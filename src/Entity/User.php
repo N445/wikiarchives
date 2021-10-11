@@ -14,6 +14,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    const ROLE_USER = 'ROLE_USER';
+    const ROLE_ADMIN = 'ROLE_ADMIN';
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -66,7 +68,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        return (string)$this->email;
     }
 
     /**
@@ -74,7 +76,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return (string)$this->email;
     }
 
     /**
@@ -84,7 +86,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        $roles[] = self::ROLE_USER;
 
         return array_unique($roles);
     }
@@ -93,6 +95,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->roles = $roles;
 
+        return $this;
+    }
+
+    public function addRole(string $role): self
+    {
+        if(!in_array($role,$this->roles)){
+            $this->roles[] = $role;
+        }
         return $this;
     }
 

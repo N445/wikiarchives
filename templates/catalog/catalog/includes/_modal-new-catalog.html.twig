@@ -1,0 +1,10 @@
+{{ form_start(newCatalogForm) }}
+<div class="modal-body">
+    {{ form_row(newCatalogForm.name) }}
+    {{ form_row(newCatalogForm.parent) }}
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+    <button type="submit" class="btn btn-primary">Ajouter</button>
+</div>
+{{ form_end(newCatalogForm) }}

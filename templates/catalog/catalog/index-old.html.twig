@@ -1,0 +1,43 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}Catalog index{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Catalog index</h1>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Lft</th>
+                <th>Lvl</th>
+                <th>Rgt</th>
+                <th>actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for catalog in catalogs %}
+                <tr>
+                    <td>{{ catalog.id }}</td>
+                    <td>{{ catalog.name }}</td>
+                    <td>{{ catalog.lft }}</td>
+                    <td>{{ catalog.lvl }}</td>
+                    <td>{{ catalog.rgt }}</td>
+                    <td>
+                        <a href="{{ path('ADMIN_CATALOG_CATALOG_SHOW', {'id': catalog.id}) }}">show</a>
+                        <a href="{{ path('ADMIN_CATALOG_CATALOG_EDIT', {'id': catalog.id}) }}">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ path('ADMIN_CATALOG_CATALOG_NEW') }}">Create new</a>
+    </div>
+{% endblock %}

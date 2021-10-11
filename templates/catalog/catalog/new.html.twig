@@ -1,0 +1,13 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}New Catalog{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Create new Catalog</h1>
+
+        {{ include('catalog/catalog/_form.html.twig') }}
+
+        <a href="{{ path('ADMIN_CATALOG_CATALOG_INDEX') }}">back to list</a>
+    </div>
+{% endblock %}

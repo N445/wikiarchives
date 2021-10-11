@@ -1,0 +1,21 @@
+{% macro nodeLine(nodes,isFirst) %}
+    <ul>
+        {% for node in nodes %}
+            <li class="catalog{{ isFirst and loop.first ? ' jstree-open' : '' }}"
+{#                data-jstree='{"icon":"{{ node.file?asset(node.file.webpath)|imagine_filter('liip_directory_tree_icon'):'default' }}"}'#}
+            >
+                <a class="draggable {{ isFirst and loop.first ? ' jstree-clicked' : '' }}" data-id="{{ node.id }}"
+                   href="#" data-type="catalog">
+                    {{ node.name }} {# [<span class="nb-laws">{{ node.laws|length }}</span>] #}
+                </a>
+                {% if node.children|length > 0 %}
+                    {{ _self.nodeLine(node.children.toArray(),false) }}
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endmacro %}
+
+<div id="jstree-catalog">
+    <div class="tree">{{ _self.nodeLine(trees,true) }}</div>
+</div>

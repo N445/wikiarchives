@@ -19,6 +19,38 @@ class CatalogRepository extends ServiceEntityRepository
         parent::__construct($registry, Catalog::class);
     }
 
+    /**
+     * @param int $id
+     * @return Catalog|null
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function byId(int $id)
+    {
+        return $this->createQueryBuilder('c')
+            ->addSelect('pictures')
+            ->leftJoin('c.pictures', 'pictures')
+            ->andWhere('c.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    /**
+     * @return Catalog[]
+     */
+    public function getRoot()
+    {
+        $this->getEntityManager()->getConfiguration()->addCustomHydrationMode('tree', 'Gedmo\Tree\Hydrator\ORM\TreeObjectHydrator');
+        return $this->createQueryBuilder('node')
+//            ->addSelect('file', 'laws', 'law_file')
+//            ->leftJoin('node.file', 'file')
+//            ->leftJoin('node.laws', 'laws')
+//            ->leftJoin('laws.file', 'law_file')
+            ->getQuery()
+            ->setHint(\Doctrine\ORM\Query::HINT_INCLUDE_META_COLUMNS, true)
+            ->getResult('tree');
+    }
+
     // /**
     //  * @return Catalog[] Returns an array of Catalog objects
     //  */

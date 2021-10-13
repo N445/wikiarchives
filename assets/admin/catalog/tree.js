@@ -1,10 +1,19 @@
+var $ = jQuery = require("jquery");
+
 require('./../../lib/vakata-jstree/dist/jstree')
 const bootstrap = require('bootstrap');
+// const FilePond = require('filepond');
+import * as FilePond from "filepond";
+
+// import FilePond from 'filepond';
+// require('jquery-filepond/filepond.jquery');
+// var bootbox = require('bootbox');
+// const noty = require('noty');
+
 const routes = require('../../../public/js/fos_js_routes.json');
 import Routing from '../../../vendor/friendsofsymfony/jsrouting-bundle/Resources/public/js/router.min.js';
+
 Routing.setRoutingData(routes);
-// const $ = require('jquery');
-// require('jquery-filepond/filepond.jquery');
 
 class Directory {
     id;
@@ -14,114 +23,74 @@ class Directory {
 
     constructor() {
         var that = this;
-        // that.modalAdd = $('#catalogModalAdd');
-        // that.modalAdd = new bootstrap.Modal(document.getElementById('myModal'), options);
-        that.modalAdd = new bootstrap.Modal($('#catalogModalAdd'));
-
-        that.modalAddForm = $('#catalogModalAdd').find('form').on('submit', function (e) {
-            e.preventDefault();
-            that.addSubmit();
-        });
-        that.inputDirectoryParent = that.modalAddForm.find('#ajax_catalog_tree_parent');
-
-
-        that.modalEdit = $('#catalogModalEdit');
-        that.modalEditContent = that.modalEdit.find('.editCatalogContent');
-    }
-
-    hideAddModal() {
-        this.modalAdd.modal('hide');
-    }
-
-    hideEditModal() {
-        this.modalEdit.modal('hide');
+        that.modal = new bootstrap.Modal($('#catalogModal'));
     }
 
     add() {
-        this.inputDirectoryParent.val(this.id);
-        this.modalAdd.show();
+        var that = this;
+        $.ajax({
+            url: Routing.generate('ADMIN_AJAX_CATALOG_CATALOG_ADD', {
+                parentCatalogId: that.id
+            }),
+            method: 'GET',
+        })
+            .done(function (response) {
+                that.setForm(response, 'new');
+                that.modal.show();
+            })
+        ;
     }
 
     addSubmit() {
         var that = this;
         $.ajax({
-            url: Routing.generate('ADMIN_AJAX_ADMIN_CATALOG_CATALOG_ADD'),
+            url: Routing.generate('ADMIN_AJAX_CATALOG_CATALOG_ADD'),
             method: 'POST',
             dataType: 'json',
             processData: false,
             contentType: false,
-            data: new FormData(this.modalAddForm[0]),
+            data: new FormData(this.getForm()[0]),
         })
             .done(function (response) {
+                that.setForm(response);
                 if (!response.success) {
-                    addNoty('error', response.message);
-                    $(response.html).on('submit', function (e) {
-                        e.preventDefault();
-                        that.addSubmit();
-                    });
-                    that.modalAddForm.replaceWith(response.html);
+                    // addNoty('error', response.message);
                     return false;
                 }
 
                 var $nodeId = tree.jstree().create_node(that.getNodeParent(), {
-                    text: response.directory.name + '[<span class="nb-laws">0</span>]',
-                    icon: response.directory.file ? '/' + response.directory.file.file : null,
+                    text: response.catalog.name,
                     li_attr: {
-                        class: "law-directory",
+                        class: "catalog",
                     },
                     a_attr: {
-                        "data-directory-id": response.directory.id,
-                        "data-type": "directory",
+                        "data-id": response.catalog.id,
+                        "data-type": "catalog",
                     },
-                }, "last");
-                var $node = tree.jstree().get_node($nodeId);
+                }, "first");
+                // var $node = tree.jstree().get_node($nodeId);
+                //
+                //
+                // tree.jstree().deselect_all();
+                // tree.jstree().select_node($node);
+                // selectNode($(`#${$node.a_attr.id}`));
 
-
-                tree.jstree().deselect_all();
-                tree.jstree().select_node($node);
-                selectNode($(`#${$node.a_attr.id}`));
-
-                that.inputDirectoryParent.append($('<option>', {
-                    value: response.directory.id,
-                    text: response.directory.name,
-                }));
-
-                that.modalAddForm[0].reset();
-                that.hideAddModal();
-            })
-            .always(function () {
+                that.modal.hide();
             })
         ;
-    }
-
-    changeParent(parentId) {
-        $.ajax({
-            url: Routing.generate('AJAX_LAW_DIRECTORY_SET_PARENT', {
-                siteid: SITE_ID,
-                id: this.id,
-                parentId: parentId,
-            }),
-            method: 'POST',
-        });
     }
 
     edit() {
         var that = this;
         $.ajax({
-            url: Routing.generate('AJAX_LAW_DIRECTORY_EDIT', {
-                siteid: SITE_ID,
+            url: Routing.generate('ADMIN_AJAX_CATALOG_CATALOG_EDIT', {
                 id: that.id,
             }),
             method: 'GET',
         })
             .done(function (response) {
-                that.modalEditForm = $(response.html);
-                that.modalEditContent.html(that.modalEditForm);
-                that.modalEdit.modal('show');
-                that.modalEditForm.on('submit', function (e) {
-                    e.preventDefault();
-                    that.editSubmit();
-                });
+                that.setForm(response, 'edit');
+                that.modal.show();
             })
         ;
     }
@@ -129,107 +98,89 @@ class Directory {
     editSubmit() {
         var that = this;
         $.ajax({
-            url: Routing.generate('AJAX_LAW_DIRECTORY_EDIT', {
-                siteid: SITE_ID,
+            url: Routing.generate('ADMIN_AJAX_CATALOG_CATALOG_EDIT', {
                 id: that.id,
             }),
             method: 'POST',
             dataType: 'json',
             processData: false,
             contentType: false,
-            data: new FormData(this.modalEditForm[0]),
+            data: new FormData(this.getForm()[0]),
         })
             .done(function (response) {
+                that.setForm(response);
                 if (!response.success) {
-                    addNoty('error', response.message);
-                    that.modalEditForm.replaceWith(response.html);
-                    that.modalEditForm = $(response.html);
-                    that.modalEditForm.on('submit', function (e) {
-                        e.preventDefault();
-                        that.editSubmit();
-                    });
+                    // addNoty('error', response.message);
                     return false;
                 }
 
 
-                tree.jstree().set_text(that.$node, response.directory.name + '[<span class="nb-laws">0</span>]');
-                tree.jstree().set_icon(that.$node, '/' + response.directory.file.file);
+                tree.jstree().set_text(that.$node, response.catalog.name);
 
 
                 tree.jstree().deselect_all();
                 tree.jstree().select_node(that.$node);
-                selectNode($(`#${that.$node.a_attr.id}`));
+                // selectNode($(`#${that.$node.a_attr.id}`));
 
-                that.modalEditForm[0].reset();
-                that.hideEditModal();
-            })
-            .always(function () {
-                loader.addClass('d-none');
+                that.modal.hide();
             })
         ;
     }
 
+    setForm(response, type) {
+        var that = this;
+        var form = $(response.form).on('submit', function (e) {
+            e.preventDefault();
+            if ('new' === type) {
+                that.addSubmit();
+            } else {
+                that.editSubmit();
+            }
+        });
+        $(that.modal._element).find('.modal-content').html(form);
+    }
+
+    getForm() {
+        return $(this.modal._element).find('.modal-content form');
+    }
+
+    changeParent(parentId) {
+        $.ajax({
+            url: Routing.generate('ADMIN_AJAX_CATALOG_CATALOG_SET_PARENT', {
+                id: this.id,
+                parentId: parentId,
+            }),
+            method: 'POST',
+        });
+    }
+
     remove() {
         var that = this;
-        bootbox.confirm("Supprimer le dossier (les dossiers enfants serons aussi supprimé)", function (result) {
-            if (ajax) {
-                return false;
-            }
-            loader.removeClass('d-none');
-
-            $.ajax({
-                url: Routing.generate('AJAX_LAW_DIRECTORY_REMOVE', {
-                    siteid: SITE_ID,
-                    id: that.id,
-                }),
-                method: 'POST',
-                dataType: 'json',
+        // bootbox.confirm("Supprimer le dossier (les dossiers enfants serons aussi supprimé)", function (result) {
+        $.ajax({
+            url: Routing.generate('ADMIN_AJAX_CATALOG_CATALOG_REMOVE', {
+                id: that.id,
+            }),
+            method: 'POST',
+            dataType: 'json',
+        })
+            .done(function (response) {
+                tree.jstree().delete_node(that.$node);
             })
-                .done(function (response) {
-                    tree.jstree().delete_node(that.$node);
-                    selectNode($('.tree a[data-directory-id]'));
-                })
-                .always(function () {
-                    loader.addClass('d-none');
-                })
-            ;
-        });
+        ;
+        // });
     }
 
     open() {
         var that = this;
-        if (ajax) {
-            return false;
-        }
-        loader.removeClass('d-none');
         $.ajax({
-            url: Routing.generate('AJAX_LAW_DIRECTORY_OPEN', {
-                siteid: SITE_ID,
+            url: Routing.generate('ADMIN_AJAX_CATALOG_CATALOG_OPEN', {
                 id: that.id,
             }),
         })
             .done(function (response) {
                 var html = $(response.html);
-                html.find('.law-show').on('click', function () {
-                    file.id = $(this).closest('tr').attr('id');
-                    file.directoryId = that.id;
-                    file.show();
-                });
-                html.find('.law-edit').on('click', function () {
-                    file.id = $(this).closest('tr').attr('id');
-                    file.directoryId = that.id;
-                    file.edit();
-                });
-                html.find('.law-remove').on('click', function () {
-                    file.id = $(this).closest('tr').attr('id');
-                    file.directoryId = that.id;
-                    file.remove();
-                });
-                $('.directory-content').html(html);
-                $(`.tree [data-directory-id=${that.id}]`).find('.nb-laws').html(response.nb_laws);
-            })
-            .always(function () {
-                loader.addClass('d-none');
+                $('.catalog-content').html(html);
             })
         ;
     }
@@ -334,7 +285,7 @@ class File {
 
                 var $node = tree.jstree().get_node(that.$node);
 
-                selectNode($(`#${$node.a_attr.id}`));
+                // selectNode($(`#${$node.a_attr.id}`));
 
                 that.modalAddForm[0].reset();
                 that.hideAddModal();
@@ -496,9 +447,28 @@ let directory = new Directory();
 let file = new File();
 
 
-let tree = null;
+let tree;
+let filepond;
 
 $(function () {
+    // FilePond.create($('.filepond'));
+
+
+    const inputElement = document.querySelector('.filepond');
+    filepond = FilePond.create(inputElement, {
+        allowMultiple: true,
+        server: {
+            process: {
+                method: 'POST',
+            },
+        },
+        maxParallelUploads: 5,
+        allowDrop: true,
+        allowRevert: false,
+        labelIdle: 'Glissez et déposez vos fichiers ou <span class="filepond--label-action"> Parcourir </span>',
+    });
+
+
     tree = $('#jstree-catalog .tree').jstree({
         "core": {
             "check_callback": true,
@@ -515,7 +485,7 @@ $(function () {
                         "separator_after": false,
                         "label": "Ajouter",
                         "action": function (obj) {
-                            directory.id = $node.a_attr["data-directory-id"];
+                            directory.id = $node.a_attr["data-id"];
                             directory.$nodeParent = $node;
                             directory.add();
                         },
@@ -525,7 +495,7 @@ $(function () {
                         "separator_after": false,
                         "label": "Modifier",
                         "action": function (obj) {
-                            directory.id = $node.a_attr["data-directory-id"];
+                            directory.id = $node.a_attr["data-id"];
                             directory.$node = $node;
                             directory.edit();
                         },
@@ -535,7 +505,7 @@ $(function () {
                         "separator_after": false,
                         "label": "Supprimer (récursif)",
                         "action": function (obj) {
-                            directory.id = $node.a_attr["data-directory-id"];
+                            directory.id = $node.a_attr["data-id"];
                             directory.$node = $node;
                             directory.remove($node);
                         },
@@ -545,7 +515,7 @@ $(function () {
                         "separator_after": false,
                         "label": "Ajouter fichier légal",
                         "action": function (obj) {
-                            file.directoryId = $node.a_attr["data-directory-id"];
+                            file.directoryId = $node.a_attr["data-id"];
                             file.$node = $node;
                             file.add();
                         },
@@ -558,17 +528,17 @@ $(function () {
     }).on('move_node.jstree', function (data, element, helper, event) {
         var node = element.node;
         var parent = tree.jstree().get_node(tree.jstree().get_parent(node));
-        var parentId = parent.a_attr ? parent.a_attr["data-directory-id"] : null;
-        directory.id = node.a_attr["data-directory-id"];
+        var parentId = parent.a_attr ? parent.a_attr["data-id"] : null;
+        directory.id = node.a_attr["data-id"];
         directory.changeParent(parentId);
     })
     ;
 
     $('body')
-        .on('click', '.tree a[data-directory-id]', function () {
+        .on('click', '.tree a[data-id]', function () {
             selectNode($(this));
         })
-        .on('contextmenu', '.tree a[data-directory-id]', function () {
+        .on('contextmenu', '.tree a[data-id]', function () {
             selectNode($(this));
         })
     ;
@@ -593,3 +563,27 @@ $(function () {
         ;
     });
 });
+
+
+function selectNode(element) {
+    if(!element.attr('data-id')) {
+        return false;
+    }
+    directory.id = element.attr('data-id');
+
+    tree.jstree().deselect_node(tree.jstree().node);
+    tree.jstree().select_node(tree.jstree().get_node(element.attr('id')));
+
+    directory.open();
+
+    filepond.removeFiles();
+    filepond.setOptions({
+        server: {
+            process: {
+                url: Routing.generate('AJAX_CATALOG_PICTURE_FILEPOND', {
+                    'directoryId': directory.id,
+                }),
+            },
+        },
+    });
+}

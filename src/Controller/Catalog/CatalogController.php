@@ -36,15 +36,10 @@ class CatalogController extends AbstractController
     #[Route('/', name: 'ADMIN_CATALOG_CATALOG_INDEX', methods: ['GET'])]
     public function index(CatalogRepository $catalogRepository): Response
     {
-        $this->em->getConfiguration()->addCustomHydrationMode('tree', 'Gedmo\Tree\Hydrator\ORM\TreeObjectHydrator');
-        $trees = $this->catalogRepository->findAll();
-
-        $newCatalogForm = $this->createForm(AjaxCatalogTreeType::class, new Catalog());
-
+        $trees = $this->catalogRepository->getRoot();
 
         return $this->render('catalog/catalog/index.html.twig', [
-            'trees' => $trees,
-            'newCatalogForm' => $newCatalogForm->createView(),
+            'trees' => dump($trees),
         ]);
     }
 

@@ -6,31 +6,34 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-4">
-                <h2>Arborescence</h2>
-                <button class="btn btn-success btn-sm add-root-catalog mb-3">
-                    Ajouter un dossier racine
-                </button>
-                {% include 'catalog/catalog/includes/_tree-catalog.html.twig' %}
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h2>Arborescence</h2>
+                        <button class="btn btn-success btn-sm add-root-catalog mb-3">
+                            Ajouter un dossier racine
+                        </button>
+                        {% include 'catalog/catalog/includes/_tree-catalog.html.twig' %}
+                    </div>
+                </div>
             </div>
             <div class="col-md-8">
-                <form method="POST">
-                    <input type="file" class="filepond" name="filepond" data-allow-remove="true">
-                </form>
-                <div class="catalog-content"></div>
+                <div class="card shadow">
+                    <div class="card-body">
+                        <form method="POST">
+                            <input type="file" class="filepond" name="filepond" data-allow-remove="true">
+                        </form>
+                        <div class="catalog-content"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
 
     {# new Catalog #}
-    <div class="modal fade" id="catalogModalAdd" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="catalogModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Création d'un dossier</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                {% include 'catalog/catalog/includes/_modal-new-catalog.html.twig' %}
             </div>
         </div>
     </div>

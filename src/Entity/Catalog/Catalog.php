@@ -4,6 +4,7 @@ namespace App\Entity\Catalog;
 
 use App\Repository\Catalog\CatalogRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 use Doctrine\ORM\PersistentCollection;
@@ -65,9 +66,15 @@ class Catalog
      */
     private $children;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="catalog")
+     */
+    private $pictures;
+
     public function __construct()
     {
         $this->children = new ArrayCollection();
+        $this->pictures = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -92,9 +99,11 @@ class Catalog
         return $this->root;
     }
 
-    public function setParent(Catalog $parent = null)
+    public function setParent(Catalog $parent = null): self
     {
         $this->parent = $parent;
+
+        return $this;
     }
 
     public function getParent()
@@ -126,6 +135,36 @@ class Catalog
             // set the owning side to null (unless already changed)
             if ($child->getParent() === $this) {
                 $child->setParent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Picture[]
+     */
+    public function getPictures(): Collection
+    {
+        return $this->pictures;
+    }
+
+    public function addPicture(Picture $picture): self
+    {
+        if (!$this->pictures->contains($picture)) {
+            $this->pictures[] = $picture;
+            $picture->setCatalog($this);
+        }
+
+        return $this;
+    }
+
+    public function removePicture(Picture $picture): self
+    {
+        if ($this->pictures->removeElement($picture)) {
+            // set the owning side to null (unless already changed)
+            if ($picture->getCatalog() === $this) {
+                $picture->setCatalog(null);
             }
         }
 

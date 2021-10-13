@@ -5,9 +5,7 @@
 {{ form_start(newCatalogForm) }}
 <div class="modal-body">
     {{ form_row(newCatalogForm.name) }}
-    <div class="d-none">
-        {{ form_row(newCatalogForm.parent) }}
-    </div>
+    {{ form_row(newCatalogForm.parent) }}
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>

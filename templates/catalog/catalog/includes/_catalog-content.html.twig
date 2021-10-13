@@ -1,0 +1,14 @@
+<h2>contenu du catalog</h2>
+<div class="row row-cols-5 g-2">
+    {% for picture in catalog.pictures %}
+        <div class="col">
+                <img src="{{ vich_uploader_asset(picture) }}" alt="{{ picture.name }}" class="img-thumbnail rounded">
+                <p>
+                        {{ picture.imageSize|humanFilesize }} <br>
+                        {{ picture.imageMimeType }} <br>
+                        {{ picture.imageOriginalName }} <br>
+                        {{ picture.imageDimensions|join('x') }}
+                </p>
+        </div>
+    {% endfor %}
+</div>

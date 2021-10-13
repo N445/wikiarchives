@@ -5,7 +5,6 @@ namespace App\Controller\Catalog;
 use App\DataTransformer\Catalog\CatalogDataTransformer;
 use App\Entity\Catalog\Catalog;
 use App\Form\Catalog\AjaxCatalogTreeType;
-use App\Form\Catalog\CatalogType;
 use App\Repository\Catalog\CatalogRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,7 +12,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/admin/ajax/catalog')]
+/**
+ * Class AjaxCatalogController
+ * @package App\Controller\Catalog
+ * @Route("/admin/ajax/catalog",options={"expose":true})
+ */
 class AjaxCatalogController extends AbstractController
 {
     /**
@@ -43,82 +46,97 @@ class AjaxCatalogController extends AbstractController
 
     /**
      * Création de la route "add"
-     * @Route("/add", name="ADMIN_AJAX_ADMIN_CATALOG_CATALOG_ADD", methods={"POST"},options={"expose":true})
+     * @Route("/add", name="ADMIN_AJAX_CATALOG_CATALOG_ADD", methods={"GET","POST"})
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function add(Request $request)
     {
-        $newcatalog = new Catalog();
-
-        $newDirectoryForm = $this->createForm(AjaxCatalogTreeType::class, $newcatalog);
-
-        $newDirectoryForm->handleRequest($request);
-
-        if ($newDirectoryForm->isSubmitted() && $newDirectoryForm->isValid()) {
-            $this->em->persist($newcatalog);
-            $this->em->flush();
-            return $this->json([
-                'success' => true,
-                'directory' => $this->catalogDataTransformer->toArray($newcatalog),
-//                'nb_laws' => $newcatalog->getLaws()->count(),
-//                'html' => $this->renderView('law/directory/ajax/open.html.twig', [
-//                    'directory' => $newcatalog,
-//                ]),
-            ]);
+        $parentCatalog = null;
+        if ($parentCatalogId = $request->get('parentCatalogId')) {
+            $parentCatalog = $this->catalogRepository->find($parentCatalogId);
         }
-        return $this->json([
-            'success' => false,
-            'message' => 'Forumlaire invalid',
-            'html' => $this->renderView('catalog/catalog/includes/_modal-new-catalog.html.twig', [
-                'newDirectoryForm' => $newDirectoryForm->createView(),
-            ]),
-        ]);
-    }
+        $newcatalog = (new Catalog())->setParent($parentCatalog);
 
-    /**
-     * Création de la route "add"
-     * @Route("/{id}/edit", name="ADMIN_AJAX_ADMIN_CATALOG_CATALOG_EDIT", methods={"GET","POST"},options={"expose":true})
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function edit(int $siteid, int $id, Request $request)
-    {
-        $site = $this->siteProvider->get($siteid);
+        $newCatalogForm = $this->createForm(AjaxCatalogTreeType::class, $newcatalog);
 
-        if (!$directory = $this->directoryRepository->byId($site, $id)) {
+        $newCatalogForm->handleRequest($request);
+        if ($newCatalogForm->isSubmitted()) {
+            if ($newCatalogForm->isValid()) {
+                $this->em->persist($newcatalog);
+                $this->em->flush();
+                $newCatalogForm = $this->createForm(AjaxCatalogTreeType::class, new Catalog());
+                return $this->json([
+                    'success' => true,
+                    'catalog' => $this->catalogDataTransformer->toArray($newcatalog),
+                    'form' => $this->renderView('catalog/catalog/includes/_modal-new-catalog.html.twig', [
+                        'newCatalogForm' => $newCatalogForm->createView(),
+                    ]),
+                ]);
+            }
             return $this->json([
                 'success' => false,
-                'message' => 'Pas de dossier trouvé',
-            ]);
-        }
-
-        $editDirectoryForm = $this->createForm(AjaxDirectoryTreeType::class, $directory, [
-            DirectoryType::PARENT_CHOICES => $this->directoryRepository->getSiteData($site),
-            DirectoryType::STATE => DirectoryType::STATE_EDIT,
-        ]);
-
-        $editDirectoryForm->handleRequest($request);
-
-        if ($editDirectoryForm->isSubmitted() && $editDirectoryForm->isValid()) {
-            $directory->getFile()->setDirectory($directory);
-            $this->em->persist($directory);
-            $this->em->flush();
-            return $this->json([
-                'success' => true,
-                'directory' => $this->directoryDataTransformer->toArray($directory),
-                'nb_laws' => $directory->getLaws()->count(),
-                'html' => $this->renderView('law/directory/ajax/open.html.twig', [
-                    'site' => $site,
-                    'directory' => $directory,
+                'message' => 'Forumlaire invalid',
+                'form' => $this->renderView('catalog/catalog/includes/_modal-new-catalog.html.twig', [
+                    'newCatalogForm' => $newCatalogForm->createView(),
                 ]),
             ]);
+
         }
         return $this->json([
             'success' => true,
-            'html' => $this->renderView('law/directory/tree/_edit-directory-modal.html.twig', [
-                'editDirectoryForm' => $editDirectoryForm->createView(),
-                'directory' => $directory,
+            'form' => $this->renderView('catalog/catalog/includes/_modal-new-catalog.html.twig', [
+                'newCatalogForm' => $newCatalogForm->createView(),
+            ]),
+        ]);
+    }
+
+    /**
+     * Création de la route "add"
+     * @Route("/{id}/edit", name="ADMIN_AJAX_CATALOG_CATALOG_EDIT", methods={"GET","POST"},options={"expose":true})
+     * @param Request $request
+     * @return Response
+     */
+    public function edit(int $id, Request $request)
+    {
+        if (!$catalog = $this->catalogRepository->byId($id)) {
+            return $this->json([
+                'success' => false,
+                'message' => 'Pas de dossier trouvé',
+            ]);
+        }
+
+        $editCatalogForm = $this->createForm(AjaxCatalogTreeType::class, $catalog);
+
+        $editCatalogForm->handleRequest($request);
+
+        if ($editCatalogForm->isSubmitted()) {
+            if ($editCatalogForm->isValid()) {
+                $this->em->persist($catalog);
+                $this->em->flush();
+                $editCatalogForm = $this->createForm(AjaxCatalogTreeType::class, new Catalog());
+                return $this->json([
+                    'success' => true,
+                    'catalog' => $this->catalogDataTransformer->toArray($catalog),
+                    'form' => $this->renderView('catalog/catalog/includes/_modal-new-catalog.html.twig', [
+                        'newCatalogForm' => $editCatalogForm->createView(),
+                    ]),
+                ]);
+            }
+            return $this->json([
+                'success' => false,
+                'catalog' => $this->catalogDataTransformer->toArray($catalog),
+                'form' => $this->renderView('catalog/catalog/includes/_modal-new-catalog.html.twig', [
+                    'newCatalogForm' => $editCatalogForm->createView(),
+                ]),
+            ]);
+        }
+
+        return $this->json([
+            'success' => true,
+            'catalog' => $this->catalogDataTransformer->toArray($catalog),
+            'form' => $this->renderView('catalog/catalog/includes/_modal-new-catalog.html.twig', [
+                'newCatalogForm' => $editCatalogForm->createView(),
             ]),
         ]);
     }
@@ -126,22 +144,20 @@ class AjaxCatalogController extends AbstractController
 
     /**
      * Création de la route "add"
-     * @Route("/{id}/remove", name="ADMIN_AJAX_ADMIN_CATALOG_CATALOG_REMOVE", methods={"POST"},options={"expose":true})
+     * @Route("/{id}/remove", name="ADMIN_AJAX_CATALOG_CATALOG_REMOVE", methods={"POST"},options={"expose":true})
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function remove(int $siteid, int $id, Request $request)
+    public function remove(int $id)
     {
-        $site = $this->siteProvider->get($siteid);
-
-        if (!$directory = $this->directoryRepository->byId($site, $id)) {
+        if (!$catalog = $this->catalogRepository->byId($id)) {
             return $this->json([
                 'success' => false,
                 'message' => 'Pas de dossier trouvé',
             ]);
         }
 
-        $this->em->remove($directory);
+        $this->em->remove($catalog);
         $this->em->flush();
 
         return $this->json([
@@ -152,16 +168,14 @@ class AjaxCatalogController extends AbstractController
 
     /**
      * Création de la route "add"
-     * @Route("/{id}/set-parent/{parentId}", name="ADMIN_AJAX_ADMIN_CATALOG_CATALOG_SET_PARENT",
+     * @Route("/{id}/set-parent/{parentId}", name="ADMIN_AJAX_CATALOG_CATALOG_SET_PARENT",
      *                                       methods={"POST"},options={"expose":true})
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function setParent(int $siteid, int $id, ?int $parentId = null, Request $request)
+    public function setParent(int $id, ?int $parentId = null)
     {
-        $site = $this->siteProvider->get($siteid);
-
-        if (!$directory = $this->directoryRepository->byId($site, $id)) {
+        if (!$directory = $this->catalogRepository->byId($id)) {
             return $this->json([
                 'success' => false,
                 'message' => 'Pas de dossier trouvé',
@@ -178,7 +192,7 @@ class AjaxCatalogController extends AbstractController
             ]);
         }
 
-        if (!$parentDirectory = $this->directoryRepository->byId($site, $parentId)) {
+        if (!$parentDirectory = $this->catalogRepository->byId($parentId)) {
             return $this->json([
                 'success' => false,
                 'message' => 'Pas de dossier trouvé',
@@ -197,28 +211,22 @@ class AjaxCatalogController extends AbstractController
 
 
     /**
-     * @Route("/{id}", name="ADMIN_AJAX_ADMIN_CATALOG_CATALOG_OPEN", methods={"GET"},options={"expose":true})
+     * @Route("/{id}", name="ADMIN_AJAX_CATALOG_CATALOG_OPEN", methods={"GET"},options={"expose":true})
      */
-    public function show(int $siteid, int $id, Request $request): Response
+    public function show(int $id): Response
     {
-        $site = $this->siteProvider->get($siteid);
-
-        if (!$directory = $this->directoryRepository->byId($site, $id)) {
+        if (!$catalog = $this->catalogRepository->byId($id)) {
             return $this->json([
                 'success' => false,
                 'message' => 'Pas de dossier trouvé',
             ]);
         }
-
+dump($catalog);
         return $this->json([
             'success' => true,
-            'directory' => $this->directoryDataTransformer->toArray($directory),
-            'nb_laws' => $directory->getLaws()->count(),
-            'html' => $this->renderView($request->get('issmall')
-                ? 'law/directory/ajax/open-small.html.twig'
-                : 'law/directory/ajax/open.html.twig', [
-                'site' => $site,
-                'directory' => $directory,
+            'catalog' => $this->catalogDataTransformer->toArray($catalog),
+            'html' => $this->renderView('catalog/catalog/includes/_catalog-content.html.twig', [
+                'catalog' => $catalog,
             ]),
         ]);
     }

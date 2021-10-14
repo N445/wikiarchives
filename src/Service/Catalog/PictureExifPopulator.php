@@ -23,7 +23,13 @@ class PictureExifPopulator
 
         // reader with Native adapter
         $reader = \PHPExif\Reader\Reader::factory(\PHPExif\Reader\Reader::TYPE_NATIVE);
-        $exifData = $reader->read($picture->getImageFile()->getRealPath())->getData();
+
+        if(!$read = $reader->read($picture->getImageFile()->getRealPath())){
+            $picture->setExif($exif);
+            return;
+        }
+
+        $exifData = $read->getData();
         foreach ($exifData as $label => $value) {
             $exif->addRow(new Exif\Row($label, serialize($value)));
         }

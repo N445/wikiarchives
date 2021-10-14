@@ -63,9 +63,9 @@ class Row
         return $this->value;
     }
 
-    public function getValueUnserialize(): ?string
+    public function getValueUnserialize()
     {
-        return unserialize(serialize($this->value));
+        return unserialize($this->value);
     }
 
     public function setValue(string $value): self

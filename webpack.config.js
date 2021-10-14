@@ -31,6 +31,8 @@ Encore
     .addEntry('admin-tree-js', './assets/admin/catalog/tree.js')
     .addStyleEntry('admin-tree', './assets/admin/catalog/tree.scss')
 
+    .addEntry('admin-picture-exif-collection', './assets/admin/catalog/picture-exif-collection.js')
+
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     // .enableStimulusBridge('./assets/controllers.json')
 

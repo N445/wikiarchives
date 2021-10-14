@@ -14,11 +14,21 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/admin/catalog/picture')]
 class PictureController extends AbstractController
 {
+    /**
+     * @var PictureRepository
+     */
+    private $pictureRepository;
+
+    public function __construct(PictureRepository $pictureRepository)
+    {
+        $this->pictureRepository = $pictureRepository;
+    }
+
     #[Route('/', name: 'ADMIN_CATALOG_PICTURE_INDEX', methods: ['GET'])]
-    public function index(PictureRepository $pictureRepository): Response
+    public function index(): Response
     {
         return $this->render('catalog/picture/index.html.twig', [
-            'pictures' => $pictureRepository->findAll(),
+            'pictures' => $this->pictureRepository->findAll(),
         ]);
     }
 
@@ -47,16 +57,22 @@ class PictureController extends AbstractController
     }
 
     #[Route('/{id}', name: 'ADMIN_CATALOG_PICTURE_SHOW', methods: ['GET'])]
-    public function show(Picture $picture): Response
+    public function show(int $id): Response
     {
+        if(!$picture = $this->pictureRepository->byId($id)){
+            return $this->redirectToRoute('ADMIN_CATALOG_PICTURE_INDEX');
+        }
         return $this->render('catalog/picture/show.html.twig', [
             'picture' => $picture,
         ]);
     }
 
     #[Route('/{id}/edit', name: 'ADMIN_CATALOG_PICTURE_EDIT', methods: ['GET','POST'])]
-    public function edit(Request $request, Picture $picture): Response
+    public function edit(Request $request, int $id): Response
     {
+        if(!$picture = $this->pictureRepository->byId($id)){
+            return $this->redirectToRoute('ADMIN_CATALOG_PICTURE_INDEX');
+        }
         $form = $this->createForm(PictureType::class, $picture);
         $form->handleRequest($request);
 
@@ -74,8 +90,11 @@ class PictureController extends AbstractController
     }
 
     #[Route('/{id}', name: 'ADMIN_CATALOG_PICTURE_DELETE', methods: ['POST'])]
-    public function delete(Request $request, Picture $picture): Response
+    public function delete(Request $request, int $id): Response
     {
+        if(!$picture = $this->pictureRepository->byId($id)){
+            return $this->redirectToRoute('ADMIN_CATALOG_PICTURE_INDEX');
+        }
         if ($this->isCsrfTokenValid('delete' . $picture->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($picture);

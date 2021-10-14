@@ -70,13 +70,13 @@ class Catalog
     private $parent;
 
     /**
-     * @ORM\OneToMany(targetEntity="Catalog", mappedBy="parent")
+     * @ORM\OneToMany(targetEntity="Catalog", mappedBy="parent", cascade={"persist", "remove"})
      * @ORM\OrderBy({"lft" = "ASC"})
      */
     private $children;
 
     /**
-     * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="catalog")
+     * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="catalog", cascade={"persist", "remove"})
      */
     private $pictures;
 

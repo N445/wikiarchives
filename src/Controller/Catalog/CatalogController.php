@@ -33,13 +33,22 @@ class CatalogController extends AbstractController
         $this->catalogRepository = $catalogRepository;
     }
 
-    #[Route('/', name: 'ADMIN_CATALOG_CATALOG_INDEX', methods: ['GET'])]
-    public function index(): Response
+    #[Route('/{id}', name: 'ADMIN_CATALOG_CATALOG_INDEX', methods: ['GET'])]
+    public function index(?int $id = null): Response
     {
         $trees = $this->catalogRepository->getRoot();
 
+        $catalog = (new Catalog())->setName('Non classé');
+
+        if ($id) {
+            if (!$catalog = $this->catalogRepository->byId($id)) {
+                $catalog = (new Catalog())->setName('Non classé');
+            }
+        }
+
         return $this->render('catalog/catalog/index.html.twig', [
-            'trees' => $trees
+            'trees' => $trees,
+            'catalog' => $catalog,
         ]);
     }
 

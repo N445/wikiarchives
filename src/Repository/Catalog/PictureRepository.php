@@ -19,6 +19,20 @@ class PictureRepository extends ServiceEntityRepository
         parent::__construct($registry, Picture::class);
     }
 
+    public function byId(int $id): ?Picture
+    {
+        return $this->createQueryBuilder('p')
+            ->addSelect('catalog', 'place', 'exif', 'exif_rows')
+            ->leftJoin('p.catalog', 'catalog')
+            ->leftJoin('p.place', 'place')
+            ->leftJoin('p.exif', 'exif')
+            ->leftJoin('exif.rows', 'exif_rows')
+            ->andWhere('p.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     // /**
     //  * @return Picture[] Returns an array of Picture objects
     //  */

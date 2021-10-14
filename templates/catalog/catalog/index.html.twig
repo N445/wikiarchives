@@ -22,7 +22,9 @@
                         <form method="POST">
                             <input type="file" class="filepond" name="filepond" data-allow-remove="true">
                         </form>
-                        <div class="catalog-content"></div>
+                        <div class="catalog-content">
+                            {% include 'catalog/catalog/includes/_catalog-content.html.twig' %}
+                        </div>
                     </div>
                 </div>
             </div>

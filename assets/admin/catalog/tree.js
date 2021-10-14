@@ -68,12 +68,12 @@ class Directory {
                         "data-type": "catalog",
                     },
                 }, "first");
-                // var $node = tree.jstree().get_node($nodeId);
-                //
-                //
-                // tree.jstree().deselect_all();
-                // tree.jstree().select_node($node);
-                // selectNode($(`#${$node.a_attr.id}`));
+
+                var $node = tree.jstree().get_node($nodeId);
+
+                tree.jstree().deselect_all();
+                tree.jstree().select_node($node);
+                selectNode($(`#${$node.a_attr.id}`));
 
                 that.modal.hide();
             })
@@ -166,6 +166,7 @@ class Directory {
         })
             .done(function (response) {
                 tree.jstree().delete_node(that.$node);
+                selectNode($('.tree a[data-id]'));
             })
         ;
         // });
@@ -535,13 +536,17 @@ $(function () {
     ;
 
     selectNode($('.tree a[data-id]'));
+    //
+    // directory.id = $('.tree a[data-id]').attr('data-id');
 
     $('body')
         .on('click', '.tree a[data-id]', function () {
             selectNode($(this));
+            redirect($(this));
         })
         .on('contextmenu', '.tree a[data-id]', function () {
             selectNode($(this));
+            redirect($(this));
         })
     ;
 
@@ -572,17 +577,25 @@ $(function () {
 });
 
 
+function redirect(element){
+    window.location.replace(element.attr('href'));
+    return false;
+}
+
+
 
 function selectNode(element) {
     if(!element.attr('data-id')) {
         return false;
     }
+
     directory.id = element.attr('data-id');
 
-    tree.jstree().deselect_node(tree.jstree().node);
-    tree.jstree().select_node(tree.jstree().get_node(element.attr('id')));
 
-    directory.open();
+    // tree.jstree().deselect_node(tree.jstree().node);
+    // tree.jstree().select_node(tree.jstree().get_node(element.attr('id')));
+
+    // directory.open();
 
     filepond.removeFiles();
     filepond.setOptions({

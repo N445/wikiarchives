@@ -1,15 +1,13 @@
-{% macro nodeLine(nodes,isFirst) %}
+{% macro nodeLine(nodes,catalog) %}
     <ul>
         {% for node in nodes %}
-            <li class="catalog{{ isFirst and loop.first ? ' jstree-open' : '' }}"
-{#                data-jstree='{"icon":"{{ node.file?asset(node.file.webpath)|imagine_filter('liip_directory_tree_icon'):'default' }}"}'#}
-            >
-                <a class="draggable {{ isFirst and loop.first ? ' jstree-clicked' : '' }}" data-id="{{ node.id }}"
-                   href="#" data-type="catalog">
-                    {{ node.name }} {# [<span class="nb-laws">{{ node.laws|length }}</span>] #}
+            <li class="catalog{{ (catalog.id == node.id) ? ' jstree-open' : '' }}">
+                <a class="draggable {{ (catalog.id == node.id)  ? ' jstree-clicked' : '' }}" data-id="{{ node.id }}"
+                   href="{{ path('ADMIN_CATALOG_CATALOG_INDEX',{id:node.id}) }}" data-type="catalog">
+                    {{ node.name }}
                 </a>
                 {% if node.children|length > 0 %}
-                    {{ _self.nodeLine(node.children.toArray(),false) }}
+                    {{ _self.nodeLine(node.children.toArray(),catalog) }}
                 {% endif %}
             </li>
         {% endfor %}
@@ -17,5 +15,5 @@
 {% endmacro %}
 
 <div id="jstree-catalog">
-    <div class="tree">{{ _self.nodeLine(trees,true) }}</div>
+    <div class="tree">{{ _self.nodeLine(trees,catalog) }}</div>
 </div>

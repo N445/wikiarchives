@@ -2,6 +2,7 @@
 
 namespace App\Form\Catalog;
 
+use App\Entity\Catalog\Exif\Row;
 use App\Entity\Catalog\Picture;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -14,9 +15,9 @@ class PictureType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('imageFile',FileType::class)
+            ->add('imageFile', FileType::class)
             ->add('catalog')
-        ;
+            ->add('exif', ExifType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

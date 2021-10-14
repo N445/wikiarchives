@@ -8,6 +8,7 @@ use App\Form\Catalog\AjaxCatalogTreeType;
 use App\Repository\Catalog\CatalogRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -66,29 +67,16 @@ class AjaxCatalogController extends AbstractController
                 $this->em->persist($newcatalog);
                 $this->em->flush();
                 $newCatalogForm = $this->createForm(AjaxCatalogTreeType::class, new Catalog());
-                return $this->json([
-                    'success' => true,
-                    'catalog' => $this->catalogDataTransformer->toArray($newcatalog),
-                    'form' => $this->renderView('catalog/catalog/includes/_modal-new-catalog.html.twig', [
-                        'newCatalogForm' => $newCatalogForm->createView(),
-                    ]),
-                ]);
-            }
-            return $this->json([
-                'success' => false,
-                'message' => 'Forumlaire invalid',
-                'form' => $this->renderView('catalog/catalog/includes/_modal-new-catalog.html.twig', [
-                    'newCatalogForm' => $newCatalogForm->createView(),
-                ]),
-            ]);
 
+                return $this->getFormResponse($newcatalog, $newCatalogForm, true, 'new');
+            }
+
+
+            return $this->getFormResponse($newcatalog, $newCatalogForm, false, 'new');
         }
-        return $this->json([
-            'success' => true,
-            'form' => $this->renderView('catalog/catalog/includes/_modal-new-catalog.html.twig', [
-                'newCatalogForm' => $newCatalogForm->createView(),
-            ]),
-        ]);
+
+
+        return $this->getFormResponse($newcatalog, $newCatalogForm, true, 'new');
     }
 
     /**
@@ -115,30 +103,16 @@ class AjaxCatalogController extends AbstractController
                 $this->em->persist($catalog);
                 $this->em->flush();
                 $editCatalogForm = $this->createForm(AjaxCatalogTreeType::class, new Catalog());
-                return $this->json([
-                    'success' => true,
-                    'catalog' => $this->catalogDataTransformer->toArray($catalog),
-                    'form' => $this->renderView('catalog/catalog/includes/_modal-new-catalog.html.twig', [
-                        'newCatalogForm' => $editCatalogForm->createView(),
-                    ]),
-                ]);
+
+
+                return $this->getFormResponse($catalog, $editCatalogForm, true, 'edit');
             }
-            return $this->json([
-                'success' => false,
-                'catalog' => $this->catalogDataTransformer->toArray($catalog),
-                'form' => $this->renderView('catalog/catalog/includes/_modal-new-catalog.html.twig', [
-                    'newCatalogForm' => $editCatalogForm->createView(),
-                ]),
-            ]);
+
+
+            return $this->getFormResponse($catalog, $editCatalogForm, false, 'edit');
         }
 
-        return $this->json([
-            'success' => true,
-            'catalog' => $this->catalogDataTransformer->toArray($catalog),
-            'form' => $this->renderView('catalog/catalog/includes/_modal-new-catalog.html.twig', [
-                'newCatalogForm' => $editCatalogForm->createView(),
-            ]),
-        ]);
+        return $this->getFormResponse($catalog, $editCatalogForm, true, 'edit');
     }
 
 
@@ -221,12 +195,26 @@ class AjaxCatalogController extends AbstractController
                 'message' => 'Pas de dossier trouvé',
             ]);
         }
-dump($catalog);
         return $this->json([
             'success' => true,
             'catalog' => $this->catalogDataTransformer->toArray($catalog),
             'html' => $this->renderView('catalog/catalog/includes/_catalog-content.html.twig', [
                 'catalog' => $catalog,
+            ]),
+        ]);
+    }
+
+    private function getFormResponse(Catalog $catalog, FormInterface $form, bool $success, string $type)
+    {
+        $view = 'catalog/catalog/includes/_modal-new-catalog.html.twig';
+        if('edit' === $type){
+            $view = 'catalog/catalog/includes/_modal-edit-catalog.html.twig';
+        }
+        return $this->json([
+            'success' => $success,
+            'catalog' => $this->catalogDataTransformer->toArray($catalog),
+            'form' => $this->renderView($view, [
+                'newCatalogForm' => $form->createView(),
             ]),
         ]);
     }

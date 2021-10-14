@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/admin/catalog')]
+#[Route('/admin/catalog/catalog')]
 class CatalogController extends AbstractController
 {
     /**
@@ -34,12 +34,12 @@ class CatalogController extends AbstractController
     }
 
     #[Route('/', name: 'ADMIN_CATALOG_CATALOG_INDEX', methods: ['GET'])]
-    public function index(CatalogRepository $catalogRepository): Response
+    public function index(): Response
     {
         $trees = $this->catalogRepository->getRoot();
 
         return $this->render('catalog/catalog/index.html.twig', [
-            'trees' => dump($trees),
+            'trees' => $trees
         ]);
     }
 

@@ -3,6 +3,8 @@
 namespace App\Entity\Catalog;
 
 use App\Repository\Catalog\CatalogRepository;
+use App\Traits\BlameableTrait;
+use App\Traits\TimestampableTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,10 +14,15 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass=CatalogRepository::class)
+ * @ORM\Table(name="catalog")
  * @Gedmo\Tree(type="nested")
+ * @Gedmo\Loggable
  */
 class Catalog
 {
+    use TimestampableTrait;
+    use BlameableTrait;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -24,6 +31,7 @@ class Catalog
     private $id;
 
     /**
+     * @Gedmo\Versioned
      * @ORM\Column(type="string", length=255)
      */
     private $name;
@@ -54,6 +62,7 @@ class Catalog
     private $root;
 
     /**
+     * @Gedmo\Versioned
      * @Gedmo\TreeParent
      * @ORM\ManyToOne(targetEntity="Catalog", inversedBy="children")
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="CASCADE")
@@ -71,10 +80,21 @@ class Catalog
      */
     private $pictures;
 
+    /**
+     * @Gedmo\Versioned
+     * @ORM\ManyToOne(targetEntity=Place::class, inversedBy="catalogs")
+     */
+    private $place;
+
     public function __construct()
     {
         $this->children = new ArrayCollection();
         $this->pictures = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->getName();
     }
 
     public function getId(): ?int
@@ -106,7 +126,7 @@ class Catalog
         return $this;
     }
 
-    public function getParent()
+    public function getParent(): ?Catalog
     {
         return $this->parent;
     }
@@ -167,6 +187,27 @@ class Catalog
                 $picture->setCatalog(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPlace(): ?Place
+    {
+        return $this->place;
+    }
+
+
+    public function getPlaceRecursive(): ?Place
+    {
+        if (!$this->place) {
+            return $this->getParent() ? $this->getParent()->getPlaceRecursive() : null;
+        }
+        return $this->place;
+    }
+
+    public function setPlace(?Place $place): self
+    {
+        $this->place = $place;
 
         return $this;
     }

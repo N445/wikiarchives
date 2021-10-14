@@ -1,0 +1,13 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}Edit Place{% endblock %}
+
+{% block body %}
+    <h1>Edit Place</h1>
+
+    {{ include('catalog/place/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('ADMIN_CATALOG_PLACE_INDEX') }}">back to list</a>
+
+    {{ include('catalog/place/_delete_form.html.twig') }}
+{% endblock %}

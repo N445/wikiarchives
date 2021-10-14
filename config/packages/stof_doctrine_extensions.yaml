@@ -18,3 +18,4 @@ stof_doctrine_extensions:
             loggable: true
             tree: true
             timestampable: true
+            blameable: true

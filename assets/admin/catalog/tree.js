@@ -534,6 +534,8 @@ $(function () {
     })
     ;
 
+    selectNode($('.tree a[data-id]'));
+
     $('body')
         .on('click', '.tree a[data-id]', function () {
             selectNode($(this));
@@ -562,7 +564,13 @@ $(function () {
             })
         ;
     });
+
+    document.addEventListener('FilePond:processfiles', (e) => {
+        directory.open();
+        filepond.removeFiles();
+    });
 });
+
 
 
 function selectNode(element) {

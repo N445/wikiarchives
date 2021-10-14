@@ -2,27 +2,27 @@
 
 namespace App\Form\Catalog;
 
-use App\Entity\Catalog\Picture;
+use App\Entity\Catalog\Place;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PictureType extends AbstractType
+class PlaceType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('name')
-            ->add('imageFile',FileType::class)
-            ->add('catalog')
+            ->add('location')
+            ->add('lat')
+            ->add('lng')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Picture::class,
+            'data_class' => Place::class,
         ]);
     }
 }

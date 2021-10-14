@@ -6,6 +6,7 @@ use App\Entity\Catalog\Picture;
 use App\Form\Catalog\PictureType;
 use App\Repository\Catalog\CatalogRepository;
 use App\Repository\Catalog\PictureRepository;
+use App\Service\Catalog\PictureExifPopulator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -57,6 +58,8 @@ class AjaxPictureController extends AbstractController
             ->setName(pathinfo($filename)['filename'] ?? $filename)
             ->setImageFile($uploadedFile)
             ->setCatalog($catalog);
+
+        PictureExifPopulator::populate($picture);
 
         $this->em->persist($picture);
         $this->em->flush();

@@ -3,6 +3,7 @@
 namespace App\Form\Catalog;
 
 use App\Entity\Catalog\Catalog;
+use App\Entity\Catalog\Place;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -22,7 +23,14 @@ class AjaxCatalogTreeType extends AbstractType
                 'class' => Catalog::class,
                 'required' => false,
                 'choice_label' => 'name',
-            ]);
+            ])
+            ->add('place', EntityType::class, [
+                'label' => 'Zone',
+                'class' => Place::class,
+                'required' => false,
+                'choice_label' => 'name',
+            ])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

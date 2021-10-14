@@ -3,16 +3,24 @@
 namespace App\Entity\Catalog;
 
 use App\Repository\Catalog\PictureRepository;
+use App\Traits\BlameableTrait;
+use App\Traits\TimestampableTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass=PictureRepository::class)
+ * @ORM\Table(name="catalog_picture")
  * @Vich\Uploadable
+ * @Gedmo\Loggable
  */
 class Picture
 {
+    use TimestampableTrait;
+    use BlameableTrait;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -21,11 +29,13 @@ class Picture
     private $id;
 
     /**
+     * @Gedmo\Versioned
      * @ORM\Column(type="string", length=255)
      */
     private $name;
 
     /**
+     * @Gedmo\Versioned
      * @ORM\ManyToOne(targetEntity=Catalog::class, inversedBy="pictures")
      */
     private $catalog;
@@ -46,39 +56,56 @@ class Picture
     private $imageFile;
 
     /**
+     * @Gedmo\Versioned
      * @ORM\Column(type="string")
-     *
      * @var string|null
      */
     private $imageName;
 
     /**
+     * @Gedmo\Versioned
      * @ORM\Column(type="integer")
-     *
      * @var int|null
      */
     private $imageSize;
 
     /**
+     * @Gedmo\Versioned
      * @ORM\Column(type="string")
-     *
      * @var string|null
      */
     private $imageMimeType;
 
     /**
+     * @Gedmo\Versioned
      * @ORM\Column(type="string")
-     *
      * @var string|null
      */
     private $imageOriginalName;
 
     /**
+     * @Gedmo\Versioned
      * @ORM\Column(type="array")
-     *
      * @var array|null
      */
     private $imageDimensions;
+
+    /**
+     * @Gedmo\Versioned
+     * @ORM\ManyToOne(targetEntity=Place::class, inversedBy="pictures")
+     */
+    private $place;
+
+    /**
+     * @Gedmo\Versioned
+     * @ORM\OneToOne(targetEntity=Exif::class, cascade={"persist", "remove"})
+     */
+    private $exif;
+
+    public function __toString()
+    {
+        return $this->getName();
+    }
 
     public function getId(): ?int
     {
@@ -218,6 +245,38 @@ class Picture
     public function setImageDimensions(?array $imageDimensions): Picture
     {
         $this->imageDimensions = $imageDimensions;
+        return $this;
+    }
+
+    public function getPlace(): ?Place
+    {
+        return $this->place;
+    }
+
+    public function getPlaceRecursive(): ?Place
+    {
+        if(!$this->place){
+            return $this->getCatalog() ? $this->getCatalog()->getPlaceRecursive() : null;
+        }
+        return $this->place;
+    }
+
+    public function setPlace(?Place $place): self
+    {
+        $this->place = $place;
+
+        return $this;
+    }
+
+    public function getExif(): ?Exif
+    {
+        return $this->exif;
+    }
+
+    public function setExif(?Exif $exif): self
+    {
+        $this->exif = $exif;
+
         return $this;
     }
 

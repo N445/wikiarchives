@@ -1,0 +1,41 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}Place index{% endblock %}
+
+{% block body %}
+    <h1>Place index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Lat</th>
+                <th>Lng</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for place in places %}
+            <tr>
+                <td>{{ place.id }}</td>
+                <td>{{ place.name }}</td>
+                <td>{{ place.location }}</td>
+                <td>{{ place.lat }}</td>
+                <td>{{ place.lng }}</td>
+                <td>
+                    <a href="{{ path('ADMIN_CATALOG_PLACE_SHOW', {'id': place.id}) }}">show</a>
+                    <a href="{{ path('ADMIN_CATALOG_PLACE_EDIT', {'id': place.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('ADMIN_CATALOG_PLACE_NEW') }}">Create new</a>
+{% endblock %}

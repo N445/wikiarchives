@@ -1,14 +1,49 @@
-<h2>contenu du catalog</h2>
-<div class="row row-cols-5 g-2">
+<h2>Contenu de {{ catalog.name }}</h2>
+{% if catalog.placeRecursive %}
+    <table class="table table-sm table-bordered">
+        <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Location</th>
+            <th>Lat,Lng</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ catalog.placeRecursive.name }}</td>
+            <td>{{ catalog.placeRecursive.location }}</td>
+            <td>{{ catalog.placeRecursive.lat }} ; {{ catalog.placeRecursive.lng }}</td>
+        </tr>
+        </tbody>
+    </table>
+{% endif %}
+
+<table class="table table-sm table-bordered">
+    <thead>
+    <tr>
+        <th></th>
+        <th>Nom</th>
+        <th>Taille</th>
+        <th>Type mime</th>
+        <th>Résolution</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
     {% for picture in catalog.pictures %}
-        <div class="col">
-                <img src="{{ vich_uploader_asset(picture) }}" alt="{{ picture.name }}" class="img-thumbnail rounded">
-                <p>
-                        {{ picture.imageSize|humanFilesize }} <br>
-                        {{ picture.imageMimeType }} <br>
-                        {{ picture.imageOriginalName }} <br>
-                        {{ picture.imageDimensions|join('x') }}
-                </p>
-        </div>
+        <tr>
+            <td><img src="{{ vich_uploader_asset(picture) }}" alt="{{ picture.imageOriginalName }}" width="100"
+                     class="img-fluid rounded"></td>
+            <td>{{ picture.name }}</td>
+            <td>{{ picture.imageSize|humanFilesize }}</td>
+            <td>{{ picture.imageMimeType }}</td>
+            <td>{{ picture.imageDimensions|join('x') }}</td>
+            <td>
+                <a href="{{ path('ADMIN_CATALOG_PICTURE_EDIT',{'id':picture.id}) }}" class="btn btn-sm btn-info">
+                    Modifier
+                </a>
+            </td>
+        </tr>
     {% endfor %}
-</div>
+    </tbody>
+</table>

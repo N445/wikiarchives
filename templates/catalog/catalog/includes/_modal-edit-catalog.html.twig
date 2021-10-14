@@ -1,14 +1,17 @@
 <div class="modal-header">
-    <h5 class="modal-title">Création d'un dossier</h5>
+    <h5 class="modal-title">Modification d'un dossier</h5>
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 {{ form_start(newCatalogForm) }}
 <div class="modal-body">
     {{ form_row(newCatalogForm.name) }}
-    {{ form_row(newCatalogForm.parent) }}
+    {{ form_row(newCatalogForm.place) }}
+    <div class="d-none">
+        {{ form_row(newCatalogForm.parent) }}
+    </div>
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-    <button type="submit" class="btn btn-primary">Ajouter</button>
+    <button type="submit" class="btn btn-primary">Modifier</button>
 </div>
 {{ form_end(newCatalogForm) }}

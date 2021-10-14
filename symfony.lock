@@ -112,6 +112,9 @@
     "laminas/laminas-code": {
         "version": "4.4.3"
     },
+    "miljar/php-exif": {
+        "version": "v0.6.5"
+    },
     "monolog/monolog": {
         "version": "2.3.5"
     },

@@ -12,6 +12,7 @@
         "doctrine/doctrine-migrations-bundle": "^3.1",
         "doctrine/orm": "^2.10",
         "friendsofsymfony/jsrouting-bundle": "^2.7",
+        "miljar/php-exif": "^0.6.5",
         "sensio/framework-extra-bundle": "^6.2",
         "stof/doctrine-extensions-bundle": "^1.6",
         "symfony/asset": "5.3.*",

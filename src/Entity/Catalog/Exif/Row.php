@@ -22,6 +22,11 @@ class Row
     /**
      * @ORM\Column(type="string", length=255)
      */
+    private $type;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
     private $label;
 
     /**
@@ -35,8 +40,9 @@ class Row
      */
     private $exif;
 
-    public function __construct(string $label, string $value)
+    public function __construct(string $type, string $label, string $value)
     {
+        $this->type = $type;
         $this->label = $label;
         $this->value = $value;
     }
@@ -45,6 +51,19 @@ class Row
     {
         return $this->id;
     }
+
+
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    public function setType($type): self
+    {
+        $this->type = $type;
+        return $this;
+    }
+
 
     public function getLabel(): ?string
     {

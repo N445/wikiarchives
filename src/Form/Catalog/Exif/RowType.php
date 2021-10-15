@@ -3,8 +3,10 @@
 namespace App\Form\Catalog\Exif;
 
 use App\Entity\Catalog\Exif\Row;
+use App\Service\Catalog\Row\RowHelper;
 use Doctrine\Common\Util\ClassUtils;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -19,18 +21,23 @@ class RowType extends AbstractType
     {
 
         $builder
-            ->add('label');
+            ->add('label')
+            ->add('type', ChoiceType::class, [
+                'attr' => [
+                    'class' => 'type'
+                ],
+                'choices' => [
+                    'Date' => RowHelper::DATE_TIME,
+                    'Autre' => RowHelper::STRING,
+                ]
+            ]);
 
         $builder->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
 
             $form = $event->getForm();
             /** @var Row $row */
             $row = $event->getData();
-            if ($row) {
-                $this->setType($row, $form);
-            } else {
-                $form->add('value');
-            }
+            $this->setRowType($form, $row);
         });
     }
 
@@ -41,28 +48,32 @@ class RowType extends AbstractType
         ]);
     }
 
-    private function setType(Row $row, $form)
+    public function setRowType($form, ?Row $row = null)
     {
-        $valueUnserialize = $row->getValueUnserialize();
-        if ('object' !== gettype($valueUnserialize)) {
+        if (!$row) {
             $form->add('value', TextType::class, [
+                'attr' => [
+                    'class' => 'value'
+                ],
+            ]);
+            return;
+        }
+
+        if (RowHelper::DATE_TIME === $row->getType()) {
+            $form->add('value', DateType::class, [
+                'attr' => [
+                    'class' => 'value'
+                ],
+                'widget' => 'single_text',
                 'data' => $row->getValueUnserialize()
             ]);
             return;
         }
-
-
-        if (ClassUtils::getClass($valueUnserialize) === \DateTime::class) {
-            $form->add('value', DateType::class, [
-                'data' => $row->getValueUnserialize(),
-                'widget' => 'single_text'
-            ]);
-            return;
-        }
-
         $form->add('value', TextType::class, [
+            'attr' => [
+                'class' => 'value'
+            ],
             'data' => $row->getValueUnserialize()
         ]);
-        return;
     }
 }

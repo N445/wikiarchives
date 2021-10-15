@@ -1,0 +1,9 @@
+<div class="card shadow-sm"">
+    {% if catalog.pictures|length %}
+        <img src="{{ vich_uploader_asset(catalog.pictures|first)|imagine_filter('catalog_card_listing') }}" class="card-img-top" alt="{{ catalog.name }}">
+    {% endif %}
+    <div class="card-body">
+        <h5 class="card-title">{{ catalog.name }} [{{ catalog.pictures|length }}]</h5>
+        <a href="{{ path('CATALOG', {'id': catalog.id}) }}" class="btn btn-primary">Ouvrir</a>
+    </div>
+</div>

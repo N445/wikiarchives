@@ -535,7 +535,18 @@ $(function () {
     })
     ;
 
-    selectNode($('.tree a[data-id]'));
+
+    // selectNode($('.tree a[data-id]'));
+    directory.id = $('[data-current-catalog]').attr('data-current-catalog');
+    filepond.setOptions({
+        server: {
+            process: {
+                url: Routing.generate('AJAX_CATALOG_PICTURE_FILEPOND', {
+                    'directoryId': directory.id,
+                }),
+            },
+        },
+    });
     //
     // directory.id = $('.tree a[data-id]').attr('data-id');
 
@@ -577,15 +588,14 @@ $(function () {
 });
 
 
-function redirect(element){
+function redirect(element) {
     window.location.replace(element.attr('href'));
     return false;
 }
 
 
-
 function selectNode(element) {
-    if(!element.attr('data-id')) {
+    if (!element.attr('data-id')) {
         return false;
     }
 

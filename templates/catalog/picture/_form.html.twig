@@ -1,12 +1,15 @@
 {% macro exifRow(rowForm) %}
     <div class="row align-items-end exif-row">
-        <div class="col-md-5">
+        <div class="col-md">
             {{ form_row(rowForm.label) }}
         </div>
-        <div class="col-md-5">
+        <div class="col-md">
+            {{ form_row(rowForm.type) }}
+        </div>
+        <div class="col-md">
             {{ form_row(rowForm.value) }}
         </div>
-        <div class="col-md-2">
+        <div class="col-md-auto">
             <button type="button" class="btn btn-danger delete-collection-widget mb-3">
                 Supprimer
             </button>

@@ -30,8 +30,19 @@ jQuery(document).ready(function () {
     });
 });
 
-function addDeleteEventForRow(tag) {
+function addTypeEventForRow(tag) {
     tag.find('.delete-collection-widget').on('click', function () {
         tag.remove();
+    })
+}
+
+function addDeleteEventForRow(tag) {
+    tag.find('.type').on('change', function () {
+        if ($(this).val() === 'string') {
+            tag.find('.value').attr('type', 'string');
+        }
+        if ($(this).val() === 'DateTime') {
+            tag.find('.value').attr('type', 'date');
+        }
     })
 }

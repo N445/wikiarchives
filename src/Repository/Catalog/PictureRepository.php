@@ -19,6 +19,19 @@ class PictureRepository extends ServiceEntityRepository
         parent::__construct($registry, Picture::class);
     }
 
+    /**
+     * @param string $query
+     * @return Picture[]
+     */
+    public function search(string $query)
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.name LIKE :query')
+            ->setParameter('query', '%' . $query . '%')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function byId(int $id): ?Picture
     {
         return $this->createQueryBuilder('p')

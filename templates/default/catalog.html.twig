@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row row-cols-auto row-cols-lg-5 g-3 my-3">
+            <div class="col">
+                {% include 'includes/catalog/_catalog-current-card.html.twig' %}
+            </div>
+        </div>
+        <div class="row row-cols-auto row-cols-lg-5 g-3 my-3">
+            {% for child in catalog.children %}
+                <div class="col">
+                    {% include 'includes/catalog/_catalog-card.html.twig' with{catalog:child} %}
+                </div>
+            {% endfor %}
+        </div>
+        <hr>
+        <div class="row row-cols-auto row-cols-lg-5 g-3 my-3">
+            {% for picture in catalog.pictures %}
+                <div class="col">
+                    {% include 'includes/catalog/_picture-card.html.twig' %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

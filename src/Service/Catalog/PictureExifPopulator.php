@@ -6,6 +6,7 @@ namespace App\Service\Catalog;
 
 use App\Entity\Catalog\Exif;
 use App\Entity\Catalog\Picture;
+use App\Service\Catalog\Row\RowHelper;
 use Doctrine\Common\Util\ClassUtils;
 
 class PictureExifPopulator
@@ -24,14 +25,15 @@ class PictureExifPopulator
         // reader with Native adapter
         $reader = \PHPExif\Reader\Reader::factory(\PHPExif\Reader\Reader::TYPE_NATIVE);
 
-        if(!$read = $reader->read($picture->getImageFile()->getRealPath())){
+        if (!$read = $reader->read($picture->getImageFile()->getRealPath())) {
             $picture->setExif($exif);
             return;
         }
 
         $exifData = $read->getData();
+
         foreach ($exifData as $label => $value) {
-            $exif->addRow(new Exif\Row($label, serialize($value)));
+            $exif->addRow(new Exif\Row(RowHelper::getType($value), $label, serialize($value)));
         }
         $picture->setExif($exif);
     }

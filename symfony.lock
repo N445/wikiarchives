@@ -106,11 +106,27 @@
     "gedmo/doctrine-extensions": {
         "version": "v3.1.0"
     },
+    "imagine/imagine": {
+        "version": "1.2.4"
+    },
     "jms/metadata": {
         "version": "2.5.1"
     },
     "laminas/laminas-code": {
         "version": "4.4.3"
+    },
+    "liip/imagine-bundle": {
+        "version": "2.6",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.8",
+            "ref": "ffbb72e74598f04cc7f79f9fc736c77eeb98f569"
+        },
+        "files": [
+            "config/routes/liip_imagine.yaml",
+            "config/packages/liip_imagine.yaml"
+        ]
     },
     "miljar/php-exif": {
         "version": "v0.6.5"
@@ -334,6 +350,9 @@
     },
     "symfony/polyfill-php81": {
         "version": "v1.23.0"
+    },
+    "symfony/process": {
+        "version": "v5.3.7"
     },
     "symfony/property-access": {
         "version": "v5.3.8"

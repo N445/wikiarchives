@@ -20,6 +20,19 @@ class CatalogRepository extends ServiceEntityRepository
     }
 
     /**
+     * @param string $query
+     * @return Catalog[]
+     */
+    public function search(string $query)
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.name LIKE :query')
+            ->setParameter('query', '%' . $query . '%')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
      * @param int $id
      * @return Catalog|null
      * @throws \Doctrine\ORM\NonUniqueResultException
@@ -41,11 +54,9 @@ class CatalogRepository extends ServiceEntityRepository
     public function getRoot()
     {
         $this->getEntityManager()->getConfiguration()->addCustomHydrationMode('tree', 'Gedmo\Tree\Hydrator\ORM\TreeObjectHydrator');
-        return $this->createQueryBuilder('node')
-//            ->addSelect('file', 'laws', 'law_file')
-//            ->leftJoin('node.file', 'file')
-//            ->leftJoin('node.laws', 'laws')
-//            ->leftJoin('laws.file', 'law_file')
+        return $this->createQueryBuilder('c')
+            ->addSelect('pictures')
+            ->leftJoin('c.pictures', 'pictures')
             ->getQuery()
             ->setHint(\Doctrine\ORM\Query::HINT_INCLUDE_META_COLUMNS, true)
             ->getResult('tree');

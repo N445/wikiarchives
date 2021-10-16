@@ -557,7 +557,6 @@ $(function () {
         })
         .on('contextmenu', '.tree a[data-id]', function () {
             selectNode($(this));
-            redirect($(this));
         })
     ;
 

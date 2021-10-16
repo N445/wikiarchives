@@ -1,4 +1,11 @@
 <h2>Contenu de {{ catalog.name }}</h2>
+{% if catalog.imageName %}
+    <img src="{{ vich_uploader_asset(catalog) }}" alt="{{ catalog.name }}" class="img-fluid" width="100px">
+    {% else %}
+    <p>
+        <span class="badge bg-danger">Pas de couverture</span>
+    </p>
+{% endif %}
 {% if catalog.placeRecursive %}
     <table class="table table-sm table-bordered">
         <thead>

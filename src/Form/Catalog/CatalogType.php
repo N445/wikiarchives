@@ -4,6 +4,7 @@ namespace App\Form\Catalog;
 
 use App\Entity\Catalog\Catalog;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,8 +14,10 @@ class CatalogType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('parent')
-        ;
+            ->add('imageFile', FileType::class, [
+                'required' => !$builder->getData()->getImageName(),
+            ])
+            ->add('parent');
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -6,6 +6,7 @@ use App\Entity\Catalog\Catalog;
 use App\Entity\Catalog\Place;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -18,6 +19,10 @@ class AjaxCatalogTreeType extends AbstractType
             ->add('name', TextType::class, [
                 'label' => 'Nom'
             ])
+            ->add('imageFile', FileType::class, [
+                'label' => 'Couverture',
+                'required' => !dump($builder->getData()->getImageName()),
+            ])
             ->add('parent', EntityType::class, [
                 'label' => 'Catalog parent',
                 'class' => Catalog::class,
@@ -29,8 +34,7 @@ class AjaxCatalogTreeType extends AbstractType
                 'class' => Place::class,
                 'required' => false,
                 'choice_label' => 'name',
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

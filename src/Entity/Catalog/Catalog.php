@@ -8,15 +8,18 @@ use App\Traits\TimestampableTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
 use Doctrine\ORM\PersistentCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=CatalogRepository::class)
  * @ORM\Table(name="catalog")
  * @Gedmo\Tree(type="nested")
  * @Gedmo\Loggable
+ * @Vich\Uploadable
  */
 class Catalog
 {
@@ -85,6 +88,20 @@ class Catalog
      * @ORM\ManyToOne(targetEntity=Place::class, inversedBy="catalogs")
      */
     private $place;
+
+    /**
+     * @Vich\UploadableField(mapping="catalog_cover",fileNameProperty="imageName")
+     *
+     * @var File|null
+     */
+    private $imageFile;
+
+    /**
+     * @Gedmo\Versioned
+     * @ORM\Column(type="string")
+     * @var string|null
+     */
+    private $imageName;
 
     public function __construct()
     {
@@ -209,6 +226,42 @@ class Catalog
     {
         $this->place = $place;
 
+        return $this;
+    }
+
+    /**
+     * @param File|UploadedFile|null $imageFile
+     */
+    public function setImageFile(?File $imageFile = null): self
+    {
+        $this->imageFile = $imageFile;
+        if (null !== $imageFile) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+
+        return $this;
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
+    }
+
+    /**
+     * @param string|null $imageName
+     * @return Catalog
+     */
+    public function setImageName(?string $imageName): Catalog
+    {
+        $this->imageName = $imageName;
         return $this;
     }
 }

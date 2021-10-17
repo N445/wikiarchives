@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Entity\User\Info;
+use App\Entity\User\Rights;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -43,6 +45,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="boolean")
      */
     private $isVerified = false;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Info::class, cascade={"persist", "remove"}, fetch="EAGER")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $info;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Rights::class, cascade={"persist", "remove"}, fetch="EAGER")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $rights;
+
+    public function __construct()
+    {
+        $this->info = new Info();
+        $this->rights = new Rights();
+    }
 
     public function getId(): ?int
     {
@@ -100,7 +120,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function addRole(string $role): self
     {
-        if(!in_array($role,$this->roles)){
+        if (!in_array($role, $this->roles)) {
             $this->roles[] = $role;
         }
         return $this;
@@ -149,6 +169,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getInfo(): ?Info
+    {
+        return $this->info;
+    }
+
+    public function setInfo(Info $info): self
+    {
+        $this->info = $info;
+
+        return $this;
+    }
+
+    public function getRights(): ?Rights
+    {
+        return $this->rights;
+    }
+
+    public function setRights(Rights $rights): self
+    {
+        $this->rights = $rights;
 
         return $this;
     }

@@ -6,7 +6,7 @@
         {% include 'includes/catalog/_breadcrumb.html.twig' with {object:picture} %}
         <div class="row">
             <div class="col">
-                <h2>{{ picture.name }}</h2>
+                <h2 class="text-white">{{ picture.name }}</h2>
                 <img src="{{ vich_uploader_asset(picture.file) }}" alt="" class="img-fluid">
             </div>
             <div class="col">

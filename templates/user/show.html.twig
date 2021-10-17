@@ -1,0 +1,80 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}User{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>User</h1>
+
+        <div class="row">
+            <div class="col-md-6">
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <th>Id</th>
+                        <td>{{ user.id }}</td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td>{{ user.email }}</td>
+                    </tr>
+                    <tr>
+                        <th>Roles</th>
+                        <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                    </tr>
+                    <tr>
+                        <th>IsVerified</th>
+                        <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <h2>Info</h2>
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <th>lastname</th>
+                        <td>{{ user.info.lastname }}</td>
+                    </tr>
+                    <tr>
+                        <th>firstname</th>
+                        <td>{{ user.info.firstname }}</td>
+                    </tr>
+                    <tr>
+                        <th>country</th>
+                        <td>{{ user.info.country }}</td>
+                    </tr>
+                    <tr>
+                        <th>city</th>
+                        <td>{{ user.info.city }}</td>
+                    </tr>
+                    <tr>
+                        <th>address</th>
+                        <td>{{ user.info.address }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <h2>Droits</h2>
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <th>Version Creator</th>
+                        <td>{{ user.rights.hasVersionCreator?'Oui':'Non' }}</td>
+                    </tr>
+                    <tr>
+                        <th>Version Creator</th>
+                        <td>{{ user.rights.hasVersionCreator?'Oui':'Non' }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <a href="{{ path('ADMIN_USER_INDEX') }}">back to list</a>
+
+        <a href="{{ path('ADMIN_USER_EDIT', {'id': user.id}) }}">edit</a>
+
+        {{ include('user/_delete_form.html.twig') }}
+    </div>
+{% endblock %}

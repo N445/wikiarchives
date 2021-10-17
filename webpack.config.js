@@ -33,7 +33,13 @@ Encore
 
     .addEntry('admin-picture-exif-collection', './assets/admin/catalog/picture-exif-collection.js')
 
-    .addEntry('catalog-picture-picturechange', './assets/catalog/picture/picturechange.js')
+    .addEntry('wysiwyg-js', './assets/wysiwyg.js')
+
+    .copyFiles({
+        from: 'node_modules/tinymce/skins',
+        to: 'skins/[path]/[name].[ext]'
+    })
+
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     // .enableStimulusBridge('./assets/controllers.json')

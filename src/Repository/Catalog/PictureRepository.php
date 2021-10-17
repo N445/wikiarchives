@@ -1,81 +1,89 @@
 <?php
-
-namespace App\Repository\Catalog;
-
-use App\Entity\Catalog\Picture;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
-
-/**
- * @method Picture|null find($id, $lockMode = null, $lockVersion = null)
- * @method Picture|null findOneBy(array $criteria, array $orderBy = null)
- * @method Picture[]    findAll()
- * @method Picture[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
- */
-class PictureRepository extends ServiceEntityRepository
-{
-    public function __construct(ManagerRegistry $registry)
-    {
-        parent::__construct($registry, Picture::class);
-    }
-
+    
+    namespace App\Repository\Catalog;
+    
+    use App\Entity\Catalog\Picture;
+    use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+    use Doctrine\Persistence\ManagerRegistry;
+    
     /**
-     * @param string $query
-     * @return Picture[]
+     * @method Picture|null find($id, $lockMode = null, $lockVersion = null)
+     * @method Picture|null findOneBy(array $criteria, array $orderBy = null)
+     * @method Picture[]    findAll()
+     * @method Picture[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
      */
-    public function search(string $query)
+    class PictureRepository extends ServiceEntityRepository
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.name LIKE :query')
-            ->setParameter('query', '%' . $query . '%')
-            ->getQuery()
-            ->getResult();
+        public function __construct(ManagerRegistry $registry)
+        {
+            parent::__construct($registry, Picture::class);
+        }
+        
+        /**
+         * @param string|null $query
+         * @return Picture[]
+         */
+        public function search(?string $query)
+        {
+            $qb = $this->createQueryBuilder('c');
+            
+            
+            if ($query) {
+                $qb->andWhere('c.name LIKE :query')
+                   ->setParameter('query', '%' . $query . '%')
+                ;
+            }
+            
+            return $qb->getQuery()
+                      ->getResult()
+            ;
+        }
+        
+        public function byId(int $id): ?Picture
+        {
+            return $this->createQueryBuilder('p')
+                        ->addSelect('file', 'catalog', 'place', 'validatedVersion', 'versions', 'exif', 'versions_exif')
+                        ->leftJoin('p.file', 'file')
+                        ->leftJoin('p.catalog', 'catalog')
+                        ->leftJoin('p.place', 'place')
+                        ->leftJoin('p.validatedVersion', 'validatedVersion')
+                        ->leftJoin('p.versions', 'versions')
+                        ->leftJoin('validatedVersion.exif', 'exif')
+                        ->leftJoin('versions.exif', 'versions_exif')
+                        ->orderBy('versions.versionNumber', 'DESC')
+                        ->andWhere('p.id = :id')
+                        ->setParameter('id', $id)
+                        ->getQuery()
+                        ->getOneOrNullResult()
+            ;
+        }
+        
+        // /**
+        //  * @return Picture[] Returns an array of Picture objects
+        //  */
+        /*
+        public function findByExampleField($value)
+        {
+            return $this->createQueryBuilder('p')
+                ->andWhere('p.exampleField = :val')
+                ->setParameter('val', $value)
+                ->orderBy('p.id', 'ASC')
+                ->setMaxResults(10)
+                ->getQuery()
+                ->getResult()
+            ;
+        }
+        */
+        
+        /*
+        public function findOneBySomeField($value): ?Picture
+        {
+            return $this->createQueryBuilder('p')
+                ->andWhere('p.exampleField = :val')
+                ->setParameter('val', $value)
+                ->getQuery()
+                ->getOneOrNullResult()
+            ;
+        }
+        */
     }
-
-    public function byId(int $id): ?Picture
-    {
-        return $this->createQueryBuilder('p')
-            ->addSelect('file', 'catalog', 'place', 'validatedVersion', 'versions', 'exif', 'versions_exif')
-            ->leftJoin('p.file', 'file')
-            ->leftJoin('p.catalog', 'catalog')
-            ->leftJoin('p.place', 'place')
-            ->leftJoin('p.validatedVersion', 'validatedVersion')
-            ->leftJoin('p.versions', 'versions')
-            ->leftJoin('validatedVersion.exif', 'exif')
-            ->leftJoin('versions.exif', 'versions_exif')
-            ->orderBy('versions.versionNumber', 'DESC')
-            ->andWhere('p.id = :id')
-            ->setParameter('id', $id)
-            ->getQuery()
-            ->getOneOrNullResult();
-    }
-
-    // /**
-    //  * @return Picture[] Returns an array of Picture objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Picture
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
-}

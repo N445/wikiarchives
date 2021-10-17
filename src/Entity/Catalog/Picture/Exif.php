@@ -429,6 +429,10 @@ class Exif
         }
 
         $exposureParts = explode('/', $this->exposure);
+        
+        if(0 === (int)end($exposureParts)){
+            return null;
+        }
 
         return (int)reset($exposureParts) / (int)end($exposureParts);
     }

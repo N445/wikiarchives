@@ -5,7 +5,7 @@
 {# </div> #}
 {# </div> #}
 
-<div class="picture-card">
+<div class="picture-card rounded">
     <a href="{{ path('PICTURE', {'catalogId':picture.catalog.id,'id': picture.id}) }}" title="{{ picture.name }}">
         <img src="{{ vich_uploader_asset(picture.file)|imagine_filter('picture_card_listing') }}"
              class="img-fluid" alt="{{ picture.name }}">

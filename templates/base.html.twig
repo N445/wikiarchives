@@ -13,17 +13,17 @@
         {# {{ encore_entry_link_tags('app') }} #}
     {% endblock %}
 
-    {% block javascripts %}
-        {# {{ encore_entry_script_tags('app') }} #}
-    {% endblock %}
+
 </head>
 <body>
 {% include 'includes/flash-message.html.twig' %}
 {% include 'includes/navigation.html.twig' %}
 
-
+{% block body %}{% endblock %}
 {{ encore_entry_script_tags('globalsjs') }}
 {{ encore_entry_script_tags('mainjs') }}
-{% block body %}{% endblock %}
+{% block javascripts %}
+    {# {{ encore_entry_script_tags('app') }} #}
+{% endblock %}
 </body>
 </html>

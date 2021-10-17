@@ -33,6 +33,8 @@ Encore
 
     .addEntry('admin-picture-exif-collection', './assets/admin/catalog/picture-exif-collection.js')
 
+    .addEntry('catalog-picture-picturechange', './assets/catalog/picture/picturechange.js')
+
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     // .enableStimulusBridge('./assets/controllers.json')
 

@@ -5,6 +5,7 @@ namespace App\Controller\Catalog;
 use App\Entity\Catalog\Picture;
 use App\Form\Catalog\PictureType;
 use App\Repository\Catalog\PictureRepository;
+use App\Service\Catalog\PictureContentPopulator;
 use App\Service\Catalog\PictureExifPopulator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,6 +43,7 @@ class PictureController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             PictureExifPopulator::populate($picture);
+            PictureContentPopulator::setContent($picture);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($picture);
@@ -78,6 +80,7 @@ class PictureController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             PictureExifPopulator::populate($picture);
+            PictureContentPopulator::setContent($picture);
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('ADMIN_CATALOG_PICTURE_INDEX', [], Response::HTTP_SEE_OTHER);

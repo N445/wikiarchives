@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repository\Catalog;
+namespace App\Repository\Catalog\Picture;
 
-use App\Entity\Catalog\Exif;
+use App\Entity\Catalog\Picture\Exif;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

@@ -4,10 +4,10 @@
 namespace App\Service\Catalog;
 
 
-use App\Entity\Catalog\Exif;
+use App\Entity\Catalog\Picture\Exif;
 use App\Entity\Catalog\Picture;
-use App\Service\Catalog\Row\RowHelper;
 use Doctrine\Common\Util\ClassUtils;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class PictureExifPopulator
 {
@@ -20,8 +20,6 @@ class PictureExifPopulator
             $exif = new Exif();
         }
 
-        $exif->clearRows();
-
         // reader with Native adapter
         $reader = \PHPExif\Reader\Reader::factory(\PHPExif\Reader\Reader::TYPE_NATIVE);
 
@@ -30,21 +28,23 @@ class PictureExifPopulator
             return;
         }
 
-        $exifData = $read->getData();
+        $propertyAccessor = PropertyAccess::createPropertyAccessor();
 
+        $exifData = $read->getData();
         foreach ($exifData as $label => $value) {
-            $exif->addRow(new Exif\Row(RowHelper::getType($value), $label, serialize($value)));
+            if ($propertyAccessor->isWritable($exif, $label)) {
+                $propertyAccessor->setValue($exif, $label, self::getFormatedValue($label, $value));
+            }
         }
+
         $picture->setExif($exif);
     }
 
-    private static function getValueType($value)
+    private static function getFormatedValue($label, $value)
     {
-        return serialize($value);
-        $type = gettype($value);
-        if ("object" === $type) {
-            return ClassUtils::getClass($value);
+        if ('gps' === strtolower($label) && !is_array($value)) {
+            $value = explode(',', $value);
         }
-        return $type;
+        return $value;
     }
 }

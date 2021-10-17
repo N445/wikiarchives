@@ -1,0 +1,167 @@
+<h2>Exif</h2>
+<table class="table table-sm table-bordered">
+    <tbody>
+    {% if picture.exif.title %}
+        <tr>
+            <th>Title</th>
+            <td>{{ picture.exif.title }}</td>
+        </tr>
+    {% endif %}
+    {% if picture.exif.author %}
+        <tr>
+            <th>Author</th>
+            <td>{{ picture.exif.author }}</td>
+        </tr>
+    {% endif %}
+    {% if picture.exif.camera %}
+        <tr>
+            <th>Camera</th>
+            <td>{{ picture.exif.camera }}</td>
+        </tr>
+    {% endif %}
+   {# {% if picture.exif.caption %}
+        <tr>
+            <th>Caption</th>
+            <td>{{ picture.exif.caption|raw }}</td>
+        </tr>
+    {% endif %}#}
+ {#   {% if picture.exif.copyright %}
+        <tr>
+            <th>Copyright</th>
+            <td>{{ picture.exif.copyright }}</td>
+        </tr>
+    {% endif %}#}
+    {% if picture.exif.creationdate %}
+        <tr>
+            <th>Creation date</th>
+            <td>{{ picture.exif.creationdate|date('Y-m-d H:i:s') }}</td>
+        </tr>
+    {% endif %}
+    {% if picture.exif.credit %}
+        <tr>
+            <th>Credit</th>
+            <td>{{ picture.exif.credit }}</td>
+        </tr>
+    {% endif %}
+    {% if picture.exif.aperture %}
+        <tr>
+            <th>Aperture</th>
+            <td>{{ picture.exif.aperture }}</td>
+        </tr>
+    {% endif %}
+    {% if picture.exif.exposure %}
+        <tr>
+            <th>Exposure</th>
+            <td>{{ picture.exif.exposure }}</td>
+        </tr>
+    {% endif %}
+    {% if picture.exif.exposure %}
+        <tr>
+            <th>Exposure ms</th>
+            <td>{{ picture.exif.exposureMilliseconds }}</td>
+        </tr>
+    {% endif %}
+    {% if picture.exif.focalLength %}
+        <tr>
+            <th>Focal Length</th>
+            <td>{{ picture.exif.focalLength }}</td>
+        </tr>
+    {% endif %}
+    {% if picture.exif.focalDistance %}
+        <tr>
+            <th>Focal Distance</th>
+            <td>{{ picture.exif.focalDistance }}</td>
+        </tr>
+    {% endif %}
+    {% if picture.exif.iso %}
+        <tr>
+            <th>Iso</th>
+            <td>{{ picture.exif.iso }}</td>
+        </tr>
+    {% endif %}
+    {% if picture.exif.colorSpace %}
+        <tr>
+            <th>ColorSpace</th>
+            <td>{{ picture.exif.colorSpace }}</td>
+        </tr>
+    {% endif %}
+    {% if picture.exif.fileSize %}
+        <tr>
+            <th>File Size</th>
+            <td>{{ picture.exif.fileSize|humanFilesize }}</td>
+        </tr>
+    {% endif %}
+    {% if picture.exif.height %}
+        <tr>
+            <th>Height</th>
+            <td>{{ picture.exif.height }}</td>
+        </tr>
+    {% endif %}
+    {% if picture.exif.width %}
+        <tr>
+            <th>Width</th>
+            <td>{{ picture.exif.width }}</td>
+        </tr>
+    {% endif %}
+    {% if picture.exif.horizontalResolution %}
+        <tr>
+            <th>Horizontal Resolution</th>
+            <td>{{ picture.exif.horizontalResolution }}</td>
+        </tr>
+    {% endif %}
+    {% if picture.exif.verticalResolution %}
+        <tr>
+            <th>Vertical Resolution</th>
+            <td>{{ picture.exif.verticalResolution }}</td>
+        </tr>
+    {% endif %}
+    {% if picture.exif.headline %}
+        <tr>
+            <th>Headline</th>
+            <td>{{ picture.exif.headline }}</td>
+        </tr>
+    {% endif %}
+    {% if picture.exif.jobTitle %}
+        <tr>
+            <th>JobTitle</th>
+            <td>{{ picture.exif.jobTitle }}</td>
+        </tr>
+    {% endif %}
+    {% if picture.exif.keywords %}
+        <tr>
+            <th>Keywords</th>
+            <td>{{ picture.exif.keywords|join(', ') }}</td>
+        </tr>
+    {% endif %}
+    {% if picture.exif.mimeType %}
+        <tr>
+            <th>Mime Type</th>
+            <td>{{ picture.exif.mimeType }}</td>
+        </tr>
+    {% endif %}
+    {% if picture.exif.orientation %}
+        <tr>
+            <th>Orientation</th>
+            <td>{{ picture.exif.orientation }}</td>
+        </tr>
+    {% endif %}
+    {% if picture.exif.software %}
+        <tr>
+            <th>Software</th>
+            <td>{{ picture.exif.software }}</td>
+        </tr>
+    {% endif %}
+    {% if picture.exif.source %}
+        <tr>
+            <th>Source</th>
+            <td>{{ picture.exif.source }}</td>
+        </tr>
+    {% endif %}
+    {% if picture.exif.gps %}
+        <tr>
+            <th>GPS</th>
+            <td>{{ picture.exif.gps|join(', ') }}</td>
+        </tr>
+    {% endif %}
+    </tbody>
+</table>

@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Catalog\Picture\PictureChange;
+use App\Form\Catalog\Picture\PictureChangeType;
 use App\Repository\Catalog\CatalogRepository;
 use App\Repository\Catalog\PictureRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -64,6 +66,26 @@ class DefaultController extends AbstractController
         }
         return $this->render('default/picture.html.twig', [
             'picture' => $picture,
+        ]);
+    }
+
+    #[Route('/catalog/{catalogId}/picture/{id}/change', name: 'PICTURE_CHANGE')]
+    public function pictureChange(?int $catalogId = null, ?int $id = null): Response
+    {
+        if (!$id) {
+            return $this->redirectToRoute('HOMEPAGE');
+        }
+        if (!$picture = $this->pictureRepository->byId($id)) {
+            return $this->redirectToRoute('HOMEPAGE');
+        }
+
+        $pictureChange = (new PictureChange())->setPicture($picture);
+        $pictureChangeForm = $this->createForm(PictureChangeType::class, $pictureChange);
+
+        return $this->render('default/change.html.twig', [
+            'picture' => $picture,
+            'pictureChange' => $pictureChange,
+            'pictureChangeForm' => $pictureChangeForm->createView(),
         ]);
     }
 }

@@ -1,44 +1,13 @@
-{% macro exifRow(rowForm) %}
-    <div class="row align-items-end exif-row">
-        <div class="col-md">
-            {{ form_row(rowForm.label) }}
-        </div>
-        <div class="col-md">
-            {{ form_row(rowForm.type) }}
-        </div>
-        <div class="col-md">
-            {{ form_row(rowForm.value) }}
-        </div>
-        <div class="col-md-auto">
-            <button type="button" class="btn btn-danger delete-collection-widget mb-3">
-                Supprimer
-            </button>
-        </div>
-    </div>
-{% endmacro %}
-
 {{ form_start(form) }}
 <div class="row">
     <div class="col-md-6">
         {{ form_row(form.name) }}
+        {{ form_row(form.description) }}
         {{ form_row(form.imageFile) }}
         {{ form_row(form.catalog) }}
     </div>
     <div class="col-md-6">
-        {{ form_label(form.exif) }}
-        {{ form_errors(form.exif) }}
-        <div id="exif-rows-list"
-             data-prototype="{{ _self.exifRow(form.exif.rows.vars.prototype)|e }}"
-             data-widget-tags="{{ '<div></div>'|e }}"
-             data-widget-counter="{{ form.exif.rows|length }}">
-            {% for rowField in form.exif.rows %}
-                {{ _self.exifRow(rowField) }}
-            {% endfor %}
-        </div>
-        <button type="button" class="btn btn-primary add-another-collection-widget"
-                data-list-selector="#exif-rows-list">
-            Ajouter une nouvelle ligne
-        </button>
+        {{ form_row(form.exif) }}
     </div>
 </div>
 

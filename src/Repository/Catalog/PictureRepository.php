@@ -35,11 +35,10 @@ class PictureRepository extends ServiceEntityRepository
     public function byId(int $id): ?Picture
     {
         return $this->createQueryBuilder('p')
-            ->addSelect('catalog', 'place', 'exif', 'exif_rows')
+            ->addSelect('catalog', 'place', 'exif')
             ->leftJoin('p.catalog', 'catalog')
             ->leftJoin('p.place', 'place')
             ->leftJoin('p.exif', 'exif')
-            ->leftJoin('exif.rows', 'exif_rows')
             ->andWhere('p.id = :id')
             ->setParameter('id', $id)
             ->getQuery()

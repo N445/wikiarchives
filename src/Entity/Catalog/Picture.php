@@ -2,9 +2,12 @@
 
 namespace App\Entity\Catalog;
 
+use App\Entity\Catalog\Picture\PictureChange;
 use App\Repository\Catalog\PictureRepository;
 use App\Traits\BlameableTrait;
 use App\Traits\TimestampableTrait;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -100,6 +103,22 @@ class Picture
      * @ORM\OneToOne(targetEntity=Exif::class, cascade={"persist", "remove"})
      */
     private $exif;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $description;
+
+    /**
+     * @ORM\OneToMany(targetEntity=PictureChange::class, mappedBy="picture", orphanRemoval=true)
+     */
+    private $pictureChanges;
+
+    public function __construct()
+    {
+        $this->pictureChanges = new ArrayCollection();
+        $this->exif = new Exif();
+    }
 
     public function __toString()
     {
@@ -245,7 +264,7 @@ class Picture
 
     public function getPlaceRecursive(): ?Place
     {
-        if(!$this->place){
+        if (!$this->place) {
             return $this->getCatalog() ? $this->getCatalog()->getPlaceRecursive() : null;
         }
         return $this->place;
@@ -270,6 +289,47 @@ class Picture
         return $this;
     }
 
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PictureChange[]
+     */
+    public function getPictureChanges(): Collection
+    {
+        return $this->pictureChanges;
+    }
+
+    public function addPictureChange(PictureChange $pictureChange): self
+    {
+        if (!$this->pictureChanges->contains($pictureChange)) {
+            $this->pictureChanges[] = $pictureChange;
+            $pictureChange->setPicture($this);
+        }
+
+        return $this;
+    }
+
+    public function removePictureChange(PictureChange $pictureChange): self
+    {
+        if ($this->pictureChanges->removeElement($pictureChange)) {
+            // set the owning side to null (unless already changed)
+            if ($pictureChange->getPicture() === $this) {
+                $pictureChange->setPicture(null);
+            }
+        }
+
+        return $this;
+    }
 
 
 }

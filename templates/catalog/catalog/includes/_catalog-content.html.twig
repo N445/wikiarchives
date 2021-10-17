@@ -1,7 +1,7 @@
 <h2>Contenu de {{ catalog.name }}</h2>
 {% if catalog.imageName %}
     <img src="{{ vich_uploader_asset(catalog) }}" alt="{{ catalog.name }}" class="img-fluid" width="100px">
-    {% else %}
+{% else %}
     <p>
         <span class="badge bg-danger">Pas de couverture</span>
     </p>
@@ -33,6 +33,7 @@
         <th>Taille</th>
         <th>Type mime</th>
         <th>Résolution</th>
+        <th>Exif</th>
         <th></th>
     </tr>
     </thead>
@@ -45,6 +46,18 @@
             <td>{{ picture.imageSize|humanFilesize }}</td>
             <td>{{ picture.imageMimeType }}</td>
             <td>{{ picture.imageDimensions|join('x') }}</td>
+            <td>
+                {% if picture.exif.isVerified %}
+                    <span class="badge bg-success">Vérifié</span>
+                {% else %}
+                    <span class="badge bg-danger">Non vérifié</span>
+                {% endif %}
+                {% if picture.exif.isCompleted %}
+                    <span class="badge bg-success">Complet</span>
+                {% else %}
+                    <span class="badge bg-danger">Non Complet</span>
+                {% endif %}
+            </td>
             <td>
                 <a href="{{ path('ADMIN_CATALOG_PICTURE_EDIT',{'id':picture.id}) }}" class="btn btn-sm btn-info">
                     Modifier

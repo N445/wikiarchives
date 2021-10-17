@@ -40,8 +40,12 @@ class CatalogFixtures extends Fixture implements DependentFixtureInterface
                 $catalog->setPlace($this->getReference(sprintf(PlaceFixtures::REFERENCE, rand(1, PlaceFixtures::LOOP))));
             }
 
-            if ($faker->boolean(90) && count($this->catalogs) > 0) {
+            if (count($this->catalogs) > 0) {
                 $catalog->setParent($faker->randomElement($this->catalogs));
+            }
+
+            if ($faker->boolean(10)) {
+                $catalog->setParent(null);
             }
 
             $this->catalogs[] = $catalog;

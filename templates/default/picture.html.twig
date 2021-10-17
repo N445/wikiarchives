@@ -1,7 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {% include 'includes/catalog/_catalog-banner.html.twig' with{catalog:picture.catalog} %}
     <div class="container-fluid">
+        {% include 'includes/catalog/_breadcrumb.html.twig' with {object:picture} %}
         <div class="row">
             <div class="col">
                 <h2>{{ picture.name }}</h2>

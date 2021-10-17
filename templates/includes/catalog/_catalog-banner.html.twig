@@ -1,0 +1,22 @@
+<div class="catalog-banner">
+    {% if catalog.imageName %}
+        {% set catalogPath = vich_uploader_asset(catalog)  %}
+    {% elseif catalog.pictures|length %}
+        {% set catalogPath = vich_uploader_asset(catalog.pictures|first)  %}
+    {% endif %}
+    <img src="{{ catalogPath|imagine_filter('catalog_banner') }}" alt="" class="img-fluid">
+    <div class="content">
+        <div class="container">
+            <h1 class="catalog-name">{{ catalog.name }}</h1>
+            {% if catalog.parent %}
+                <a href="{{ path('CATALOG', {'id': catalog.parent.id}) }}" class="btn btn-primary">
+                    Remonter d'un dossier
+                </a>
+            {% else %}
+                <a href="{{ path('HOMEPAGE') }}" class="btn btn-primary">
+                    Remonter d'un dossier
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</div>

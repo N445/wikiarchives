@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Form\Catalog\Picture\VersionType;
 use App\Repository\Catalog\CatalogRepository;
 use App\Repository\Catalog\PictureRepository;
+use App\Service\Breadcrumb\BreadcrumbCreator;
 use App\Service\Catalog\PictureVersionCloner;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,11 +17,17 @@ class DefaultController extends AbstractController
 {
     private CatalogRepository $catalogRepository;
     private PictureRepository $pictureRepository;
+    private BreadcrumbCreator $breadcrumbCreator;
 
-    public function __construct(CatalogRepository $catalogRepository, PictureRepository $pictureRepository)
+    public function __construct(
+        CatalogRepository $catalogRepository,
+        PictureRepository $pictureRepository,
+        BreadcrumbCreator $breadcrumbCreator
+    )
     {
         $this->catalogRepository = $catalogRepository;
         $this->pictureRepository = $pictureRepository;
+        $this->breadcrumbCreator = $breadcrumbCreator;
     }
 
     #[Route('/', name: 'HOMEPAGE')]
@@ -65,6 +72,7 @@ class DefaultController extends AbstractController
         if (!$picture = $this->pictureRepository->byId($id)) {
             return $this->redirectToRoute('HOMEPAGE');
         }
+
         return $this->render('default/picture.html.twig', [
             'picture' => $picture,
         ]);

@@ -1,4 +1,4 @@
-<div class="card shadow-sm">
+<div class="card shadow-sm h-100">
     {% if catalog.imageName %}
         {% set catalogPath = vich_uploader_asset(catalog) %}
     {% elseif catalog.pictures|length %}
@@ -8,7 +8,9 @@
          alt="{{ catalog.name }}">
 
     <div class="card-body">
-        <h5 class="card-title">{{ catalog.name }} [{{ catalog.pictures|length }}]</h5>
-        <a href="{{ path('CATALOG', {'id': catalog.id}) }}" class="btn btn-primary">Ouvrir</a>
+        <div class="d-flex flex-column justify-content-between h-100">
+            <p class="card-title">{{ catalog.name }} [{{ catalog.pictures|length }}]</p>
+            <a href="{{ path('CATALOG', {'id': catalog.id}) }}" class="btn btn-sm w-100 btn-primary">Ouvrir</a>
+        </div>
     </div>
 </div>

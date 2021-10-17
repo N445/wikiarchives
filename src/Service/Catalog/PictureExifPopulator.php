@@ -6,7 +6,6 @@ namespace App\Service\Catalog;
 
 use App\Entity\Catalog\Picture\Exif;
 use App\Entity\Catalog\Picture;
-use Doctrine\Common\Util\ClassUtils;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class PictureExifPopulator

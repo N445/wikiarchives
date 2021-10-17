@@ -3,8 +3,6 @@
 namespace App\Entity\Catalog\Picture;
 
 use App\Repository\Catalog\Picture\ExifRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

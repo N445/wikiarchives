@@ -2,6 +2,7 @@
 
 namespace App\Entity\Catalog;
 
+use App\Entity\Catalog\Picture\Exif;
 use App\Entity\Catalog\Picture\PictureChange;
 use App\Repository\Catalog\PictureRepository;
 use App\Traits\BlameableTrait;

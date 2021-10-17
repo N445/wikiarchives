@@ -32,6 +32,12 @@ class Picture
 
     /**
      * @Gedmo\Versioned
+     * @ORM\Column(type="boolean")
+     */
+    private $enabled = true;
+
+    /**
+     * @Gedmo\Versioned
      * @ORM\ManyToOne(targetEntity=Catalog::class, inversedBy="pictures")
      */
     private $catalog;
@@ -74,19 +80,37 @@ class Picture
         return $this->id;
     }
 
+    /**
+     * @return bool
+     */
+    public function isEnabled(): bool
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * @param bool $enabled
+     * @return Picture
+     */
+    public function setEnabled(bool $enabled): Picture
+    {
+        $this->enabled = $enabled;
+        return $this;
+    }
+
     public function getName()
     {
-        return $this->getValidatedVersion() ? $this->getValidatedVersion()->getName() : null;
+        return $this->getValidatedVersion()?->getName();
     }
 
     public function getDescription()
     {
-        return $this->getValidatedVersion() ? $this->getValidatedVersion()->getDescription() : null;
+        return $this->getValidatedVersion()?->getDescription();
     }
 
     public function getExif()
     {
-        return $this->getValidatedVersion() ? $this->getValidatedVersion()->getExif() : null;
+        return $this->getValidatedVersion()?->getExif();
     }
 
     public function getCatalog(): ?Catalog

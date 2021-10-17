@@ -40,6 +40,12 @@ class Catalog
     private $name;
 
     /**
+     * @Gedmo\Versioned
+     * @ORM\Column(type="boolean")
+     */
+    private $enabled = true;
+
+    /**
      * @Gedmo\TreeLeft
      * @ORM\Column(name="lft", type="integer")
      */
@@ -128,6 +134,24 @@ class Catalog
     {
         $this->name = $name;
 
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEnabled(): bool
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * @param bool $enabled
+     * @return Catalog
+     */
+    public function setEnabled(bool $enabled): Catalog
+    {
+        $this->enabled = $enabled;
         return $this;
     }
 

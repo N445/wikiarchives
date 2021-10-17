@@ -2,10 +2,11 @@
 
 namespace App\Controller;
 
-use App\Entity\Catalog\Picture\PictureChange;
-use App\Form\Catalog\Picture\PictureChangeType;
+
+use App\Form\Catalog\Picture\VersionType;
 use App\Repository\Catalog\CatalogRepository;
 use App\Repository\Catalog\PictureRepository;
+use App\Service\Catalog\PictureVersionCloner;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -70,8 +71,12 @@ class DefaultController extends AbstractController
     }
 
     #[Route('/catalog/{catalogId}/picture/{id}/change', name: 'PICTURE_CHANGE')]
-    public function pictureChange(?int $catalogId = null, ?int $id = null): Response
+    public function pictureChange(?int $catalogId = null, ?int $id = null, Request $request): Response
     {
+        if (!$this->getUser()) {
+            $this->addFlash('info', 'You must be connected to propose a new version');
+            return $this->redirectToRoute('APP_LOGIN');
+        }
         if (!$id) {
             return $this->redirectToRoute('HOMEPAGE');
         }
@@ -79,13 +84,25 @@ class DefaultController extends AbstractController
             return $this->redirectToRoute('HOMEPAGE');
         }
 
-        $pictureChange = (new PictureChange())->setPicture($picture);
-        $pictureChangeForm = $this->createForm(PictureChangeType::class, $pictureChange);
+        $newVersion = PictureVersionCloner::cloneVersion($picture);
+
+        $form = $this->createForm(VersionType::class, $newVersion);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $picture->addVersion($newVersion);
+            $em->flush();
+            $this->addFlash('success', 'Thanks for your participation');
+            return $this->redirectToRoute('PICTURE', [
+                'catalogId' => $picture->getCatalog()->getId(),
+                'id' => $picture->getId(),
+            ]);
+        }
 
         return $this->render('default/change.html.twig', [
             'picture' => $picture,
-            'pictureChange' => $pictureChange,
-            'pictureChangeForm' => $pictureChangeForm->createView(),
+            'newVersion' => $newVersion,
+            'form' => $form->createView(),
         ]);
     }
 }

@@ -4,6 +4,8 @@ namespace App\Form\Catalog;
 
 use App\Entity\Catalog\Picture;
 use App\Form\Catalog\Picture\ExifType;
+use App\Form\Catalog\Picture\PictureFileType;
+use App\Form\Catalog\Picture\VersionType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -15,16 +17,13 @@ class PictureType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        dump($builder->getData());
         $builder
-            ->add('name', TextType::class, [
-                'required' => false
+            ->add('validatedVersion', VersionType::class)
+            ->add('file', PictureFileType::class,[
+                'data'=>   $builder->getData()->getfile()
             ])
-            ->add('description', TextareaType::class, [
-                'required' => false
-            ])
-            ->add('imageFile', FileType::class)
-            ->add('catalog')
-            ->add('exif', ExifType::class);
+            ->add('catalog');
     }
 
     public function configureOptions(OptionsResolver $resolver): void

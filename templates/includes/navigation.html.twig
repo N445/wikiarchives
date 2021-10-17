@@ -24,27 +24,22 @@
                         <button type="button" class="btn btn-outline-primary">{{ app.user.userIdentifier }}</button>
                         <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                            <span class="visually-hidden">Toggle Dropdown</span>
+                            <span class="visually-hidden">Dropdown</span>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="{{ path('APP_LOGOUT') }}">Déconnexion</a></li>
+                            <li><a class="dropdown-item" href="{{ path('APP_LOGOUT') }}">Logout</a></li>
                         </ul>
                     </div>
 
                 {% else %}
                     <div class="btn-group">
-                        <a href="{{ path('APP_LOGIN') }}" type="button" class="btn btn-outline-primary">Connexion</a>
+                        <a href="{{ path('APP_LOGIN') }}" type="button" class="btn btn-outline-primary">Login</a>
                         <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
                                 data-bs-toggle="dropdown" aria-expanded="false">
                             <span class="visually-hidden">Toggle Dropdown</span>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="{{ path('APP_REGISTER') }}">S'inscrire</a></li>
+                            <li><a class="dropdown-item" href="{{ path('APP_REGISTER') }}">Sign up</a></li>
                         </ul>
                     </div>
                 {% endif %}

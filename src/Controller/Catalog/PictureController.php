@@ -7,6 +7,8 @@ use App\Form\Catalog\PictureType;
 use App\Repository\Catalog\PictureRepository;
 use App\Service\Catalog\PictureContentPopulator;
 use App\Service\Catalog\PictureExifPopulator;
+use App\Service\Catalog\PictureRemover;
+use App\Service\Catalog\PictureVersionHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,7 +35,7 @@ class PictureController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'ADMIN_CATALOG_PICTURE_NEW', methods: ['GET','POST'])]
+    #[Route('/new', name: 'ADMIN_CATALOG_PICTURE_NEW', methods: ['GET', 'POST'])]
     public function new(Request $request): Response
     {
         $picture = new Picture();
@@ -44,6 +46,8 @@ class PictureController extends AbstractController
 
             PictureExifPopulator::populate($picture);
             PictureContentPopulator::setContent($picture);
+
+            $picture->getValidatedVersion()->setStatus(PictureVersionHelper::STATUS_ACCEPTED);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($picture);
@@ -61,7 +65,7 @@ class PictureController extends AbstractController
     #[Route('/{id}', name: 'ADMIN_CATALOG_PICTURE_SHOW', methods: ['GET'])]
     public function show(int $id): Response
     {
-        if(!$picture = $this->pictureRepository->byId($id)){
+        if (!$picture = $this->pictureRepository->byId($id)) {
             return $this->redirectToRoute('ADMIN_CATALOG_PICTURE_INDEX');
         }
         return $this->render('catalog/picture/show.html.twig', [
@@ -69,10 +73,10 @@ class PictureController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'ADMIN_CATALOG_PICTURE_EDIT', methods: ['GET','POST'])]
+    #[Route('/{id}/edit', name: 'ADMIN_CATALOG_PICTURE_EDIT', methods: ['GET', 'POST'])]
     public function edit(Request $request, int $id): Response
     {
-        if(!$picture = $this->pictureRepository->byId($id)){
+        if (!$picture = $this->pictureRepository->byId($id)) {
             return $this->redirectToRoute('ADMIN_CATALOG_PICTURE_INDEX');
         }
         $form = $this->createForm(PictureType::class, $picture);
@@ -93,15 +97,17 @@ class PictureController extends AbstractController
     }
 
     #[Route('/{id}', name: 'ADMIN_CATALOG_PICTURE_DELETE', methods: ['POST'])]
-    public function delete(Request $request, int $id): Response
+    public function delete(Request $request, int $id, PictureRemover $pictureRemover): Response
     {
-        if(!$picture = $this->pictureRepository->byId($id)){
+        if (!$picture = $this->pictureRepository->byId($id)) {
             return $this->redirectToRoute('ADMIN_CATALOG_PICTURE_INDEX');
         }
+        dump($picture);
         if ($this->isCsrfTokenValid('delete' . $picture->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($picture);
-            $entityManager->flush();
+//            $entityManager = $this->getDoctrine()->getManager();
+//            $entityManager->remove($picture);
+//            $entityManager->flush();
+            $pictureRemover->remove($picture);
         }
 
         return $this->redirectToRoute('ADMIN_CATALOG_PICTURE_INDEX', [], Response::HTTP_SEE_OTHER);

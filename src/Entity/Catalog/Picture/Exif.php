@@ -4,10 +4,12 @@ namespace App\Entity\Catalog\Picture;
 
 use App\Repository\Catalog\Picture\ExifRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass=ExifRepository::class)
  * @ORM\Table(name="catalog_picture_exif")
+ * @Gedmo\Loggable
  */
 class Exif
 {
@@ -20,136 +22,163 @@ class Exif
 
     /**
      * @ORM\Column(type="boolean")
+     * @Gedmo\Versioned
      */
     private bool $isVerified = false;
 
     /**
      * @ORM\Column(type="string",nullable=true)
+     * @Gedmo\Versioned
      */
     private ?string $title;
 
     /**
      * @ORM\Column(type="string",nullable=true)
+     * @Gedmo\Versioned
      */
     private ?string $author;
 
     /**
      * @ORM\Column(type="string",nullable=true)
+     * @Gedmo\Versioned
      */
     private ?string $camera;
 
     /**
      * @ORM\Column(type="text",nullable=true)
+     * @Gedmo\Versioned
      */
     private ?string $caption;
 
     /**
      * @ORM\Column(type="string",nullable=true)
+     * @Gedmo\Versioned
      */
     private ?string $copyright;
 
     /**
-     * @ORM\Column(type="datetime",nullable=true)ime|null
+     * @ORM\Column(type="datetime",nullable=true)
+     * @Gedmo\Versioned
      */
     private ?\DateTime $creationdate;
 
     /**
      * @ORM\Column(type="string",nullable=true)
+     * @Gedmo\Versioned
      */
     private ?string $credit;
 
     /**
      * @ORM\Column(type="string",nullable=true)
+     * @Gedmo\Versioned
      */
     private ?string $aperture;
 
     /**
      * @ORM\Column(type="string",nullable=true)
+     * @Gedmo\Versioned
      */
     private ?string $exposure;
 
     /**
      * @ORM\Column(type="float",nullable=true)
+     * @Gedmo\Versioned
      */
     private ?float $focalLength;
 
     /**
      * @ORM\Column(type="string",nullable=true)
+     * @Gedmo\Versioned
      */
     private ?string $focalDistance;
 
     /**
      * @ORM\Column(type="integer",nullable=true)
+     * @Gedmo\Versioned
      */
     private ?int $iso;
 
     /**
      * @ORM\Column(type="string",nullable=true)
+     * @Gedmo\Versioned
      */
     private ?string $colorSpace;
 
     /**
      * @ORM\Column(type="integer",nullable=true)
+     * @Gedmo\Versioned
      */
     private ?int $fileSize;
 
     /**
      * @ORM\Column(type="integer",nullable=true)
+     * @Gedmo\Versioned
      */
     private ?int $height;
 
     /**
      * @ORM\Column(type="integer",nullable=true)
+     * @Gedmo\Versioned
      */
     private ?int $width;
 
     /**
      * @ORM\Column(type="integer",nullable=true)
+     * @Gedmo\Versioned
      */
     private ?int $horizontalResolution;
 
     /**
      * @ORM\Column(type="integer",nullable=true)
+     * @Gedmo\Versioned
      */
     private ?int $verticalResolution;
 
     /**
      * @ORM\Column(type="string",nullable=true)
+     * @Gedmo\Versioned
      */
     private ?string $headline;
 
     /**
      * @ORM\Column(type="string",nullable=true)
+     * @Gedmo\Versioned
      */
     private ?string $jobTitle;
 
     /**
      * @ORM\Column(type="array",nullable=true)
+     * @Gedmo\Versioned
      */
     private ?array $keywords;
 
     /**
      * @ORM\Column(type="string",nullable=true)
+     * @Gedmo\Versioned
      */
     private ?string $mimeType;
 
     /**
      * @ORM\Column(type="integer",nullable=true)
+     * @Gedmo\Versioned
      */
     private ?int $orientation;
 
     /**
      * @ORM\Column(type="string",nullable=true)
+     * @Gedmo\Versioned
      */
     private ?string $software;
 
     /**
      * @ORM\Column(type="string",nullable=true)
+     * @Gedmo\Versioned
      */
     private ?string $source;
 
     /**
      * @ORM\Column(type="array",nullable=true)
+     * @Gedmo\Versioned
      */
     private ?array $gps;
 

@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col">
                 <h2>{{ picture.name }}</h2>
-                <img src="{{ vich_uploader_asset(picture) }}" alt="" class="img-fluid">
+                <img src="{{ vich_uploader_asset(picture.file) }}" alt="" class="img-fluid">
             </div>
             <div class="col">
                 <a href="{{ path('PICTURE_CHANGE', {'catalogId': picture.catalog.id, 'id': picture.id}) }}">

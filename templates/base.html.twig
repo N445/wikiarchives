@@ -5,11 +5,7 @@
     <title>{% block title %}Welcome!{% endblock %}</title>
 
     {{ encore_entry_link_tags('globals') }}
-    {{ encore_entry_script_tags('globalsjs') }}
-
-    {{ encore_entry_link_tags('mainjs') }}
-    {{ encore_entry_script_tags('main') }}
-
+    {{ encore_entry_link_tags('main') }}
 
     {# Run `composer require symfony/webpack-encore-bundle`
            and uncomment the following Encore helpers to start using Symfony UX #}
@@ -22,7 +18,12 @@
     {% endblock %}
 </head>
 <body>
+{% include 'includes/flash-message.html.twig' %}
 {% include 'includes/navigation.html.twig' %}
+
+
+{{ encore_entry_script_tags('globalsjs') }}
+{{ encore_entry_script_tags('mainjs') }}
 {% block body %}{% endblock %}
 </body>
 </html>

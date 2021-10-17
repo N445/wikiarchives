@@ -1,13 +1,14 @@
 {{ form_start(form) }}
 <div class="row">
     <div class="col-md-6">
-        {{ form_row(form.name) }}
-        {{ form_row(form.description) }}
-        {{ form_row(form.imageFile) }}
+
+        {{ form_row(form.validatedVersion.name) }}
+        {{ form_row(form.validatedVersion.description) }}
+        {{ form_row(form.file) }}
         {{ form_row(form.catalog) }}
     </div>
     <div class="col-md-6">
-        {{ form_row(form.exif) }}
+        {{ form_row(form.validatedVersion.exif) }}
     </div>
 </div>
 

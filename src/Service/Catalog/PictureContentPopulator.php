@@ -14,16 +14,16 @@ class PictureContentPopulator
 
     public static function setTitle(Picture $picture)
     {
-        if ($picture->getName()) {
+        if ($picture->getValidatedVersion()->getName()) {
             return;
         }
-        if ($title = $picture->getExif()->getTitle()) {
-            $picture->setName($title);
+        if ($title = $picture->getValidatedVersion()->getExif()->getTitle()) {
+            $picture->getValidatedVersion()->setName($title);
             return;
         }
-        if ($uploadedfile = $picture->getImageFile()) {
+        if ($uploadedfile = $picture->getFile()->getImageFile()) {
             $filename = $uploadedfile->getClientOriginalName();
-            $picture->setName(pathinfo($filename)['filename'] ?? $filename);
+            $picture->getValidatedVersion()->setName(pathinfo($filename)['filename'] ?? $filename);
             return;
         }
     }

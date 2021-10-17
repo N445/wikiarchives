@@ -1,0 +1,10 @@
+{% for label, messages in app.flashes %}
+    <div class="flash-message-wrapper d-none">
+        <div class="container">
+            {% for message in messages %}
+                <div class="flash-message" data-type="{{ label }} " data-message="{{ message|raw }}"></div>
+            {% endfor %}
+        </div>
+    </div>
+{% endfor %}
+

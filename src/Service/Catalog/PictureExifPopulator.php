@@ -12,18 +12,18 @@ class PictureExifPopulator
 {
     public static function populate(Picture $picture)
     {
-        if (!$uploadedFile = $picture->getImageFile()) {
+        if (!$uploadedFile = $picture->getFile()->getImageFile()) {
             return;
         }
-        if (!$exif = $picture->getExif()) {
+        if (!$exif = $picture->getValidatedVersion()->getExif()) {
             $exif = new Exif();
         }
 
         // reader with Native adapter
         $reader = \PHPExif\Reader\Reader::factory(\PHPExif\Reader\Reader::TYPE_NATIVE);
 
-        if (!$read = $reader->read($picture->getImageFile()->getRealPath())) {
-            $picture->setExif($exif);
+        if (!$read = $reader->read($uploadedFile->getRealPath())) {
+            $picture->getValidatedVersion()->setExif($exif);
             return;
         }
 
@@ -36,7 +36,7 @@ class PictureExifPopulator
             }
         }
 
-        $picture->setExif($exif);
+        $picture->getValidatedVersion()->setExif($exif);
     }
 
     private static function getFormatedValue($label, $value)

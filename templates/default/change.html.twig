@@ -1,53 +1,25 @@
 {% extends 'base.html.twig' %}
 
-{% macro fieldRow(rowForm) %}
-    <div class="row align-items-end field-row">
-        <div class="col-md">
-            {{ form_row(rowForm.label) }}
-        </div>
-        <div class="col-md">
-            {{ form_row(rowForm.type) }}
-        </div>
-        <div class="col-md">
-            {{ form_row(rowForm.value) }}
-        </div>
-        <div class="col-md-auto">
-            <button type="button" class="btn btn-danger delete-collection-widget mb-3">
-                Supprimer
-            </button>
-        </div>
-    </div>
-{% endmacro %}
 
 {% block body %}
     <div class="container-fluid">
+        {{ form_start(form) }}
         <div class="row">
+
             <div class="col-md-6">
-                {{ dump(picture) }}
-            </div>
-            <div class="col-md-6">
-                {{ dump(pictureChange) }}
-                {{ form_start(pictureChangeForm) }}
-                {{ form_row(pictureChangeForm.avaiableFields) }}
-                <div id="fields-list"
-                     data-prototype="{{ _self.fieldRow(pictureChangeForm.fields.vars.prototype)|e }}"
-                     data-widget-tags="{{ '<div></div>'|e }}"
-                     data-widget-counter="{{ pictureChangeForm.fields|length }}">
-                    {% for field in pictureChangeForm.fields %}
-                        {{ _self.fieldRow(field) }}
-                    {% endfor %}
-                </div>
-                <button type="button" class="btn btn-primary add-another-collection-widget"
-                        data-list-selector="#fields-list">
-                    Ajouter une nouvelle ligne
-                </button>
-                {{ form_widget(pictureChangeForm) }}
+                {{ form_row(form.name) }}
+                {{ form_row(form.description) }}
                 <button type="submit" class="btn btn-primary">
                     Proposer
                 </button>
-                {{ form_end(pictureChangeForm) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_widget(form.exif) }}
             </div>
         </div>
+
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
     </div>
 {% endblock %}
 

@@ -3,22 +3,19 @@
 namespace App\Entity\Catalog;
 
 use App\Entity\Catalog\Picture\Exif;
-use App\Entity\Catalog\Picture\PictureChange;
+use App\Entity\Catalog\Picture\File;
+use App\Entity\Catalog\Picture\Version;
 use App\Repository\Catalog\PictureRepository;
 use App\Traits\BlameableTrait;
 use App\Traits\TimestampableTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass=PictureRepository::class)
  * @ORM\Table(name="catalog_picture")
- * @Vich\Uploadable
  * @Gedmo\Loggable
  */
 class Picture
@@ -35,63 +32,9 @@ class Picture
 
     /**
      * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=255)
-     */
-    private $name;
-
-    /**
-     * @Gedmo\Versioned
      * @ORM\ManyToOne(targetEntity=Catalog::class, inversedBy="pictures")
      */
     private $catalog;
-
-    /**
-     * @Vich\UploadableField(mapping="catalog_picture",
-     *     fileNameProperty="imageName",
-     *     size="imageSize",
-     *     mimeType="imageMimeType",
-     *     originalName="imageOriginalName",
-     *     dimensions="imageDimensions"
-     * )
-     *
-     * @var File|null
-     */
-    private $imageFile;
-
-    /**
-     * @Gedmo\Versioned
-     * @ORM\Column(type="string")
-     * @var string|null
-     */
-    private $imageName;
-
-    /**
-     * @Gedmo\Versioned
-     * @ORM\Column(type="integer")
-     * @var int|null
-     */
-    private $imageSize;
-
-    /**
-     * @Gedmo\Versioned
-     * @ORM\Column(type="string")
-     * @var string|null
-     */
-    private $imageMimeType;
-
-    /**
-     * @Gedmo\Versioned
-     * @ORM\Column(type="string")
-     * @var string|null
-     */
-    private $imageOriginalName;
-
-    /**
-     * @Gedmo\Versioned
-     * @ORM\Column(type="array")
-     * @var array|null
-     */
-    private $imageDimensions;
 
     /**
      * @Gedmo\Versioned
@@ -100,25 +43,25 @@ class Picture
     private $place;
 
     /**
-     * @Gedmo\Versioned
-     * @ORM\OneToOne(targetEntity=Exif::class, cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Version::class, cascade={"persist", "remove"})
      */
-    private $exif;
+    private $validatedVersion;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\OneToMany(targetEntity=Version::class, mappedBy="picture", orphanRemoval=true, cascade={"persist", "remove"})
      */
-    private $description;
+    private $versions;
 
     /**
-     * @ORM\OneToMany(targetEntity=PictureChange::class, mappedBy="picture", orphanRemoval=true)
+     * @ORM\OneToOne(targetEntity=File::class, inversedBy="picture", cascade={"persist", "remove"})
      */
-    private $pictureChanges;
+    private $file;
 
     public function __construct()
     {
-        $this->pictureChanges = new ArrayCollection();
-        $this->exif = new Exif();
+        $this->versions = new ArrayCollection();
+        $this->validatedVersion = new Version();
+        $this->addVersion($this->validatedVersion);
     }
 
     public function __toString()
@@ -131,16 +74,19 @@ class Picture
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getName()
     {
-        return $this->name;
+        return $this->getValidatedVersion() ? $this->getValidatedVersion()->getName() : null;
     }
 
-    public function setName(string $name): self
+    public function getDescription()
     {
-        $this->name = $name;
+        return $this->getValidatedVersion() ? $this->getValidatedVersion()->getDescription() : null;
+    }
 
-        return $this;
+    public function getExif()
+    {
+        return $this->getValidatedVersion() ? $this->getValidatedVersion()->getExif() : null;
     }
 
     public function getCatalog(): ?Catalog
@@ -152,109 +98,6 @@ class Picture
     {
         $this->catalog = $catalog;
 
-        return $this;
-    }
-
-
-    /**
-     * @param File|UploadedFile|null $imageFile
-     */
-    public function setImageFile(?File $imageFile = null): self
-    {
-        $this->imageFile = $imageFile;
-        if (null !== $imageFile) {
-            $this->updatedAt = new \DateTimeImmutable();
-        }
-
-        return $this;
-    }
-
-    public function getImageFile(): ?File
-    {
-        return $this->imageFile;
-    }
-
-    public function setImageName(?string $imageName): self
-    {
-        $this->imageName = $imageName;
-
-        return $this;
-    }
-
-    public function getImageName(): ?string
-    {
-        return $this->imageName;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getImageSize(): ?int
-    {
-        return $this->imageSize;
-    }
-
-    /**
-     * @param int|null $imageSize
-     * @return Picture
-     */
-    public function setImageSize(?int $imageSize): Picture
-    {
-        $this->imageSize = $imageSize;
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getImageMimeType(): ?string
-    {
-        return $this->imageMimeType;
-    }
-
-    /**
-     * @param string|null $imageMimeType
-     * @return Picture
-     */
-    public function setImageMimeType(?string $imageMimeType): Picture
-    {
-        $this->imageMimeType = $imageMimeType;
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getImageOriginalName(): ?string
-    {
-        return $this->imageOriginalName;
-    }
-
-    /**
-     * @param string|null $imageOriginalName
-     * @return Picture
-     */
-    public function setImageOriginalName(?string $imageOriginalName): Picture
-    {
-        $this->imageOriginalName = $imageOriginalName;
-        return $this;
-    }
-
-    /**
-     * @return array|null
-     */
-    public function getImageDimensions(): ?array
-    {
-        return $this->imageDimensions;
-    }
-
-    /**
-     * @param array|null $imageDimensions
-     * @return Picture
-     */
-    public function setImageDimensions(?array $imageDimensions): Picture
-    {
-        $this->imageDimensions = $imageDimensions;
         return $this;
     }
 
@@ -278,59 +121,57 @@ class Picture
         return $this;
     }
 
-    public function getExif(): ?Exif
+    public function getValidatedVersion(): ?Version
     {
-        return $this->exif;
+        return $this->validatedVersion;
     }
 
-    public function setExif(?Exif $exif): self
+    public function setValidatedVersion(?Version $validatedVersion): self
     {
-        $this->exif = $exif;
-
-        return $this;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(?string $description): self
-    {
-        $this->description = $description;
+        $this->validatedVersion = $validatedVersion;
 
         return $this;
     }
 
     /**
-     * @return Collection|PictureChange[]
+     * @return Collection|Version[]
      */
-    public function getPictureChanges(): Collection
+    public function getVersions(): Collection
     {
-        return $this->pictureChanges;
+        return $this->versions;
     }
 
-    public function addPictureChange(PictureChange $pictureChange): self
+    public function addVersion(Version $version): self
     {
-        if (!$this->pictureChanges->contains($pictureChange)) {
-            $this->pictureChanges[] = $pictureChange;
-            $pictureChange->setPicture($this);
+        if (!$this->versions->contains($version)) {
+            $this->versions[] = $version;
+            $version->setPicture($this);
         }
 
         return $this;
     }
 
-    public function removePictureChange(PictureChange $pictureChange): self
+    public function removeVersion(Version $version): self
     {
-        if ($this->pictureChanges->removeElement($pictureChange)) {
+        if ($this->versions->removeElement($version)) {
             // set the owning side to null (unless already changed)
-            if ($pictureChange->getPicture() === $this) {
-                $pictureChange->setPicture(null);
+            if ($version->getPicture() === $this) {
+                $version->setPicture(null);
             }
         }
 
         return $this;
     }
 
+    public function getFile(): ?File
+    {
+        return $this->file;
+    }
 
+    public function setFile(?File $file): self
+    {
+        $this->file = $file;
+
+        return $this;
+    }
 }

@@ -7,7 +7,7 @@
 
 <div class="picture-card">
     <a href="{{ path('PICTURE', {'catalogId':picture.catalog.id,'id': picture.id}) }}" title="{{ picture.name }}">
-        <img src="{{ vich_uploader_asset(picture)|imagine_filter('picture_card_listing') }}"
+        <img src="{{ vich_uploader_asset(picture.file)|imagine_filter('picture_card_listing') }}"
              class="img-fluid" alt="{{ picture.name }}">
     </a>
 </div>

@@ -1,5 +1,10 @@
 monolog:
     handlers:
+        custom:
+            type: stream
+            path: "%kernel.logs_dir%/%kernel.environment%.log"
+            level: error
+            channels: [ "!event" ]
         main:
             type: fingers_crossed
             action_level: error

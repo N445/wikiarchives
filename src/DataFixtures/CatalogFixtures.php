@@ -34,7 +34,7 @@
                 'image-5.jpg',
             ];
             foreach ($images as $image) {
-                $from = $this->kernel->getProjectDir() . '/src/DataFixtures/images/';
+                $from = $this->kernel->getProjectDir() . '/src/DataFixtures/images/' . $image;
                 $to = $this->kernel->getProjectDir() . '/public/uploads/catalog/cover/' . $image;
                 dump($from);
                 dump($to);

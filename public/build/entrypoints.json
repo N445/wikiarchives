@@ -1,0 +1,106 @@
+{
+  "entrypoints": {
+    "globalsjs": {
+      "js": [
+        "/build/runtime.f3575a88.js",
+        "/build/169.42da4472.js",
+        "/build/globalsjs.b51e2622.js"
+      ]
+    },
+    "adminjs": {
+      "js": [
+        "/build/runtime.f3575a88.js",
+        "/build/adminjs.b68e08bd.js"
+      ]
+    },
+    "mainjs": {
+      "js": [
+        "/build/runtime.f3575a88.js",
+        "/build/755.5a8586e9.js",
+        "/build/826.246a3c8f.js",
+        "/build/854.514bc9c5.js",
+        "/build/mainjs.c054e663.js"
+      ]
+    },
+    "admin-tree-js": {
+      "js": [
+        "/build/runtime.f3575a88.js",
+        "/build/755.5a8586e9.js",
+        "/build/826.246a3c8f.js",
+        "/build/169.42da4472.js",
+        "/build/600.0b8fa349.js",
+        "/build/262.2cf491f3.js",
+        "/build/admin-tree-js.0a5fa316.js"
+      ]
+    },
+    "admin-picture-exif-collection": {
+      "js": [
+        "/build/runtime.f3575a88.js",
+        "/build/755.5a8586e9.js",
+        "/build/826.246a3c8f.js",
+        "/build/600.0b8fa349.js",
+        "/build/admin-picture-exif-collection.1c483298.js"
+      ]
+    },
+    "wysiwyg-js": {
+      "js": [
+        "/build/runtime.f3575a88.js",
+        "/build/755.5a8586e9.js",
+        "/build/880.b286792d.js",
+        "/build/wysiwyg-js.8c632653.js"
+      ]
+    },
+    "globals": {
+      "js": [
+        "/build/runtime.f3575a88.js"
+      ],
+      "css": [
+        "/build/globals.19195f85.css"
+      ]
+    },
+    "admin": {
+      "js": [
+        "/build/runtime.f3575a88.js"
+      ],
+      "css": [
+        "/build/admin.31d6cfe0.css"
+      ]
+    },
+    "main": {
+      "js": [
+        "/build/runtime.f3575a88.js"
+      ],
+      "css": [
+        "/build/main.a24d45d1.css"
+      ]
+    },
+    "admin-tree": {
+      "js": [
+        "/build/runtime.f3575a88.js"
+      ],
+      "css": [
+        "/build/admin-tree.2b6ce815.css"
+      ]
+    }
+  },
+  "integrity": {
+    "/build/runtime.f3575a88.js": "sha384-gAuLQCN9fwWEsUayPgr3Tdjv661MPEghyaTy+7hHAclscpOH0Fc1BVchlJtcOobh",
+    "/build/169.42da4472.js": "sha384-bsJ5CpEYVKfEiovVb/UFWmlrYGIikxnpJojhKYvryt8GdqsOOKKSGg49zSNwjRGs",
+    "/build/globalsjs.b51e2622.js": "sha384-VFqE1LhVW93MW/yvqyOclfilhI34z2QftMg7VZistyKpuRy2+Od6s5XNU8ypSuG3",
+    "/build/adminjs.b68e08bd.js": "sha384-GIsMXxBQ0eoDiJad35YaNgRYatARyjKPcsnfcyDMI/cusIpB2IBkk1i/DdyzlPKy",
+    "/build/755.5a8586e9.js": "sha384-gr4pBhc/crsd3k0Y6LPY6EzskQ1errcIxrCcR3mXD0bY9Ud2y2N0jCEomRCZiY9G",
+    "/build/826.246a3c8f.js": "sha384-2T62/rzur2bFCCQoNDLjmmYdnW4o7UrxhQw13uFJ3TMz9YCkczQRMvFFFsg24Np7",
+    "/build/854.514bc9c5.js": "sha384-hlBwjmBUAkyr5J1dFMYxMjoJAjm3Wp3bQeFvqgLA3qqeoebUVfnvFeeJB4Du2cD5",
+    "/build/mainjs.c054e663.js": "sha384-lmYpXVdMsELwgAsM2QHtwOY5PM5x2HE8eUFyrSLMSSn8aqdx/jZz33tAJwOA9g/P",
+    "/build/600.0b8fa349.js": "sha384-Ea7XQcQZjQEauePB2pKREw9/mXm6bhIykEffahLnd7E0IRkQX4ugKZpImc1XsCZ2",
+    "/build/262.2cf491f3.js": "sha384-escDMzDeBus0l2edeCAvu+7agBHsWA5ch16xjJDrdpbhdHJ+XFDIsEkhof7j3MGG",
+    "/build/admin-tree-js.0a5fa316.js": "sha384-EwKGsVsrzgas/ZjQC3g7ehh6B0RP5NpDGafgNOeN9zEyWSsMU5XZE1si9NEfFEgs",
+    "/build/admin-picture-exif-collection.1c483298.js": "sha384-75l2gB6kSHwKe2tdI1zOENgJMHldEK0uAzAQ3sFmZqT2wmaOapxAUuuFJtAM3+3E",
+    "/build/880.b286792d.js": "sha384-0S2odu3ytJKKhRUemo7IH4eyPq6glZA8nWJzelC317C9L9OwvJT5xaS/jfSwJaUL",
+    "/build/wysiwyg-js.8c632653.js": "sha384-rpITd5fJxV2BA21R5wRXPh0zFC1cOgDjGsuhL3GitJdf3qrD8lGM3o9DoXb6Twgz",
+    "/build/globals.19195f85.css": "sha384-rmpOeDpRYLYhxfK4Khc5n6123GuIjlMVzrGH+vftSfvI3/ScoT1zvRLXkAI2QFTx",
+    "/build/admin.31d6cfe0.css": "sha384-OLBgp1GsljhM2TJ+sbHjaiH9txEUvgdDTAzHv2P24donTt6/529l+9Ua0vFImLlb",
+    "/build/main.a24d45d1.css": "sha384-mwwVwBN9fC8ZqHeW7qhGLODt042e+K8vwKh1BxF2ZZgPERtLk0hHcoGfA1qLMLFo",
+    "/build/admin-tree.2b6ce815.css": "sha384-sgBuxyyIOfXFl19G/ee3HsndzBEvi1MOQLtDnhEuCxbXyFQbG6bkNq0xX615HbKX"
+  }
+}

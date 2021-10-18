@@ -65,7 +65,7 @@ class PictureController extends AbstractController
     #[Route('/{id}', name: 'ADMIN_CATALOG_PICTURE_SHOW', methods: ['GET'])]
     public function show(int $id): Response
     {
-        if (!$picture = $this->pictureRepository->byId($id)) {
+        if (!$picture = $this->pictureRepository->byIdAdmin($id)) {
             return $this->redirectToRoute('ADMIN_CATALOG_PICTURE_INDEX');
         }
         return $this->render('catalog/picture/show.html.twig', [
@@ -76,7 +76,7 @@ class PictureController extends AbstractController
     #[Route('/{id}/edit', name: 'ADMIN_CATALOG_PICTURE_EDIT', methods: ['GET', 'POST'])]
     public function edit(Request $request, int $id): Response
     {
-        if (!$picture = $this->pictureRepository->byId($id)) {
+        if (!$picture = $this->pictureRepository->byIdAdmin($id)) {
             return $this->redirectToRoute('ADMIN_CATALOG_PICTURE_INDEX');
         }
         $form = $this->createForm(PictureType::class, $picture);
@@ -99,7 +99,7 @@ class PictureController extends AbstractController
     #[Route('/{id}', name: 'ADMIN_CATALOG_PICTURE_DELETE', methods: ['POST'])]
     public function delete(Request $request, int $id, PictureRemover $pictureRemover): Response
     {
-        if (!$picture = $this->pictureRepository->byId($id)) {
+        if (!$picture = $this->pictureRepository->byIdAdmin($id)) {
             return $this->redirectToRoute('ADMIN_CATALOG_PICTURE_INDEX');
         }
         dump($picture);

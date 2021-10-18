@@ -9,13 +9,19 @@
     use Doctrine\Common\DataFixtures\DependentFixtureInterface;
     use Doctrine\Persistence\ObjectManager;
     use Faker\Factory;
-    
+    use Symfony\Component\HttpKernel\KernelInterface;
+
     /**
      * @property \Faker\Generator $faker
      */
     class PictureFixtures extends Fixture implements DependentFixtureInterface
     {
         const LOOP = 1000;
+    
+        public function __construct(KernelInterface $kernel)
+        {
+            $this->kernel = $kernel;
+        }
         
         public function load(ObjectManager $manager): void
         {
@@ -29,7 +35,7 @@
                 'image-5.jpg',
             ];
             foreach ($images as $image) {
-                copy(__DIR__ . '/images/' . $image, __DIR__ . '/../../public/uploads/catalog/picture/' . $image);
+                copy($this->kernel->getProjectDir() . '/src/DataFixtures/images/', $this->kernel->getProjectDir() .  '/public/uploads/catalog/picture/' . $image);
             }
             
             foreach (range(1, self::LOOP) as $i) {

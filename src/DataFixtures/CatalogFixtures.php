@@ -7,6 +7,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 class CatalogFixtures extends Fixture implements DependentFixtureInterface
 {
@@ -14,7 +15,13 @@ class CatalogFixtures extends Fixture implements DependentFixtureInterface
     const LOOP = 500;
 
     private $catalogs = [];
-
+    private KernelInterface $kernel;
+    
+    public function __construct(KernelInterface $kernel)
+    {
+        $this->kernel = $kernel;
+    }
+    
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create();
@@ -27,7 +34,7 @@ class CatalogFixtures extends Fixture implements DependentFixtureInterface
             'image-5.jpg',
         ];
         foreach ($images as $image) {
-            copy(__DIR__ . '/images/' . $image, __DIR__ . '/../../public/uploads/catalog/cover/' . $image);
+            copy($this->kernel->getProjectDir() . '/src/DataFixtures/images/' . $image, $this->kernel->getProjectDir()  . '/public/uploads/catalog/cover/' . $image);
         }
 
         foreach (range(1, self::LOOP) as $i) {

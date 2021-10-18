@@ -35,7 +35,9 @@
                 'image-5.jpg',
             ];
             foreach ($images as $image) {
-                copy($this->kernel->getProjectDir() . '/src/DataFixtures/images/', $this->kernel->getProjectDir() .  '/public/uploads/catalog/picture/' . $image);
+                $from = $this->kernel->getProjectDir() . '/src/DataFixtures/images/' . $image;
+                $to = $this->kernel->getProjectDir() . '/public/uploads/catalog/picture/' . $image;
+                copy($from, $to);
             }
             
             foreach (range(1, self::LOOP) as $i) {

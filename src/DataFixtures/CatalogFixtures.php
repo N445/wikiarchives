@@ -36,10 +36,6 @@
             foreach ($images as $image) {
                 $from = $this->kernel->getProjectDir() . '/src/DataFixtures/images/' . $image;
                 $to = $this->kernel->getProjectDir() . '/public/uploads/catalog/cover/' . $image;
-                dump($from);
-                dump($to);
-                dump(is_file($from));
-                dump(is_file($to));
                 copy($from, $to);
             }
             

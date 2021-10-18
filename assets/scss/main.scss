@@ -2,6 +2,7 @@
 
 body {
   background-color: $wikiarchives-dark;
+  color: white;
 }
 
 .catalog-banner {
@@ -45,6 +46,10 @@ body {
     z-index: 12;
   }
 
+}
+
+.catalog-card{
+  color: #000;
 }
 
 .picture-card {

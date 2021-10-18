@@ -40,12 +40,12 @@
     <tbody>
     {% for picture in catalog.pictures %}
         <tr>
-            <td><img src="{{ vich_uploader_asset(picture) }}" alt="{{ picture.imageOriginalName }}" width="100"
+            <td><img src="{{ vich_uploader_asset(picture.file) }}" alt="{{ picture.file.imageOriginalName }}" width="100"
                      class="img-fluid rounded"></td>
             <td>{{ picture.name }}</td>
-            <td>{{ picture.imageSize|humanFilesize }}</td>
-            <td>{{ picture.imageMimeType }}</td>
-            <td>{{ picture.imageDimensions|join('x') }}</td>
+            <td>{{ picture.file.imageSize|humanFilesize }}</td>
+            <td>{{ picture.file.imageMimeType }}</td>
+            <td>{{ picture.file.imageDimensions|join('x') }}</td>
             <td>
                 {% if picture.exif.isVerified %}
                     <span class="badge bg-success">Vérifié</span>

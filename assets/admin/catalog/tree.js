@@ -2,6 +2,9 @@ var $ = jQuery = require("jquery");
 
 require('./../../lib/vakata-jstree/dist/jstree')
 const bootstrap = require('bootstrap');
+require( 'datatables.net-bs5' );
+
+
 // const FilePond = require('filepond');
 import * as FilePond from "filepond";
 
@@ -182,6 +185,7 @@ class Directory {
             .done(function (response) {
                 var html = $(response.html);
                 $('.catalog-content').html(html);
+                $('.datatable').DataTable();
             })
         ;
     }

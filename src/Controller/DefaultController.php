@@ -4,6 +4,8 @@
     
     
     use App\Form\Catalog\Picture\VersionType;
+    use App\Provider\CatalogProvider;
+    use App\Provider\PictureProvider;
     use App\Repository\Catalog\CatalogRepository;
     use App\Repository\Catalog\PictureRepository;
     use App\Security\Voter\PictureVersionVoter;
@@ -17,26 +19,26 @@
     
     class DefaultController extends AbstractController
     {
-        private CatalogRepository $catalogRepository;
-        private PictureRepository $pictureRepository;
         private BreadcrumbCreator $breadcrumbCreator;
+        private CatalogProvider $catalogProvider;
+        private PictureProvider $pictureProvider;
         
         public function __construct(
-            CatalogRepository $catalogRepository,
-            PictureRepository $pictureRepository,
-            BreadcrumbCreator $breadcrumbCreator
+            BreadcrumbCreator $breadcrumbCreator,
+            CatalogProvider   $catalogProvider,
+            PictureProvider   $pictureProvider
         )
         {
-            $this->catalogRepository = $catalogRepository;
-            $this->pictureRepository = $pictureRepository;
             $this->breadcrumbCreator = $breadcrumbCreator;
+            $this->catalogProvider = $catalogProvider;
+            $this->pictureProvider = $pictureProvider;
         }
         
         #[Route('/', name: 'HOMEPAGE')]
         public function index(): Response
         {
             return $this->render('default/index.html.twig', [
-                'roots' => $this->catalogRepository->getRoot(),
+                'roots' => $this->catalogProvider->root(),
             ]);
         }
         
@@ -45,8 +47,8 @@
         {
             $query = $request->get('q');
             return $this->render('default/search.html.twig', [
-                'catalogs' => $this->catalogRepository->search($query),
-                'pictures' => $this->pictureRepository->search($query),
+                'catalogs' => $this->catalogProvider->search($query),
+                'pictures' => $this->pictureProvider->search($query),
                 'query' => $query,
             ]);
         }
@@ -57,9 +59,10 @@
             if (!$id) {
                 return $this->redirectToRoute('HOMEPAGE');
             }
-            if (!$catalog = $this->catalogRepository->byId($id)) {
+            if (!$catalog = $this->catalogProvider->byId($id)) {
                 return $this->redirectToRoute('HOMEPAGE');
             }
+            
             return $this->render('default/catalog.html.twig', [
                 'catalog' => $catalog,
             ]);
@@ -71,7 +74,7 @@
             if (!$id) {
                 return $this->redirectToRoute('HOMEPAGE');
             }
-            if (!$picture = $this->pictureRepository->byId($id)) {
+            if (!$picture = $this->pictureProvider->byId($id)) {
                 return $this->redirectToRoute('HOMEPAGE');
             }
             
@@ -92,10 +95,10 @@
             if (!$id) {
                 return $this->redirectToRoute('HOMEPAGE');
             }
-            if (!$picture = $this->pictureRepository->byId($id)) {
+            if (!$picture = $this->pictureProvider->byId($id)) {
                 return $this->redirectToRoute('HOMEPAGE');
             }
-
+            
             if (!$this->isGranted(PictureVersionVoter::PICTURE_VERSION_CREATE, $this->getUser())) {
                 return $this->redirectToRoute('PICTURE', [
                     'catalogId' => $picture->getCatalog()->getId(),

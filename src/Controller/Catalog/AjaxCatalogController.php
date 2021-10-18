@@ -87,7 +87,7 @@ class AjaxCatalogController extends AbstractController
      */
     public function edit(int $id, Request $request)
     {
-        if (!$catalog = $this->catalogRepository->byId($id)) {
+        if (!$catalog = $this->catalogRepository->byIdAdmin($id)) {
             return $this->json([
                 'success' => false,
                 'message' => 'Pas de dossier trouvé',
@@ -124,7 +124,7 @@ class AjaxCatalogController extends AbstractController
      */
     public function remove(int $id)
     {
-        if (!$catalog = $this->catalogRepository->byId($id)) {
+        if (!$catalog = $this->catalogRepository->byIdAdmin($id)) {
             return $this->json([
                 'success' => false,
                 'message' => 'Pas de dossier trouvé',
@@ -149,7 +149,7 @@ class AjaxCatalogController extends AbstractController
      */
     public function setParent(int $id, ?int $parentId = null)
     {
-        if (!$directory = $this->catalogRepository->byId($id)) {
+        if (!$directory = $this->catalogRepository->byIdAdmin($id)) {
             return $this->json([
                 'success' => false,
                 'message' => 'Pas de dossier trouvé',
@@ -166,7 +166,7 @@ class AjaxCatalogController extends AbstractController
             ]);
         }
 
-        if (!$parentDirectory = $this->catalogRepository->byId($parentId)) {
+        if (!$parentDirectory = $this->catalogRepository->byIdAdmin($parentId)) {
             return $this->json([
                 'success' => false,
                 'message' => 'Pas de dossier trouvé',
@@ -189,7 +189,7 @@ class AjaxCatalogController extends AbstractController
      */
     public function show(int $id): Response
     {
-        if (!$catalog = $this->catalogRepository->byId($id)) {
+        if (!$catalog = $this->catalogRepository->byIdAdmin($id)) {
             return $this->json([
                 'success' => false,
                 'message' => 'Pas de dossier trouvé',

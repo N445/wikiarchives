@@ -31,6 +31,8 @@ Encore
     .addEntry('admin-tree-js', './assets/admin/catalog/tree.js')
     .addStyleEntry('admin-tree', './assets/admin/catalog/tree.scss')
 
+    .addEntry('admin-catalog-datatable-js', './assets/admin/catalog/catalog-datatable.js')
+    .addStyleEntry('admin-catalog-datatable', './assets/admin/catalog/catalog-datatable.scss')
     .addEntry('admin-picture-exif-collection', './assets/admin/catalog/picture-exif-collection.js')
 
     .addEntry('wysiwyg-js', './assets/wysiwyg.js')

@@ -28,6 +28,7 @@ class BreadcrumbCreator
         if (!in_array(ClassUtils::getClass($object), [Catalog::class, Picture::class])) {
             throw new \Exception(sprintf('La class "" n\'est pas valide', ClassUtils::getClass($object)));
         }
+    
         if (Catalog::class === ClassUtils::getClass($object)) {
             return $this->getCatalogBreadcrumb($object);
         }
@@ -69,7 +70,7 @@ class BreadcrumbCreator
             ]))
             ->setIsActual(true)
         );
-
+    
         if ($parent = $object->getCatalog()) {
             $this->addCatalogBreadcrumbLink($breadcrumb, $parent);
         }

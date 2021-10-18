@@ -4,6 +4,9 @@
     
     use App\Entity\Catalog\Picture;
     use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+    use Doctrine\ORM\NonUniqueResultException;
+    use Doctrine\ORM\Query\Expr\Join;
+    use Doctrine\ORM\QueryBuilder;
     use Doctrine\Persistence\ManagerRegistry;
     
     /**
@@ -25,7 +28,7 @@
          */
         public function search(?string $query)
         {
-            $qb = $this->createQueryBuilder('c');
+            $qb = $this->getBaseFrontQuery();
             
             
             if ($query) {
@@ -39,22 +42,61 @@
             ;
         }
         
-        public function byId(int $id): ?Picture
+        /**
+         * @param int $id
+         * @return Picture|null
+         * @throws NonUniqueResultException
+         */
+        public function byIdFront(int $id): ?Picture
         {
-            return $this->createQueryBuilder('p')
-                        ->addSelect('file', 'catalog', 'place', 'validatedVersion', 'versions', 'exif', 'versions_exif')
-                        ->leftJoin('p.file', 'file')
-                        ->leftJoin('p.catalog', 'catalog')
-                        ->leftJoin('p.place', 'place')
-                        ->leftJoin('p.validatedVersion', 'validatedVersion')
-                        ->leftJoin('p.versions', 'versions')
-                        ->leftJoin('validatedVersion.exif', 'exif')
-                        ->leftJoin('versions.exif', 'versions_exif')
-                        ->orderBy('versions.versionNumber', 'DESC')
+            return $this->getBaseFrontQuery()
                         ->andWhere('p.id = :id')
                         ->setParameter('id', $id)
                         ->getQuery()
                         ->getOneOrNullResult()
+            ;
+        }
+        
+        public function byIdAdmin(int $id): ?Picture
+        {
+            return $this->getBaseAdminQuery()
+                        ->orderBy('pictures_versions.versionNumber', 'DESC')
+                        ->andWhere('p.id = :id')
+                        ->setParameter('id', $id)
+                        ->getQuery()
+                        ->getOneOrNullResult()
+            ;
+        }
+        
+        /**
+         * @return QueryBuilder
+         */
+        public function getBaseAdminQuery()
+        {
+            return $this->createQueryBuilder('p')
+                        ->addSelect('catalog', 'pictures_file', 'pictures_versions', 'pictures_validatedversion', 'pictures_validatedversion_exif')
+                        ->leftJoin('p.catalog', 'catalog')
+                        ->leftJoin('p.file', 'pictures_file')
+                        ->leftJoin('p.versions', 'pictures_versions')
+                        ->leftJoin('p.validatedVersion', 'pictures_validatedversion')
+                        ->leftJoin('pictures_validatedversion.exif', 'pictures_validatedversion_exif')
+            ;
+        }
+        
+        /**
+         * @return QueryBuilder
+         */
+        public function getBaseFrontQuery()
+        {
+            return $this->createQueryBuilder('p')
+                        ->addSelect('catalog', 'catalog_parent', 'pictures_file', 'pictures_validatedversion', 'pictures_validatedversion_exif')
+                        ->leftJoin('p.catalog', 'catalog')
+                        ->leftJoin('catalog.parent', 'catalog_parent')
+                        ->leftJoin('p.file', 'pictures_file')
+                        ->leftJoin('p.validatedVersion', 'pictures_validatedversion')
+                        ->leftJoin('pictures_validatedversion.exif', 'pictures_validatedversion_exif')
+                        ->andWhere('p.enabled = :enabled')
+                        ->setParameter('enabled', true)
             ;
         }
         

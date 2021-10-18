@@ -4,6 +4,8 @@
     
     use App\Entity\Catalog\Catalog;
     use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+    use Doctrine\ORM\Query\Expr\Join;
+    use Doctrine\ORM\QueryBuilder;
     use Doctrine\Persistence\ManagerRegistry;
     
     /**
@@ -25,7 +27,7 @@
          */
         public function search(?string $query)
         {
-            $qb = $this->createQueryBuilder('c');
+            $qb = $this->getBaseFrontQuery();
             
             if ($query) {
                 $qb->andWhere('c.name LIKE :query')
@@ -43,11 +45,24 @@
          * @return Catalog|null
          * @throws \Doctrine\ORM\NonUniqueResultException
          */
-        public function byId(int $id)
+        public function byIdFront(int $id)
         {
-            return $this->createQueryBuilder('c')
-                        ->addSelect('pictures')
-                        ->leftJoin('c.pictures', 'pictures')
+            return $this->getBaseFrontQuery()
+                        ->andWhere('c.id = :id')
+                        ->setParameter('id', $id)
+                        ->getQuery()
+                        ->getOneOrNullResult()
+            ;
+        }
+        
+        /**
+         * @param int $id
+         * @return Catalog|null
+         * @throws \Doctrine\ORM\NonUniqueResultException
+         */
+        public function byIdAdmin(int $id)
+        {
+            return $this->getBaseAdminQuery()
                         ->andWhere('c.id = :id')
                         ->setParameter('id', $id)
                         ->getQuery()
@@ -58,15 +73,60 @@
         /**
          * @return Catalog[]
          */
-        public function getRoot()
+        public function getRootFront()
+        {
+            return $this->getBaseFrontQuery()
+                        ->andWhere('c.parent IS NULL')
+                        ->getQuery()
+                        ->getResult()
+            ;
+        }
+        
+        /**
+         * @return Catalog[]
+         */
+        public function getRootAdmin()
         {
             $this->getEntityManager()->getConfiguration()->addCustomHydrationMode('tree', 'Gedmo\Tree\Hydrator\ORM\TreeObjectHydrator');
-            return $this->createQueryBuilder('c')
-                        ->addSelect('pictures')
-                        ->leftJoin('c.pictures', 'pictures')
+            return $this->getBaseAdminQuery()
                         ->getQuery()
                         ->setHint(\Doctrine\ORM\Query::HINT_INCLUDE_META_COLUMNS, true)
                         ->getResult('tree')
+            ;
+        }
+        
+        /**
+         * @return QueryBuilder
+         */
+        public function getBaseAdminQuery()
+        {
+            return $this->createQueryBuilder('c')
+                        ->addSelect('children', 'pictures', 'pictures_file', 'pictures_validatedversion', 'pictures_validatedversion_exif')
+                        ->leftJoin('c.children', 'children')
+                        ->leftJoin('c.pictures', 'pictures')
+                        ->leftJoin('pictures.file', 'pictures_file')
+                        ->leftJoin('pictures.validatedVersion', 'pictures_validatedversion')
+                        ->leftJoin('pictures_validatedversion.exif', 'pictures_validatedversion_exif')
+                        ->orderBy('c.name', 'ASC')
+            ;
+        }
+        
+        /**
+         * @return QueryBuilder
+         */
+        public function getBaseFrontQuery()
+        {
+            return $this->createQueryBuilder('c')
+                        ->addSelect('children', 'children_pictures', 'pictures', 'pictures_file', 'pictures_validatedversion', 'pictures_validatedversion_exif')
+                        ->leftJoin('c.children', 'children', Join::WITH, 'children.enabled = true')
+                        ->leftJoin('children.pictures', 'children_pictures', Join::WITH, 'children_pictures.enabled = true')
+                        ->leftJoin('c.pictures', 'pictures', Join::WITH, 'pictures.enabled = true')
+                        ->leftJoin('pictures.file', 'pictures_file')
+                        ->leftJoin('pictures.validatedVersion', 'pictures_validatedversion')
+                        ->leftJoin('pictures_validatedversion.exif', 'pictures_validatedversion_exif')
+                        ->andWhere('c.enabled = :enabled')
+                        ->setParameter('enabled', true)
+                        ->orderBy('c.name', 'ASC')
             ;
         }
         

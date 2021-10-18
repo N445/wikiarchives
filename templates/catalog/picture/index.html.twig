@@ -3,33 +3,42 @@
 {% block title %}Picture index{% endblock %}
 
 {% block body %}
-    <h1>Picture index</h1>
+    <div class="container-fluid">
+        <h1>Picture index</h1>
 
-    <table class="table">
-        <thead>
+        <table class="datatable table">
+            <thead>
             <tr>
                 <th>Id</th>
                 <th>Name</th>
                 <th>actions</th>
             </tr>
-        </thead>
-        <tbody>
-        {% for picture in pictures %}
-            <tr>
-                <td>{{ picture.id }}</td>
-                <td>{{ picture.name }}</td>
-                <td>
-                    <a href="{{ path('ADMIN_CATALOG_PICTURE_SHOW', {'id': picture.id}) }}">show</a>
-                    <a href="{{ path('ADMIN_CATALOG_PICTURE_EDIT', {'id': picture.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for picture in pictures %}
+                <tr>
+                    <td>{{ picture.id }}</td>
+                    <td>{{ picture.name }}</td>
+                    <td>
+                        <a href="{{ path('ADMIN_CATALOG_PICTURE_SHOW', {'id': picture.id}) }}">show</a>
+                        <a href="{{ path('ADMIN_CATALOG_PICTURE_EDIT', {'id': picture.id}) }}">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 
-    <a href="{{ path('ADMIN_CATALOG_PICTURE_NEW') }}">Create new</a>
+        <a href="{{ path('ADMIN_CATALOG_PICTURE_NEW') }}">Create new</a>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('admin-catalog-datatable') }}
+{% endblock %}
+{% block javascripts %}
+    {{ encore_entry_script_tags('admin-catalog-datatable-js') }}
 {% endblock %}

@@ -65,6 +65,7 @@ class Picture
 
     public function __construct()
     {
+        $this->file = new File();
         $this->versions = new ArrayCollection();
         $this->validatedVersion = new Version();
         $this->addVersion($this->validatedVersion);

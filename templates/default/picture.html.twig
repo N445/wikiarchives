@@ -6,14 +6,46 @@
         {% include 'includes/catalog/_breadcrumb.html.twig' with {object:picture} %}
         <div class="row">
             <div class="col">
-                <h2 class="text-white">{{ picture.name }}</h2>
-                <img src="{{ vich_uploader_asset(picture.file) }}" alt="" class="img-fluid">
+                <div class="dropdown mb-3">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        Télécharger
+                    </button>
+
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        {#<li>
+                            <a class="dropdown-item" href="{{ path('PICTURE_DOWNLOAD', {'catalogId': picture.catalog.id, 'id': picture.id, 'string': 'square'}) }}">Carré</a>
+                            <a class="dropdown-item" href="{{ path('PICTURE_DOWNLOAD', {'catalogId': picture.catalog.id, 'id': picture.id, 'string': 'sm'}) }}">Petite taille</a>
+                            <a class="dropdown-item" href="{{ path('PICTURE_DOWNLOAD', {'catalogId': picture.catalog.id, 'id': picture.id, 'string': 'md'}) }}">Taille moyenne</a>
+                            <a class="dropdown-item" href="{{ path('PICTURE_DOWNLOAD', {'catalogId': picture.catalog.id, 'id': picture.id, 'string': 'lg'}) }}">Grande taille</a>
+                            <a class="dropdown-item" href="{{ path('PICTURE_DOWNLOAD', {'catalogId': picture.catalog.id, 'id': picture.id, 'string': 'vlg'}) }}">Extralarge</a>
+                            <a class="dropdown-item" href="{{ path('PICTURE_DOWNLOAD', {'catalogId': picture.catalog.id, 'id': picture.id, 'string': 'original'}) }}">Originale</a>
+                        </li>#}
+                        <li>
+                            <a target="_blank" class="dropdown-item" href="{{ vich_uploader_asset(picture.file)|imagine_filter('picture_square') }}">Carré</a>
+                            <a target="_blank" class="dropdown-item" href="{{ vich_uploader_asset(picture.file)|imagine_filter('picture_sm') }}">Petite taille</a>
+                            <a target="_blank" class="dropdown-item" href="{{ vich_uploader_asset(picture.file)|imagine_filter('picture_md') }}">Taille moyenne</a>
+                            <a target="_blank" class="dropdown-item" href="{{ vich_uploader_asset(picture.file)|imagine_filter('picture_lg') }}">Grande taille</a>
+                            <a target="_blank" class="dropdown-item" href="{{ vich_uploader_asset(picture.file)|imagine_filter('picture_vlg') }}">Extra large</a>
+                            <a target="_blank" class="dropdown-item" href="{{ vich_uploader_asset(picture.file) }}">Originale</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <img src="{{ vich_uploader_asset(picture.file)|imagine_filter('picture') }}" alt="{{ picture.name }}" class="img-fluid rounded">
             </div>
             <div class="col">
-                <a href="{{ path('PICTURE_CHANGE', {'catalogId': picture.catalog.id, 'id': picture.id}) }}">
-                    Proposer une modification
-                </a>
+
+                <h2 class="text-white">{{ picture.name }}</h2>
+                <div class="description">
+                    {{ picture.description|raw }}
+                </div>
                 {% include 'includes/catalog/_picture-exif.html.twig' %}
+                <p>
+                    <a class="btn btn-primary"
+                       href="{{ path('PICTURE_CHANGE', {'catalogId': picture.catalog.id, 'id': picture.id}) }}">
+                        Proposer une modification
+                    </a>
+                </p>
             </div>
         </div>
     </div>

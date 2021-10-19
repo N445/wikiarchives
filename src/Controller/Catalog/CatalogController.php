@@ -38,19 +38,18 @@
         {
             $trees = $this->catalogRepository->getRootAdmin();
             
-            $catalog = (new Catalog())->setName('Non classé');
-            
-            if ($id) {
-                if (!$catalog = $this->catalogRepository->byIdAdmin($id)) {
-                    $catalog = (new Catalog())->setName('Non classé');
-                }
-            } else {
-                if ($catalog = $trees[0] ?? null) {
-                    return $this->redirectToRoute('ADMIN_CATALOG_CATALOG_INDEX', [
-                        'id' => $catalog->getId(),
-                    ]);
-                }
+            if (!$id) {
+                $catalog = (new Catalog())->setName(Catalog::ROOT);
+                $this->em->persist($catalog);
+                $this->em->flush();
+                return $this->redirectToRoute('ADMIN_CATALOG_CATALOG_INDEX', [
+                    'id' => $catalog->getId(),
+                ]);
             }
+            $catalog = $this->catalogRepository->byIdAdmin($id);
+//            if (!$catalog = $this->catalogRepository->byIdAdmin($id)) {
+//                $catalog = (new Catalog())->setName('Non classé');
+//            }
             
             return $this->render('catalog/catalog/index.html.twig', [
                 'trees' => $trees,

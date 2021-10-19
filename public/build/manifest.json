@@ -14,12 +14,12 @@
   "build/runtime.js": "/build/runtime.js",
   "build/vendors-node_modules_jquery_dist_jquery_js.js": "/build/vendors-node_modules_jquery_dist_jquery_js.js",
   "build/vendors-node_modules_core-js_modules_es_array_find_js.js": "/build/vendors-node_modules_core-js_modules_es_array_find_js.js",
+  "build/vendors-node_modules_datatables_net-bs5_js_dataTables_bootstrap5_js.js": "/build/vendors-node_modules_datatables_net-bs5_js_dataTables_bootstrap5_js.js",
   "build/vendors-node_modules_bootstrap_dist_js_bootstrap_esm_js.js": "/build/vendors-node_modules_bootstrap_dist_js_bootstrap_esm_js.js",
   "build/vendors-node_modules_core-js_modules_es_array_for-each_js-node_modules_core-js_modules_es_str-cc3808.js": "/build/vendors-node_modules_core-js_modules_es_array_for-each_js-node_modules_core-js_modules_es_str-cc3808.js",
   "build/vendors-node_modules_core-js_modules_es_array_concat_js-node_modules_core-js_modules_es_array-bb3cca.js": "/build/vendors-node_modules_core-js_modules_es_array_concat_js-node_modules_core-js_modules_es_array-bb3cca.js",
   "build/vendors-node_modules_tinymce_icons_default_icons_js-node_modules_tinymce_themes_silver_theme_-f1fc69.js": "/build/vendors-node_modules_tinymce_icons_default_icons_js-node_modules_tinymce_themes_silver_theme_-f1fc69.js",
   "build/vendors-node_modules_noty_lib_noty_js.js": "/build/vendors-node_modules_noty_lib_noty_js.js",
-  "build/vendors-node_modules_datatables_net_js_jquery_dataTables_js.js": "/build/vendors-node_modules_datatables_net_js_jquery_dataTables_js.js",
   "build/skins/ui/oxide/skin.css": "/build/skins/ui/oxide//skin.css",
   "build/skins/ui/oxide-dark/skin.css": "/build/skins/ui/oxide-dark//skin.css",
   "build/skins/ui/oxide/skin.min.css": "/build/skins/ui/oxide//skin.min.css",
@@ -56,9 +56,5 @@
   "build/skins/ui/oxide-dark/content.mobile.css": "/build/skins/ui/oxide-dark//content.mobile.css",
   "build/skins/ui/oxide/content.mobile.css": "/build/skins/ui/oxide//content.mobile.css",
   "build/skins/ui/oxide-dark/content.mobile.min.css": "/build/skins/ui/oxide-dark//content.mobile.min.css",
-  "build/skins/ui/oxide/content.mobile.min.css": "/build/skins/ui/oxide//content.mobile.min.css",
-  "build/vendors-node_modules_datatables_net-bs5_js_dataTables_bootstrap5_js.js": "/build/vendors-node_modules_datatables_net-bs5_js_dataTables_bootstrap5_js.js",
-  "build/vendors-node_modules_datatables_net-datetime_dist_dataTables_dateTime_js-node_modules_datatab-a22e1b.js": "/build/vendors-node_modules_datatables_net-datetime_dist_dataTables_dateTime_js-node_modules_datatab-a22e1b.js",
-  "build/vendors-node_modules_datatables_net-scroller-bs5_js_scroller_bootstrap5_js-node_modules_datat-9afbb3.js": "/build/vendors-node_modules_datatables_net-scroller-bs5_js_scroller_bootstrap5_js-node_modules_datat-9afbb3.js",
-  "build/vendors-node_modules_datatables_net-scroller-bs5_js_scroller_bootstrap5_js-node_modules_datat-1f1a14.js": "/build/vendors-node_modules_datatables_net-scroller-bs5_js_scroller_bootstrap5_js-node_modules_datat-1f1a14.js"
+  "build/skins/ui/oxide/content.mobile.min.css": "/build/skins/ui/oxide//content.mobile.min.css"
 }

@@ -4,9 +4,11 @@
     
     use App\Entity\Catalog\Catalog;
     use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+    use Doctrine\ORM\EntityManagerInterface;
     use Doctrine\ORM\Query\Expr\Join;
     use Doctrine\ORM\QueryBuilder;
     use Doctrine\Persistence\ManagerRegistry;
+    use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
     
     /**
      * @method Catalog|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,12 +16,17 @@
      * @method Catalog[]    findAll()
      * @method Catalog[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
      */
-    class CatalogRepository extends ServiceEntityRepository
+    class CatalogRepository extends NestedTreeRepository
     {
-        public function __construct(ManagerRegistry $registry)
+        public function __construct(EntityManagerInterface $manager)
         {
-            parent::__construct($registry, Catalog::class);
+            parent::__construct($manager, $manager->getClassMetadata(Catalog::class));
         }
+
+//        public function __construct(ManagerRegistry $registry)
+//        {
+//            parent::__construct($registry, Catalog::class);
+//        }
         
         /**
          * @param string|null $query
@@ -76,9 +83,12 @@
         public function getRootFront()
         {
             return $this->getBaseFrontQuery()
-                        ->andWhere('c.parent IS NULL')
+//                        ->andWhere('c.parent IS NULL')
+                        ->andWhere('c.name = :rootName')
+                        ->setParameter('rootName', Catalog::ROOT)
+                        ->orderBy('c.lft', 'ASC')
                         ->getQuery()
-                        ->getResult()
+                        ->getOneOrNullResult()
             ;
         }
         
@@ -89,6 +99,7 @@
         {
             $this->getEntityManager()->getConfiguration()->addCustomHydrationMode('tree', 'Gedmo\Tree\Hydrator\ORM\TreeObjectHydrator');
             return $this->getBaseAdminQuery()
+                        ->orderBy('c.lft', 'ASC')
                         ->getQuery()
                         ->setHint(\Doctrine\ORM\Query::HINT_INCLUDE_META_COLUMNS, true)
                         ->getResult('tree')
@@ -107,7 +118,6 @@
                         ->leftJoin('pictures.file', 'pictures_file')
                         ->leftJoin('pictures.validatedVersion', 'pictures_validatedversion')
                         ->leftJoin('pictures_validatedversion.exif', 'pictures_validatedversion_exif')
-                        ->orderBy('c.name', 'ASC')
             ;
         }
         

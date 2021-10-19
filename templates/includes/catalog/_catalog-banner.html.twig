@@ -8,7 +8,7 @@
     <div class="content">
         <div class="container">
             <h1 class="catalog-name">{{ catalog.name }}</h1>
-            {% if catalog.parent %}
+            {% if catalog.parent.name != constant('App\\Entity\\Catalog\\Catalog::ROOT') %}
                 <a href="{{ path('CATALOG', {'id': catalog.parent.id}) }}" class="btn btn-primary">
                     Remonter d'un dossier
                 </a>

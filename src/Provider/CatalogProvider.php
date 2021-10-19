@@ -15,7 +15,7 @@
     
         public function root()
         {
-            return $this->catalogRepository->getRootFront($id);
+            return $this->catalogRepository->getRootFront();
         }
     
     

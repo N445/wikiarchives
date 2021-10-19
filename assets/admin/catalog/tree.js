@@ -2,7 +2,7 @@ var $ = jQuery = require("jquery");
 
 require('./../../lib/vakata-jstree/dist/jstree')
 const bootstrap = require('bootstrap');
-require( 'datatables.net-bs5' );
+require('datatables.net-bs5');
 
 
 // const FilePond = require('filepond');
@@ -18,10 +18,15 @@ import Routing from '../../../vendor/friendsofsymfony/jsrouting-bundle/Resources
 
 Routing.setRoutingData(routes);
 
+let tree;
+let filepond;
+
 class Directory {
     id;
     $node;
     $nodeParent;
+    $prevId;
+    $nextId;
     inputDirectoryParent;
 
     constructor() {
@@ -148,10 +153,16 @@ class Directory {
     }
 
     changeParent(parentId) {
+        let that = this;
+
+        console.log(this.getSiblings());
+
         $.ajax({
             url: Routing.generate('ADMIN_AJAX_CATALOG_CATALOG_SET_PARENT', {
                 id: this.id,
                 parentId: parentId,
+                catalogPrevId: that.$prevId,
+                catalogNextId: that.$nextId,
             }),
             method: 'POST',
         });
@@ -194,266 +205,33 @@ class Directory {
         return this.$nodeParent ? this.$nodeParent : '#';
     }
 
-
-}
-
-class File {
-    id;
-    modalAdd;
-    modalAddContent;
-    modalAddForm;
-    $nodeParent;
-    directoryId;
-    directoryNbMinDay;
-    modalEdit;
-    modalEditForm;
-    modalEditContent;
-
-    constructor() {
-        var that = this;
-        that.modalAdd = $('#lawModalAdd');
-        that.modalAddContent = that.modalAdd.find('.newLawContent');
-        that.modalAddForm = that.modalAdd.find('form').on('submit', function (e) {
-            e.preventDefault();
-            that.addSumbit();
-        });
-
-        that.modalEdit = $('#lawModalEdit');
-        that.modalEditContent = that.modalEdit.find('.editLawContent');
-
-        that.modalShow = $('#lawModalShow');
-        that.modalShowContent = that.modalShow.find('.showLawContent');
-    }
-
-    hideAddModal() {
-        this.modalAdd.modal('hide');
-    }
-
-    hideEditModal() {
-        this.modalEdit.modal('hide');
-    }
-
-    add() {
-        var that = this;
-        $.ajax({
-            url: Routing.generate('AJAX_LAW_NEW', {
-                siteid: SITE_ID,
-                directoryId: that.directoryId,
-            }),
-            method: 'GET',
-        })
-            .done(function (response) {
-                that.modalAddForm = $(response.html);
-                that.modalAddContent.html(that.modalAddForm);
-                that.modalAdd.modal('show');
-                that.initFlatPikr(that.modalAddForm);
-
-                that.modalAddForm.on('submit', function (e) {
-                    e.preventDefault();
-                    that.addSumbit();
-                });
-            })
-        ;
-
-
-    }
-
-    addSumbit() {
-        var that = this;
-        $.ajax({
-            url: Routing.generate('AJAX_LAW_NEW', {
-                'siteid': SITE_ID,
-                'directoryId': that.directoryId,
-            }),
-            method: 'POST',
-            dataType: 'json',
-            processData: false,
-            contentType: false,
-            data: new FormData(that.modalAddForm[0]),
-            context: this,
-        })
-            .done(function (response) {
-
-                if (!response.success) {
-                    addNoty('error', response.message);
-                    var html = $(response.html);
-                    html.on('submit', function (e) {
-                        e.preventDefault();
-                        that.addSumbit();
-                    });
-
-                    that.modalAddForm.replaceWith(html);
-                    that.modalAddForm = html;
-                    that.initFlatPikr(html);
-                    return false;
-                }
-
-                var $node = tree.jstree().get_node(that.$node);
-
-                // selectNode($(`#${$node.a_attr.id}`));
-
-                that.modalAddForm[0].reset();
-                that.hideAddModal();
-            })
-            .always(function () {
-                loader.addClass('d-none');
-            })
-        ;
-    }
-
-    edit() {
-        var that = this;
-        $.ajax({
-            url: Routing.generate('AJAX_LAW_EDIT', {
-                siteid: SITE_ID,
-                directoryId: that.directoryId,
-                id: that.id,
-            }),
-            method: 'GET',
-        })
-            .done(function (response) {
-                that.modalEditForm = $(response.html);
-
-                that.modalEditForm.on('submit', function (e) {
-                    e.preventDefault();
-                    that.editSubmit();
-                });
-                that.modalEditContent.html(that.modalEditForm);
-                that.initFlatPikr(that.modalEditForm);
-
-                that.modalEdit.modal('show');
-            })
-        ;
-    }
-
-    editSubmit() {
-        var that = this;
-        $.ajax({
-            url: Routing.generate('AJAX_LAW_EDIT', {
-                siteid: SITE_ID,
-                directoryId: that.directoryId,
-                id: that.id,
-            }),
-            method: 'POST',
-            dataType: 'json',
-            processData: false,
-            contentType: false,
-            data: new FormData(this.modalEditForm[0]),
-        })
-            .done(function (response) {
-                if (!response.success) {
-                    addNoty('error', response.message);
-                    that.modalEditForm.replaceWith(response.html);
-                    that.modalEditForm = $(response.html);
-                    that.modalEditForm.on('submit', function (e) {
-                        e.preventDefault();
-                        that.editSubmit();
-                    });
-                    return false;
-                }
-
-                directory.open();
-
-                that.modalEditForm[0].reset();
-                that.hideEditModal();
-            })
-            .always(function () {
-                loader.addClass('d-none');
-            })
-        ;
-    }
-
-    show() {
-        var that = this;
-        $.ajax({
-            url: Routing.generate('AJAX_LAW_SHOW', {
-                siteid: SITE_ID,
-                directoryId: that.directoryId,
-                id: that.id,
-            }),
-            method: 'GET',
-        })
-            .done(function (response) {
-                that.modalShowContent.html($(response.html));
-                that.modalShow.modal('show');
-            })
-        ;
-    }
-
-    remove() {
-        var that = this;
-        bootbox.confirm("Supprimer le fichier", function (result) {
-            if (ajax) {
-                return false;
-            }
-            loader.removeClass('d-none');
-
-            $.ajax({
-                url: Routing.generate('AJAX_LAW_DELETE', {
-                    siteid: SITE_ID,
-                    directoryId: that.directoryId,
-                    id: that.id,
-                }),
-                method: 'POST',
-                dataType: 'json',
-            })
-                .done(function (response) {
-                    directory.open();
-                })
-                .always(function () {
-                    loader.addClass('d-none');
-                })
-            ;
-        });
-    }
-
-    initFlatPikr(html) {
+    getSiblings() {
         let that = this;
-        let $html = $(html);
+        let li = $(`#${that.$node.id}`);
 
-        that.directoryNbMinDay = parseInt($html.find('[data-min-days]').attr('data-min-days'));
+        let prev = li.prev();
+        let next = li.next();
+        let prevnode;
+        let nextnode;
 
-        let startAt = $html.find('.input-date-start-at');
-        let endAt = $html.find('.input-date-end-at');
+        that.$prevId = null;
+        that.$nextId = null;
 
-        startAt = startAt.flatpickr({
-            altFormat: 'l j F Y H:i',
-            locale: 'fr',
-            altInput: true,
-            time_24hr: true,
-            enableTime: true,
-            minuteIncrement: 1,
-            // defaultDate: '2020-05-16',
-            onChange: function (selectedDates, dateStr, instance) {
-                let minDate = new Date(dateStr);
-                minDate.setDate(minDate.getDate() + that.directoryNbMinDay);
-                endAt.set('minDate', minDate);
-            },
-        });
-
-        endAt = endAt.flatpickr({
-            altFormat: 'l j F Y H:i',
-            locale: 'fr',
-            altInput: true,
-            time_24hr: true,
-            enableTime: true,
-            minuteIncrement: 1,
-            // defaultDate: '2020-05-16',
-            onChange: function (selectedDates, dateStr, instance) {
-                let maxDate = new Date(dateStr);
-                maxDate.setDate(maxDate.getDate() - that.directoryNbMinDay);
-                startAt.set('maxDate', maxDate);
-            },
-        });
+        if (prev.length > 0) {
+            prevnode = tree.jstree().get_node(prev.attr('id'));
+            that.$prevId = prevnode.a_attr['data-id'];
+        }
+        if (next.length > 0) {
+            nextnode = tree.jstree().get_node(next.attr('id'));
+            that.$nextId = nextnode.a_attr['data-id'];
+        }
     }
+
+
 }
 
 let directory = new Directory();
-let file = new File();
 
-
-let tree;
-let filepond;
 
 $(function () {
     // FilePond.create($('.filepond'));
@@ -465,9 +243,10 @@ $(function () {
         server: {
             process: {
                 method: 'POST',
+                url: $('.filepond').closest('form').attr('action')
             },
         },
-        maxParallelUploads: 5,
+        maxParallelUploads: 10,
         allowDrop: true,
         allowRevert: false,
         labelIdle: 'Glissez et déposez vos fichiers ou <span class="filepond--label-action"> Parcourir </span>',
@@ -484,6 +263,20 @@ $(function () {
         ],
         "contextmenu": {
             "items": function ($node) {
+                if ('true' === $node.a_attr['data-is-root']) {
+                    return {
+                        "create": {
+                            "separator_before": false,
+                            "separator_after": false,
+                            "label": "Ajouter",
+                            "action": function (obj) {
+                                directory.id = $node.a_attr["data-id"];
+                                directory.$nodeParent = $node;
+                                directory.add();
+                            },
+                        },
+                    }
+                }
                 return {
                     "create": {
                         "separator_before": false,
@@ -515,17 +308,6 @@ $(function () {
                             directory.remove($node);
                         },
                     },
-                    "createFile": {
-                        "separator_before": true,
-                        "separator_after": false,
-                        "label": "Ajouter fichier légal",
-                        "action": function (obj) {
-                            file.directoryId = $node.a_attr["data-id"];
-                            file.$node = $node;
-                            file.add();
-                        },
-                    },
-
                 };
             },
         },
@@ -534,25 +316,16 @@ $(function () {
         var node = element.node;
         var parent = tree.jstree().get_node(tree.jstree().get_parent(node));
         var parentId = parent.a_attr ? parent.a_attr["data-id"] : null;
+        directory.$node = node;
+        directory.$nodeParent = parent;
         directory.id = node.a_attr["data-id"];
         directory.changeParent(parentId);
     })
     ;
 
 
-    // selectNode($('.tree a[data-id]'));
     directory.id = $('[data-current-catalog]').attr('data-current-catalog');
-    filepond.setOptions({
-        server: {
-            process: {
-                url: Routing.generate('AJAX_CATALOG_PICTURE_FILEPOND', {
-                    'directoryId': directory.id,
-                }),
-            },
-        },
-    });
-    //
-    // directory.id = $('.tree a[data-id]').attr('data-id');
+
 
     $('body')
         .on('click', '.tree a[data-id]', function () {

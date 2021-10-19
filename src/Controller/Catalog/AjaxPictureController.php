@@ -8,6 +8,7 @@
     use App\Repository\Catalog\PictureRepository;
     use App\Service\Catalog\PictureContentPopulator;
     use App\Service\Catalog\PictureExifPopulator;
+    use App\Service\Catalog\PictureUploadator;
     use App\Service\Catalog\PictureVersionHelper;
     use Doctrine\ORM\EntityManagerInterface;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -43,29 +44,18 @@
          * Création de la route "ajax media new"
          * @Route("/new-filepond/{directoryId}", name="AJAX_CATALOG_PICTURE_FILEPOND", methods={"POST"})
          */
-        public function ajaxMediaNewFilepond(int $directoryId, Request $request)
+        public function ajaxMediaNewFilepond(int $directoryId, Request $request, PictureUploadator $pictureUploadator)
         {
             if (!$catalog = $this->catalogRepository->byIdAdmin($directoryId)) {
                 return $this->json([
                     'text' => 'directory not found',
-                ], 404);
+                ]);
             }
             
             /** @var UploadedFile $uploadedFile */
             $uploadedFile = $request->files->get('filepond');
             
-            $filename = $uploadedFile->getClientOriginalName();
-            
-            $picture = (new Picture())->setCatalog($catalog);
-            $picture->getValidatedVersion()->setStatus(PictureVersionHelper::STATUS_ACCEPTED);
-            $file = $picture->getFile()->setImageFile($uploadedFile);
-            $picture->setFile($file);
-            
-            PictureExifPopulator::populate($picture);
-            PictureContentPopulator::setContent($picture);
-            
-            $this->em->persist($picture);
-            $this->em->flush();
+            $pictureUploadator->upload($catalog, $uploadedFile);
             
             return $this->json([
                 'success' => true,

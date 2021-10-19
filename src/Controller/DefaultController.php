@@ -10,6 +10,7 @@
     use App\Repository\Catalog\PictureRepository;
     use App\Security\Voter\PictureVersionVoter;
     use App\Service\Breadcrumb\BreadcrumbCreator;
+    use App\Service\Catalog\PictureDownloadProvider;
     use App\Service\Catalog\PictureVersionCloner;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -38,7 +39,7 @@
         public function index(): Response
         {
             return $this->render('default/index.html.twig', [
-                'roots' => $this->catalogProvider->root(),
+                'root' => $this->catalogProvider->root(),
             ]);
         }
         
@@ -82,6 +83,21 @@
                 'picture' => $picture,
             ]);
         }
+        
+        #[Route('/catalog/{catalogId}/picture/{id}/download/{size}', name: 'PICTURE_DOWNLOAD')]
+        public function pictureDownload(?int $catalogId = null, ?int $id = null, ?string $size, Request $request, PictureDownloadProvider $pictureDownloadProvider)
+        {
+            if (!$id) {
+                return $this->redirectToRoute('HOMEPAGE');
+            }
+            if (!$picture = $this->pictureProvider->byId($id)) {
+                return $this->redirectToRoute('HOMEPAGE');
+            }
+            
+//            return $this->redirect($pictureDownloadProvider->getResizedPicture($picture, $size));
+//            return $this->file($pictureDownloadProvider->getResizedPicture($picture, $size));
+        }
+        
         
         #[Route('/catalog/{catalogId}/picture/{id}/change', name: 'PICTURE_CHANGE')]
         public function pictureChange(?int $catalogId = null, ?int $id = null, Request $request): Response

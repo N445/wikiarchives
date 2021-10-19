@@ -102,7 +102,7 @@ class PictureController extends AbstractController
         if (!$picture = $this->pictureRepository->byIdAdmin($id)) {
             return $this->redirectToRoute('ADMIN_CATALOG_PICTURE_INDEX');
         }
-        dump($picture);
+        
         if ($this->isCsrfTokenValid('delete' . $picture->getId(), $request->request->get('_token'))) {
 //            $entityManager = $this->getDoctrine()->getManager();
 //            $entityManager->remove($picture);

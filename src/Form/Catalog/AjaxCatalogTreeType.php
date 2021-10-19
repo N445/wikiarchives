@@ -26,7 +26,7 @@
                 ])
                 ->add('imageFile', FileType::class, [
                     'label' => 'Couverture',
-                    'required' => !dump($builder->getData()->getImageName()),
+                    'required' => !$builder->getData()->getImageName(),
                 ])
                 ->add('parent', EntityType::class, [
                     'label' => 'Catalog parent',

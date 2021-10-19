@@ -41,22 +41,16 @@
             $vichPath = $this->uploaderHelper->asset($picture->getFile());
 //            $absolute = $this->kernel->getProjectDir() . '/public' . $vichPath;
 //            $path = './../../../public' . $this->uploaderHelper->asset($picture->getFile());
-            dump($vichPath);
-            dump(is_file($vichPath));
+
             if ($filter = $this->getLiipFilter($size)) {
                 if (!$this->imagineCacheManager->isStored($vichPath, $filter)) {
                     $response = $this->client->request('GET', $this->imagineCacheManager->getBrowserPath($vichPath, $filter));
-                    dump($response);
-                    dump($response->getStatusCode());
                 }
                 
                 $urlPath = $this->imagineCacheManager->resolve($vichPath, $filter);
                 $parsedUrl = parse_url($urlPath);
                 $absolute = $this->kernel->getProjectDir() . '/public' . $parsedUrl['path'];
-                dump($absolute);
-                dump(is_file($absolute));
                 $file = new File($absolute);
-                dump($file);
                 return $file;
             }
             

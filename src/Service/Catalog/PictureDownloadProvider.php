@@ -40,7 +40,7 @@
             $vichPath = $this->uploaderHelper->asset($picture->getFile());
             
             if ($filter = $this->getLiipFilter($size)) {
-                if (!dump($this->imagineCacheManager->isStored($vichPath, $filter))) {
+                if (!$this->imagineCacheManager->isStored($vichPath, $filter)) {
                     $this->client->request('GET', $this->imagineCacheManager->getBrowserPath($vichPath, $filter));
                 }
                 

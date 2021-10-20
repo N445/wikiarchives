@@ -37,7 +37,7 @@
                 $finalVersion->setExif($finalExif);
             }
             
-            return dump($finalVersion);
+            return $finalVersion;
         }
         
         private static function getVersionGetters()

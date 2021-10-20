@@ -134,9 +134,7 @@
             if ($request->getMethod() === 'POST') {
                 $submittedToken = $request->request->get('token');
                 if ($type = $request->get('type')) {
-                    dump($type);
                     if ($this->isCsrfTokenValid($type . '-version', $submittedToken)) {
-                        dump($finalVersion);
                         $versionValidator->valdiate($type, $picture, $version, $finalVersion);
                         return $this->redirectToRoute('ADMIN_CATALOG_PICTURE_TMP_VERSIONS', [
                             'id' => $picture->getId()

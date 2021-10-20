@@ -20,22 +20,33 @@ Encore
      * Each entry will result in one JavaScript file (e.g. app.js)
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
+    // Globals
     .addEntry('globalsjs', './assets/globals.js')
-    .addEntry('adminjs', './assets/admin.js')
-    .addEntry('mainjs', './assets/main.js')
     .addStyleEntry('globals', './assets/scss/globals.scss')
+
+    // Admin
+    .addEntry('adminjs', './assets/admin.js')
     .addStyleEntry('admin', './assets/scss/admin.scss')
+
+    // Custom
+    .addEntry('mainjs', './assets/main.js')
     .addStyleEntry('main', './assets/scss/main.scss')
 
-
+    // Admin tree
     .addEntry('admin-tree-js', './assets/admin/catalog/tree.js')
     .addStyleEntry('admin-tree', './assets/admin/catalog/tree.scss')
 
+    // Datatable
     .addEntry('admin-catalog-datatable-js', './assets/admin/catalog/catalog-datatable.js')
     .addStyleEntry('admin-catalog-datatable', './assets/admin/catalog/catalog-datatable.scss')
-    .addEntry('admin-picture-exif-collection', './assets/admin/catalog/picture-exif-collection.js')
 
+    // wysiwyg
     .addEntry('wysiwyg-js', './assets/wysiwyg.js')
+
+    .copyFiles({
+        from: 'node_modules/tinymce/skins',
+        to: 'skins/[path]/[name].[ext]'
+    })
 
     .copyFiles({
         from: 'node_modules/tinymce/skins',

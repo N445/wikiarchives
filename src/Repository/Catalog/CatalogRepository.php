@@ -93,6 +93,19 @@
         }
         
         /**
+         * @return Catalog|null
+         */
+        public function getRootOne(string $name = Catalog::ROOT)
+        {
+            return $this->getBaseAdminQuery()
+                        ->where('c.name = :rootName')
+                        ->setParameter('rootName', $name)
+                        ->getQuery()
+                        ->getOneOrNullResult()
+            ;
+        }
+        
+        /**
          * @return Catalog[]
          */
         public function getRootAdmin()
@@ -118,6 +131,7 @@
                         ->leftJoin('pictures.file', 'pictures_file')
                         ->leftJoin('pictures.validatedVersion', 'pictures_validatedversion')
                         ->leftJoin('pictures_validatedversion.exif', 'pictures_validatedversion_exif')
+                        ->leftJoin('pictures.tmpVersions', 'pictures_tmpVersions')
             ;
         }
         

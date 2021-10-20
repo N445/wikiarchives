@@ -72,6 +72,11 @@ class Version
      */
     private $picture;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Picture::class, inversedBy="tmpVersions")
+     */
+    private $tmpPicture;
+
     public function __construct()
     {
         $this->versionNumber = 1;
@@ -207,6 +212,18 @@ class Version
     public function setPicture(?Picture $picture): self
     {
         $this->picture = $picture;
+
+        return $this;
+    }
+
+    public function getTmpPicture(): ?Picture
+    {
+        return $this->tmpPicture;
+    }
+
+    public function setTmpPicture(?Picture $picture): self
+    {
+        $this->tmpPicture = $picture;
 
         return $this;
     }

@@ -1,0 +1,209 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}Picture{% endblock %}
+
+{% macro picture_version_show(version) %}
+    <div class="version">
+        <h3>Base</h3>
+        <table class="table table-sm table-bordered">
+            <tr>
+                <th>Nom</th>
+                <td>{{ version.name }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ version.description|raw }}</td>
+            </tr>
+        </table>
+    </div>
+{% endmacro %}
+{% macro picture_version_show_exif(version) %}
+    <div class="version">
+        <h3>Exif</h3>
+        <table class="table table-sm table-bordered">
+            <tr>
+                <th>title</th>
+                <td>{{ version.exif.title }}</td>
+            </tr>
+            <tr>
+                <th>author</th>
+                <td>{{ version.exif.author }}</td>
+            </tr>
+            <tr>
+                <th>camera</th>
+                <td>{{ version.exif.camera }}</td>
+            </tr>
+            <tr>
+                <th>caption</th>
+                <td>{{ version.exif.caption }}</td>
+            </tr>
+            <tr>
+                <th>copyright</th>
+                <td>{{ version.exif.copyright }}</td>
+            </tr>
+            <tr>
+                <th>creationdate</th>
+                <td>{{ version.exif.creationdate|date('Y-d-m H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>credit</th>
+                <td>{{ version.exif.credit }}</td>
+            </tr>
+            <tr>
+                <th>aperture</th>
+                <td>{{ version.exif.aperture }}</td>
+            </tr>
+            <tr>
+                <th>exposure</th>
+                <td>{{ version.exif.exposure }}</td>
+            </tr>
+            <tr>
+                <th>exposureMilliseconds</th>
+                <td>{{ version.exif.exposureMilliseconds }}</td>
+            </tr>
+            <tr>
+                <th>focalLength</th>
+                <td>{{ version.exif.focalLength }}</td>
+            </tr>
+            <tr>
+                <th>focalDistance</th>
+                <td>{{ version.exif.focalDistance }}</td>
+            </tr>
+            <tr>
+                <th>iso</th>
+                <td>{{ version.exif.iso }}</td>
+            </tr>
+            <tr>
+                <th>colorSpace</th>
+                <td>{{ version.exif.colorSpace }}</td>
+            </tr>
+            <tr>
+                <th>fileSize</th>
+                <td>{{ version.exif.fileSize }}</td>
+            </tr>
+            <tr>
+                <th>height</th>
+                <td>{{ version.exif.height }}</td>
+            </tr>
+            <tr>
+                <th>width</th>
+                <td>{{ version.exif.width }}</td>
+            </tr>
+            <tr>
+                <th>horizontalResolution</th>
+                <td>{{ version.exif.horizontalResolution }}</td>
+            </tr>
+            <tr>
+                <th>verticalResolution</th>
+                <td>{{ version.exif.verticalResolution }}</td>
+            </tr>
+            <tr>
+                <th>headline</th>
+                <td>{{ version.exif.headline }}</td>
+            </tr>
+            <tr>
+                <th>jobTitle</th>
+                <td>{{ version.exif.jobTitle }}</td>
+            </tr>
+            <tr>
+                <th>keywords</th>
+                <td>{{ version.exif.keywords|join(',') }}</td>
+            </tr>
+            <tr>
+                <th>mimeType</th>
+                <td>{{ version.exif.mimeType }}</td>
+            </tr>
+            <tr>
+                <th>orientation</th>
+                <td>{{ version.exif.orientation }}</td>
+            </tr>
+            <tr>
+                <th>software</th>
+                <td>{{ version.exif.software }}</td>
+            </tr>
+            <tr>
+                <th>source</th>
+                <td>{{ version.exif.source }}</td>
+            </tr>
+            <tr>
+                <th>gps</th>
+                <td>{{ version.exif.gps|join(',') }}</td>
+            </tr>
+
+        </table>
+    </div>
+{% endmacro %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+
+            </div>
+            <div class="col-md-4">
+
+            </div>
+            <div class="col-md-4">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <form action="{{ path('ADMIN_CATALOG_PICTURE_TMP_VERSIONS_SHOW', {'id': picture.id, 'versionId': version.id}) }}"
+                              method="post">
+                            <input type="hidden" name="token" value="{{ csrf_token('refused-version') }}"/>
+                            <input type="hidden" name="type" value="refused">
+                            <button type="submit" class="btn btn-outline-danger w-100">Refuser</button>
+                        </form>
+                    </div>
+                    <div class="col-md-6">
+                        <form action="{{ path('ADMIN_CATALOG_PICTURE_TMP_VERSIONS_SHOW', {'id': picture.id, 'versionId': version.id}) }}"
+                              method="post">
+                            <input type="hidden" name="token" value="{{ csrf_token('accepted-version') }}"/>
+                            <input type="hidden" name="type" value="accepted">
+                            <button type="submit" class="btn btn-outline-success w-100">Accepter</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <h2>Proposé</h2>
+                {{ _self.picture_version_show(version) }}
+            </div>
+            <div class="col-md-4">
+                <h2>En cours</h2>
+                <div class="current">
+                    {{ _self.picture_version_show(picture.validatedVersion) }}
+                </div>
+            </div>
+            <div class="col-md-4">
+                <h2>Final</h2>
+                <div class="final">
+                    {{ _self.picture_version_show(finalVersion) }}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                {{ _self.picture_version_show_exif(version) }}
+            </div>
+            <div class="col-md-4">
+                <div class="current-exif">
+                    {{ _self.picture_version_show_exif(picture.validatedVersion) }}
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="final-exif">
+                    {{ _self.picture_version_show_exif(finalVersion) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/diff2html/bundles/css/diff2html.min.css"/>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/diff2html/bundles/js/diff2html-ui.min.js"></script>
+{% endblock %}

@@ -35,6 +35,7 @@
         <th>Résolution</th>
         <th>Visible</th>
         <th>Exif</th>
+        <th>Validations en attentes</th>
         <th></th>
     </tr>
     </thead>
@@ -70,6 +71,12 @@
                 {% endif %}
             </td>
             <td>
+                {{ picture.tmpVersions|length }}
+            </td>
+            <td>
+                <a href="{{ path('ADMIN_CATALOG_PICTURE_SHOW',{'id':picture.id}) }}" class="btn btn-sm btn-info">
+                    Voir
+                </a>
                 <a href="{{ path('ADMIN_CATALOG_PICTURE_EDIT',{'id':picture.id}) }}" class="btn btn-sm btn-info">
                     Modifier
                 </a>

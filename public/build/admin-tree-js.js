@@ -12347,7 +12347,7 @@ module.exports = JSON.parse('{"base_url":"","routes":{"ADMIN_AJAX_CATALOG_CATALO
 },
 /******/ __webpack_require__ => { // webpackRuntimeModules
 /******/ var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-/******/ __webpack_require__.O(0, ["vendors-node_modules_jquery_dist_jquery_js","vendors-node_modules_datatables_net-bs5_js_dataTables_bootstrap5_js","vendors-node_modules_bootstrap_dist_js_bootstrap_esm_js","vendors-node_modules_core-js_modules_es_array_find_js","vendors-node_modules_core-js_modules_es_array_concat_js-node_modules_core-js_modules_es_array-fa659f"], () => (__webpack_exec__("./assets/admin/catalog/tree.js")));
+/******/ __webpack_require__.O(0, ["vendors-node_modules_jquery_dist_jquery_js","vendors-node_modules_core-js_internals_export_js-node_modules_core-js_internals_is-array_js-n-e836c4","vendors-node_modules_datatables_net-bs5_js_dataTables_bootstrap5_js","vendors-node_modules_bootstrap_dist_js_bootstrap_esm_js","vendors-node_modules_core-js_modules_es_array_index-of_js-node_modules_core-js_modules_es_arr-2a3fb0","vendors-node_modules_core-js_modules_es_array_concat_js-node_modules_core-js_modules_es_array-7ec783"], () => (__webpack_exec__("./assets/admin/catalog/tree.js")));
 /******/ var __webpack_exports__ = __webpack_require__.O();
 /******/ }
 ]);

@@ -3,10 +3,11 @@
 {% block title %}Picture{% endblock %}
 
 {% block body %}
-    <h1>Picture</h1>
+    <div class="container">
+        <h1>Picture</h1>
 
-    <table class="table">
-        <tbody>
+        <table class="table">
+            <tbody>
             <tr>
                 <th>Id</th>
                 <td>{{ picture.id }}</td>
@@ -15,12 +16,19 @@
                 <th>Name</th>
                 <td>{{ picture.name }}</td>
             </tr>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
 
-    <a href="{{ path('ADMIN_CATALOG_PICTURE_INDEX') }}">back to list</a>
+        <a href="{{ path('ADMIN_CATALOG_PICTURE_INDEX') }}">back to list</a>
+        <br>
 
-    <a href="{{ path('ADMIN_CATALOG_PICTURE_EDIT', {'id': picture.id}) }}">edit</a>
+        <a href="{{ path('ADMIN_CATALOG_PICTURE_EDIT', {'id': picture.id}) }}">edit</a>
+        <br>
 
-    {{ include('catalog/picture/_delete_form.html.twig') }}
+        <a href="{{ path('ADMIN_CATALOG_PICTURE_TMP_VERSIONS', {'id': picture.id}) }}">{{ picture.tmpVersions|length }}
+            modifications en attente
+        </a>
+
+        {{ include('catalog/picture/_delete_form.html.twig') }}
+    </div>
 {% endblock %}

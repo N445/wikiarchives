@@ -4,6 +4,7 @@
 namespace App\Traits;
 
 
+use App\Entity\User;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -29,12 +30,12 @@ trait BlameableTrait
     private $updatedBy;
 
 
-    public function getCreatedBy(): string
+    public function getCreatedBy(): User
     {
         return $this->createdBy;
     }
 
-    public function getUpdatedBy(): string
+    public function getUpdatedBy(): User
     {
         return $this->updatedBy;
     }

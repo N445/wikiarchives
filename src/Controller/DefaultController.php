@@ -128,7 +128,7 @@
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
-                $picture->addVersion($newVersion);
+                $picture->addTmpVersion($newVersion);
                 $em->flush();
                 $this->addFlash('success', 'Thanks for your participation');
                 return $this->redirectToRoute('PICTURE', [

@@ -95,7 +95,7 @@
             }
             
 //            return $this->redirect($pictureDownloadProvider->getResizedPicture($picture, $size));
-//            return $this->file($pictureDownloadProvider->getResizedPicture($picture, $size));
+            return $this->file($pictureDownloadProvider->getResizedPicture($picture, $size));
         }
         
         

@@ -12,21 +12,13 @@
                     </button>
 
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        {#<li>
-                            <a class="dropdown-item" href="{{ path('PICTURE_DOWNLOAD', {'catalogId': picture.catalog.id, 'id': picture.id, 'string': 'square'}) }}">Carré</a>
-                            <a class="dropdown-item" href="{{ path('PICTURE_DOWNLOAD', {'catalogId': picture.catalog.id, 'id': picture.id, 'string': 'sm'}) }}">Petite taille</a>
-                            <a class="dropdown-item" href="{{ path('PICTURE_DOWNLOAD', {'catalogId': picture.catalog.id, 'id': picture.id, 'string': 'md'}) }}">Taille moyenne</a>
-                            <a class="dropdown-item" href="{{ path('PICTURE_DOWNLOAD', {'catalogId': picture.catalog.id, 'id': picture.id, 'string': 'lg'}) }}">Grande taille</a>
-                            <a class="dropdown-item" href="{{ path('PICTURE_DOWNLOAD', {'catalogId': picture.catalog.id, 'id': picture.id, 'string': 'vlg'}) }}">Extralarge</a>
-                            <a class="dropdown-item" href="{{ path('PICTURE_DOWNLOAD', {'catalogId': picture.catalog.id, 'id': picture.id, 'string': 'original'}) }}">Originale</a>
-                        </li>#}
                         <li>
-                            <a target="_blank" class="dropdown-item" href="{{ vich_uploader_asset(picture.file)|imagine_filter('picture_square') }}">Carré</a>
-                            <a target="_blank" class="dropdown-item" href="{{ vich_uploader_asset(picture.file)|imagine_filter('picture_sm') }}">Petite taille</a>
-                            <a target="_blank" class="dropdown-item" href="{{ vich_uploader_asset(picture.file)|imagine_filter('picture_md') }}">Taille moyenne</a>
-                            <a target="_blank" class="dropdown-item" href="{{ vich_uploader_asset(picture.file)|imagine_filter('picture_lg') }}">Grande taille</a>
-                            <a target="_blank" class="dropdown-item" href="{{ vich_uploader_asset(picture.file)|imagine_filter('picture_vlg') }}">Extra large</a>
-                            <a target="_blank" class="dropdown-item" href="{{ vich_uploader_asset(picture.file) }}">Originale</a>
+                            <a target="_blank" class="dropdown-item" href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'square'}) }}">Carré</a>
+                            <a target="_blank" class="dropdown-item" href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'sm'}) }}">Petite taille</a>
+                            <a target="_blank" class="dropdown-item" href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'md'}) }}">Taille moyenne</a>
+                            <a target="_blank" class="dropdown-item" href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'lg'}) }}">Grande taille</a>
+                            <a target="_blank" class="dropdown-item" href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'vlg'}) }}">Extra large</a>
+                            <a target="_blank" class="dropdown-item" href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'original'}) }}">Originale</a>
                         </li>
                     </ul>
                 </div>

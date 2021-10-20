@@ -37,24 +37,22 @@
         
         public function getResizedPicture(Picture $picture, string $size)
         {
-            $filename = $picture->getFile()->getImageName();
             $vichPath = $this->uploaderHelper->asset($picture->getFile());
-//            $absolute = $this->kernel->getProjectDir() . '/public' . $vichPath;
-//            $path = './../../../public' . $this->uploaderHelper->asset($picture->getFile());
-
+            
             if ($filter = $this->getLiipFilter($size)) {
-                if (!$this->imagineCacheManager->isStored($vichPath, $filter)) {
-                    $response = $this->client->request('GET', $this->imagineCacheManager->getBrowserPath($vichPath, $filter));
+                if (!dump($this->imagineCacheManager->isStored($vichPath, $filter))) {
+                    $this->client->request('GET', $this->imagineCacheManager->getBrowserPath($vichPath, $filter));
                 }
                 
                 $urlPath = $this->imagineCacheManager->resolve($vichPath, $filter);
                 $parsedUrl = parse_url($urlPath);
                 $absolute = $this->kernel->getProjectDir() . '/public' . $parsedUrl['path'];
-                $file = new File($absolute);
-                return $file;
+                if (is_file($absolute)) {
+                    return new File($absolute);
+                }
             }
             
-            return $vichPath;
+            return new File($this->kernel->getProjectDir() . '/public' . $vichPath);
         }
         
         private function getLiipFilter(string $size)

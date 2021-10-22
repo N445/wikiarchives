@@ -5,7 +5,7 @@
     use App\Entity\Catalog\Picture;
     use App\Entity\Catalog\Picture\Version;
     use Doctrine\ORM\EntityManagerInterface;
-    
+
     class VersionValidator
     {
         private EntityManagerInterface $em;

@@ -13,17 +13,26 @@
 
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                         <li>
-                            <a target="_blank" class="dropdown-item" href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'square'}) }}">Carré</a>
-                            <a target="_blank" class="dropdown-item" href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'sm'}) }}">Petite taille</a>
-                            <a target="_blank" class="dropdown-item" href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'md'}) }}">Taille moyenne</a>
-                            <a target="_blank" class="dropdown-item" href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'lg'}) }}">Grande taille</a>
-                            <a target="_blank" class="dropdown-item" href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'vlg'}) }}">Extra large</a>
-                            <a target="_blank" class="dropdown-item" href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'original'}) }}">Originale</a>
+                            <a target="_blank" class="dropdown-item"
+                               href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'square'}) }}">Carré</a>
+                            <a target="_blank" class="dropdown-item"
+                               href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'sm'}) }}">Petite
+                                taille</a>
+                            <a target="_blank" class="dropdown-item"
+                               href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'md'}) }}">Taille
+                                moyenne</a>
+                            <a target="_blank" class="dropdown-item"
+                               href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'lg'}) }}">Grande
+                                taille</a>
+                            <a target="_blank" class="dropdown-item"
+                               href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'vlg'}) }}">Extra
+                                large</a>
+                            <a target="_blank" class="dropdown-item"
+                               href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'original'}) }}">Originale</a>
                         </li>
                     </ul>
                 </div>
-
-                <img src="{{ vich_uploader_asset(picture.file)|imagine_filter('picture') }}" alt="{{ picture.name }}" class="img-fluid rounded">
+                <img src="{{ picture.file.imageName|imagine_filter('picture') }}" alt="{{ picture.file.imageName }}" class="img-fluid rounded">
             </div>
             <div class="col">
 

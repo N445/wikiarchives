@@ -20,3 +20,24 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
             - '../src/Tests/'
+
+
+    s3uplaoder:
+        class: Aws\S3\S3Client
+        factory: [Aws\S3\S3Client, 'factory']
+        arguments:
+            -
+#                version: YOUR_AWS_S3_VERSION (to be found in AWS console depending on your bucket region and version)
+                version: '%env(AWS_VERSION)%'
+                region: '%env(AWS_REGION)%'
+                credentials:
+                    key: '%env(AWS_KEY)%'
+                    secret: '%env(AWS_SECRET_KEY)%'
+
+    app.imagine.cache.resolver.aws_s3_resolver:
+        class: Liip\ImagineBundle\Imagine\Cache\Resolver\AwsS3Resolver
+        arguments:
+            - "@s3uplaoder"
+            - '%env(AWS_BUCKET_NAME)%'
+        tags:
+            - { name: "liip_imagine.cache.resolver", resolver: "aws_s3_resolver" }

@@ -1,0 +1,26 @@
+knp_gaufrette:
+  stream_wrapper: ~
+  adapters:
+    picture_adapter:
+      aws_s3:
+        service_id: s3uplaoder
+        bucket_name: '%env(AWS_BUCKET_NAME)%'
+        detect_content_type: true
+        options:
+          create: true
+          directory: picture
+          acl: 'public-read'
+    catalog_adapter:
+      aws_s3:
+        service_id: s3uplaoder
+        bucket_name: '%env(AWS_BUCKET_NAME)%'
+        detect_content_type: true
+        options:
+          create: true
+          directory: catalog
+          acl: 'public-read'
+  filesystems:
+    picture_fs:
+      adapter:    picture_adapter
+    catalog_fs:
+      adapter:    catalog_adapter

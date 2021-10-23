@@ -4,11 +4,12 @@
     
     use App\Entity\Catalog\Picture;
     use Liip\ImagineBundle\Imagine\Cache\CacheManager;
-    use Symfony\Component\HttpFoundation\File\File;
+    use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+    use Symfony\Component\HttpFoundation\StreamedResponse;
     use Symfony\Component\HttpKernel\KernelInterface;
     use Symfony\Contracts\HttpClient\HttpClientInterface;
     use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
-    
+
     class PictureDownloadProvider
     {
         public const  SQUARE = 'square';
@@ -37,22 +38,19 @@
         
         public function getResizedPicture(Picture $picture, string $size)
         {
-            $vichPath = $this->uploaderHelper->asset($picture->getFile());
-            
+            $imageName = $picture->getFile()->getImageName();
+    
             if ($filter = $this->getLiipFilter($size)) {
-                if (!$this->imagineCacheManager->isStored($vichPath, $filter)) {
-                    $this->client->request('GET', $this->imagineCacheManager->getBrowserPath($vichPath, $filter));
+                if (!$this->imagineCacheManager->isStored($imageName, $filter)) {
+                    $this->client->request('GET', $this->imagineCacheManager->getBrowserPath($imageName, $filter));
                 }
-                
-                $urlPath = $this->imagineCacheManager->resolve($vichPath, $filter);
-                $parsedUrl = parse_url($urlPath);
-                $absolute = $this->kernel->getProjectDir() . '/public' . $parsedUrl['path'];
-                if (is_file($absolute)) {
-                    return new File($absolute);
-                }
+        
+                $urlPath = $this->imagineCacheManager->resolve($imageName, $filter);
+        
+                return $this->getResponse($imageName, $urlPath);
             }
-            
-            return new File($this->kernel->getProjectDir() . '/public' . $vichPath);
+    
+            return $this->getResponse($imageName, $this->uploaderHelper->asset($picture->getFile()));
         }
         
         private function getLiipFilter(string $size)
@@ -70,5 +68,29 @@
                     return 'picture_vlg';
             }
             return null;
+        }
+    
+        private function getResponse(string $imageName, string $urlPath)
+        {
+            $response = new StreamedResponse();
+
+// set headers to force file download
+            $response->headers->set('Content-Type', 'application/force-download');
+            $response->headers->set(
+                'Content-Disposition',
+                $response->headers->makeDisposition(
+                    ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+                    $imageName
+                )
+            );
+
+// stream content from the URL to the browser
+            $response->setCallback(function () use ($urlPath) {
+                $c = curl_init($urlPath);
+                curl_exec($c);
+                curl_close($c);
+            });
+        
+            return $response;
         }
     }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "91965529e20ec81c072d009ce9f7bdb2",
+    "content-hash": "0bc8d9c2de5608d3b9e487898e4bb211",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -1915,6 +1915,39 @@
                 "source": "https://github.com/FriendsOfSymfony/FOSJsRoutingBundle/tree/2.7.0"
             },
             "time": "2020-11-20T10:38:12+00:00"
+        },
+        {
+            "name": "gaufrette/aws-s3-adapter",
+            "version": "v0.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Gaufrette/aws-s3-adapter.git",
+                "reference": "a37143f592d5cb0ba124451439af6e6da6784d89"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Gaufrette/aws-s3-adapter/zipball/a37143f592d5cb0ba124451439af6e6da6784d89",
+                "reference": "a37143f592d5cb0ba124451439af6e6da6784d89",
+                "shasum": ""
+            },
+            "require": {
+                "aws/aws-sdk-php": "~2||~3",
+                "ext-fileinfo": "*",
+                "knplabs/gaufrette": "~0.4@dev"
+            },
+            "type": "metapackage",
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "KnpLabs",
+                    "email": "hello@knplabs.com"
+                }
+            ],
+            "description": "Aws adapter for Gaufrette",
+            "support": {
+                "source": "https://github.com/Gaufrette/aws-s3-adapter/tree/master"
+            },
+            "time": "2017-06-08T11:37:42+00:00"
         },
         {
             "name": "gedmo/doctrine-extensions",

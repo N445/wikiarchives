@@ -127,6 +127,9 @@
             "config/routes/fos_js_routing.yaml"
         ]
     },
+    "gaufrette/aws-s3-adapter": {
+        "version": "v0.4.0"
+    },
     "gedmo/doctrine-extensions": {
         "version": "v3.1.0"
     },

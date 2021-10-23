@@ -1,10 +1,5 @@
 <div class="catalog-card card shadow-sm h-100">
-    {% if catalog.imageName %}
-        {% set catalogPath = vich_uploader_asset(catalog) %}
-    {% elseif catalog.pictures|length %}
-        {% set catalogPath = vich_uploader_asset(catalog.pictures|first) %}
-    {% endif %}
-    <img src="{{ catalogPath|imagine_filter('catalog_card_listing') }}" class="card-img-top"
+    <img src="{{ catalog.imageName |imagine_filter('catalog_card_listing') }}" class="card-img-top"
          alt="{{ catalog.name }}">
 
     <div class="card-body">

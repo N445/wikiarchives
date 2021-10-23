@@ -14,6 +14,7 @@
         "doctrine/orm": "^2.10",
         "fakerphp/faker": "^1.16",
         "friendsofsymfony/jsrouting-bundle": "^2.7",
+        "gaufrette/aws-s3-adapter": "^0.4.0",
         "knplabs/knp-gaufrette-bundle": "^0.7.1",
         "liip/imagine-bundle": "^2.6",
         "miljar/php-exif": "^0.6.5",

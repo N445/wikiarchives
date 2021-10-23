@@ -1,13 +1,6 @@
-{# <div class="card shadow-sm"> #}
-{# <img src="{{ vich_uploader_asset(picture)|imagine_filter('picture_card_listing') }}" class="card-img-top" alt="{{ picture.name }}"> #}
-{# <div class="card-body"> #}
-{# <h5 class="card-title">{{ picture.name }}</h5> #}
-{# </div> #}
-{# </div> #}
-
 <div class="picture-card rounded">
     <a href="{{ path('PICTURE', {'catalogId':picture.catalog.id,'id': picture.id}) }}" title="{{ picture.name }}">
-        <img src="{{ vich_uploader_asset(picture.file)|imagine_filter('picture_card_listing') }}"
+        <img src="{{ picture.file.imageName|imagine_filter('picture_card_listing') }}"
              class="img-fluid" alt="{{ picture.name }}">
     </a>
 </div>

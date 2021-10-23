@@ -1,24 +1,19 @@
 vich_uploader:
   db_driver: orm
-
-  #mappings:
-  #    products:
-  #        uri_prefix: /images/products
-  #        upload_destination: '%kernel.project_dir%/public/images/products'
-
-
+  twig:      true
+  storage: gaufrette
   mappings:
     catalog_picture:
-      uri_prefix: /uploads/catalog/picture
-      upload_destination: '%kernel.project_dir%/public/uploads/catalog/picture'
+      uri_prefix: "%env(AWS_BASE_URL)%/picture"
+      upload_destination: picture_fs
       namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
-      inject_on_load: false
+      inject_on_load: true
       delete_on_update: true
       delete_on_remove: true
     catalog_cover:
-      uri_prefix: /uploads/catalog/cover
-      upload_destination: '%kernel.project_dir%/public/uploads/catalog/cover'
+      uri_prefix: "%env(AWS_BASE_URL)%/catalog"
+      upload_destination: catalog_fs
       namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
-      inject_on_load: false
+      inject_on_load: true
       delete_on_update: true
       delete_on_remove: true

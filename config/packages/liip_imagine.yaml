@@ -1,46 +1,77 @@
 # See dos how to configure the bundle: https://symfony.com/doc/current/bundles/LiipImagineBundle/basic-usage.html
 liip_imagine:
-    # valid drivers options include "gd" or "gmagick" or "imagick"
     driver: "imagick"
+    cache: aws_s3_resolver
+    loaders:
+      loader_aws_s3_picture:
+        stream:
+          wrapper: gaufrette://picture_fs/
+      loader_aws_s3_catalog:
+        stream:
+          wrapper: gaufrette://catalog_fs/
+    resolvers:
+      aws_s3_resolver:
+        aws_s3:
+          client_config:
+            credentials:
+              key: '%env(AWS_KEY)%'
+              secret: '%env(AWS_SECRET_KEY)%'
+            region: '%env(AWS_REGION)%'
+            version: '%env(AWS_VERSION)%'
+          bucket: '%env(AWS_BUCKET_NAME)%'
+          get_options:
+            Scheme: https
+          put_options:
+            CacheControl: "max-age=86400"
+    # valid drivers options include "gd" or "gmagick" or "imagick"
     filter_sets:
       cache: ~
       catalog_banner:
+        data_loader: loader_aws_s3_catalog
         quality: 75
         filters:
           thumbnail: { size: [1920, 500], mode: outbound }
       catalog_card_listing:
+        data_loader: loader_aws_s3_catalog
         quality: 75
         filters:
           thumbnail: { size: [260, 260], mode: outbound }
       picture_card_listing:
+        data_loader: loader_aws_s3_picture
         quality: 75
         filters:
           thumbnail: { size: [260, 260], mode: outbound }
       picture:
+        data_loader: loader_aws_s3_picture
         quality: 75
         filters:
           relative_resize:
             widen: 1050
       picture_square:
+        data_loader: loader_aws_s3_picture
         quality: 75
         filters:
           thumbnail: { size: [260, 260], mode: outbound }
       picture_sm:
+        data_loader: loader_aws_s3_picture
         quality: 75
         filters:
           relative_resize:
             widen: 400
       picture_md:
+        data_loader: loader_aws_s3_picture
         quality: 75
         filters:
           relative_resize:
             widen: 800
       picture_lg:
+        data_loader: loader_aws_s3_picture
         quality: 75
         filters:
           relative_resize:
             widen: 2048
       picture_vlg:
+        data_loader: loader_aws_s3_picture
         quality: 75
         filters:
           relative_resize:

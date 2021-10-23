@@ -1,10 +1,5 @@
 <div class="catalog-banner mb-5">
-    {% if catalog.imageName %}
-        {% set catalogPath = vich_uploader_asset(catalog)  %}
-    {% elseif catalog.pictures|length %}
-        {% set catalogPath = vich_uploader_asset(catalog.pictures|first)  %}
-    {% endif %}
-    <img src="{{ catalogPath|imagine_filter('catalog_banner') }}" alt="" class="img-fluid">
+    <img src="{{ catalog.imageName|imagine_filter('catalog_banner') }}" alt="" class="img-fluid">
     <div class="content">
         <div class="container">
             <h1 class="catalog-name">{{ catalog.name }}</h1>

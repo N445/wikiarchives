@@ -16,7 +16,10 @@ framework:
     #fragments: true
     php_errors:
         log: true
-
+    http_client:
+        scoped_clients:
+            wikiarchives.client:
+                scope: 'https://wikiarchives.space'
 when@test:
     framework:
         test: true

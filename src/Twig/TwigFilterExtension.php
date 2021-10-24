@@ -2,7 +2,9 @@
 
 namespace App\Twig;
 
+use App\Entity\Catalog\Catalog;
 use App\Service\Breadcrumb\BreadcrumbCreator;
+use App\Service\Catalog\CatalogHelper;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
@@ -18,10 +20,17 @@ class TwigFilterExtension extends AbstractExtension
     public function getFilters(): array
     {
         return [
+            new TwigFilter('catalogTotalPictures', [$this, 'catalogTotalPictures']),
             new TwigFilter('humanFilesize', [$this, 'humanFilesize']),
             new TwigFilter('getBreadcrumb', [$this, 'getBreadcrumb']),
         ];
     }
+
+    public function catalogTotalPictures(Catalog $catalog)
+    {
+        return CatalogHelper::getAllPictures($catalog);
+    }
+
 
     public function humanFilesize(int $bytes, int $dec = 2)
     {

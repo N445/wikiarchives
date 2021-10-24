@@ -9,6 +9,7 @@
     use App\Security\Voter\PictureVersionVoter;
     use App\Service\Catalog\PictureDownloadProvider;
     use App\Service\Catalog\PictureVersionCloner;
+    use App\Service\Importator\ImportatorFromWebsite;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
@@ -136,4 +137,17 @@
                 'form' => $form->createView(),
             ]);
         }
+    
+        /**
+         * Création de la route "test"
+         */
+        #[Route('/test', name: 'TEST')]
+        public function test(Request $request, ImportatorFromWebsite $importatorFromWebsite)
+        {
+            $importatorFromWebsite->import();
+            die;
+            return $this->render('default/test.html.twig', []);
+        }
+    
+    
     }

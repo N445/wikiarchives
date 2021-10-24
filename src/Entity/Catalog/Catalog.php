@@ -13,7 +13,7 @@
     use Symfony\Component\HttpFoundation\File\File;
     use Symfony\Component\HttpFoundation\File\UploadedFile;
     use Vich\UploaderBundle\Mapping\Annotation as Vich;
-    
+
     /**
      * @ORM\Entity(repositoryClass=CatalogRepository::class)
      * @ORM\Table(name="catalog")
@@ -26,20 +26,25 @@
         public const ROOT = 'root';
         use TimestampableTrait;
         use BlameableTrait;
-        
+    
         /**
          * @ORM\Id
          * @ORM\GeneratedValue
          * @ORM\Column(type="integer")
          */
         private $id;
-        
+    
+        /**
+         * @ORM\Column(type="integer",nullable=true)
+         */
+        private $piwigoId;
+    
         /**
          * @Gedmo\Versioned
          * @ORM\Column(type="string", length=255)
          */
         private $name;
-        
+    
         /**
          * @Gedmo\Versioned
          * @ORM\Column(type="boolean")
@@ -124,6 +129,24 @@
         public function getId(): ?int
         {
             return $this->id;
+        }
+    
+        /**
+         * @return mixed
+         */
+        public function getPiwigoId()
+        {
+            return $this->piwigoId;
+        }
+    
+        /**
+         * @param mixed $piwigoId
+         * @return Catalog
+         */
+        public function setPiwigoId($piwigoId)
+        {
+            $this->piwigoId = $piwigoId;
+            return $this;
         }
         
         public function getName(): ?string

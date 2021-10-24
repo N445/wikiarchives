@@ -254,6 +254,9 @@
             "bin/console"
         ]
     },
+    "symfony/css-selector": {
+        "version": "v5.3.4"
+    },
     "symfony/debug-bundle": {
         "version": "5.3",
         "recipe": {
@@ -274,6 +277,9 @@
     },
     "symfony/doctrine-bridge": {
         "version": "v5.3.8"
+    },
+    "symfony/dom-crawler": {
+        "version": "v5.3.7"
     },
     "symfony/dotenv": {
         "version": "v5.3.8"

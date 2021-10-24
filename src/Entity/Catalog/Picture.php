@@ -31,6 +31,11 @@
         private $id;
         
         /**
+         * @ORM\Column(type="integer",nullable=true)
+         */
+        private $piwigoId;
+        
+        /**
          * @Gedmo\Versioned
          * @ORM\Column(type="boolean")
          */
@@ -85,6 +90,24 @@
         public function getId(): ?int
         {
             return $this->id;
+        }
+    
+        /**
+         * @return mixed
+         */
+        public function getPiwigoId()
+        {
+            return $this->piwigoId;
+        }
+    
+        /**
+         * @param mixed $piwigoId
+         * @return Picture
+         */
+        public function setPiwigoId($piwigoId)
+        {
+            $this->piwigoId = $piwigoId;
+            return $this;
         }
         
         /**

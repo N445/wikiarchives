@@ -16,6 +16,7 @@
         "friendsofsymfony/jsrouting-bundle": "^2.7",
         "gaufrette/aws-s3-adapter": "^0.4.0",
         "knplabs/knp-gaufrette-bundle": "^0.7.1",
+        "knplabs/knp-paginator-bundle": "^5.7",
         "liip/imagine-bundle": "^2.6",
         "miljar/php-exif": "^0.6.5",
         "sensio/framework-extra-bundle": "^6.2",
@@ -43,7 +44,7 @@
         "symfony/webpack-encore-bundle": "^1.12",
         "symfony/yaml": "5.3.*",
         "symfonycasts/verify-email-bundle": "^1.5",
-        "twig/extra-bundle": "^2.12|^3.0",
+        "twig/extra-bundle": "^3.3",
         "twig/twig": "^2.12|^3.0",
         "vich/uploader-bundle": "^1.18"
     },

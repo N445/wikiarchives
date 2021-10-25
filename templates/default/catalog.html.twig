@@ -11,14 +11,34 @@
                 </div>
             {% endfor %}
         </div>
-{#        {{ catalog|catalogTotalPictures }}#}
+        {# {{ catalog|catalogTotalPictures }} #}
         <hr>
+        {# <h3>{{ catalog.pictures|length }} pictures</h3> #}
+        {# <div class="row g-3 my-3"> #}
+        {# {% for picture in catalog.pictures %} #}
+        {# <div class="col-12 col-md-1"> #}
+        {# {% include 'includes/catalog/_picture-card.html.twig' %} #}
+        {# </div> #}
+        {# {% endfor %} #}
+        {# </div> #}
+
+        {# total items count #}
+        <div class="count">
+            <h3>{{ pagination.getTotalItemCount }} pictures</h3>
+        </div>
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
         <div class="row g-3 my-3">
-            {% for picture in catalog.pictures %}
+            {% for picture in pagination %}
                 <div class="col-12 col-md-1">
                     {% include 'includes/catalog/_picture-card.html.twig' %}
                 </div>
             {% endfor %}
+        </div>
+        {# display navigation #}
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
         </div>
     </div>
 {% endblock %}

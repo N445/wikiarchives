@@ -1,14 +1,16 @@
 <?php
     
     namespace App\Repository\Catalog;
-    
+
+    use App\Entity\Catalog\Catalog;
     use App\Entity\Catalog\Picture;
     use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
     use Doctrine\ORM\NonUniqueResultException;
-    use Doctrine\ORM\Query\Expr\Join;
     use Doctrine\ORM\QueryBuilder;
     use Doctrine\Persistence\ManagerRegistry;
-    
+    use Knp\Component\Pager\Pagination\PaginationInterface;
+    use Knp\Component\Pager\PaginatorInterface;
+
     /**
      * @method Picture|null find($id, $lockMode = null, $lockVersion = null)
      * @method Picture|null findOneBy(array $criteria, array $orderBy = null)
@@ -17,11 +19,14 @@
      */
     class PictureRepository extends ServiceEntityRepository
     {
-        public function __construct(ManagerRegistry $registry)
+        private PaginatorInterface $paginator;
+    
+        public function __construct(ManagerRegistry $registry, PaginatorInterface $paginator)
         {
             parent::__construct($registry, Picture::class);
+            $this->paginator = $paginator;
         }
-        
+    
         /**
          * @param string|null $query
          * @return Picture[]
@@ -29,19 +34,19 @@
         public function search(?string $query)
         {
             $qb = $this->getBaseFrontQuery();
-            
-            
+        
+        
             if ($query) {
                 $qb->andWhere('c.name LIKE :query')
-                   ->setParameter('query', '%' . $query . '%')
+                    ->setParameter('query', '%' . $query . '%')
                 ;
             }
-            
+        
             return $qb->getQuery()
                       ->getResult()
             ;
         }
-        
+    
         /**
          * @param int $id
          * @return Picture|null
@@ -56,7 +61,26 @@
                         ->getOneOrNullResult()
             ;
         }
+    
+        /**
+         * @param Catalog $catalog
+         * @param int $page
+         * @return PaginationInterface
+         */
+        public function byCatalogPaginatedFront(Catalog $catalog, int $page, int $nbPerPage = 10)
+        {
+            $query = $this->getBaseFrontQuery()
+                          ->andWhere('p.catalog = :catalog')
+                          ->setParameter('catalog', $catalog)
+                          ->getQuery();
         
+            return $this->paginator->paginate(
+                $query, /* query NOT result */
+                $page, /*page number*/
+                $nbPerPage /*limit per page*/
+            );
+        }
+    
         public function byIdAdmin(int $id): ?Picture
         {
             return $this->getBaseAdminQuery()
@@ -67,7 +91,7 @@
                         ->getOneOrNullResult()
             ;
         }
-        
+    
         /**
          * @return QueryBuilder
          */
@@ -82,24 +106,24 @@
                         ->leftJoin('pictures_validatedversion.exif', 'pictures_validatedversion_exif')
             ;
         }
-        
+    
         /**
          * @return QueryBuilder
          */
         public function getBaseFrontQuery()
         {
             return $this->createQueryBuilder('p')
-                        ->addSelect('catalog', 'catalog_parent', 'pictures_file', 'pictures_validatedversion', 'pictures_validatedversion_exif')
-                        ->leftJoin('p.catalog', 'catalog')
-                        ->leftJoin('catalog.parent', 'catalog_parent')
-                        ->leftJoin('p.file', 'pictures_file')
-                        ->leftJoin('p.validatedVersion', 'pictures_validatedversion')
-                        ->leftJoin('pictures_validatedversion.exif', 'pictures_validatedversion_exif')
-                        ->andWhere('p.enabled = :enabled')
-                        ->setParameter('enabled', true)
+                ->addSelect('catalog', 'catalog_parent', 'pictures_file', 'pictures_validatedversion', 'pictures_validatedversion_exif')
+                ->leftJoin('p.catalog', 'catalog')
+                ->leftJoin('catalog.parent', 'catalog_parent')
+                ->leftJoin('p.file', 'pictures_file')
+                ->leftJoin('p.validatedVersion', 'pictures_validatedversion')
+                ->leftJoin('pictures_validatedversion.exif', 'pictures_validatedversion_exif')
+                ->andWhere('p.enabled = :enabled')
+                ->setParameter('enabled', true)
             ;
         }
-        
+    
         // /**
         //  * @return Picture[] Returns an array of Picture objects
         //  */
@@ -116,7 +140,7 @@
             ;
         }
         */
-        
+    
         /*
         public function findOneBySomeField($value): ?Picture
         {

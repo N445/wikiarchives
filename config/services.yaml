@@ -21,6 +21,7 @@ services:
             - '../src/Kernel.php'
             - '../src/Tests/'
 
+    Twig\Extensions\TextExtension: null
 
     s3uplaoder:
         class: Aws\S3\S3Client

@@ -43,16 +43,23 @@ class BreadcrumbCreator
      */
     private function getCatalogBreadcrumb(Catalog $object): Breadcrumb
     {
-        $breadcrumb = (new Breadcrumb())->addLink((new BreadcrumbLink())
+        $breadcrumb = (new Breadcrumb());
+        if (Catalog::ROOT === $object->getName()) {
+            $this->addHome($breadcrumb);
+            return $breadcrumb;
+        }
+        $breadcrumb->addLink((new BreadcrumbLink())
             ->setTitle($object->getName())
             ->setLink($this->router->generate('CATALOG', ['id' => $object->getId()]))
             ->setIsActual(true)
         );
-
+    
         if ($parent = $object->getParent()) {
             $this->addCatalogBreadcrumbLink($breadcrumb, $parent);
         }
-
+        
+        $this->addHome($breadcrumb);
+    
         return $breadcrumb;
     }
 
@@ -74,12 +81,17 @@ class BreadcrumbCreator
         if ($parent = $object->getCatalog()) {
             $this->addCatalogBreadcrumbLink($breadcrumb, $parent);
         }
+    
+        $this->addHome($breadcrumb);
 
         return $breadcrumb;
     }
 
     private function addCatalogBreadcrumbLink(Breadcrumb $breadcrumb, Catalog $object)
     {
+        if (Catalog::ROOT === $object->getName()) {
+            return;
+        }
         $breadcrumb->addLink((new BreadcrumbLink())
             ->setTitle($object->getName())
             ->setLink($this->router->generate('CATALOG', ['id' => $object->getId()]))
@@ -88,6 +100,15 @@ class BreadcrumbCreator
         if ($parent = $object->getParent()) {
             $this->addCatalogBreadcrumbLink($breadcrumb, $parent);
         }
+    }
+    
+    private function addHome(Breadcrumb $breadcrumb)
+    {
+        $breadcrumb->addLink((new BreadcrumbLink())
+            ->setTitle('Home')
+            ->setLink($this->router->generate('HOMEPAGE'))
+            ->setIsActual(false)
+        );
     }
 
 

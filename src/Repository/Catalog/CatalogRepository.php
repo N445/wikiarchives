@@ -3,13 +3,11 @@
     namespace App\Repository\Catalog;
     
     use App\Entity\Catalog\Catalog;
-    use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
     use Doctrine\ORM\EntityManagerInterface;
     use Doctrine\ORM\Query\Expr\Join;
     use Doctrine\ORM\QueryBuilder;
-    use Doctrine\Persistence\ManagerRegistry;
     use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
-    
+
     /**
      * @method Catalog|null find($id, $lockMode = null, $lockVersion = null)
      * @method Catalog|null findOneBy(array $criteria, array $orderBy = null)
@@ -52,16 +50,16 @@
          * @return Catalog|null
          * @throws \Doctrine\ORM\NonUniqueResultException
          */
-        public function byIdFront(int $id)
+        public function byIdFront(int $id, bool $isFull = false)
         {
-            return $this->getBaseFrontQuery()
+            return $this->getBaseFrontQuery($isFull)
                         ->andWhere('c.id = :id')
                         ->setParameter('id', $id)
                         ->getQuery()
                         ->getOneOrNullResult()
             ;
         }
-        
+    
         /**
          * @param int $id
          * @return Catalog|null
@@ -138,48 +136,25 @@
         /**
          * @return QueryBuilder
          */
-        public function getBaseFrontQuery()
+        public function getBaseFrontQuery(bool $isFull = false)
         {
-            return $this->createQueryBuilder('c')
-                        ->addSelect('children', 'children_pictures', 'pictures', 'pictures_file', 'pictures_validatedversion', 'pictures_validatedversion_exif')
-                        ->leftJoin('c.children', 'children', Join::WITH, 'children.enabled = true')
-                        ->leftJoin('children.pictures', 'children_pictures', Join::WITH, 'children_pictures.enabled = true')
-                        ->leftJoin('c.pictures', 'pictures', Join::WITH, 'pictures.enabled = true')
-                        ->leftJoin('pictures.file', 'pictures_file')
-                        ->leftJoin('pictures.validatedVersion', 'pictures_validatedversion')
-                        ->leftJoin('pictures_validatedversion.exif', 'pictures_validatedversion_exif')
-                        ->andWhere('c.enabled = :enabled')
-                        ->setParameter('enabled', true)
-                        ->orderBy('c.name', 'ASC')
-            ;
-        }
+            $qb = $this->createQueryBuilder('c')
+                       ->andWhere('c.enabled = :enabled')
+                       ->setParameter('enabled', true)
+                       ->orderBy('c.name', 'ASC');
         
-        // /**
-        //  * @return Catalog[] Returns an array of Catalog objects
-        //  */
-        /*
-        public function findByExampleField($value)
-        {
-            return $this->createQueryBuilder('c')
-                ->andWhere('c.exampleField = :val')
-                ->setParameter('val', $value)
-                ->orderBy('c.id', 'ASC')
-                ->setMaxResults(10)
-                ->getQuery()
-                ->getResult()
-            ;
-        }
-        */
+            if ($isFull) {
+                $qb->addSelect('children', 'children_pictures', 'pictures', 'pictures_file', 'pictures_validatedversion', 'pictures_validatedversion_exif')
+                   ->leftJoin('c.children', 'children', Join::WITH, 'children.enabled = true')
+                   ->leftJoin('children.pictures', 'children_pictures', Join::WITH, 'children_pictures.enabled = true')
+                   ->leftJoin('c.pictures', 'pictures', Join::WITH, 'pictures.enabled = true')
+                   ->leftJoin('pictures.file', 'pictures_file')
+                   ->leftJoin('pictures.validatedVersion', 'pictures_validatedversion')
+                   ->leftJoin('pictures_validatedversion.exif', 'pictures_validatedversion_exif')
+                ;
+            }
         
-        /*
-        public function findOneBySomeField($value): ?Catalog
-        {
-            return $this->createQueryBuilder('c')
-                ->andWhere('c.exampleField = :val')
-                ->setParameter('val', $value)
-                ->getQuery()
-                ->getOneOrNullResult()
-            ;
+            return $qb;
         }
-        */
+    
     }

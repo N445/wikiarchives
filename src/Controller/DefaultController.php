@@ -49,17 +49,18 @@
         }
     
         #[Route('/catalog/{id}', name: 'CATALOG')]
-        public function catalog(?int $id = null): Response
+        public function catalog(?int $id = null, Request $request): Response
         {
             if (!$id) {
                 return $this->redirectToRoute('HOMEPAGE');
             }
-            if (!$catalog = $this->catalogProvider->byId($id)) {
+            if (!$catalog = $this->catalogProvider->byId($id, false)) {
                 return $this->redirectToRoute('HOMEPAGE');
             }
     
             return $this->render('default/catalog.html.twig', [
                 'catalog' => $catalog,
+                'pagination' => $this->pictureProvider->byCatalogPaginated($catalog, $request->get('page', 1), 12 * 5),
             ]);
         }
     

@@ -5,6 +5,7 @@ namespace App\Twig;
 use App\Entity\Catalog\Catalog;
 use App\Service\Breadcrumb\BreadcrumbCreator;
 use App\Service\Catalog\CatalogHelper;
+use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
@@ -23,6 +24,7 @@ class TwigFilterExtension extends AbstractExtension
             new TwigFilter('catalogTotalPictures', [$this, 'catalogTotalPictures']),
             new TwigFilter('humanFilesize', [$this, 'humanFilesize']),
             new TwigFilter('getBreadcrumb', [$this, 'getBreadcrumb']),
+            new TwigFilter('truncate', [$this, 'twig_truncate_filter'], ['needs_environment' => true]),
         ];
     }
 
@@ -39,7 +41,7 @@ class TwigFilterExtension extends AbstractExtension
 
         return sprintf("%.{$dec}f", $bytes / pow(1024, $factor)) . @$size[$factor];
     }
-
+    
     /**
      * @param $object
      * @return \App\Model\Breadcrumb\Breadcrumb|void
@@ -48,5 +50,24 @@ class TwigFilterExtension extends AbstractExtension
     public function getBreadcrumb($object)
     {
         return $this->breadcrumbCreator->getBreadcrumb($object);
+    }
+    
+    
+    public function twig_truncate_filter(Environment $env, $value, $length = 30, $preserve = false, $separator = '...')
+    {
+        if (mb_strlen($value, $env->getCharset()) > $length) {
+            if ($preserve) {
+                // If breakpoint is on the last word, return the value without separator.
+                if (false === ($breakpoint = mb_strpos($value, ' ', $length, $env->getCharset()))) {
+                    return $value;
+                }
+                
+                $length = $breakpoint;
+            }
+            
+            return rtrim(mb_substr($value, 0, $length, $env->getCharset())) . $separator;
+        }
+        
+        return $value;
     }
 }

@@ -1,9 +1,15 @@
 <div class="catalog-banner mb-5">
-    <img src="{{ catalog.imageName|imagine_filter('catalog_banner') }}" alt="" class="img-fluid">
+    {% if catalog.imageName %}
+        <img src="{{ catalog.imageName|imagine_filter('catalog_banner') }}" alt="" class="img-fluid">
+    {% endif %}
     <div class="content">
         <div class="container">
             <h1 class="catalog-name">{{ catalog.name }}</h1>
-            {% if catalog.parent.name != constant('App\\Entity\\Catalog\\Catalog::ROOT') %}
+            {% if catalog.parent is null %}
+                <a href="{{ path('HOMEPAGE') }}" class="btn btn-primary">
+                    Remonter d'un dossier
+                </a>
+            {% elseif catalog.parent.name != constant('App\\Entity\\Catalog\\Catalog::ROOT') %}
                 <a href="{{ path('CATALOG', {'id': catalog.parent.id}) }}" class="btn btn-primary">
                     Remonter d'un dossier
                 </a>

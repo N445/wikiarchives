@@ -1,15 +1,15 @@
-{#<nav aria-label="breadcrumb">#}
-{#    <ol class="breadcrumb">#}
-{#        {% for breadcrumbLink in object|getBreadcrumb.linksReversed %}#}
-{#            <li class="breadcrumb-item{{ breadcrumbLink.isActual?' active':'' }}">#}
-{#                {% if breadcrumbLink.isActual %}#}
-{#                    {{ breadcrumbLink.title }}#}
-{#                {% else %}#}
-{#                    <a href="{{ breadcrumbLink.link }}">#}
-{#                        {{ breadcrumbLink.title }}#}
-{#                    </a>#}
-{#                {% endif %}#}
-{#            </li>#}
-{#        {% endfor %}#}
-{#    </ol>#}
-{#</nav>#}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        {% for breadcrumbLink in object|getBreadcrumb.linksReversed %}
+            <li class="breadcrumb-item{{ breadcrumbLink.isActual?' active':'' }}">
+                {% if breadcrumbLink.isActual %}
+                    {{ breadcrumbLink.title }}
+                {% else %}
+                    <a href="{{ breadcrumbLink.link }}">
+                        {{ breadcrumbLink.title }}
+                    </a>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ol>
+</nav>

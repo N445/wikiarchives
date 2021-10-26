@@ -19,8 +19,10 @@ knp_gaufrette:
           create: true
           directory: catalog
           acl: 'public-read'
+
+
   filesystems:
     picture_fs:
-      adapter:    picture_adapter
+      adapter: picture_adapter
     catalog_fs:
-      adapter:    catalog_adapter
+      adapter: catalog_adapter

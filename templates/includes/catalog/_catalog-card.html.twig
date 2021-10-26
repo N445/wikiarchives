@@ -2,9 +2,13 @@
     <img src="{{ catalog.imageName |imagine_filter('catalog_card_listing') }}" class="card-img-top"
          alt="{{ catalog.name }}">
 
-    <div class="card-body">
+    <div class="card-body p-1">
         <div class="d-flex flex-column justify-content-between h-100">
-            <p class="card-title">{{ catalog.name }} [{{ catalog.pictures|length }}]</p>
+            <p class="card-title">
+                <small>
+                    {{ catalog.name }} [{{ catalog.pictures|length }}]
+                </small>
+            </p>
             <a href="{{ path('CATALOG', {'id': catalog.id}) }}" class="btn btn-sm w-100 btn-wikiarchives-dark">Ouvrir</a>
         </div>
     </div>

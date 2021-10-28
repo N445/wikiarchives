@@ -48,7 +48,7 @@
                     'id' => $catalog->getId(),
                 ]);
             }
-            if (!$id && !$trees) {
+            if (!$trees) {
                 $catalog = (new Catalog())->setName(Catalog::ROOT);
                 $this->em->persist($catalog);
                 $this->em->flush();

@@ -21,21 +21,26 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     {
         parent::__construct($registry, User::class);
     }
-
+    
     /**
-     * Used to upgrade (rehash) the user's password automatically over time.
+     * @param int $id
+     * @return User|null
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
+    public function byId(int $id)
     {
-        if (!$user instanceof User) {
-            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', \get_class($user)));
-        }
-
-        $user->setPassword($newHashedPassword);
-        $this->_em->persist($user);
-        $this->_em->flush();
+        return $this->createQueryBuilder('u')
+                    ->addSelect('info', 'createdCatalogs', 'updatedCatalogs')
+                    ->leftJoin('u.info', 'info')
+                    ->leftJoin('u.createdCatalogs', 'createdCatalogs')
+                    ->leftJoin('u.updatedCatalogs', 'updatedCatalogs')
+                    ->where('u.id = :id')
+                    ->setParameter('id', $id)
+                    ->getQuery()
+                    ->getOneOrNullResult()
+        ;
     }
-
+    
     /**
      * @param string $email
      * @return User|null
@@ -44,12 +49,33 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function getByEmail(string $email)
     {
         return $this->createQueryBuilder('u')
-            ->where('u.email = :email')
-            ->setParameter('email', $email)
-            ->getQuery()
-            ->getOneOrNullResult();
+                    ->addSelect('info', 'createdCatalogs', 'updatedCatalogs')
+                    ->leftJoin('u.info', 'info')
+                    ->leftJoin('u.createdCatalogs', 'createdCatalogs')
+                    ->leftJoin('u.updatedCatalogs', 'updatedCatalogs')
+                    ->where('u.email = :email')
+                    ->setParameter('email', $email)
+                    ->getQuery()
+                    ->getOneOrNullResult()
+        ;
     }
-
+    
+    /**
+     * Used to upgrade (rehash) the user's password automatically over time.
+     */
+    public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
+    {
+        if (!$user instanceof User) {
+            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', \get_class($user)));
+        }
+        
+        $user->setPassword($newHashedPassword);
+        $this->_em->persist($user);
+        $this->_em->flush();
+    }
+    
+    
+    
     // /**
     //  * @return User[] Returns an array of User objects
     //  */

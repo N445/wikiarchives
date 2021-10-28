@@ -4,6 +4,7 @@
 
     use App\Entity\Catalog\Catalog;
     use App\Entity\Catalog\Picture;
+    use App\Entity\User;
     use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
     use Doctrine\ORM\NonUniqueResultException;
     use Doctrine\ORM\QueryBuilder;
@@ -59,6 +60,38 @@
                         ->setParameter('id', $id)
                         ->getQuery()
                         ->getOneOrNullResult()
+            ;
+        }
+    
+        /**
+         * @param User $user
+         * @return Picture|null
+         */
+        public function getUserVersions(User $user): array
+        {
+            return $this->createQueryBuilder('p')
+                        ->addSelect('pictures_versions')
+                        ->leftJoin('p.versions', 'pictures_versions')
+                        ->andWhere('pictures_versions.createdBy = :user')
+                        ->setParameter('user', $user)
+                        ->getQuery()
+                        ->getResult()
+            ;
+        }
+    
+        /**
+         * @param User $user
+         * @return Picture|null
+         */
+        public function getUserTmpVersions(User $user): array
+        {
+            return $this->createQueryBuilder('p')
+                        ->addSelect('pictures_versions')
+                        ->leftJoin('p.tmpVersions', 'pictures_versions')
+                        ->andWhere('pictures_versions.createdBy = :user')
+                        ->setParameter('user', $user)
+                        ->getQuery()
+                        ->getResult()
             ;
         }
     

@@ -3,10 +3,11 @@
     namespace App\Repository\Catalog\Picture;
     
     use App\Entity\Catalog\Picture\Version;
+    use App\Entity\User;
     use App\Service\Catalog\PictureVersionHelper;
     use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
     use Doctrine\Persistence\ManagerRegistry;
-    
+
     /**
      * @method Version|null find($id, $lockMode = null, $lockVersion = null)
      * @method Version|null findOneBy(array $criteria, array $orderBy = null)
@@ -18,6 +19,41 @@
         public function __construct(ManagerRegistry $registry)
         {
             parent::__construct($registry, Version::class);
+        }
+    
+        /**
+         * @param User $user
+         * @return Version[]
+         */
+        public function getByUser(User $user)
+        {
+            return $this->createQueryBuilder('v')
+                        ->andWhere('v.createdBy = :user')
+                        ->setParameter('user', $user)
+                        ->orderBy('v.createdAt', 'DESC')
+                        ->getQuery()
+                        ->getResult()
+            ;
+        }
+    
+        /**
+         * @param User $user
+         * @return Version[]
+         */
+        public function getTmpByUser(User $user)
+        {
+            return $this->createQueryBuilder('v')
+                        ->addSelect('tmpPicture', 'validatedVersion')
+                        ->leftJoin('v.tmpPicture', 'tmpPicture')
+                        ->leftJoin('tmpPicture.validatedVersion', 'validatedVersion')
+                        ->andWhere('v.createdBy = :user')
+                        ->setParameter('user', $user)
+                        ->andWhere('v.type = :type')
+                        ->setParameter('type', PictureVersionHelper::TYPE_TMP)
+                        ->orderBy('v.createdAt', 'DESC')
+                        ->getQuery()
+                        ->getResult()
+            ;
         }
     
         /**

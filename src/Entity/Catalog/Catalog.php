@@ -2,6 +2,7 @@
     
     namespace App\Entity\Catalog;
     
+    use App\Entity\User;
     use App\Repository\Catalog\CatalogRepository;
     use App\Traits\BlameableTrait;
     use App\Traits\TimestampableTrait;
@@ -25,7 +26,6 @@
     {
         public const ROOT = 'root';
         use TimestampableTrait;
-        use BlameableTrait;
     
         /**
          * @ORM\Id
@@ -114,6 +114,18 @@
          * @var string|null
          */
         private $imageName;
+
+        /**
+         * @Gedmo\Blameable(on="create")
+         * @ORM\ManyToOne(targetEntity=User::class, inversedBy="createdCatalogs")
+         */
+        private $createdBy;
+
+        /**
+         * @Gedmo\Blameable(on="update")
+         * @ORM\ManyToOne(targetEntity=User::class, inversedBy="updatedCatalogs")
+         */
+        private $updatedBy;
         
         public function __construct()
         {
@@ -311,5 +323,15 @@
         {
             $this->imageName = $imageName;
             return $this;
+        }
+
+        public function getCreatedBy(): ?User
+        {
+            return $this->createdBy;
+        }
+
+        public function getUpdatedBy(): ?User
+        {
+            return $this->updatedBy;
         }
     }

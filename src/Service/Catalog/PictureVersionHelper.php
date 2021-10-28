@@ -5,21 +5,27 @@
     use App\Entity\Catalog\Picture\Exif;
     use App\Entity\Catalog\Picture\Version;
     use Symfony\Component\PropertyAccess\PropertyAccess;
-    
+
     class PictureVersionHelper
     {
+        const TYPE_FINAL = 'final';
+        const TYPE_TMP = 'tmp';
+    
         const STATUS_PENDING = 'pending';
         const STATUS_ACCEPTED = 'accepted';
         const STATUS_REJECTED = 'rejected';
-        
+    
         public static function getFinalVersion(Version $currentVersion, Version $proposedVersion)
         {
             $propertyAccessor = PropertyAccess::createPropertyAccessor();
-            $finalVersion = new Version();
-            
+            $finalVersion = (new Version())
+                ->setType(PictureVersionHelper::TYPE_FINAL)
+                ->setVersionNumber($proposedVersion->getVersionNumber())
+                ->setBasedVersion($proposedVersion);
+        
             $propertiesVersion = self::getVersionGetters();
             $propertiesExif = self::getExifGetters();
-            
+        
             foreach ($propertiesVersion as $property) {
                 $currentValue = $propertyAccessor->getValue($currentVersion, $property);
                 $proposedValue = $propertyAccessor->getValue($proposedVersion, $property);

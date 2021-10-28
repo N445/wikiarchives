@@ -41,6 +41,8 @@ class PictureVersionCloner
             ->setGps($clonedExif->getGps());
 
         $newVersion = (new Picture\Version())
+            ->setStatus(PictureVersionHelper::STATUS_PENDING)
+            ->setType(PictureVersionHelper::TYPE_TMP)
             ->setVersionNumber($picture->getVersions()->last()->getVersionNumber() + 1)
             ->setBasedVersion($clonedVersion)
             ->setName($clonedVersion->getName())

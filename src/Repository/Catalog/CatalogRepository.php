@@ -109,7 +109,9 @@
         public function getRootAdmin()
         {
             $this->getEntityManager()->getConfiguration()->addCustomHydrationMode('tree', 'Gedmo\Tree\Hydrator\ORM\TreeObjectHydrator');
-            return $this->getBaseAdminQuery()
+            return $this->createQueryBuilder('c')
+                        ->addSelect('children')
+                        ->leftJoin('c.children', 'children')
                         ->orderBy('c.lft', 'ASC')
                         ->getQuery()
                         ->setHint(\Doctrine\ORM\Query::HINT_INCLUDE_META_COLUMNS, true)

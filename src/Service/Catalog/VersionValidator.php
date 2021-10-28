@@ -23,6 +23,10 @@
             if ($type === 'accepted') {
                 $this->validated($picture, $proposedVersion, $finalVersion);
             }
+            
+            $this->em->persist($proposedVersion);
+            $this->em->persist($finalVersion);
+            $this->em->persist($picture);
             $this->em->flush();
         }
         
@@ -33,7 +37,9 @@
         
         private function validated(Picture $picture, Version $proposedVersion, Version $finalVersion)
         {
+            $this->em->persist($proposedVersion);
             $proposedVersion->setStatus(PictureVersionHelper::STATUS_ACCEPTED);
+            $finalVersion->setStatus(PictureVersionHelper::STATUS_ACCEPTED);
             $picture->addVersion($finalVersion)->setValidatedVersion($finalVersion);
         }
     }

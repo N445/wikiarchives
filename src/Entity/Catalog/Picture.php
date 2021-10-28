@@ -5,6 +5,7 @@
     use App\Entity\Catalog\Picture\Exif;
     use App\Entity\Catalog\Picture\File;
     use App\Entity\Catalog\Picture\Version;
+    use App\Entity\User;
     use App\Repository\Catalog\PictureRepository;
     use App\Traits\BlameableTrait;
     use App\Traits\TimestampableTrait;
@@ -21,7 +22,6 @@
     class Picture
     {
         use TimestampableTrait;
-        use BlameableTrait;
         
         /**
          * @ORM\Id
@@ -72,6 +72,18 @@
          * @ORM\OneToOne(targetEntity=File::class, inversedBy="picture", cascade={"persist", "remove"})
          */
         private $file;
+    
+        /**
+         * @Gedmo\Blameable(on="create")
+         * @ORM\ManyToOne(targetEntity=User::class, inversedBy="createdPictures")
+         */
+        private $createdBy;
+    
+        /**
+         * @Gedmo\Blameable(on="update")
+         * @ORM\ManyToOne(targetEntity=User::class, inversedBy="updatedPictures")
+         */
+        private $updatedBy;
         
         public function __construct()
         {
@@ -257,5 +269,16 @@
             $this->file = $file;
             
             return $this;
+        }
+    
+    
+        public function getCreatedBy(): ?User
+        {
+            return $this->createdBy;
+        }
+    
+        public function getUpdatedBy(): ?User
+        {
+            return $this->updatedBy;
         }
     }

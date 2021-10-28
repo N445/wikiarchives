@@ -5,26 +5,37 @@
     use App\Entity\User\Info;
     use App\Entity\User\Rights;
     use App\Repository\UserRepository;
+    use App\Traits\User\CatalogBlameableTrait;
+    use App\Traits\User\Picture\VersionBlameableTrait;
+    use App\Traits\User\PictureBlameableTrait;
+    use App\Traits\User\PlaceBlameableTrait;
+    use Doctrine\Common\Collections\ArrayCollection;
     use Doctrine\ORM\Mapping as ORM;
     use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
     use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
     use Symfony\Component\Security\Core\User\UserInterface;
-    
+
     /**
      * @ORM\Entity(repositoryClass=UserRepository::class)
      * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
      */
-    class User implements UserInterface, PasswordAuthenticatedUserInterface
+    class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serializable
     {
         const ROLE_USER = 'ROLE_USER';
         const ROLE_ADMIN = 'ROLE_ADMIN';
+    
+        use CatalogBlameableTrait;
+        use PictureBlameableTrait;
+        use PlaceBlameableTrait;
+        use VersionBlameableTrait;
+    
         /**
          * @ORM\Id
          * @ORM\GeneratedValue
          * @ORM\Column(type="integer")
          */
         private $id;
-        
+    
         /**
          * @ORM\Column(type="string", length=180, unique=true)
          */
@@ -62,6 +73,14 @@
         {
             $this->info = new Info();
             $this->rights = new Rights();
+            $this->createdCatalogs = new ArrayCollection();
+            $this->updatedCatalogs = new ArrayCollection();
+            $this->createdPictures = new ArrayCollection();
+            $this->updatedPictures = new ArrayCollection();
+            $this->createdPlaces = new ArrayCollection();
+            $this->updatedPlaces = new ArrayCollection();
+            $this->createdVersions = new ArrayCollection();
+            $this->updatedVersions = new ArrayCollection();
         }
         
         public function __toString(): string
@@ -194,11 +213,33 @@
         {
             return $this->rights;
         }
-        
+    
         public function setRights(Rights $rights): self
         {
             $this->rights = $rights;
-            
+        
             return $this;
+        }
+    
+        public function serialize()
+        {
+            return serialize(array(
+                $this->id,
+                $this->email,
+                $this->password,
+                // see section on salt below
+                // $this->salt,
+            ));
+        }
+    
+        public function unserialize($serialized)
+        {
+            list (
+                $this->id,
+                $this->email,
+                $this->password,
+                // see section on salt below
+                // $this->salt
+                ) = unserialize($serialized);
         }
     }

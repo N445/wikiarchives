@@ -2,6 +2,7 @@
 
 namespace App\Entity\Catalog;
 
+use App\Entity\User;
 use App\Repository\Catalog\PlaceRepository;
 use App\Traits\BlameableTrait;
 use App\Traits\TimestampableTrait;
@@ -18,7 +19,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
 class Place
 {
     use TimestampableTrait;
-    use BlameableTrait;
 
     /**
      * @ORM\Id
@@ -60,6 +60,18 @@ class Place
      * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="place")
      */
     private $pictures;
+    
+    /**
+     * @Gedmo\Blameable(on="create")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="createdPlaces")
+     */
+    private $createdBy;
+    
+    /**
+     * @Gedmo\Blameable(on="update")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="updatedPlaces")
+     */
+    private $updatedBy;
 
     public function __construct()
     {
@@ -183,5 +195,15 @@ class Place
         }
 
         return $this;
+    }
+    
+    public function getCreatedBy(): ?User
+    {
+        return $this->createdBy;
+    }
+    
+    public function getUpdatedBy(): ?User
+    {
+        return $this->updatedBy;
     }
 }

@@ -10,6 +10,7 @@
     use App\Service\Catalog\PictureDownloadProvider;
     use App\Service\Catalog\PictureVersionCloner;
     use App\Service\Importator\ImportatorFromWebsite;
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
@@ -138,7 +139,7 @@
                 'form' => $form->createView(),
             ]);
         }
-    
+        
         /**
          * Création de la route "test"
          */

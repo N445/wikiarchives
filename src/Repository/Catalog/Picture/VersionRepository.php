@@ -79,6 +79,9 @@
         public function tmpById(int $id)
         {
             return $this->createQueryBuilder('v')
+                        ->addSelect('basedVersion', 'basedVersion_versions')
+                        ->leftJoin('v.basedVersion', 'basedVersion')
+                        ->leftJoin('basedVersion.versions', 'basedVersion_versions')
                         ->andWhere('v.status = :status')
                         ->setParameter('status', PictureVersionHelper::STATUS_PENDING)
                         ->andWhere('v.id = :id')

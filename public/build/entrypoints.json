@@ -11,7 +11,7 @@
       "js": [
         "/build/runtime.js",
         "/build/vendors-node_modules_jquery_dist_jquery_js.js",
-        "/build/vendors-node_modules_core-js_internals_export_js-node_modules_core-js_internals_is-array_js-n-43ff7f.js",
+        "/build/vendors-node_modules_core-js_internals_string-multibyte_js-node_modules_core-js_modules_es_ar-7be9c1.js",
         "/build/vendors-node_modules_core-js_modules_es_array_index-of_js-node_modules_core-js_modules_es_arr-b8e7e0.js",
         "/build/adminjs.js"
       ]
@@ -20,8 +20,8 @@
       "js": [
         "/build/runtime.js",
         "/build/vendors-node_modules_jquery_dist_jquery_js.js",
-        "/build/vendors-node_modules_core-js_internals_export_js-node_modules_core-js_internals_is-array_js-n-43ff7f.js",
-        "/build/vendors-node_modules_core-js_internals_a-constructor_js-node_modules_core-js_internals_functi-dedf84.js",
+        "/build/vendors-node_modules_core-js_internals_string-multibyte_js-node_modules_core-js_modules_es_ar-7be9c1.js",
+        "/build/vendors-node_modules_core-js_internals_a-constructor_js-node_modules_core-js_internals_functi-82fdf6.js",
         "/build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_symfony_ux-lazy-image-5a27f3.js",
         "/build/mainjs.js"
       ]
@@ -30,10 +30,10 @@
       "js": [
         "/build/runtime.js",
         "/build/vendors-node_modules_jquery_dist_jquery_js.js",
-        "/build/vendors-node_modules_core-js_internals_export_js-node_modules_core-js_internals_is-array_js-n-43ff7f.js",
+        "/build/vendors-node_modules_core-js_internals_string-multibyte_js-node_modules_core-js_modules_es_ar-7be9c1.js",
         "/build/vendors-node_modules_datatables_net-bs5_js_dataTables_bootstrap5_js.js",
         "/build/vendors-node_modules_bootstrap_dist_js_bootstrap_esm_js.js",
-        "/build/vendors-node_modules_core-js_internals_a-constructor_js-node_modules_core-js_internals_functi-dedf84.js",
+        "/build/vendors-node_modules_core-js_internals_a-constructor_js-node_modules_core-js_internals_functi-82fdf6.js",
         "/build/vendors-node_modules_core-js_modules_es_array_index-of_js-node_modules_core-js_modules_es_arr-b8e7e0.js",
         "/build/vendors-node_modules_core-js_modules_es_array_concat_js-node_modules_core-js_modules_es_array-81b1ef.js",
         "/build/admin-tree-js.js"

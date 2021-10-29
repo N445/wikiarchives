@@ -3,6 +3,7 @@
 namespace App\Controller\Catalog;
 
 use App\Entity\Catalog\Picture;
+use App\Form\Catalog\Picture\VersionValidatorType;
 use App\Form\Catalog\PictureType;
 use App\Repository\Catalog\Picture\VersionRepository;
 use App\Repository\Catalog\PictureRepository;
@@ -129,25 +130,53 @@ class PictureController extends AbstractController
                 'id' => $picture->getId()
             ]);
         }
-        $finalVersion = PictureVersionHelper::getFinalVersion($picture->getValidatedVersion(), $version);
-        
-        if ($request->getMethod() === 'POST') {
-            $submittedToken = $request->request->get('token');
-            if ($type = $request->get('type')) {
-                if ($this->isCsrfTokenValid($type . '-version', $submittedToken)) {
-                    $versionValidator->valdiate($type, $picture, $version, $finalVersion);
-                    return $this->redirectToRoute('ADMIN_CATALOG_PICTURE_TMP_VERSIONS', [
-                        'id' => $picture->getId()
-                    ]);
-                }
-            }
+    
+        if (PictureVersionHelper::STATUS_ACCEPTED === $version->getStatus()) {
+            return $this->redirectToRoute('ADMIN_CATALOG_PICTURE_SHOW', [
+                'id' => $picture->getId()
+            ]);
         }
-        
-        
+    
+        $finalVersion = PictureVersionHelper::getFinalVersion($version->getBasedVersion(), $version);
+        $finalVersion2 = PictureVersionHelper::getFinalVersion($picture->getValidatedVersion(), $version);
+
+//        $validationForm = $this->createForm(VersionValidatorType::class);
+        $validationForm = $this->get('form.factory')->createNamed('version_validator_1', VersionValidatorType::class);
+        $validationForm->handleRequest($request);
+    
+        if ($validationForm->isSubmitted() && $validationForm->isValid()) {
+            if ($validationForm->get('refused')->isClicked()) {
+                $versionValidator->refused($picture, $version, $finalVersion);
+            } else {
+                $versionValidator->validated($picture, $version, $finalVersion);
+            }
+            return $this->redirectToRoute('ADMIN_CATALOG_PICTURE_SHOW', [
+                'id' => $picture->getId()
+            ]);
+        }
+
+
+//        $validationForm2 = $this->createForm(VersionValidatorType::class);
+        $validationForm2 = $this->get('form.factory')->createNamed('version_validator_2', VersionValidatorType::class);
+        $validationForm2->handleRequest($request);
+        if ($validationForm2->isSubmitted() && $validationForm2->isValid()) {
+            if ($validationForm2->get('refused')->isClicked()) {
+                $versionValidator->refused($picture, $version, $finalVersion2);
+            } else {
+                $versionValidator->validated($picture, $version, $finalVersion2);
+            }
+            return $this->redirectToRoute('ADMIN_CATALOG_PICTURE_SHOW', [
+                'id' => $picture->getId()
+            ]);
+        }
+    
         return $this->render('catalog/picture/tmp-versions-show.html.twig', [
                 'picture' => $picture,
                 'version' => $version,
                 'finalVersion' => $finalVersion,
+                'validationForm' => $validationForm->createView(),
+                'finalVersion2' => $finalVersion2,
+                'validationForm2' => $validationForm2->createView(),
             ]
         );
     }

@@ -17,6 +17,7 @@
     
         public static function getFinalVersion(Version $currentVersion, Version $proposedVersion)
         {
+            $baseVersion = $proposedVersion->getBasedVersion();
             $propertyAccessor = PropertyAccess::createPropertyAccessor();
             $finalVersion = (new Version())
                 ->setType(PictureVersionHelper::TYPE_FINAL)
@@ -27,18 +28,33 @@
             $propertiesExif = self::getExifGetters();
         
             foreach ($propertiesVersion as $property) {
+                $baseValue = $propertyAccessor->getValue($baseVersion, $property);
                 $currentValue = $propertyAccessor->getValue($currentVersion, $property);
                 $proposedValue = $propertyAccessor->getValue($proposedVersion, $property);
                 if (!$currentValue instanceof Exif) {
-                    $propertyAccessor->setValue($finalVersion, $property, self::getValue($currentValue, $proposedValue));
+                    $propertyAccessor->setValue($finalVersion, $property, self::getValue2(
+                        $baseValue,
+                        $currentValue,
+                        $proposedValue,
+                        $currentVersion,
+                        $proposedVersion
+                    ));
                     continue;
                 }
                 
                 $finalExif = $finalVersion->getExif();
                 foreach ($propertiesExif as $propertyExif) {
+                    $baseValueExif = $propertyAccessor->getValue($baseValue, $propertyExif);
                     $currentValueExif = $propertyAccessor->getValue($currentValue, $propertyExif);
                     $proposedValueExif = $propertyAccessor->getValue($proposedValue, $propertyExif);
-                    $propertyAccessor->setValue($finalExif, $propertyExif, self::getValue($currentValueExif, $proposedValueExif));
+    
+                    $propertyAccessor->setValue($finalExif, $propertyExif, self::getValue2(
+                        $baseValueExif,
+                        $currentValueExif,
+                        $proposedValueExif,
+                        $currentVersion,
+                        $proposedVersion
+                    ));
                 }
                 $finalVersion->setExif($finalExif);
             }
@@ -52,6 +68,7 @@
                 "getId",
                 "getVersionNumber",
                 "getStatus",
+                "getType",
                 "getBasedVersion",
                 "getVersions",
                 "getPicture",
@@ -86,15 +103,23 @@
                 }
                 return str_starts_with($method, 'get');
             });
-
+    
             return array_map(function ($getter) {
                 return substr($getter, 3);
             }, $getters);
         }
-        
-        private static function getValue($currentValue, $proposedValue)
+    
+        private static function getValue2(mixed $baseValue, mixed $currentValue, mixed $proposedValue, Version $currentVersion, Version $proposedVersion)
         {
             if (!$proposedValue) {
+                return $currentValue;
+            }
+        
+            if ($baseValue !== $proposedValue) {
+                return $proposedValue;
+            }
+        
+            if ($currentVersion->getCreatedAt() > $proposedVersion->getCreatedAt()) {
                 return $currentValue;
             }
             return $proposedValue;

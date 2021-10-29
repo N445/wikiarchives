@@ -3,14 +3,9 @@
     namespace App\Controller;
 
 
-    use App\Form\Catalog\Picture\VersionType;
+    use App\Form\Catalog\Picture\VersionValidatorType;
     use App\Provider\CatalogProvider;
     use App\Provider\PictureProvider;
-    use App\Security\Voter\PictureVersionVoter;
-    use App\Service\Catalog\PictureDownloadProvider;
-    use App\Service\Catalog\PictureVersionCloner;
-    use App\Service\Importator\ImportatorFromWebsite;
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
@@ -49,106 +44,31 @@
             ]);
         }
     
-        #[Route('/catalog/{id}', name: 'CATALOG')]
-        public function catalog(?int $id = null, Request $request): Response
-        {
-            if (!$id) {
-                return $this->redirectToRoute('HOMEPAGE');
-            }
-            if (!$catalog = $this->catalogProvider->byId($id, false)) {
-                return $this->redirectToRoute('HOMEPAGE');
-            }
-    
-            return $this->render('default/catalog.html.twig', [
-                'catalog' => $catalog,
-                'pagination' => $this->pictureProvider->byCatalogPaginated($catalog, $request->get('page', 1), 12 * 5),
-            ]);
-        }
-    
-        #[Route('/catalog/{catalogId}/picture/{id}', name: 'PICTURE')]
-        public function picture(?int $catalogId = null, ?int $id = null): Response
-        {
-            if (!$id) {
-                return $this->redirectToRoute('HOMEPAGE');
-            }
-            if (!$picture = $this->pictureProvider->byId($id)) {
-                return $this->redirectToRoute('HOMEPAGE');
-            }
-    
-            return $this->render('default/picture.html.twig', [
-                'picture' => $picture,
-            ]);
-        }
-    
-        #[Route('/catalog/{catalogId}/picture/{id}/download/{size}', name: 'PICTURE_DOWNLOAD')]
-        public function pictureDownload(?int $catalogId = null, ?int $id = null, ?string $size, Request $request, PictureDownloadProvider $pictureDownloadProvider)
-        {
-            if (!$id) {
-                return $this->redirectToRoute('HOMEPAGE');
-            }
-            if (!$picture = $this->pictureProvider->byId($id)) {
-                return $this->redirectToRoute('HOMEPAGE');
-            }
-
-//            return $this->redirect($pictureDownloadProvider->getResizedPicture($picture, $size));
-            return$pictureDownloadProvider->getResizedPicture($picture, $size);
-        }
-    
-    
-        #[Route('/catalog/{catalogId}/picture/{id}/change', name: 'PICTURE_CHANGE')]
-        public function pictureChange(?int $catalogId = null, ?int $id = null, Request $request): Response
-        {
-            if (!$this->getUser()) {
-                $this->addFlash('info', 'You must be connected to propose a new version');
-                return $this->redirectToRoute('APP_LOGIN');
-            }
-    
-    
-            if (!$id) {
-                return $this->redirectToRoute('HOMEPAGE');
-            }
-            if (!$picture = $this->pictureProvider->byId($id)) {
-                return $this->redirectToRoute('HOMEPAGE');
-            }
-    
-            if (!$this->isGranted(PictureVersionVoter::PICTURE_VERSION_CREATE, $this->getUser())) {
-                return $this->redirectToRoute('PICTURE', [
-                    'catalogId' => $picture->getCatalog()->getId(),
-                    'id' => $picture->getId(),
-                ]);
-            }
-    
-            $newVersion = PictureVersionCloner::cloneVersion($picture);
-    
-            $form = $this->createForm(VersionType::class, $newVersion);
-            $form->handleRequest($request);
-            if ($form->isSubmitted() && $form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
-                $picture->addTmpVersion($newVersion);
-                $em->flush();
-                $this->addFlash('success', 'Thanks for your participation');
-                return $this->redirectToRoute('PICTURE', [
-                    'catalogId' => $picture->getCatalog()->getId(),
-                    'id' => $picture->getId(),
-                ]);
-            }
-    
-            return $this->render('default/change.html.twig', [
-                'picture' => $picture,
-                'newVersion' => $newVersion,
-                'form' => $form->createView(),
-            ]);
-        }
-        
-        /**
-         * Création de la route "test"
-         */
         #[Route('/test', name: 'TEST')]
-        public function test(Request $request, ImportatorFromWebsite $importatorFromWebsite)
+        public function test(Request $request)
         {
-            $importatorFromWebsite->import();
-            die;
-            return $this->render('default/test.html.twig', []);
+//            $validationForm = $this->createForm(VersionValidatorType::class);
+            $validationForm = $this->get('form.factory')->createNamed('version_validator_1', VersionValidatorType::class);
+            $validationForm->handleRequest($request);
+        
+//            $validationForm2 = $this->createForm(VersionValidatorType::class);
+            $validationForm2 = $this->get('form.factory')->createNamed('version_validator_2', VersionValidatorType::class);
+            $validationForm2->handleRequest($request);
+        
+            if ($validationForm->isSubmitted() && $validationForm->isValid()) {
+                dump('$finalVersion');
+                die;
+            }
+        
+        
+            if ($validationForm2->isSubmitted() && $validationForm2->isValid()) {
+                dump('$finalVersion2');
+                die;
+            }
+            return $this->render('default/test.html.twig', [
+                'validationForm' => $validationForm->createView(),
+                'validationForm2' => $validationForm2->createView(),
+            ]);
         }
     
     

@@ -23,23 +23,36 @@
             if ($type === 'accepted') {
                 $this->validated($picture, $proposedVersion, $finalVersion);
             }
-            
+    
+    
+        }
+    
+        public function refused(Picture $picture, Version $proposedVersion, Version $finalVersion)
+        {
+            $proposedVersion->setStatus(PictureVersionHelper::STATUS_REJECTED)->setType(PictureVersionHelper::TYPE_FINAL);
+        
             $this->em->persist($proposedVersion);
             $this->em->persist($finalVersion);
             $this->em->persist($picture);
             $this->em->flush();
         }
-        
-        private function refused(Picture $picture, Version $proposedVersion, Version $finalVersion)
+    
+        public function validated(Picture $picture, Version $proposedVersion, Version $finalVersion)
         {
-            $proposedVersion->setStatus(PictureVersionHelper::STATUS_REJECTED);
-        }
-        
-        private function validated(Picture $picture, Version $proposedVersion, Version $finalVersion)
-        {
-            $this->em->persist($proposedVersion);
             $proposedVersion->setStatus(PictureVersionHelper::STATUS_ACCEPTED);
             $finalVersion->setStatus(PictureVersionHelper::STATUS_ACCEPTED);
             $picture->addVersion($finalVersion)->setValidatedVersion($finalVersion);
+
+            $this->em->persist($proposedVersion);
+//            dump($proposedVersion);
+//            $picture->removeTmpVersion($proposedVersion);
+//            $basedVersion = $proposedVersion->getBasedVersion();
+//            $basedVersion->removeVersion($proposedVersion);
+
+            
+//            $this->em->persist($basedVersion);
+            $this->em->persist($finalVersion);
+            $this->em->persist($picture);
+            $this->em->flush();
         }
     }

@@ -3,15 +3,21 @@
 namespace App\Service\Catalog;
 
 use App\Entity\Catalog\Picture;
+use App\Entity\Catalog\Picture\Exif;
+use App\Entity\Catalog\Picture\Version;
 
 class PictureVersionCloner
 {
-    public static function cloneVersion(Picture $picture)
+    /**
+     * @param Picture $picture
+     * @return Version
+     */
+    public static function cloneVersion(Picture $picture): Version
     {
         $clonedVersion = $picture->getValidatedVersion();
         $clonedExif = $clonedVersion->getExif();
-
-        $newExif = (new Picture\Exif())
+        
+        $newExif = (new Exif())
             ->setIsVerified($clonedExif->isVerified())
             ->setTitle($clonedExif->getTitle())
             ->setAuthor($clonedExif->getAuthor())
@@ -39,8 +45,8 @@ class PictureVersionCloner
             ->setSoftware($clonedExif->getSoftware())
             ->setSource($clonedExif->getSource())
             ->setGps($clonedExif->getGps());
-
-        $newVersion = (new Picture\Version())
+        
+        $newVersion = (new Version())
             ->setStatus(PictureVersionHelper::STATUS_PENDING)
             ->setType(PictureVersionHelper::TYPE_TMP)
             ->setVersionNumber($picture->getVersions()->last()->getVersionNumber() + 1)

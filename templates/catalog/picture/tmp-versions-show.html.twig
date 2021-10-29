@@ -4,7 +4,7 @@
 
 {% macro picture_version_show(version) %}
     <div class="version">
-        <h3>Base</h3>
+{# <h3>Base</h3> #}
         <table class="table table-sm table-bordered">
             <tr>
                 <th>Nom</th>
@@ -137,63 +137,64 @@
 {% block body %}
     <div class="container">
         <div class="row">
-            <div class="col-md-4">
 
-            </div>
-            <div class="col-md-4">
+            {% if version.basedVersion.id != picture.validatedVersion.id %}
+                <div class="col-md">
+                    {{ form_start(validationForm) }}
+                    <div class="row">
+                        <div class="col">{{ form_row(validationForm.refused) }}</div>
+                        <div class="col">{{ form_row(validationForm.accepted) }}</div>
+                    </div>
+                    {{ form_end(validationForm) }}
+                    <h2>Final</h2>
+                    <p>
+                        Basée sur une version de {{ version.basedVersion.createdAt|date('d/m/Y H:i') }}
+                    </p>
+                    <div class="git-diff">
+                        <div class="current d-none">
+                            {{ _self.picture_version_show(version.basedVersion) }}
+                        </div>
+                        <div class="final">
+                            {{ _self.picture_version_show(finalVersion) }}
+                        </div>
+                    </div>
+                    <div class="git-diff">
+                        <div class="current d-none">
+                            {{ _self.picture_version_show_exif(version.basedVersion) }}
+                        </div>
+                        <div class="final">
+                            {{ _self.picture_version_show_exif(finalVersion) }}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
 
-            </div>
-            <div class="col-md-4">
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <form action="{{ path('ADMIN_CATALOG_PICTURE_TMP_VERSIONS_SHOW', {'id': picture.id, 'versionId': version.id}) }}"
-                              method="post">
-                            <input type="hidden" name="token" value="{{ csrf_token('refused-version') }}"/>
-                            <input type="hidden" name="type" value="refused">
-                            <button type="submit" class="btn btn-outline-danger w-100">Refuser</button>
-                        </form>
+            <div class="col-md">
+                {{ form_start(validationForm2) }}
+                <div class="row">
+                    <div class="col">{{ form_row(validationForm2.refused) }}</div>
+                    <div class="col">{{ form_row(validationForm2.accepted) }}</div>
+                </div>
+                {{ form_end(validationForm2) }}
+                <h2>Final 2</h2>
+                <p>
+                    Basée sur une version de {{ picture.validatedVersion.createdAt|date('d/m/Y H:i') }}
+                </p>
+                <div class="git-diff">
+                    <div class="current d-none">
+                        {{ _self.picture_version_show(picture.validatedVersion) }}
                     </div>
-                    <div class="col-md-6">
-                        <form action="{{ path('ADMIN_CATALOG_PICTURE_TMP_VERSIONS_SHOW', {'id': picture.id, 'versionId': version.id}) }}"
-                              method="post">
-                            <input type="hidden" name="token" value="{{ csrf_token('accepted-version') }}"/>
-                            <input type="hidden" name="type" value="accepted">
-                            <button type="submit" class="btn btn-outline-success w-100">Accepter</button>
-                        </form>
+                    <div class="final">
+                        {{ _self.picture_version_show(finalVersion2) }}
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                <h2>Proposé</h2>
-                {{ _self.picture_version_show(version) }}
-            </div>
-            <div class="col-md-4">
-                <h2>En cours</h2>
-                <div class="current">
-                    {{ _self.picture_version_show(picture.validatedVersion) }}
-                </div>
-            </div>
-            <div class="col-md-4">
-                <h2>Final</h2>
-                <div class="final">
-                    {{ _self.picture_version_show(finalVersion) }}
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                {{ _self.picture_version_show_exif(version) }}
-            </div>
-            <div class="col-md-4">
-                <div class="current-exif">
-                    {{ _self.picture_version_show_exif(picture.validatedVersion) }}
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="final-exif">
-                    {{ _self.picture_version_show_exif(finalVersion) }}
+                <div class="git-diff">
+                    <div class="current d-none">
+                        {{ _self.picture_version_show_exif(picture.validatedVersion) }}
+                    </div>
+                    <div class="final">
+                        {{ _self.picture_version_show_exif(finalVersion2) }}
+                    </div>
                 </div>
             </div>
         </div>

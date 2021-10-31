@@ -4,7 +4,7 @@
     
     use App\Entity\Catalog\Picture\Version;
     use App\Entity\User;
-    use App\Service\Catalog\PictureVersionHelper;
+    use App\Service\Catalog\Version\PictureVersionHelper;
     use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
     use Doctrine\Persistence\ManagerRegistry;
 
@@ -65,6 +65,24 @@
             return $this->createQueryBuilder('v')
                         ->andWhere('v.status = :status')
                         ->setParameter('status', $status)
+                        ->orderBy('v.createdAt', 'ASC')
+                        ->getQuery()
+                        ->getResult()
+            ;
+        }
+    
+        /**
+         * @param string $type
+         * @return Version[]
+         */
+        public function getByType(string $type)
+        {
+            return $this->createQueryBuilder('v')
+                        ->addSelect('picture', 'tmpPicture')
+                        ->leftJoin('v.picture', 'picture')
+                        ->leftJoin('v.tmpPicture', 'tmpPicture')
+                        ->andWhere('v.type = :type')
+                        ->setParameter('type', $type)
                         ->orderBy('v.createdAt', 'ASC')
                         ->getQuery()
                         ->getResult()

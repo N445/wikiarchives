@@ -1,13 +1,15 @@
 {% extends 'base-admin.html.twig' %}
 
-{% block title %}Edit Place{% endblock %}
+{% block title %}Modification de la place {{ place.name }} - {{ parent() }}{% endblock %}
 
 {% block body %}
-    <h1>Edit Place</h1>
+    <div class="container">
+        <h1>Modification de la place {{ place.name }}</h1>
 
-    {{ include('catalog/place/_form.html.twig', {'button_label': 'Update'}) }}
+        {{ include('catalog/place/_form.html.twig', {'button_label': 'Modifier'}) }}
 
-    <a href="{{ path('ADMIN_CATALOG_PLACE_INDEX') }}">back to list</a>
+        <a href="{{ path('ADMIN_CATALOG_PLACE_INDEX') }}" class="btn btn-primary my-3">Revenir au listing</a>
 
-    {{ include('catalog/place/_delete_form.html.twig') }}
+        {{ include('catalog/place/_delete_form.html.twig') }}
+    </div>
 {% endblock %}

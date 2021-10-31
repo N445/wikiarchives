@@ -2,98 +2,121 @@
   "entrypoints": {
     "globalsjs": {
       "js": [
-        "/build/runtime.js",
-        "/build/vendors-node_modules_bootstrap_dist_js_bootstrap_esm_js.js",
-        "/build/globalsjs.js"
+        "/build/runtime.f3575a88.js",
+        "/build/169.42da4472.js",
+        "/build/globalsjs.b51e2622.js"
       ]
     },
     "adminjs": {
       "js": [
-        "/build/runtime.js",
-        "/build/vendors-node_modules_jquery_dist_jquery_js.js",
-        "/build/vendors-node_modules_core-js_internals_string-multibyte_js-node_modules_core-js_modules_es_ar-7be9c1.js",
-        "/build/vendors-node_modules_core-js_modules_es_array_index-of_js-node_modules_core-js_modules_es_arr-b8e7e0.js",
-        "/build/adminjs.js"
+        "/build/runtime.f3575a88.js",
+        "/build/755.5a8586e9.js",
+        "/build/403.009cedc9.js",
+        "/build/693.887f0de5.js",
+        "/build/adminjs.bb3efef0.js"
       ]
     },
     "mainjs": {
       "js": [
-        "/build/runtime.js",
-        "/build/vendors-node_modules_jquery_dist_jquery_js.js",
-        "/build/vendors-node_modules_core-js_internals_string-multibyte_js-node_modules_core-js_modules_es_ar-7be9c1.js",
-        "/build/vendors-node_modules_core-js_internals_a-constructor_js-node_modules_core-js_internals_functi-82fdf6.js",
-        "/build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_symfony_ux-lazy-image-5a27f3.js",
-        "/build/mainjs.js"
+        "/build/runtime.f3575a88.js",
+        "/build/755.5a8586e9.js",
+        "/build/403.009cedc9.js",
+        "/build/791.355aa86c.js",
+        "/build/773.5fb9ccf0.js",
+        "/build/mainjs.fb8dde80.js"
       ]
     },
     "admin-tree-js": {
       "js": [
-        "/build/runtime.js",
-        "/build/vendors-node_modules_jquery_dist_jquery_js.js",
-        "/build/vendors-node_modules_core-js_internals_string-multibyte_js-node_modules_core-js_modules_es_ar-7be9c1.js",
-        "/build/vendors-node_modules_datatables_net-bs5_js_dataTables_bootstrap5_js.js",
-        "/build/vendors-node_modules_bootstrap_dist_js_bootstrap_esm_js.js",
-        "/build/vendors-node_modules_core-js_internals_a-constructor_js-node_modules_core-js_internals_functi-82fdf6.js",
-        "/build/vendors-node_modules_core-js_modules_es_array_index-of_js-node_modules_core-js_modules_es_arr-b8e7e0.js",
-        "/build/vendors-node_modules_core-js_modules_es_array_concat_js-node_modules_core-js_modules_es_array-81b1ef.js",
-        "/build/admin-tree-js.js"
+        "/build/runtime.f3575a88.js",
+        "/build/755.5a8586e9.js",
+        "/build/403.009cedc9.js",
+        "/build/333.69701e10.js",
+        "/build/169.42da4472.js",
+        "/build/791.355aa86c.js",
+        "/build/693.887f0de5.js",
+        "/build/907.dbe0057c.js",
+        "/build/admin-tree-js.9bdd409d.js"
       ]
     },
     "admin-catalog-datatable-js": {
       "js": [
-        "/build/runtime.js",
-        "/build/vendors-node_modules_jquery_dist_jquery_js.js",
-        "/build/vendors-node_modules_datatables_net-bs5_js_dataTables_bootstrap5_js.js",
-        "/build/admin-catalog-datatable-js.js"
+        "/build/runtime.f3575a88.js",
+        "/build/755.5a8586e9.js",
+        "/build/333.69701e10.js",
+        "/build/admin-catalog-datatable-js.2ca84138.js"
       ]
     },
     "wysiwyg-js": {
       "js": [
-        "/build/runtime.js",
-        "/build/vendors-node_modules_jquery_dist_jquery_js.js",
-        "/build/vendors-node_modules_tinymce_icons_default_icons_js-node_modules_tinymce_plugins_autoresize_p-a89b51.js",
-        "/build/wysiwyg-js.js"
+        "/build/runtime.f3575a88.js",
+        "/build/755.5a8586e9.js",
+        "/build/21.0a815726.js",
+        "/build/wysiwyg-js.1b883f82.js"
       ]
     },
     "globals": {
       "js": [
-        "/build/runtime.js"
+        "/build/runtime.f3575a88.js"
       ],
       "css": [
-        "/build/globals.css"
+        "/build/globals.19195f85.css"
       ]
     },
     "admin": {
       "js": [
-        "/build/runtime.js"
+        "/build/runtime.f3575a88.js"
       ],
       "css": [
-        "/build/admin.css"
+        "/build/admin.304512a0.css"
       ]
     },
     "main": {
       "js": [
-        "/build/runtime.js"
+        "/build/runtime.f3575a88.js"
       ],
       "css": [
-        "/build/main.css"
+        "/build/main.a24d45d1.css"
       ]
     },
     "admin-tree": {
       "js": [
-        "/build/runtime.js"
+        "/build/runtime.f3575a88.js"
       ],
       "css": [
-        "/build/admin-tree.css"
+        "/build/admin-tree.5f7001d5.css"
       ]
     },
     "admin-catalog-datatable": {
       "js": [
-        "/build/runtime.js"
+        "/build/runtime.f3575a88.js"
       ],
       "css": [
-        "/build/admin-catalog-datatable.css"
+        "/build/admin-catalog-datatable.1c81194e.css"
       ]
     }
+  },
+  "integrity": {
+    "/build/runtime.f3575a88.js": "sha384-gAuLQCN9fwWEsUayPgr3Tdjv661MPEghyaTy+7hHAclscpOH0Fc1BVchlJtcOobh",
+    "/build/169.42da4472.js": "sha384-bsJ5CpEYVKfEiovVb/UFWmlrYGIikxnpJojhKYvryt8GdqsOOKKSGg49zSNwjRGs",
+    "/build/globalsjs.b51e2622.js": "sha384-VFqE1LhVW93MW/yvqyOclfilhI34z2QftMg7VZistyKpuRy2+Od6s5XNU8ypSuG3",
+    "/build/755.5a8586e9.js": "sha384-gr4pBhc/crsd3k0Y6LPY6EzskQ1errcIxrCcR3mXD0bY9Ud2y2N0jCEomRCZiY9G",
+    "/build/403.009cedc9.js": "sha384-/DrRmJZ/WxsnWBYQIEL2XeVPlbnNeNK6cFMFlNEgNOFVUL8v3XO7zd4Y+9w922zI",
+    "/build/693.887f0de5.js": "sha384-0JYZuDhEP0tlSI82T6Lkg63dSdEQ3BeL/CTbJ7VBbYYOExrI6koh9u6oQuKn9e1a",
+    "/build/adminjs.bb3efef0.js": "sha384-6k3vodtoXt6lH4RjHKKQN3RE2gu4B6VSxsSMifnnAwrGDp9RX4aXgKQW12tQjqFQ",
+    "/build/791.355aa86c.js": "sha384-yuF0X8SRfKrGnyJNxG3CDNMlP5FHzWoteeGJmBLKj62mIci2U5ZUW4h4LuGlq/VM",
+    "/build/773.5fb9ccf0.js": "sha384-EfHevt1Y6+YrG+ckGqu+woDkEZ9uj6WYw1zWsBnB0/cqFahRC4iJzP/NVM+L/tSz",
+    "/build/mainjs.fb8dde80.js": "sha384-VBNn95UKouwHoQG8lLT8HS1yXBeVTLPcF/0CAG1D0A7d244B+6uWsZzeg7CeMCns",
+    "/build/333.69701e10.js": "sha384-ilh52Tx7dh8LcaaUetKiJmlCn4z9tu4fFXo/AqhbWhOC6y4+fQ8+t0dZOe8C+qbO",
+    "/build/907.dbe0057c.js": "sha384-bdYnX4MGjwT+k/JfrvVyuOMK56qVAU5dUPPFH//DgKgN3ST9rP0XLjnNlrKf74Ad",
+    "/build/admin-tree-js.9bdd409d.js": "sha384-qB+6aLSsxgQW945lUrcZ9+FV8AXe2u2wxmCrblkPcgCg72+iu0HGWaTcU/Mu7Ogw",
+    "/build/admin-catalog-datatable-js.2ca84138.js": "sha384-37IGMvgaJlhIShic/0t0yDbDdQ8WTgBx/m50YFfGW3N4AQj76jqeg10G7ld+DNzl",
+    "/build/21.0a815726.js": "sha384-66c7smDxjdqoskBCM1+OfDpVSWDAjC4uy+sXO4QhM1X0667iyZr9cuv2wrKgzBzy",
+    "/build/wysiwyg-js.1b883f82.js": "sha384-vK0+vbisc86EIqfGvxbAFIkLmYUZGwvczTZQ2DxNx0/9llEcsHfABMDjgGV9LfRG",
+    "/build/globals.19195f85.css": "sha384-rmpOeDpRYLYhxfK4Khc5n6123GuIjlMVzrGH+vftSfvI3/ScoT1zvRLXkAI2QFTx",
+    "/build/admin.304512a0.css": "sha384-SFmKnY6nUXhXMmYAPtU4F88oL+qTco5OczlMv9YYj0syRalwQ4wAWXzfxjcjSWpd",
+    "/build/main.a24d45d1.css": "sha384-mwwVwBN9fC8ZqHeW7qhGLODt042e+K8vwKh1BxF2ZZgPERtLk0hHcoGfA1qLMLFo",
+    "/build/admin-tree.5f7001d5.css": "sha384-5qpui7JXLZUbE9G5vpY7r0P9hxV4sgT5p0dxeoxb0yKqHNHTcOO0yST5o+bZ1X3A",
+    "/build/admin-catalog-datatable.1c81194e.css": "sha384-9sayb3B1GLr6h1f4y3yiQ7/O4Dt8ueSbsh1F3uN3rPts6Ctm1d0D1gULSkg5GDkp"
   }
 }

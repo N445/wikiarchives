@@ -4,7 +4,6 @@ namespace App\Form\Catalog\Picture;
 
 use App\Entity\Catalog\Picture\File;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichFileType;
@@ -15,7 +14,9 @@ class PictureFileType extends AbstractType
     {
         $builder
             ->add('imageFile', VichFileType::class, [
-                'required' => $builder->getData()->getImageName() ? false : true
+                'required' => $builder->getData()->getImageName() ? false : true,
+                'allow_delete' => false,
+                'asset_helper' => true,
             ]);
     }
 

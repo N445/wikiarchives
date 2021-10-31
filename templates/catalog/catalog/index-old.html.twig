@@ -27,7 +27,7 @@
                     <td>{{ catalog.rgt }}</td>
                     <td>
                         <a href="{{ path('ADMIN_CATALOG_CATALOG_SHOW', {'id': catalog.id}) }}">show</a>
-                        <a href="{{ path('ADMIN_CATALOG_CATALOG_EDIT', {'id': catalog.id}) }}">edit</a>
+                        <a href="{{ path('ADMIN_CATALOG_CATALOG_EDIT', {'id': catalog.id}) }}" class="btn btn-success">Modifier</a>
                     </td>
                 </tr>
             {% else %}

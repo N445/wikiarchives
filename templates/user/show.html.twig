@@ -1,10 +1,10 @@
 {% extends 'base-admin.html.twig' %}
 
-{% block title %}User{% endblock %}
+{% block title %}Utilisateur {{ user.userIdentifier }} - {{ parent() }}{% endblock %}
 
 {% block body %}
     <div class="container">
-        <h1>User</h1>
+        <h1>Utilisateur {{ user.userIdentifier }}</h1>
 
         <div class="row">
             <div class="col-md-6">
@@ -24,7 +24,7 @@
                     </tr>
                     <tr>
                         <th>IsVerified</th>
-                        <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>
+                        <td>{{ user.isVerified|yesNoHtml }}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -60,20 +60,18 @@
                     <tbody>
                     <tr>
                         <th>Version Creator</th>
-                        <td>{{ user.rights.hasVersionCreator?'Oui':'Non' }}</td>
-                    </tr>
-                    <tr>
-                        <th>Version Creator</th>
-                        <td>{{ user.rights.hasVersionCreator?'Oui':'Non' }}</td>
+                        <td>{{ user.rights.hasVersionCreator|yesNoHtml }}</td>
                     </tr>
                     </tbody>
                 </table>
             </div>
         </div>
 
-        <a href="{{ path('ADMIN_USER_INDEX') }}">back to list</a>
-
-        <a href="{{ path('ADMIN_USER_EDIT', {'id': user.id}) }}">edit</a>
+        <a href="{{ path('ADMIN_USER_INDEX') }}" class="btn btn-primary mb-3">Revenir au listing</a>
+        <br>
+        <a href="{{ path('ADMIN_USER_EDIT', {'id': user.id}) }}" class="btn btn-success mb-3">
+            Modifier
+        </a>
 
         {{ include('user/_delete_form.html.twig') }}
     </div>

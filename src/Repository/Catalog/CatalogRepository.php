@@ -141,15 +141,18 @@
         public function getBaseFrontQuery(bool $isFull = false)
         {
             $qb = $this->createQueryBuilder('c')
+                       ->addSelect('children', 'children_pictures', 'pictures')
                        ->andWhere('c.enabled = :enabled')
                        ->setParameter('enabled', true)
-                       ->orderBy('c.name', 'ASC');
+                       ->leftJoin('c.children', 'children', Join::WITH, 'children.enabled = true')
+                       ->leftJoin('children.pictures', 'children_pictures', Join::WITH, 'children_pictures.enabled = true')
+                       ->leftJoin('c.pictures', 'pictures', Join::WITH, 'pictures.enabled = true')
+                       ->addOrderBy('c.lft', 'ASC')
+                       ->addOrderBy('children.lft', 'ASC')
+            ;
         
             if ($isFull) {
-                $qb->addSelect('children', 'children_pictures', 'pictures', 'pictures_file', 'pictures_validatedversion', 'pictures_validatedversion_exif')
-                   ->leftJoin('c.children', 'children', Join::WITH, 'children.enabled = true')
-                   ->leftJoin('children.pictures', 'children_pictures', Join::WITH, 'children_pictures.enabled = true')
-                   ->leftJoin('c.pictures', 'pictures', Join::WITH, 'pictures.enabled = true')
+                $qb->addSelect('pictures_file', 'pictures_validatedversion', 'pictures_validatedversion_exif')
                    ->leftJoin('pictures.file', 'pictures_file')
                    ->leftJoin('pictures.validatedVersion', 'pictures_validatedversion')
                    ->leftJoin('pictures_validatedversion.exif', 'pictures_validatedversion_exif')

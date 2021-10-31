@@ -4,7 +4,7 @@
     
     use App\Entity\Catalog\Picture;
     use App\Service\Catalog\PictureExifPopulator;
-    use App\Service\Catalog\PictureVersionHelper;
+    use App\Service\Catalog\Version\PictureVersionHelper;
     use Doctrine\Bundle\FixturesBundle\Fixture;
     use Doctrine\Common\DataFixtures\DependentFixtureInterface;
     use Doctrine\Persistence\ObjectManager;

@@ -1,13 +1,17 @@
 {{ form_start(form) }}
 <div class="row">
     <div class="col-md-6">
-
         {{ form_row(form.enabled) }}
         {{ form_row(form.validatedVersion.name) }}
         {{ form_row(form.validatedVersion.description) }}
-        {{ form_row(form.file) }}
         {{ form_row(form.catalog) }}
-        <button class="btn btn-success">{{ button_label|default('Save') }}</button>
+        {{ form_row(form.file) }}
+        {% if picture.file.id %}
+            <p>
+                <img src="{{ vich_uploader_asset(picture.file) }}" alt="{{ picture.file.imageOriginalName }}" class="img-fluid rounded" width="200">
+            </p>
+        {% endif %}
+        <button class="btn btn-success">{{ button_label|default('Enregistrer') }}</button>
     </div>
     <div class="col-md-6">
         {{ form_row(form.validatedVersion.exif) }}

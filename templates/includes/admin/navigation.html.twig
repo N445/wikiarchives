@@ -7,26 +7,37 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{{ path('ADMIN_CATALOG_CATALOG_INDEX') }}">
-                        Catalogue
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{{ path('ADMIN_CATALOG_PICTURE_INDEX') }}">
-                        Photos
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{{ path('ADMIN_CATALOG_PLACE_INDEX') }}">
-                        Places
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{{ path('ADMIN_USER_INDEX') }}">
-                        Utilisateurs
-                    </a>
-                </li>
+                {% if is_granted('ROLE_CONTRIBUTOR') %}
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="{{ path('ADMIN_CATALOG_CATALOG_TREE') }}">
+                            Catalogue
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="{{ path('ADMIN_CATALOG_PICTURE_INDEX') }}">
+                            Photos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="{{ path('ADMIN_CATALOG_PLACE_INDEX') }}">
+                            Places
+                        </a>
+                    </li>
+                {% endif %}
+                {% if is_granted('ROLE_MODERATOR') %}
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="{{ path('ADMIN_MODERATION') }}">
+                            A valider
+                        </a>
+                    </li>
+                {% endif %}
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="{{ path('ADMIN_USER_INDEX') }}">
+                            Utilisateurs
+                        </a>
+                    </li>
+                {% endif %}
             </ul>
             <div class="login ms-3">
                 {% if app.user %}

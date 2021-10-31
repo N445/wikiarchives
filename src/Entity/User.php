@@ -5,6 +5,7 @@
     use App\Entity\User\Info;
     use App\Entity\User\Rights;
     use App\Repository\UserRepository;
+    use App\Service\User\UserRoles;
     use App\Traits\User\CatalogBlameableTrait;
     use App\Traits\User\Picture\VersionBlameableTrait;
     use App\Traits\User\PictureBlameableTrait;
@@ -21,9 +22,6 @@
      */
     class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serializable
     {
-        const ROLE_USER = 'ROLE_USER';
-        const ROLE_ADMIN = 'ROLE_ADMIN';
-    
         use CatalogBlameableTrait;
         use PictureBlameableTrait;
         use PlaceBlameableTrait;
@@ -130,7 +128,7 @@
         {
             $roles = $this->roles;
             // guarantee every user at least has ROLE_USER
-            $roles[] = self::ROLE_USER;
+            $roles[] = UserRoles::ROLE_USER;
             
             return array_unique($roles);
         }

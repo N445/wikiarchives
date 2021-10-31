@@ -2,33 +2,42 @@
 
 {% block body %}
     <div class="container">
+        <h1>Espace d'adminstration</h1>
+        <hr>
         <div class="row">
             <div class="col"><h2>{{ catalogs|length }} catalogues</h2></div>
             <div class="col"><h2>{{ pictures|length }} photos</h2></div>
-            <div class="col"><h2>{{ bytestotal|humanFilesize }} de photos</h2></div>
         </div>
-        <h2>{{ versions|length }} versions en attentes de validation</h2>
-        <table class="table table-sm table-bordered">
-            <thead>
-            <tr>
-                <th>Photo</th>
-                <th>Proposé le</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for version in versions %}
+        {% if is_granted('ROLE_MODERATOR') %}
+            <hr>
+            <h2>{{ versions|length }} versions en attentes de validation</h2>
+            <table class="table table-sm table-bordered">
+                <thead>
                 <tr>
-                    <td>{{ version.tmpPicture.name }}</td>
-                    <td>{{ version.createdAt|date('d/m/Y H:i') }}</td>
-                    <td>
-                        <a href="{{ path('ADMIN_CATALOG_PICTURE_TMP_VERSIONS_SHOW', {'id': version.tmpPicture.id, 'versionId': version.id}) }}" class="btn btn-sm btn-info">
-                            Voir
-                        </a>
-                    </td>
+                    <th>Photo</th>
+                    <th>Proposé le</th>
+                    <th>Proposé par</th>
+                    <th>Ratio</th>
+                    <th></th>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                {% for version in versions %}
+                    <tr>
+                        <td>{{ version.tmpPicture.name }}</td>
+                        <td>{{ version.createdAt|date('d/m/Y H:i') }}</td>
+                        <td>{{ version.createdBy }}</td>
+                        <td>{{ version.createdBy|userRatio.ratioAccepted|number_format(2) }}</td>
+                        <td>
+                            <a href="{{ path('ADMIN_MODERATION_PICTURE_TMP_VERSIONS_SHOW', {'id': version.tmpPicture.id, 'versionId': version.id}) }}"
+                               class="btn btn-sm btn-info">
+                                Voir
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
     </div>
 {% endblock %}

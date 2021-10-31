@@ -3,7 +3,7 @@
         {% for node in nodes %}
             <li class="catalog{{ (catalog.id == node.id) ? ' jstree-open' : '' }}">
                 <a class="draggable {{ (catalog.id == node.id)  ? ' jstree-clicked' : '' }}" data-id="{{ node.id }}"
-                   href="{{ path('ADMIN_CATALOG_CATALOG_INDEX',{id:node.id}) }}" data-type="catalog"
+                   href="{{ path('ADMIN_CATALOG_CATALOG_TREE',{id:node.id}) }}" data-type="catalog"
                    data-is-root="{{ node.parent ?'false':'true' }}">
                     {{ node.name }}
                 </a>

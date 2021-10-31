@@ -13,7 +13,6 @@ class RightsType extends AbstractType
     {
         $builder
             ->add('hasVersionCreator')
-            ->add('hasVersionValidator')
         ;
     }
 

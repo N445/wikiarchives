@@ -1,12 +1,15 @@
 {% extends 'base-admin.html.twig' %}
 
-{% block title %}Place index{% endblock %}
+{% block title %}Liste des places - {{ parent() }}{% endblock %}
 
 {% block body %}
-    <h1>Place index</h1>
-
-    <table class="table">
-        <thead>
+    <div class="container">
+        <h1>Liste des places</h1>
+        <a href="{{ path('ADMIN_CATALOG_PLACE_NEW') }}" class="btn btn-primary mb-3">
+            Créer place
+        </a>
+        <table class="table">
+            <thead>
             <tr>
                 <th>Id</th>
                 <th>Name</th>
@@ -15,27 +18,26 @@
                 <th>Lng</th>
                 <th>actions</th>
             </tr>
-        </thead>
-        <tbody>
-        {% for place in places %}
-            <tr>
-                <td>{{ place.id }}</td>
-                <td>{{ place.name }}</td>
-                <td>{{ place.location }}</td>
-                <td>{{ place.lat }}</td>
-                <td>{{ place.lng }}</td>
-                <td>
-                    <a href="{{ path('ADMIN_CATALOG_PLACE_SHOW', {'id': place.id}) }}">show</a>
-                    <a href="{{ path('ADMIN_CATALOG_PLACE_EDIT', {'id': place.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('ADMIN_CATALOG_PLACE_NEW') }}">Create new</a>
+            </thead>
+            <tbody>
+            {% for place in places %}
+                <tr>
+                    <td>{{ place.id }}</td>
+                    <td>{{ place.name }}</td>
+                    <td>{{ place.location }}</td>
+                    <td>{{ place.lat }}</td>
+                    <td>{{ place.lng }}</td>
+                    <td>
+                        <a href="{{ path('ADMIN_CATALOG_PLACE_SHOW', {'id': place.id}) }}" class="btn btn-sm btn-info">Voir</a>
+                        <a href="{{ path('ADMIN_CATALOG_PLACE_EDIT', {'id': place.id}) }}" class="btn btn-sm btn-info">Modifier</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

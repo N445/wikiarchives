@@ -37,6 +37,12 @@ liip_imagine:
         quality: 40
         filters:
           thumbnail: { size: [260, 260], mode: outbound }
+      picture_admin_listing:
+        cache: default
+        data_loader: loader_aws_s3_picture
+        quality: 50
+        filters:
+          thumbnail: { size: [66, 45], mode: outbound }
       picture_card_listing:
         cache: default
         data_loader: loader_aws_s3_picture

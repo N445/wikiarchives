@@ -7,7 +7,7 @@ use App\Entity\Catalog\Picture;
 use App\Repository\Catalog\CatalogRepository;
 use App\Repository\Catalog\PictureRepository;
 use App\Service\Catalog\PictureExifPopulator;
-use App\Service\Catalog\PictureVersionHelper;
+use App\Service\Catalog\Version\PictureVersionHelper;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 

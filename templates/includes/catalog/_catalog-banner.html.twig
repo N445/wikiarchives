@@ -5,7 +5,11 @@
     <div class="content">
         <div class="container">
             <h1 class="catalog-name">{{ catalog.name }}</h1>
-            {% if catalog.parent is null %}
+            {% if isPicture is defined and isPicture %}
+                <a href="{{ path('CATALOG', {'id': catalog.id}) }}" class="btn btn-primary">
+                    Remonter d'un dossier
+                </a>
+            {% elseif catalog.parent is null %}
                 <a href="{{ path('HOMEPAGE') }}" class="btn btn-primary">
                     Remonter d'un dossier
                 </a>

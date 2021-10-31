@@ -1,0 +1,61 @@
+{% extends 'base-admin.html.twig' %}
+{% block title %}Modération  - {{ parent() }}{% endblock %}
+{% block body %}
+    <div class="container">
+        <h1>Espace modération</h1>
+
+        {% if versionsSorted|length %}
+            <div class="accordion">
+
+                {% for pictureId,versionSorted in versionsSorted %}
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading-{{ pictureId }}">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapse-{{ pictureId }}" aria-expanded="true"
+                                    aria-controls="collapse-{{ pictureId }}">
+                                {{ versionSorted.picture.name }} [{{ versionSorted.versions|length }}]
+                            </button>
+                        </h2>
+                        <div id="collapse-{{ pictureId }}" class="accordion-collapse collapse"
+                             aria-labelledby="heading-{{ pictureId }}">
+                            <div class="accordion-body p-0">
+                                <table class="table table-sm table-bordered mb-0">
+                                    <thead>
+                                    <tr>
+                                        <th>Proposé le</th>
+                                        <th>Proposé par</th>
+                                        <th>Ratio</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for version in versionSorted.versions %}
+                                        <tr>
+                                            <td>{{ version.createdAt|date('d/m/Y H:i') }}</td>
+                                            <td>{{ version.createdBy }}</td>
+                                            <td>{{ version.createdBy|userRatio.ratioAccepted|number_format(2) }}</td>
+                                            <td>
+                                                <a href="{{ path('ADMIN_MODERATION_PICTURE_TMP_VERSIONS_SHOW', {'id': version.tmpPicture.id, 'versionId': version.id}) }}"
+                                                   class="btn btn-sm btn-info">
+                                                    Voir
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>
+                <span class="badge bg-success">
+                    Pas de proposition à vérifier
+                </span>
+            </p>
+        {% endif %}
+
+    </div>
+{% endblock %}

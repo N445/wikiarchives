@@ -7,12 +7,13 @@
     use App\Form\Catalog\CatalogType;
     use App\Repository\Catalog\CatalogRepository;
     use Doctrine\ORM\EntityManagerInterface;
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Annotation\Route;
     
-    #[Route('/admin/catalog/catalog')]
+    #[Route('/admin/catalog/catalog'), IsGranted('ROLE_CONTRIBUTOR')]
     class CatalogController extends AbstractController
     {
         /**
@@ -33,8 +34,17 @@
             $this->catalogRepository = $catalogRepository;
         }
         
-        #[Route('/{id}', name: 'ADMIN_CATALOG_CATALOG_INDEX', methods: ['GET'])]
+        #[Route('/', name: 'ADMIN_CATALOG_CATALOG_INDEX', methods: ['GET'])]
         public function index(?int $id = null): Response
+        {
+            return $this->render('catalog/catalog/index.html.twig', [
+                'catalogs' => $this->catalogRepository->findAll(),
+            ]);
+        }
+        
+        
+        #[Route('/tree/{id}', name: 'ADMIN_CATALOG_CATALOG_TREE', methods: ['GET'])]
+        public function tree(?int $id = null): Response
         {
             $trees = $this->catalogRepository->getRootAdmin();
             
@@ -44,7 +54,7 @@
                     $this->em->persist($catalog);
                     $this->em->flush();
                 }
-                return $this->redirectToRoute('ADMIN_CATALOG_CATALOG_INDEX', [
+                return $this->redirectToRoute('ADMIN_CATALOG_CATALOG_TREE', [
                     'id' => $catalog->getId(),
                 ]);
             }
@@ -52,13 +62,13 @@
                 $catalog = (new Catalog())->setName(Catalog::ROOT);
                 $this->em->persist($catalog);
                 $this->em->flush();
-                return $this->redirectToRoute('ADMIN_CATALOG_CATALOG_INDEX', [
+                return $this->redirectToRoute('ADMIN_CATALOG_CATALOG_TREE', [
                     'id' => $catalog->getId(),
                 ]);
             }
             $catalog = $this->catalogRepository->byIdAdmin($id);
             
-            return $this->render('catalog/catalog/index.html.twig', [
+            return $this->render('catalog/catalog/tree.html.twig', [
                 'trees' => $trees,
                 'catalog' => $catalog,
             ]);
@@ -96,6 +106,9 @@
         #[Route('/{id}/edit', name: 'ADMIN_CATALOG_CATALOG_EDIT', methods: ['GET', 'POST'])]
         public function edit(Request $request, Catalog $catalog): Response
         {
+            if(Catalog::ROOT === $catalog->getName()){
+                return $this->redirectToRoute('ADMIN_CATALOG_CATALOG_INDEX');
+            }
             $form = $this->createForm(CatalogType::class, $catalog);
             $form->handleRequest($request);
             
@@ -114,6 +127,9 @@
         #[Route('/{id}', name: 'ADMIN_CATALOG_CATALOG_DELETE', methods: ['POST'])]
         public function delete(Request $request, Catalog $catalog): Response
         {
+            if(Catalog::ROOT === $catalog->getName()){
+                return $this->redirectToRoute('ADMIN_CATALOG_CATALOG_INDEX');
+            }
             if ($this->isCsrfTokenValid('delete' . $catalog->getId(), $request->request->get('_token'))) {
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->remove($catalog);

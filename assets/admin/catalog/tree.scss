@@ -1,2 +1,6 @@
 @import "assets/lib/vakata-jstree/src/themes/default/style";
 @import "~filepond/dist/filepond.min";
+
+.filepond--item {
+  width: calc(20% - 0.5em);
+}

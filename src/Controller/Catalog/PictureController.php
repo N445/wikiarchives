@@ -3,21 +3,21 @@
 namespace App\Controller\Catalog;
 
 use App\Entity\Catalog\Picture;
-use App\Form\Catalog\Picture\VersionValidatorType;
 use App\Form\Catalog\PictureType;
 use App\Repository\Catalog\Picture\VersionRepository;
 use App\Repository\Catalog\PictureRepository;
 use App\Service\Catalog\PictureContentPopulator;
 use App\Service\Catalog\PictureExifPopulator;
 use App\Service\Catalog\PictureRemover;
-use App\Service\Catalog\PictureVersionHelper;
-use App\Service\Catalog\VersionValidator;
+use App\Service\Catalog\Version\PictureVersionHelper;
+use App\Service\Catalog\Version\VersionValidator;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/admin/catalog/picture')]
+#[Route('/admin/catalog/picture'), IsGranted('ROLE_CONTRIBUTOR')]
 class PictureController extends AbstractController
 {
     /**
@@ -84,6 +84,7 @@ class PictureController extends AbstractController
         if (!$picture = $this->pictureRepository->byIdAdmin($id)) {
             return $this->redirectToRoute('ADMIN_CATALOG_PICTURE_INDEX');
         }
+        
         $form = $this->createForm(PictureType::class, $picture);
         $form->handleRequest($request);
         
@@ -99,86 +100,6 @@ class PictureController extends AbstractController
             'picture' => $picture,
             'form' => $form,
         ]);
-    }
-    
-    /**
-     * Création de la route "picture tmp versions"
-     */
-    #[Route('/{id}/picture-tmp-versions', name: 'ADMIN_CATALOG_PICTURE_TMP_VERSIONS')]
-    public function tmpVersions(int $id): Response
-    {
-        if (!$picture = $this->pictureRepository->byIdAdmin($id)) {
-            return $this->redirectToRoute('ADMIN_CATALOG_PICTURE_INDEX');
-        }
-        return $this->render('catalog/picture/tmp-versions.html.twig', [
-                'picture' => $picture
-            ]
-        );
-    }
-    
-    /**
-     * Création de la route "picture tmp versions"
-     */
-    #[Route('/{id}/picture-tmp-versions/{versionId}', name: 'ADMIN_CATALOG_PICTURE_TMP_VERSIONS_SHOW')]
-    public function tmpVersionsShow(int $id, int $versionId, Request $request, VersionValidator $versionValidator): Response
-    {
-        if (!$picture = $this->pictureRepository->byIdAdmin($id)) {
-            return $this->redirectToRoute('ADMIN_CATALOG_PICTURE_INDEX');
-        }
-        if (!$version = $this->versionRepository->tmpById($versionId)) {
-            return $this->redirectToRoute('ADMIN_CATALOG_PICTURE_TMP_VERSIONS', [
-                'id' => $picture->getId()
-            ]);
-        }
-    
-        if (PictureVersionHelper::STATUS_ACCEPTED === $version->getStatus()) {
-            return $this->redirectToRoute('ADMIN_CATALOG_PICTURE_SHOW', [
-                'id' => $picture->getId()
-            ]);
-        }
-    
-        $finalVersion = PictureVersionHelper::getFinalVersion($version->getBasedVersion(), $version);
-        $finalVersion2 = PictureVersionHelper::getFinalVersion($picture->getValidatedVersion(), $version);
-
-//        $validationForm = $this->createForm(VersionValidatorType::class);
-        $validationForm = $this->get('form.factory')->createNamed('version_validator_1', VersionValidatorType::class);
-        $validationForm->handleRequest($request);
-    
-        if ($validationForm->isSubmitted() && $validationForm->isValid()) {
-            if ($validationForm->get('refused')->isClicked()) {
-                $versionValidator->refused($picture, $version, $finalVersion);
-            } else {
-                $versionValidator->validated($picture, $version, $finalVersion);
-            }
-            return $this->redirectToRoute('ADMIN_CATALOG_PICTURE_SHOW', [
-                'id' => $picture->getId()
-            ]);
-        }
-
-
-//        $validationForm2 = $this->createForm(VersionValidatorType::class);
-        $validationForm2 = $this->get('form.factory')->createNamed('version_validator_2', VersionValidatorType::class);
-        $validationForm2->handleRequest($request);
-        if ($validationForm2->isSubmitted() && $validationForm2->isValid()) {
-            if ($validationForm2->get('refused')->isClicked()) {
-                $versionValidator->refused($picture, $version, $finalVersion2);
-            } else {
-                $versionValidator->validated($picture, $version, $finalVersion2);
-            }
-            return $this->redirectToRoute('ADMIN_CATALOG_PICTURE_SHOW', [
-                'id' => $picture->getId()
-            ]);
-        }
-    
-        return $this->render('catalog/picture/tmp-versions-show.html.twig', [
-                'picture' => $picture,
-                'version' => $version,
-                'finalVersion' => $finalVersion,
-                'validationForm' => $validationForm->createView(),
-                'finalVersion2' => $finalVersion2,
-                'validationForm2' => $validationForm2->createView(),
-            ]
-        );
     }
     
     

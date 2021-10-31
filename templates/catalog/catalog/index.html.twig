@@ -1,56 +1,45 @@
 {% extends 'base-admin.html.twig' %}
 
-{% block title %}Catalog index{% endblock %}
+{% block title %}Catalogues listing - {{ parent() }}{% endblock %}
 
 {% block body %}
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card shadow">
-                    <div class="card-body">
-                        <h2>Arborescence</h2>
-{#                        <button class="btn btn-success btn-sm add-root-catalog mb-3">#}
-{#                            Ajouter un dossier racine#}
-{#                        </button>#}
-                        {% include 'catalog/catalog/includes/_tree-catalog.html.twig' %}
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-8">
-                <div class="card shadow">
-                    <div class="card-body">
-                        {% if catalog.id %}
-                            <form method="POST" action="{{ path('AJAX_CATALOG_PICTURE_FILEPOND', {'directoryId': catalog.id}) }}">
-                                <input type="file" class="filepond" name="filepond" data-allow-remove="true">
-                            </form>
-                            <div class="catalog-content">
-                                {% include 'catalog/catalog/includes/_catalog-content.html.twig' %}
-                            </div>
+    <div class="container">
+        <h1>Catalogues listing</h1>
+        <a href="{{ path('ADMIN_CATALOG_CATALOG_NEW') }}" class="btn btn-primary mb-3">
+            Créer catalogue
+        </a>
+        <table class="table table-sm table-bordered">
+            <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Parent</th>
+                <th>Photos</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for catalog in catalogs %}
+                <tr>
+                    <td>{{ catalog.name }}</td>
+                    <td>{{ catalog.parent }}</td>
+                    <td>{{ catalog.pictures|length }}</td>
+                    <td>
+                        <a href="{{ path('ADMIN_CATALOG_CATALOG_SHOW', {'id': catalog.id}) }}"
+                           class="btn btn-sm btn-info">
+                            Voir
+                        </a>
+                        {% if constant('ROOT',catalog) != catalog.name %}
+                            <a href="{{ path('ADMIN_CATALOG_CATALOG_EDIT', {'id': catalog.id}) }}"
+                               class="btn btn-sm btn-info">
+                                Modifier
+                            </a>
                         {% endif %}
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    {# new Catalog #}
-    <div class="modal fade" id="catalogModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-            </div>
-        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
 
 {% endblock %}
 
-{% block stylesheets %}
-    {{ encore_entry_link_tags('admin-tree') }}
-    {{ encore_entry_link_tags('admin-catalog-datatable') }}
-{% endblock %}
-
-{% block javascripts %}
-    {{ encore_entry_script_tags('admin-tree-js') }}
-    {{ encore_entry_script_tags('admin-catalog-datatable-js') }}
-{% endblock %}

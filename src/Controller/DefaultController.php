@@ -47,11 +47,9 @@
         #[Route('/test', name: 'TEST')]
         public function test(Request $request)
         {
-//            $validationForm = $this->createForm(VersionValidatorType::class);
             $validationForm = $this->get('form.factory')->createNamed('version_validator_1', VersionValidatorType::class);
             $validationForm->handleRequest($request);
         
-//            $validationForm2 = $this->createForm(VersionValidatorType::class);
             $validationForm2 = $this->get('form.factory')->createNamed('version_validator_2', VersionValidatorType::class);
             $validationForm2->handleRequest($request);
         

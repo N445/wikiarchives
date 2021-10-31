@@ -5,7 +5,7 @@ namespace App\Service\Catalog\Version;
 use App\Entity\Catalog\Picture;
 use App\Entity\Catalog\Picture\Version;
 use App\Form\Catalog\Picture\VersionType;
-use App\Service\Catalog\PictureVersionCloner;
+use App\Service\Catalog\Version\PictureVersionCloner;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;

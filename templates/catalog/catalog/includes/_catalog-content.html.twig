@@ -1,6 +1,6 @@
 <h2>Contenu de {{ catalog.name }}</h2>
 {% if catalog.imageName %}
-    <img src="{{ vich_uploader_asset(catalog) }}" alt="{{ catalog.name }}" class="img-fluid" width="100px">
+    <img src="{{ vich_uploader_asset(catalog) }}" alt="{{ catalog.name }}" class="img-fluid rounded my-3" width="100px">
 {% else %}
     <p>
         <span class="badge bg-danger">Pas de couverture</span>
@@ -35,7 +35,9 @@
         <th>Résolution</th>
         <th>Visible</th>
         <th>Exif</th>
+        {% if is_granted('ROLE_MODERATOR') %}
         <th>Validations en attentes</th>
+        {% endif %}
         <th></th>
     </tr>
     </thead>
@@ -43,7 +45,8 @@
     {% for picture in catalog.pictures %}
         <tr>
             <td>
-                <img src="{{ vich_uploader_asset(picture.file) }}" alt="{{ picture.file.imageOriginalName }}"
+                <img src="{{ picture.file.imageName|imagine_filter('picture_admin_listing') }}"
+                     alt="{{ picture.file.imageOriginalName }}"
                      width="100"
                      class="img-fluid rounded">
             </td>
@@ -70,9 +73,11 @@
                     <span class="badge bg-danger">Non Complet</span>
                 {% endif %}
             </td>
-            <td>
-                {{ picture.tmpVersions|length }}
-            </td>
+            {% if is_granted('ROLE_MODERATOR') %}
+                <td>
+                    {{ picture.tmpVersions|length }}
+                </td>
+            {% endif %}
             <td>
                 <a href="{{ path('ADMIN_CATALOG_PICTURE_SHOW',{'id':picture.id}) }}" class="btn btn-sm btn-info">
                     Voir

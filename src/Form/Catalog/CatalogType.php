@@ -17,7 +17,11 @@ class CatalogType extends AbstractType
             ->add('imageFile', FileType::class, [
                 'required' => !$builder->getData()->getImageName(),
             ])
-            ->add('parent');
+        ;
+    
+        if (!$builder->getData()->getId()) {
+            $builder->add('parent');
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -4,6 +4,7 @@ namespace App\Command;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
+use App\Service\User\UserRoles;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -53,13 +54,13 @@ class UserPromoteCommand extends Command
             return Command::SUCCESS;
         }
 
-        if (in_array(User::ROLE_ADMIN, $user->getRoles())) {
+        if (in_array(UserRoles::ROLE_ADMIN, $user->getRoles())) {
             $io->info('Utilisateur déja admin');
 
             return Command::SUCCESS;
         }
 
-        $user->addRole(User::ROLE_ADMIN);
+        $user->addRole(UserRoles::ROLE_ADMIN);
         $this->em->flush();
 
         $io->success('Utilisateur promu');

@@ -4,6 +4,7 @@
     
     use App\Entity\Catalog\Catalog;
     use App\Entity\Catalog\Picture;
+    use App\Service\Catalog\Version\PictureVersionHelper;
     use Doctrine\ORM\EntityManagerInterface;
     use Symfony\Component\HttpFoundation\File\UploadedFile;
     

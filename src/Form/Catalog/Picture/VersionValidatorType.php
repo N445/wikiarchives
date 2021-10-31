@@ -4,7 +4,6 @@ namespace App\Form\Catalog\Picture;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class VersionValidatorType extends AbstractType
@@ -18,7 +17,19 @@ class VersionValidatorType extends AbstractType
                     'class' => 'btn btn-outline-danger w-100'
                 ]
             ])
+            ->add('refusedAndBlockUser', SubmitType::class, [
+                'label' => 'Refuser et bloquer l\'utilisateur',
+                'attr' => [
+                    'class' => 'btn btn-outline-danger w-100'
+                ]
+            ])
             ->add('accepted', SubmitType::class, [
+                'label' => 'Accepter',
+                'attr' => [
+                    'class' => 'btn btn-outline-success w-100'
+                ]
+            ])
+            ->add('accepted2', SubmitType::class, [
                 'label' => 'Accepter',
                 'attr' => [
                     'class' => 'btn btn-outline-success w-100'

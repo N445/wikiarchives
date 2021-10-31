@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {% include 'includes/catalog/_catalog-banner.html.twig' with{catalog:picture.catalog} %}
+    {% include 'includes/catalog/_catalog-banner.html.twig' with{catalog:picture.catalog,isPicture:true} %}
     <div class="container-fluid">
         {% include 'includes/catalog/_breadcrumb.html.twig' with {object:picture} %}
         <div class="row mb-4">
@@ -32,7 +32,8 @@
                         </li>
                     </ul>
                 </div>
-                <img src="{{ picture.file.imageName|imagine_filter('picture') }}" alt="{{ picture.file.imageName }}" class="img-fluid rounded">
+                <img src="{{ picture.file.imageName|imagine_filter('picture') }}" alt="{{ picture.file.imageName }}"
+                     class="img-fluid rounded">
             </div>
             <div class="col">
 
@@ -41,12 +42,14 @@
                     {{ picture.description|raw }}
                 </div>
                 {% include 'includes/catalog/_picture-exif.html.twig' %}
-                <p>
-                    <a class="btn btn-primary"
-                       href="{{ path('PICTURE_CHANGE', {'catalogId': picture.catalog.id, 'id': picture.id}) }}">
-                        Proposer une modification
-                    </a>
-                </p>
+                {% if is_granted('PICTURE_VERSION_CREATE',app.user) %}
+                    <p>
+                        <a class="btn btn-primary"
+                           href="{{ path('PICTURE_CHANGE', {'catalogId': picture.catalog.id, 'id': picture.id}) }}">
+                            Proposer une modification
+                        </a>
+                    </p>
+                {% endif %}
             </div>
         </div>
     </div>

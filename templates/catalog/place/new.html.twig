@@ -1,11 +1,13 @@
 {% extends 'base-admin.html.twig' %}
 
-{% block title %}New Place{% endblock %}
+{% block title %}Création d'une place - {{ parent() }}{% endblock %}
 
 {% block body %}
-    <h1>Create new Place</h1>
+   <div class="container">
+       <h1>Création d'une place</h1>
 
-    {{ include('catalog/place/_form.html.twig') }}
+       {{ include('catalog/place/_form.html.twig') }}
 
-    <a href="{{ path('ADMIN_CATALOG_PLACE_INDEX') }}">back to list</a>
+       <a href="{{ path('ADMIN_CATALOG_PLACE_INDEX') }}" class="btn btn-primary mt-3">Revenir au listing</a>
+   </div>
 {% endblock %}

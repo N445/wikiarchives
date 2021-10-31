@@ -5,7 +5,7 @@ namespace App\Entity\Catalog\Picture;
 use App\Entity\Catalog\Picture;
 use App\Entity\User;
 use App\Repository\Catalog\Picture\VersionRepository;
-use App\Service\Catalog\PictureVersionHelper;
+use App\Service\Catalog\Version\PictureVersionHelper;
 use App\Traits\TimestampableTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -39,7 +39,7 @@ class Version
     private $status;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Version::class, inversedBy="versions", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Version::class, inversedBy="versions")
      */
     private $basedVersion;
 

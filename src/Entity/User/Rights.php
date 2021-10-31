@@ -22,15 +22,9 @@ class Rights
      */
     private $hasVersionCreator;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $hasVersionValidator;
-
     public function __construct()
     {
         $this->hasVersionCreator = true;
-        $this->hasVersionValidator = false;
     }
 
     public function getId(): ?int
@@ -46,18 +40,6 @@ class Rights
     public function setHasVersionCreator(bool $hasVersionCreator): self
     {
         $this->hasVersionCreator = $hasVersionCreator;
-
-        return $this;
-    }
-
-    public function getHasVersionValidator(): ?bool
-    {
-        return $this->hasVersionValidator;
-    }
-
-    public function setHasVersionValidator(bool $hasVersionValidator): self
-    {
-        $this->hasVersionValidator = $hasVersionValidator;
 
         return $this;
     }

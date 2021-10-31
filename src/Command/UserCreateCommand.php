@@ -4,6 +4,7 @@ namespace App\Command;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
+use App\Service\User\UserRoles;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -76,7 +77,7 @@ class UserCreateCommand extends Command
         $isAdmin = $helper->ask($input, $output, $question);
         
         if ($isAdmin) {
-            $user->setRoles([User::ROLE_ADMIN]);
+            $user->setRoles([UserRoles::ROLE_ADMIN]);
         }
         
         $question = new Question('Entrez le mot de passe : ');

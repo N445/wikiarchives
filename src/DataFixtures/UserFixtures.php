@@ -29,9 +29,7 @@
             
             $email = 'admin@wikiarchives.com';
             
-            $rights = (new User\Rights())
-                ->setHasVersionCreator(true)
-                ->setHasVersionValidator(true);
+            $rights = (new User\Rights())->setHasVersionCreator(true);
             
             $user = (new User())
                 ->setEmail($email)
@@ -46,8 +44,7 @@
             foreach (range(2, self::LOOP) as $i) {
                 
                 $rights = (new User\Rights())
-                    ->setHasVersionCreator($faker->boolean())
-                    ->setHasVersionValidator($faker->boolean());
+                    ->setHasVersionCreator($faker->boolean());
                 
                 $info = (new User\Info())
                     ->setLastname($faker->optional->lastName())

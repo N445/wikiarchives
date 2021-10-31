@@ -1,6 +1,6 @@
 {% extends 'base-admin.html.twig' %}
 
-{% block title %}Picture{% endblock %}
+{% block title %}Photo validation de la version {{ version.id }} - {{ parent() }}{% endblock %}
 
 {% macro picture_version_show(version) %}
     <div class="version">
@@ -136,16 +136,32 @@
 
 {% block body %}
     <div class="container">
-        <div class="row">
+        <h1>Photo validation de la version {{ version.id }}</h1>
 
+
+        {{ form_start(validationForm) }}
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <div class="btn-group w-100">
+                    {{ form_widget(validationForm.refused) }}
+                    {{ form_widget(validationForm.refusedAndBlockUser) }}
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md">
+                {{ form_widget(validationForm.accepted) }}
+            </div>
+            <div class="col-md">
+                {{ form_widget(validationForm.accepted2) }}
+            </div>
+        </div>
+        {{ form_end(validationForm) }}
+
+        <div class="row">
             {% if version.basedVersion.id != picture.validatedVersion.id %}
                 <div class="col-md">
-                    {{ form_start(validationForm) }}
-                    <div class="row">
-                        <div class="col">{{ form_row(validationForm.refused) }}</div>
-                        <div class="col">{{ form_row(validationForm.accepted) }}</div>
-                    </div>
-                    {{ form_end(validationForm) }}
                     <h2>Final</h2>
                     <p>
                         Basée sur une version de {{ version.basedVersion.createdAt|date('d/m/Y H:i') }}
@@ -170,12 +186,6 @@
             {% endif %}
 
             <div class="col-md">
-                {{ form_start(validationForm2) }}
-                <div class="row">
-                    <div class="col">{{ form_row(validationForm2.refused) }}</div>
-                    <div class="col">{{ form_row(validationForm2.accepted) }}</div>
-                </div>
-                {{ form_end(validationForm2) }}
                 <h2>Final 2</h2>
                 <p>
                     Basée sur une version de {{ picture.validatedVersion.createdAt|date('d/m/Y H:i') }}

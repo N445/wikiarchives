@@ -1,27 +1,33 @@
 {% extends 'base-admin.html.twig' %}
 
-{% block title %}Picture index{% endblock %}
+{% block title %}Liste des photos - {{ parent() }}{% endblock %}
 
 {% block body %}
-    <div class="container-fluid">
-        <h1>Picture index</h1>
-
+    <div class="container">
+        <h1>Liste des photos</h1>
+        <a href="{{ path('ADMIN_CATALOG_PICTURE_NEW') }}" class="btn btn-primary mb-3">
+            Créer photo
+        </a>
         <table class="datatable table">
             <thead>
             <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>actions</th>
+                <th>Nom</th>
+                <th>Catalog</th>
+                <th>Actions</th>
             </tr>
             </thead>
             <tbody>
             {% for picture in pictures %}
                 <tr>
-                    <td>{{ picture.id }}</td>
                     <td>{{ picture.name }}</td>
                     <td>
-                        <a href="{{ path('ADMIN_CATALOG_PICTURE_SHOW', {'id': picture.id}) }}">show</a>
-                        <a href="{{ path('ADMIN_CATALOG_PICTURE_EDIT', {'id': picture.id}) }}">edit</a>
+                        <a href="{{ path('ADMIN_CATALOG_CATALOG_SHOW', {'id': picture.catalog.id}) }}">
+                            {{ picture.catalog.name }}
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{{ path('ADMIN_CATALOG_PICTURE_SHOW', {'id': picture.id}) }}" class="btn btn-sm btn-info">Voir</a>
+                        <a href="{{ path('ADMIN_CATALOG_PICTURE_EDIT', {'id': picture.id}) }}" class="btn btn-sm btn-info">Modifier</a>
                     </td>
                 </tr>
             {% else %}
@@ -32,7 +38,7 @@
             </tbody>
         </table>
 
-        <a href="{{ path('ADMIN_CATALOG_PICTURE_NEW') }}">Create new</a>
+
     </div>
 {% endblock %}
 

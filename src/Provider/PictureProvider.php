@@ -31,22 +31,21 @@
     
         public function byCatalogPaginated(Catalog $catalog, int $page, int $nbPerPage = 10)
         {
-            return $this->pictureRepository->byCatalogPaginatedFront($catalog, $page, $nbPerPage);
+//            return $this->pictureRepository->byCatalogPaginatedFront($catalog, $page, $nbPerPage);
         
             $cache = new TagAwareAdapter(
                 new FilesystemAdapter(),
             );
-            $cache = new FilesystemAdapter();
         
         
-            return $cache->get(sprintf('22picture_pagination_%d_%d_%d', $catalog->getId(), $page, $nbPerPage), function (ItemInterface $item) use ($catalog, $page, $nbPerPage) {
+            return $cache->get(sprintf('picture_pagination_%d_%d_%d', $catalog->getId(), $page, $nbPerPage), function (ItemInterface $item) use ($catalog, $page, $nbPerPage) {
                 $item->expiresAfter(3600);
-//                $item->tag(sprintf('catalog_', $catalog->getId()));
+                $item->tag(sprintf('catalog_', $catalog->getId()));
                 $pagination = $this->pictureRepository->byCatalogPaginatedFront($catalog, $page, $nbPerPage);
                 /** @var Picture $picture */
-//                foreach ($pagination->getItems() as $picture) {
-//                    $item->tag(sprintf('picture_%d', $picture->getId()));
-//                }
+                foreach ($pagination->getItems() as $picture) {
+                    $item->tag(sprintf('picture_%d', $picture->getId()));
+                }
                 return $pagination;
             });
         }

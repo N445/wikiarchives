@@ -4,6 +4,13 @@
     {% include 'includes/catalog/_catalog-banner.html.twig' %}
     <div class="container-fluid">
         {% include 'includes/catalog/_breadcrumb.html.twig' with {object:catalog} %}
+
+        <a href="{{ path('CATALOG_DOWNLOAD', {'id': catalog.id}) }}" class="btn btn-primary"
+           title="Open">
+            Download
+        </a>
+
+
         <div class="row g-3 my-3">
             {% for child in catalog.children %}
                 <div class="col-12 col-md-1">

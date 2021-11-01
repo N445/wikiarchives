@@ -1,8 +1,5 @@
 const Noty = require('noty');
 
-// start the Stimulus application
-import './bootstrap';
-
 $(function () {
     var flashContainer = $('.flash-message-wrapper');
     var flashMessages = flashContainer.find('.flash-message');
@@ -18,7 +15,4 @@ $(function () {
             }).show();
         });
     }
-
-
-
 })

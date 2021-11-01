@@ -2,22 +2,21 @@
     
     namespace App\Entity\Catalog;
     
-    use App\Entity\Catalog\Picture\Exif;
     use App\Entity\Catalog\Picture\File;
     use App\Entity\Catalog\Picture\Version;
     use App\Entity\User;
     use App\Repository\Catalog\PictureRepository;
-    use App\Traits\BlameableTrait;
     use App\Traits\TimestampableTrait;
     use Doctrine\Common\Collections\ArrayCollection;
     use Doctrine\Common\Collections\Collection;
     use Doctrine\ORM\Mapping as ORM;
     use Gedmo\Mapping\Annotation as Gedmo;
-    
+
     /**
      * @ORM\Entity(repositoryClass=PictureRepository::class)
      * @ORM\Table(name="catalog_picture")
      * @Gedmo\Loggable
+     * @ORM\HasLifecycleCallbacks()
      */
     class Picture
     {

@@ -8,7 +8,51 @@
         <a href="{{ path('ADMIN_CATALOG_PICTURE_NEW') }}" class="btn btn-primary mb-3">
             Créer photo
         </a>
-        <table class="datatable table">
+        {# total items count #}
+        <div class="count">
+            <h3>{{ pagination.getTotalItemCount }} pictures</h3>
+        </div>
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Catalog</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for picture in pagination %}
+                <tr>
+                    <td>{{ picture.name }}</td>
+                    <td>
+                        <a href="{{ path('ADMIN_CATALOG_CATALOG_SHOW', {'id': picture.catalog.id}) }}">
+                            {{ picture.catalog.name }}
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{{ path('ADMIN_CATALOG_PICTURE_SHOW', {'id': picture.id}) }}" class="btn btn-sm btn-info">Voir</a>
+                        <a href="{{ path('ADMIN_CATALOG_PICTURE_EDIT', {'id': picture.id}) }}" class="btn btn-sm btn-info">Modifier</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        {# display navigation #}
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+
+
+        {#<table class="datatable table">
             <thead>
             <tr>
                 <th>Nom</th>
@@ -36,7 +80,7 @@
                 </tr>
             {% endfor %}
             </tbody>
-        </table>
+        </table>#}
 
 
     </div>

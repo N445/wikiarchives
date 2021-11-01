@@ -10,7 +10,7 @@ use App\Service\Catalog\PictureContentPopulator;
 use App\Service\Catalog\PictureExifPopulator;
 use App\Service\Catalog\PictureRemover;
 use App\Service\Catalog\Version\PictureVersionHelper;
-use App\Service\Catalog\Version\VersionValidator;
+use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,10 +33,16 @@ class PictureController extends AbstractController
     }
     
     #[Route('/', name: 'ADMIN_CATALOG_PICTURE_INDEX', methods: ['GET'])]
-    public function index(): Response
+    public function index(Request $request, PaginatorInterface $paginator): Response
     {
+        $pagination = $paginator->paginate(
+            $this->pictureRepository->createQueryBuilder('p')->getQuery(), /* query NOT result */
+            $request->get('page', 1), /*page number*/
+            100 /*limit per page*/
+        );
+        
         return $this->render('catalog/picture/index.html.twig', [
-            'pictures' => $this->pictureRepository->findAll(),
+            'pagination' => $pagination,
         ]);
     }
     

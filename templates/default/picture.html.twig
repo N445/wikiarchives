@@ -7,28 +7,37 @@
         <div class="row mb-4">
             <div class="col">
                 <div class="dropdown mb-3">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        Télécharger
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                        Download
                     </button>
 
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                         <li>
                             <a target="_blank" class="dropdown-item"
-                               href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'square'}) }}">Carré</a>
+                               href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'square'}) }}">
+                                Square
+                            </a>
                             <a target="_blank" class="dropdown-item"
-                               href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'sm'}) }}">Petite
-                                taille</a>
+                               href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'sm'}) }}">
+                                Small size
+                            </a>
                             <a target="_blank" class="dropdown-item"
-                               href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'md'}) }}">Taille
-                                moyenne</a>
+                               href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'md'}) }}">
+                                Middle size
+                            </a>
                             <a target="_blank" class="dropdown-item"
-                               href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'lg'}) }}">Grande
-                                taille</a>
+                               href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'lg'}) }}">
+                                Large size
+                            </a>
                             <a target="_blank" class="dropdown-item"
-                               href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'vlg'}) }}">Extra
-                                large</a>
+                               href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'vlg'}) }}">
+                                Very large size
+                            </a>
                             <a target="_blank" class="dropdown-item"
-                               href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'original'}) }}">Originale</a>
+                               href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'original'}) }}">
+                                Original
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -36,20 +45,21 @@
                      class="img-fluid rounded">
             </div>
             <div class="col">
-
-                <h2 class="text-white">{{ picture.name }}</h2>
-                <div class="description">
-                    {{ picture.description|raw }}
-                </div>
-                {% include 'includes/catalog/_picture-exif.html.twig' %}
-                {% if is_granted('PICTURE_VERSION_CREATE',app.user) %}
-                    <p>
-                        <a class="btn btn-primary"
-                           href="{{ path('PICTURE_CHANGE', {'catalogId': picture.catalog.id, 'id': picture.id}) }}">
-                            Proposer une modification
-                        </a>
-                    </p>
-                {% endif %}
+               <div class="sticky-top-offset">
+                   <h2 class="text-white">{{ picture.name }}</h2>
+                   <div class="description">
+                       {{ picture.description|raw }}
+                   </div>
+                   {% include 'includes/catalog/_picture-exif.html.twig' %}
+                   {% if is_granted('PICTURE_VERSION_CREATE',app.user) %}
+                       <p>
+                           <a class="btn btn-primary"
+                              href="{{ path('PICTURE_CHANGE', {'catalogId': picture.catalog.id, 'id': picture.id}) }}">
+                               Proposer une modification
+                           </a>
+                       </p>
+                   {% endif %}
+               </div>
             </div>
         </div>
     </div>

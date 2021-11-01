@@ -5,6 +5,12 @@ body {
   color: white;
 }
 
+.sticky-top-offset {
+  position: sticky;
+  top: 80px;
+  z-index: 1020;
+}
+
 .catalog-banner {
   height: 200px;
   overflow: hidden;

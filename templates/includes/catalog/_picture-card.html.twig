@@ -1,36 +1,36 @@
-{# <div class="picture-card rounded"> #}
-{# <a href="{{ path('PICTURE', {'catalogId':picture.catalog.id,'id': picture.id}) }}" title="{{ picture.name }}"> #}
-{# <img src="{{ picture.file.imageName|imagine_filter('picture_card_listing') }}" #}
-{# class="img-fluid" alt="{{ picture.name }}"> #}
-{# </a> #}
-{# </div> #}
+{#<div class="catalog-card card shadow-sm h-100">#}
+{#    <img src="{{ picture.file.imageName|imagine_filter('picture_card_listing') }}"#}
+{#         class="card-img-top"#}
+{#         alt="{{ picture.name }}"#}
+{#         loading="lazy"#}
+{#    >#}
+{#    <div class="card-body p-1">#}
+{#        <div class="d-flex flex-column justify-content-between h-100">#}
+{#            <p class="card-title">#}
+{#                <small>#}
+{#                    {{ picture.name|truncate(20) }}#}
+{#                </small>#}
+{#            </p>#}
+{#            <a href="{{ path('PICTURE', {'catalogId':picture.catalog.id,'id': picture.id}) }}"#}
+{#               class="btn btn-sm w-100 btn-wikiarchives-dark" title="Open">#}
+{#                Open#}
+{#            </a>#}
+{#        </div>#}
+{#    </div>#}
+{#</div>#}
 
-
-<div class="catalog-card card shadow-sm h-100">
+<a href="{{ path('PICTURE', {'catalogId':picture.catalog.id,'id': picture.id}) }}" class="catalog-card card shadow-sm h-100" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ picture.name }}">
     <img src="{{ picture.file.imageName|imagine_filter('picture_card_listing') }}"
          class="card-img-top"
          alt="{{ picture.name }}"
-         loading="lazy"
-    >
-
-
-    {# <img src="" #}
-    {# {{ stimulus_controller('symfony/ux-lazy-image/lazy-image') }} #}
-    {# data-hd-src="{{ picture.file.imageName|imagine_filter('picture_card_listing') }}" #}
-    {# class="card-img-top" #}
-    {# alt="{{ picture.name }}"> #}
-
+         loading="lazy">
     <div class="card-body p-1">
         <div class="d-flex flex-column justify-content-between h-100">
-            <p class="card-title">
+            <p class="card-title text-truncate">
                 <small>
-                    {{ picture.name|truncate(20) }}
+                    {{ picture.name }}
                 </small>
             </p>
-            <a href="{{ path('PICTURE', {'catalogId':picture.catalog.id,'id': picture.id}) }}"
-               class="btn btn-sm w-100 btn-wikiarchives-dark">
-                Ouvrir
-            </a>
         </div>
     </div>
-</div>
+</a>

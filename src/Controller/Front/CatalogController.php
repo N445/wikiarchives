@@ -4,6 +4,7 @@ namespace App\Controller\Front;
 
 use App\Provider\CatalogProvider;
 use App\Provider\PictureProvider;
+use App\Service\Catalog\PictureDownloadProvider;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,5 +36,16 @@ class CatalogController extends AbstractController
             'catalog' => $catalog,
             'pagination' => $this->pictureProvider->byCatalogPaginated($catalog, $request->get('page', 1), 12 * 5),
         ]);
+    }
+    
+    #[Route('/{id}/download/', name: 'CATALOG_DOWNLOAD')]
+    public function catalogDownload(int $id, PictureDownloadProvider $pictureDownloadProvider)
+    {
+        if (!$catalog = $this->catalogProvider->byId($id, false)) {
+            return $this->redirectToRoute('HOMEPAGE');
+        }
+
+//            return $this->redirect($pictureDownloadProvider->getResizedPicture($picture, $size));
+        return $pictureDownloadProvider->catalog($catalog);
     }
 }

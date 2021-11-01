@@ -42,3 +42,8 @@ services:
             - '%env(AWS_BUCKET_NAME)%'
         tags:
             - { name: "liip_imagine.cache.resolver", resolver: "aws_s3_resolver" }
+
+    catalog.subscriber:
+        class: App\Event\Catalog\CatalogSubscriber
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }

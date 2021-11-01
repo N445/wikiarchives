@@ -10,7 +10,7 @@
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpKernel\KernelInterface;
     use Symfony\Component\Routing\Annotation\Route;
-    
+
     class AdminController extends AbstractController
     {
         #[Route('/admin', name: 'ADMIN')]
@@ -21,9 +21,11 @@
             KernelInterface   $kernel
         ): Response
         {
+            $nbCatalog = $catalogRepository->createQueryBuilder('c')->select('count(c.id)')->getQuery()->getResult()[0][1] ?? 0;
+            $nbPicture = $pictureRepository->createQueryBuilder('p')->select('count(p.id)')->getQuery()->getResult()[0][1] ?? 0;
             return $this->render('admin/index.html.twig', [
-                'catalogs' => $catalogRepository->findAll(),
-                'pictures' => $pictureRepository->findAll(),
+                'nbCatalog' => $nbCatalog,
+                'nbPicture' => $nbPicture,
                 'versions' => $versionRepository->getByType(PictureVersionHelper::TYPE_TMP),
             ]);
         }

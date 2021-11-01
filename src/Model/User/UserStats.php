@@ -73,6 +73,9 @@ class UserStats
      */
     public function getRatioAccepted(): float|int
     {
+        if (0 === $this->total) {
+            return 0;
+        }
         return $this->accepted / $this->total;
     }
     
@@ -81,6 +84,9 @@ class UserStats
      */
     public function getRatioRefused(): float|int
     {
+        if (0 === $this->total) {
+            return 0;
+        }
         return $this->accepted / $this->total;
     }
 }

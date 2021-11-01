@@ -57,9 +57,6 @@ class UserVersionsProvider
                     ],
                 ];
             }
-            
-            dump($stats);
-            
             return $pictures;
         });
         

@@ -41,11 +41,8 @@ class VersionValidator
             $finalVersion->setStatus(PictureVersionHelper::STATUS_ACCEPTED);
             $picture->addVersion($finalVersion)->setValidatedVersion($finalVersion);
     
-            dump($proposedVersion);
-            dump($finalVersion);
 //            $this->em->persist($proposedVersion);
             $this->em->remove($proposedVersion);
-//            dump($proposedVersion);
 //            $picture->removeTmpVersion($proposedVersion);
 //            $basedVersion = $proposedVersion->getBasedVersion();
 //            $basedVersion->removeVersion($proposedVersion);

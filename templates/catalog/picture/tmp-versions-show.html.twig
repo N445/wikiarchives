@@ -150,7 +150,7 @@
             </div>
         </div>
         <div class="row mb-3">
-            <div class="col-md">
+            <div class="col-md{{ version.basedVersion.id != picture.validatedVersion.id?'':' d-none' }}">
                 {{ form_widget(validationForm.accepted) }}
             </div>
             <div class="col-md">

@@ -51,8 +51,8 @@
       "js": [
         "/build/runtime.f3575a88.js",
         "/build/755.5a8586e9.js",
-        "/build/21.0a815726.js",
-        "/build/wysiwyg-js.1b883f82.js"
+        "/build/137.c4382e34.js",
+        "/build/wysiwyg-js.7b30dd6c.js"
       ]
     },
     "globals": {
@@ -111,8 +111,8 @@
     "/build/907.dbe0057c.js": "sha384-bdYnX4MGjwT+k/JfrvVyuOMK56qVAU5dUPPFH//DgKgN3ST9rP0XLjnNlrKf74Ad",
     "/build/admin-tree-js.9bdd409d.js": "sha384-qB+6aLSsxgQW945lUrcZ9+FV8AXe2u2wxmCrblkPcgCg72+iu0HGWaTcU/Mu7Ogw",
     "/build/admin-catalog-datatable-js.2ca84138.js": "sha384-37IGMvgaJlhIShic/0t0yDbDdQ8WTgBx/m50YFfGW3N4AQj76jqeg10G7ld+DNzl",
-    "/build/21.0a815726.js": "sha384-66c7smDxjdqoskBCM1+OfDpVSWDAjC4uy+sXO4QhM1X0667iyZr9cuv2wrKgzBzy",
-    "/build/wysiwyg-js.1b883f82.js": "sha384-vK0+vbisc86EIqfGvxbAFIkLmYUZGwvczTZQ2DxNx0/9llEcsHfABMDjgGV9LfRG",
+    "/build/137.c4382e34.js": "sha384-TpdMay36CorVajK9yZAgmTYl8CKtDdnNbGYD06xVspI/g04r44qE9iZfwKbuclP6",
+    "/build/wysiwyg-js.7b30dd6c.js": "sha384-fSPqQWZMMIRzd08tLh1wx3dAqDs+WYcidg48eC87OP5mKKKrvEOqpToGkUuBvPTQ",
     "/build/globals.19195f85.css": "sha384-rmpOeDpRYLYhxfK4Khc5n6123GuIjlMVzrGH+vftSfvI3/ScoT1zvRLXkAI2QFTx",
     "/build/admin.304512a0.css": "sha384-SFmKnY6nUXhXMmYAPtU4F88oL+qTco5OczlMv9YYj0syRalwQ4wAWXzfxjcjSWpd",
     "/build/main.a24d45d1.css": "sha384-mwwVwBN9fC8ZqHeW7qhGLODt042e+K8vwKh1BxF2ZZgPERtLk0hHcoGfA1qLMLFo",

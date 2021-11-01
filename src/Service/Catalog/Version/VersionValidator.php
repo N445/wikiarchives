@@ -17,18 +17,20 @@ class VersionValidator
     
     public function refused(Picture $picture, Version $proposedVersion, Version $finalVersion, bool $blockUser = false)
     {
-        $user = $proposedVersion->getCreatedBy();
-        $user->getRights()->setHasVersionCreator(false);
-        
+        if ($blockUser) {
+            $user = $proposedVersion->getCreatedBy();
+            $user->getRights()->setHasVersionCreator(false);
+            $this->em->persist($user);
+        }
+    
         $proposedVersion
             ->setStatus(PictureVersionHelper::STATUS_REJECTED)
             ->setType(PictureVersionHelper::TYPE_FINAL)
         ;
-        
+    
         $picture->removeTmpVersion($proposedVersion);
         $picture->addVersion($proposedVersion);
-        
-        $this->em->persist($user);
+    
         $this->em->persist($proposedVersion);
 //            $this->em->persist($finalVersion);
         $this->em->persist($picture);

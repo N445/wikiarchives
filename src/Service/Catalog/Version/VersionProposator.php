@@ -4,6 +4,7 @@ namespace App\Service\Catalog\Version;
 
 use App\Entity\Catalog\Picture;
 use App\Entity\Catalog\Picture\Version;
+use App\Form\Catalog\Picture\VersionFrontType;
 use App\Form\Catalog\Picture\VersionType;
 use App\Service\Catalog\Version\PictureVersionCloner;
 use Doctrine\ORM\EntityManagerInterface;
@@ -33,7 +34,7 @@ class VersionProposator
     {
         $newVersion = PictureVersionCloner::cloneVersion($picture);
         
-        $this->form = $this->formFactory->create(VersionType::class, $newVersion);
+        $this->form = $this->formFactory->create(VersionFrontType::class, $newVersion);
         
         return [
             'form' => $this->form,

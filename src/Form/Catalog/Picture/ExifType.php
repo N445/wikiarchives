@@ -87,6 +87,7 @@
                 ])
                 ->add('keywords', TextareaType::class, [
                     'required' => false,
+                    'help' => 'Separate by comma'
                 ])
                 ->add('mimeType', TextType::class, [
                     'required' => false,
@@ -112,6 +113,7 @@
                 ])
                 ->add('gps', TextType::class, [
                     'required' => false,
+                    'help' => 'Separate by comma'
                 ])
             ;
             

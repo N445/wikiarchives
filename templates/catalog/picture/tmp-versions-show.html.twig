@@ -140,7 +140,6 @@
 
 
         {{ form_start(validationForm) }}
-
         <div class="row mb-3">
             <div class="col-md-6">
                 <div class="btn-group w-100">
@@ -158,6 +157,13 @@
             </div>
         </div>
         {{ form_end(validationForm) }}
+
+        <div class="card">
+            <div class="card-body">
+                <h3>Commentaire</h3>
+                {{ version.userComment|raw }}
+            </div>
+        </div>
 
         <div class="row">
             {% if version.basedVersion.id != picture.validatedVersion.id %}
@@ -218,3 +224,5 @@
 {% block javascripts %}
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/diff2html/bundles/js/diff2html-ui.min.js"></script>
 {% endblock %}
+
+

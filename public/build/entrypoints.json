@@ -75,7 +75,7 @@
         "/build/runtime.f3575a88.js"
       ],
       "css": [
-        "/build/main.18571319.css"
+        "/build/main.0beb5c5f.css"
       ]
     },
     "admin-tree": {
@@ -113,7 +113,7 @@
     "/build/wysiwyg-js.7b30dd6c.js": "sha384-fSPqQWZMMIRzd08tLh1wx3dAqDs+WYcidg48eC87OP5mKKKrvEOqpToGkUuBvPTQ",
     "/build/globals.dfa5013e.css": "sha384-M/RkAWnT4woe39T0y9CO2hj95NXqmDTP+JoFUN0tklrAEfSiyR0d04FJGOFjB1ly",
     "/build/admin.304512a0.css": "sha384-SFmKnY6nUXhXMmYAPtU4F88oL+qTco5OczlMv9YYj0syRalwQ4wAWXzfxjcjSWpd",
-    "/build/main.18571319.css": "sha384-E5f0+RVFJbU9STRLVudHTkvTtfIU8L84KEdiuCRpMS3FvNIRNjGCvE4SAcnO88XK",
+    "/build/main.0beb5c5f.css": "sha384-nGm5d+O41k4n+ak10N0OHQVCVJlG8+lLrnox8yla7bbSgJiki5oWaQA/A6uUd2b7",
     "/build/admin-tree.5f7001d5.css": "sha384-5qpui7JXLZUbE9G5vpY7r0P9hxV4sgT5p0dxeoxb0yKqHNHTcOO0yST5o+bZ1X3A",
     "/build/admin-catalog-datatable.1c81194e.css": "sha384-9sayb3B1GLr6h1f4y3yiQ7/O4Dt8ueSbsh1F3uN3rPts6Ctm1d0D1gULSkg5GDkp"
   }

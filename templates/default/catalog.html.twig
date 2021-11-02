@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}{{ parent() }} - {{ catalog.name }}{% endblock %}
+
 {% block body %}
     {% include 'includes/catalog/_catalog-banner.html.twig' %}
     {% include 'includes/catalog/_catalog-status-bar.html.twig' %}

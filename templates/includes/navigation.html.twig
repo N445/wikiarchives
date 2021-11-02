@@ -14,15 +14,19 @@
                 </li>
             </ul>
             <form action="{{ path('SEARCH') }}" class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="q"
-                       value="{{ query??'' }}">
-                <button class="btn btn-outline-success" type="submit">Search</button>
+                <div class="input-group">
+                    <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="q"
+                           value="{{ query??'' }}">
+                    <button class="btn btn-wikiarchives-primary" type="submit">Search</button>
+                </div>
             </form>
             <div class="login ms-3">
                 {% if app.user %}
                     <div class="btn-group">
-                        <button type="button" class="btn btn-outline-primary">{{ app.user.userIdentifier }}</button>
-                        <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
+                        <a href="{{ path('PROFILE') }}" type="button" class="btn btn-outline-wikiarchives-primary">
+                            {{ app.user.userIdentifier }}
+                        </a>
+                        <button type="button" class="btn btn-wikiarchives-primary dropdown-toggle dropdown-toggle-split"
                                 data-bs-toggle="dropdown" aria-expanded="false">
                             <span class="visually-hidden">Dropdown</span>
                         </button>

@@ -1,0 +1,34 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-5">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="left">
+                {% include 'includes/catalog/_breadcrumb.html.twig' with {object:catalog} %}
+            </div>
+            <div class="right ms-auto">
+                <div class="d-flex align-items-center">
+                    <div class="me-3">
+                        <a href="{{ path('CATALOG_DOWNLOAD', {'id': catalog.id}) }}" class="btn btn-wikiarchives-accent"
+                           title="Open">
+                            Download
+                        </a>
+                    </div>
+                    <div class="me-3">
+                        {{ pagination.getTotalItemCount }} pictures
+                    </div>
+                    <form action="{{ path('SEARCH') }}" class="d-flex">
+                        <div class="input-group">
+                            <input type="hidden" name="catalogId" value="{{ catalog.id }}"/>
+                            <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="q"
+                                   value="{{ query??'' }}">
+                            <button class="btn btn-wikiarchives-accent" type="submit">Search</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>

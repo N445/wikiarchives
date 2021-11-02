@@ -19,11 +19,13 @@
 {#    </div>#}
 {#</div>#}
 
-<a href="{{ path('PICTURE', {'catalogId':picture.catalog.id,'id': picture.id}) }}" class="catalog-card card shadow-sm h-100" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ picture.name }}">
-    <img src="{{ picture.file.imageName|imagine_filter('picture_card_listing') }}"
-         class="card-img-top"
-         alt="{{ picture.name }}"
-         loading="lazy">
+<a href="{{ path('PICTURE', {'catalogId':picture.catalog.id,'id': picture.id}) }}" class="picture-card card shadow-sm h-100" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ picture.name }}">
+    <div class="image">
+        <img src="{{ picture.file.imageName|imagine_filter('picture_card_listing') }}"
+             class="card-img-top"
+             alt="{{ picture.name }}"
+             loading="lazy">
+    </div>
     <div class="card-body p-1">
         <div class="d-flex flex-column justify-content-between h-100">
             <p class="card-title text-truncate">

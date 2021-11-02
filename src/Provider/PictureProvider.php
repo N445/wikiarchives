@@ -19,9 +19,9 @@
             $this->pictureRepository = $pictureRepository;
         }
     
-        public function search(?string $query)
+        public function search(?string $query, ?Catalog $catalog, int $page, int $nbPerPage = 10)
         {
-            return $this->pictureRepository->search($query);
+            return $this->pictureRepository->search($query, $catalog, $page, $nbPerPage);
         }
     
         public function byId(int $id)

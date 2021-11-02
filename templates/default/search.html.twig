@@ -1,7 +1,39 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="container">
+    {% if catalog %}
+        {% include 'includes/catalog/_catalog-banner.html.twig' %}
+        {% include 'includes/catalog/_catalog-status-bar.html.twig' %}
+    {% endif %}
+    <div class="container-fluid">
+        <div class="row g-3 my-3">
+            {% for child in catalogs %}
+                <div class="col-12 col-md-1">
+                    {% include 'includes/catalog/_catalog-card.html.twig' with{catalog:child} %}
+                </div>
+            {% endfor %}
+        </div>
+        {% if pagination.getTotalItemCount > 0 %}
+            <hr>
+            {# display navigation #}
+            <div class="navigation">
+                {{ knp_pagination_render(pagination) }}
+            </div>
+            <div class="row g-3 my-3">
+                {% for picture in pagination %}
+                    <div class="col-12 col-md-1">
+                        {% include 'includes/catalog/_picture-card.html.twig' %}
+                    </div>
+                {% endfor %}
+            </div>
+            {# display navigation #}
+            <div class="navigation">
+                {{ knp_pagination_render(pagination) }}
+            </div>
+        {% endif %}
+    </div>
+
+    {#<div class="container">
 
         <div class="accordion" id="accordionQuery">
             <div class="accordion-item">
@@ -41,5 +73,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>#}
 {% endblock %}

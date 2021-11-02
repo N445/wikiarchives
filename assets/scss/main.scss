@@ -2,7 +2,7 @@
 
 body {
   background-color: $wikiarchives-dark;
-  color: white;
+  color: $wikiarchives-white;
 }
 
 .sticky-top-offset {
@@ -54,37 +54,53 @@ body {
 
 }
 
-.catalog-card{
-  color: #000;
+.catalog-card {
+  transition: .2s all cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  a {
+    text-decoration: none;
+    display: block;
+    color: #000;
+  }
+
+  .image {
+    overflow: hidden;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: .2s all ease-in-out;
+    }
+  }
+
+  &:hover {
+    color: #000;
+
+    img {
+      transform: scale(1.1);
+    }
+  }
 }
 
 .picture-card {
   transition: .2s all cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  //border-radius: 1.5rem;
-  overflow: hidden;
-  position: relative;
+  display: block;
+  color: #000;
+  text-decoration: none;
 
-  &:after {
-    transition: .2s all cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border: 1px solid rgba(black, .3);
-    pointer-events: none;
-    //border-radius: 1.5rem;
-  }
+  .image {
+    overflow: hidden;
 
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: .2s all ease-in-out;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: .2s all ease-in-out;
+    }
   }
 
   &:hover {
+    color: #000;
+
     img {
       transform: scale(1.1);
     }

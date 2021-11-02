@@ -1,5 +1,5 @@
 <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
+    <ol class="breadcrumb mb-0">
         {% for breadcrumbLink in object|getBreadcrumb.linksReversed %}
             <li class="breadcrumb-item{{ breadcrumbLink.isActual?' active':'' }}">
                 {% if breadcrumbLink.isActual %}

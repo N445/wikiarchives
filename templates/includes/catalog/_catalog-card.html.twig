@@ -16,23 +16,37 @@
 {# </div> #}
 {# </div> #}
 
-<a href="{{ path('CATALOG', {'id': catalog.id}) }}" class="catalog-card card shadow-sm h-100 d-block" data-bs-toggle="tooltip"
-   data-bs-placement="top" title="{{ catalog.name }}">
-    <img src="{{ catalog.imageName|imagine_filter('catalog_card_listing') }}" class="card-img-top"
-         alt="{{ catalog.name }}">
-    <div class="card-body p-1">
-        <div class="d-flex flex-column justify-content-between h-100">
-            <p class="card-title text-truncate mb-0">
-                <small class="">
-                    {{ catalog.name }}
-                </small>
-            </p>
-            <p class="card-title">
-
-                <small>
-                    [{{ catalog.pictures|length }}]
-                </small>
-            </p>
-        </div>
+<div class="catalog-card card shadow-sm h-100">
+    <div class="bubbles bubbles-stacked">
+        <a href="{{ path('CATALOG_DOWNLOAD', {'id': catalog.id}) }}" class="bubble bubble-wikiarchives-primary"
+           data-bs-toggle="tooltip" data-bs-placement="top" title="Download">
+            <i class="fas fa-download"></i>
+        </a>
+        <span class="bubble bubble-wikiarchives-accent" data-bs-toggle="tooltip" data-bs-placement="top"
+              title="{{ catalog.children|length }} directories">
+            {{ catalog.children|length }}
+        </span>
+        <span class="bubble bubble-wikiarchives-accent" data-bs-toggle="tooltip" data-bs-placement="top"
+              title="{{ catalog.pictures|length }} pictures">
+            {{ catalog.pictures|length }}
+        </span>
     </div>
-</a>
+    <a href="{{ path('CATALOG', {'id': catalog.id}) }}"
+       data-bs-toggle="tooltip"
+       data-bs-placement="top" title="{{ catalog.name }}"
+    >
+        <div class="image">
+            <img src="{{ catalog.imageName|imagine_filter('catalog_card_listing') }}" class="card-img-top"
+                 alt="{{ catalog.name }}">
+        </div>
+        <div class="card-body p-1">
+            <div class="d-flex flex-column justify-content-between h-100">
+                <p class="card-title text-truncate mb-0">
+                    <small class="">
+                        {{ catalog.name }}
+                    </small>
+                </p>
+            </div>
+        </div>
+    </a>
+</div>

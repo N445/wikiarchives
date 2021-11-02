@@ -1,4 +1,4 @@
-<div class="catalog-banner mb-5">
+<div class="catalog-banner">
     {% if catalog.imageName %}
         <img src="{{ catalog.imageName|imagine_filter('catalog_banner') }}" alt="" class="img-fluid">
     {% endif %}
@@ -27,7 +27,7 @@
                 {% set url = path('HOMEPAGE') %}
             {% endif %}
 
-            <a href="{{ url }}" class="btn btn-primary" title="Move up from a folder">
+            <a href="{{ url }}" class="btn btn-wikiarchives-primary" title="Move up from a folder">
                 Move up from a folder
             </a>
         </div>

@@ -1,0 +1,63 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-5">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="left">
+                {% include 'includes/catalog/_breadcrumb.html.twig' with {object:picture} %}
+            </div>
+            <div class="right ms-auto">
+                <div class="d-flex align-items-center">
+                    <div class="me-3">
+                        <div class="dropdown">
+                            <button class="btn btn-wikiarchives-accent dropdown-toggle" type="button"
+                                    id="dropdownMenuButton1"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                Download
+                            </button>
+
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li>
+                                    <a target="_blank" class="dropdown-item"
+                                       href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'square'}) }}">
+                                        Square
+                                    </a>
+                                    <a target="_blank" class="dropdown-item"
+                                       href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'sm'}) }}">
+                                        Small size
+                                    </a>
+                                    <a target="_blank" class="dropdown-item"
+                                       href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'md'}) }}">
+                                        Middle size
+                                    </a>
+                                    <a target="_blank" class="dropdown-item"
+                                       href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'lg'}) }}">
+                                        Large size
+                                    </a>
+                                    <a target="_blank" class="dropdown-item"
+                                       href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'vlg'}) }}">
+                                        Very large size
+                                    </a>
+                                    <a target="_blank" class="dropdown-item"
+                                       href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'original'}) }}">
+                                        Original
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    {% if is_granted('PICTURE_VERSION_CREATE',app.user) %}
+                        <div>
+                            <a class="btn btn-wikiarchives-primary"
+                               href="{{ path('PICTURE_CHANGE', {'catalogId': picture.catalog.id, 'id': picture.id}) }}">
+                                Proposer une modification
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>

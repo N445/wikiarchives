@@ -2,45 +2,10 @@
 
 {% block body %}
     {% include 'includes/catalog/_catalog-banner.html.twig' with{catalog:picture.catalog,isPicture:true} %}
+    {% include 'includes/catalog/_picture-status-bar.html.twig' %}
     <div class="container-fluid">
-        {% include 'includes/catalog/_breadcrumb.html.twig' with {object:picture} %}
         <div class="row mb-4">
             <div class="col">
-                <div class="dropdown mb-3">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                        Download
-                    </button>
-
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li>
-                            <a target="_blank" class="dropdown-item"
-                               href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'square'}) }}">
-                                Square
-                            </a>
-                            <a target="_blank" class="dropdown-item"
-                               href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'sm'}) }}">
-                                Small size
-                            </a>
-                            <a target="_blank" class="dropdown-item"
-                               href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'md'}) }}">
-                                Middle size
-                            </a>
-                            <a target="_blank" class="dropdown-item"
-                               href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'lg'}) }}">
-                                Large size
-                            </a>
-                            <a target="_blank" class="dropdown-item"
-                               href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'vlg'}) }}">
-                                Very large size
-                            </a>
-                            <a target="_blank" class="dropdown-item"
-                               href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'original'}) }}">
-                                Original
-                            </a>
-                        </li>
-                    </ul>
-                </div>
                 <img src="{{ picture.file.imageName|imagine_filter('picture') }}" alt="{{ picture.file.imageName }}"
                      class="img-fluid rounded">
             </div>
@@ -51,14 +16,6 @@
                        {{ picture.description|raw }}
                    </div>
                    {% include 'includes/catalog/_picture-exif.html.twig' %}
-                   {% if is_granted('PICTURE_VERSION_CREATE',app.user) %}
-                       <p>
-                           <a class="btn btn-primary"
-                              href="{{ path('PICTURE_CHANGE', {'catalogId': picture.catalog.id, 'id': picture.id}) }}">
-                               Proposer une modification
-                           </a>
-                       </p>
-                   {% endif %}
                </div>
             </div>
         </div>

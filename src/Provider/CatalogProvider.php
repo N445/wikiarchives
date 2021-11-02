@@ -2,6 +2,7 @@
     
     namespace App\Provider;
     
+    use App\Entity\Catalog\Catalog;
     use App\Repository\Catalog\CatalogRepository;
 
     class CatalogProvider
@@ -29,9 +30,9 @@
         }
     
     
-        public function search(?string $query)
+        public function search(?string $query, ?Catalog $catalog)
         {
-            return $this->catalogRepository->search($query);
+            return $this->catalogRepository->search($query, $catalog);
         }
     
         public function byId(int $id, bool $isFull = false)

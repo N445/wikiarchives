@@ -36,11 +36,34 @@
         #[Route('/search', name: 'SEARCH')]
         public function search(Request $request): Response
         {
-            $query = $request->get('q');
+            $catalogId = $request->get('catalogId', null);
+    
+            $catalog = null;
+            if ($catalogId) {
+                $catalog = $this->catalogProvider->byId($catalogId);
+            }
+    
+            $query = $request->get('q', null);
+//            $query = $request->get('queryCatalog', null);
+    
+            if (!$query && $catalog) {
+                return $this->redirectToRoute('CATALOG', [
+                    'id' => $catalog->getId()
+                ]);
+            }
+            if (!$query) {
+                return $this->redirectToRoute('HOMEPAGE');
+            }
+    
+    
+            $page = $request->get('page', 1);
+    
             return $this->render('default/search.html.twig', [
-                'catalogs' => $this->catalogProvider->search($query),
-                'pictures' => $this->pictureProvider->search($query),
+                'catalog' => $catalog,
+                'catalogs' => $this->catalogProvider->search($query, $catalog),
+                'pagination' => $this->pictureProvider->search($query, $catalog, $page, 12 * 5),
                 'query' => $query,
+//                'queryCatalog' => $queryCatalog,
             ]);
         }
     

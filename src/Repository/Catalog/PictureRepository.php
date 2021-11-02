@@ -30,22 +30,32 @@
     
         /**
          * @param string|null $query
-         * @return Picture[]
+         * @param Catalog|null $catalog
+         * @param int $page
+         * @param int $nbPerPage
+         * @return PaginationInterface
          */
-        public function search(?string $query)
+        public function search(?string $query, ?Catalog $catalog, int $page, int $nbPerPage = 10)
         {
             $qb = $this->getBaseFrontQuery();
-        
-        
+    
+    
             if ($query) {
-                $qb->andWhere('c.name LIKE :query')
-                    ->setParameter('query', '%' . $query . '%')
+                $qb->andWhere('picture_validatedversion.name LIKE :query')
+                   ->setParameter('query', '%' . $query . '%')
                 ;
             }
-        
-            return $qb->getQuery()
-                      ->getResult()
-            ;
+    
+            if ($catalog) {
+                $qb->andWhere('p.catalog = :catalog')
+                   ->setParameter('catalog', $catalog)
+                ;
+            }
+            return $this->paginator->paginate(
+                $qb->getQuery(), /* query NOT result */
+                $page, /*page number*/
+                $nbPerPage /*limit per page*/
+            );
         }
     
         /**
@@ -146,12 +156,12 @@
         public function getBaseFrontQuery()
         {
             return $this->createQueryBuilder('p')
-                ->addSelect('catalog', 'catalog_parent', 'pictures_file', 'pictures_validatedversion', 'pictures_validatedversion_exif')
+                ->addSelect('catalog', 'catalog_parent', 'pictures_file', 'picture_validatedversion', 'picture_validatedversion_exif')
                 ->leftJoin('p.catalog', 'catalog')
                 ->leftJoin('catalog.parent', 'catalog_parent')
                 ->leftJoin('p.file', 'pictures_file')
-                ->leftJoin('p.validatedVersion', 'pictures_validatedversion')
-                ->leftJoin('pictures_validatedversion.exif', 'pictures_validatedversion_exif')
+                ->leftJoin('p.validatedVersion', 'picture_validatedversion')
+                ->leftJoin('picture_validatedversion.exif', 'picture_validatedversion_exif')
                 ->andWhere('p.enabled = :enabled')
                 ->setParameter('enabled', true)
             ;

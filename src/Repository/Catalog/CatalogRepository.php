@@ -30,16 +30,22 @@
          * @param string|null $query
          * @return Catalog[]
          */
-        public function search(?string $query)
+        public function search(?string $query, ?Catalog $catalog)
         {
             $qb = $this->getBaseFrontQuery();
-            
+    
             if ($query) {
                 $qb->andWhere('c.name LIKE :query')
                    ->setParameter('query', '%' . $query . '%')
                 ;
             }
-            
+    
+            if ($catalog) {
+                $qb->andWhere('c.parent = :catalog')
+                   ->setParameter('catalog', $catalog)
+                ;
+            }
+    
             return $qb->getQuery()
                       ->getResult()
             ;

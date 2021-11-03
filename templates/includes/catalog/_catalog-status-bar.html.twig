@@ -21,9 +21,9 @@
                     </div>
                     <form action="{{ path('SEARCH') }}" class="d-flex">
                         <div class="input-group">
-                            <input type="hidden" name="catalogId" value="{{ catalog.id }}"/>
                             <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="q"
                                    value="{{ query??'' }}">
+                            <input type="hidden" name="catalogId" value="{{ catalog.id }}"/>
                             <button class="btn btn-wikiarchives-accent" type="submit">Search</button>
                         </div>
                     </form>

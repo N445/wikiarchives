@@ -3,9 +3,10 @@
     namespace App\Controller;
 
 
-    use App\Form\Catalog\Picture\VersionValidatorType;
+    use App\Entity\Catalog\Catalog;
     use App\Provider\CatalogProvider;
     use App\Provider\PictureProvider;
+    use Doctrine\ORM\EntityManagerInterface;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
@@ -68,27 +69,21 @@
         }
     
         #[Route('/test', name: 'TEST')]
-        public function test(Request $request)
+        public function test(Request $request, EntityManagerInterface $em)
         {
-            $validationForm = $this->get('form.factory')->createNamed('version_validator_1', VersionValidatorType::class);
-            $validationForm->handleRequest($request);
+            $food = new Catalog();
+            $food->setName('Food');
+            $em->persist($food);
         
-            $validationForm2 = $this->get('form.factory')->createNamed('version_validator_2', VersionValidatorType::class);
-            $validationForm2->handleRequest($request);
-        
-            if ($validationForm->isSubmitted() && $validationForm->isValid()) {
-                dump('$finalVersion');
-                die;
-            }
-        
-        
-            if ($validationForm2->isSubmitted() && $validationForm2->isValid()) {
-                dump('$finalVersion2');
-                die;
-            }
+            $fruits = new Catalog();
+            $fruits->setName('Fruits');
+            $fruits->setParent($food);
+    
+            $em->persist($fruits);
+            $em->flush();
+            
+            
             return $this->render('default/test.html.twig', [
-                'validationForm' => $validationForm->createView(),
-                'validationForm2' => $validationForm2->createView(),
             ]);
         }
     

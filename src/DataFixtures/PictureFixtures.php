@@ -3,12 +3,14 @@
     namespace App\DataFixtures;
 
     use App\Entity\Catalog\Picture;
-    use App\Service\Catalog\PictureExifPopulator;
+    use App\Entity\Catalog\Picture\Exif;
+    use App\Entity\Catalog\Picture\Version;
     use App\Service\Catalog\Version\PictureVersionHelper;
     use Doctrine\Bundle\FixturesBundle\Fixture;
     use Doctrine\Common\DataFixtures\DependentFixtureInterface;
     use Doctrine\Persistence\ObjectManager;
     use Faker\Factory;
+    use Symfony\Component\Filesystem\Filesystem;
     use Symfony\Component\HttpKernel\KernelInterface;
 
     /**
@@ -16,7 +18,7 @@
      */
     class PictureFixtures extends Fixture implements DependentFixtureInterface
     {
-        const LOOP = 1000;
+        const LOOP = 5000;
 
         /**
          * @var \Symfony\Component\HttpKernel\KernelInterface
@@ -31,7 +33,9 @@
         public function load(ObjectManager $manager): void
         {
             $this->faker = Factory::create();
-
+    
+            (new Filesystem())->remove([$this->kernel->getProjectDir() . '/public/uploads/picture/*']);
+    
             $images = [
                 'image-1.jpg',
                 'image-2.jpg',
@@ -41,7 +45,7 @@
             ];
             foreach ($images as $image) {
                 $from = $this->kernel->getProjectDir() . '/src/DataFixtures/images/' . $image;
-                $to = $this->kernel->getProjectDir() . '/public/uploads/catalog/picture/' . $image;
+                $to = $this->kernel->getProjectDir() . '/public/uploads/picture/' . $image;
                 copy($from, $to);
             }
 
@@ -62,36 +66,56 @@
                 $picture = (new Picture())
                     ->setEnabled($this->faker->boolean())
                     ->setCatalog($this->getReference(sprintf(CatalogFixtures::REFERENCE, rand(1, CatalogFixtures::LOOP))))
-                    ->setFile($file);
-
+                    ->setFile($file)
+                    ->setCreatedBy($this->getReference(sprintf(UserFixtures::REFERENCE, rand(1, UserFixtures::LOOP))))
+                    ->setCreatedAt($this->faker->dateTimeBetween('-10 month', 'now'));
+    
+                if ($this->faker->boolean()) {
+                    $picture->setUpdatedBy($this->getReference(sprintf(UserFixtures::REFERENCE, rand(1, UserFixtures::LOOP))))
+                            ->setUpdatedAt($this->faker->dateTimeBetween('-10 month', 'now'))
+                    ;
+                }
+                
                 $picture->removeVersion($picture->getValidatedVersion());
-
+    
                 $versions = $this->getVersions();
-
+    
                 foreach ($versions as $version) {
                     $picture->addVersion($version);
                 }
-
-                $picture->setValidatedVersion($this->faker->randomElement($versions));
-
+    
+                $validatedVersion = $this->faker->randomElement($versions);
+                $validatedVersion
+                    ->setStatus(PictureVersionHelper::STATUS_ACCEPTED)
+                    ->setType(PictureVersionHelper::TYPE_FINAL)
+                ;
+                $picture->setValidatedVersion($validatedVersion);
+    
                 if ($this->faker->boolean()) {
                     $picture->setPlace($this->getReference(sprintf(PlaceFixtures::REFERENCE, rand(1, PlaceFixtures::LOOP))));
                 }
-
+    
                 $manager->persist($picture);
-                if ($i % 100 === 0) {
+    
+               
+                if ($i % 1000 === 0) {
+                    echo ".";
                     $manager->flush();
                 }
             }
-
+    
+            echo "\n";
             $manager->flush();
         }
-
-        private function getVersions()
+    
+        /**
+         * @return Version[]
+         */
+        private function getVersions(): array
         {
             $versions = [];
             foreach (range(1, rand(1, 5)) as $i) {
-                $exif = (new Picture\Exif())
+                $exif = (new Exif())
                     ->setIsVerified($this->faker->boolean())
                     ->setTitle($this->faker->optional()->realText(50))
                     ->setAuthor($this->faker->optional()->realText(50))
@@ -127,17 +151,31 @@
                 }
 
 
-                $version = (new Picture\Version())
+                $version = (new Version())
                     ->setVersionNumber($i)
                     ->setStatus($this->faker->randomElement([
                         PictureVersionHelper::STATUS_PENDING,
                         PictureVersionHelper::STATUS_ACCEPTED,
                         PictureVersionHelper::STATUS_REJECTED,
                     ]))
-//                ->setBasedVersion()
+                    ->setType($this->faker->randomElement([
+                        PictureVersionHelper::TYPE_FINAL,
+                        PictureVersionHelper::TYPE_TMP,
+                    ]))
+                    ->setBasedVersion($this->faker->randomElement($versions))
                     ->setName($this->faker->realText(50))
                     ->setDescription($this->faker->optional()->realText(500))
-                    ->setExif($exif);
+                    ->setExif($exif)
+                    ->setCreatedBy($this->getReference(sprintf(UserFixtures::REFERENCE, rand(1, UserFixtures::LOOP))))
+                    ->setCreatedAt($this->faker->dateTimeBetween('-10 month', 'now'));
+    
+                if ($this->faker->boolean()) {
+                    $version->setUpdatedBy($this->getReference(sprintf(UserFixtures::REFERENCE, rand(1, UserFixtures::LOOP))))
+                            ->setUpdatedAt($this->faker->dateTimeBetween('-10 month', 'now'))
+                    ;
+                }
+    
+    
                 $versions[] = $version;
             }
             return $versions;
@@ -146,7 +184,8 @@
         public function getDependencies()
         {
             return [
-                CatalogFixtures::class
+                CatalogFixtures::class,
+                UserFixtures::class,
             ];
         }
     }

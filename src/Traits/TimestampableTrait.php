@@ -4,8 +4,8 @@
 namespace App\Traits;
 
 
-use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 
 trait TimestampableTrait
@@ -25,14 +25,34 @@ trait TimestampableTrait
      * @ORM\Column(type="datetime")
      */
     private $updatedAt;
-
+    
     public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
     }
-
+    
+    /**
+     * @param \DateTime $createdAt
+     * @return \App\Entity\Catalog\Place|\App\Entity\Catalog\Catalog|\App\Entity\Catalog\Picture|\App\Entity\Catalog\Picture\Version|TimestampableTrait
+     */
+    public function setCreatedAt(\DateTime $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+        return $this;
+    }
+    
     public function getUpdatedAt(): \DateTime
     {
         return $this->updatedAt;
+    }
+    
+    /**
+     * @param \DateTime $updatedAt
+     * @return \App\Entity\Catalog\Place|\App\Entity\Catalog\Catalog|\App\Entity\Catalog\Picture|\App\Entity\Catalog\Picture\Version|TimestampableTrait
+     */
+    public function setUpdatedAt(\DateTime $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+        return $this;
     }
 }

@@ -78,9 +78,10 @@
         public function getByType(string $type)
         {
             return $this->createQueryBuilder('v')
-                        ->addSelect('picture', 'tmpPicture')
+                        ->addSelect('picture', 'tmpPicture', 'user')
                         ->leftJoin('v.picture', 'picture')
                         ->leftJoin('v.tmpPicture', 'tmpPicture')
+                        ->leftJoin('v.createdBy', 'user')
                         ->andWhere('v.type = :type')
                         ->setParameter('type', $type)
                         ->orderBy('v.createdAt', 'ASC')

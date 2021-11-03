@@ -176,6 +176,8 @@
     
                 if ($this->faker->boolean()) {
                     $version->setType(PictureVersionHelper::TYPE_FINAL);
+                } else if (count($versions) <= 0) {
+                    $version->setType(PictureVersionHelper::TYPE_FINAL);
                 } else {
                     $version->setType(PictureVersionHelper::TYPE_TMP);
                 }

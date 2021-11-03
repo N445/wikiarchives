@@ -84,6 +84,7 @@ class ModeratorController extends AbstractController
             ]);
         }
         
+   
         $finalVersion = PictureVersionHelper::getFinalVersion($version->getBasedVersion(), $version);
         $finalVersion2 = PictureVersionHelper::getFinalVersion($picture->getValidatedVersion(), $version);
         

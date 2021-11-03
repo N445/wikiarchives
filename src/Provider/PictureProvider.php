@@ -1,5 +1,5 @@
 <?php
-    
+
     namespace App\Provider;
 
     use App\Entity\Catalog\Catalog;
@@ -13,34 +13,34 @@
     {
         const CACHE_PICTURE = 'picture-%d';
         private PictureRepository $pictureRepository;
-    
+
         public function __construct(PictureRepository $pictureRepository)
         {
             $this->pictureRepository = $pictureRepository;
         }
-    
+
         public function search(?string $query, ?Catalog $catalog, int $page, int $nbPerPage = 10)
         {
             return $this->pictureRepository->search($query, $catalog, $page, $nbPerPage);
         }
-    
+
         public function byId(int $id)
         {
             return $this->pictureRepository->byIdFront($id);
         }
-    
+
         public function byCatalogPaginated(Catalog $catalog, int $page, int $nbPerPage = 10)
         {
 //            return $this->pictureRepository->byCatalogPaginatedFront($catalog, $page, $nbPerPage);
-        
+
             $cache = new TagAwareAdapter(
                 new FilesystemAdapter(),
             );
-        
-        
+
+
             return $cache->get(sprintf('picture_pagination_%d_%d_%d', $catalog->getId(), $page, $nbPerPage), function (ItemInterface $item) use ($catalog, $page, $nbPerPage) {
                 $item->expiresAfter(3600);
-                $item->tag(sprintf('catalog_', $catalog->getId()));
+                $item->tag(sprintf('catalog_%d', $catalog->getId()));
                 $pagination = $this->pictureRepository->byCatalogPaginatedFront($catalog, $page, $nbPerPage);
                 /** @var Picture $picture */
                 foreach ($pagination->getItems() as $picture) {

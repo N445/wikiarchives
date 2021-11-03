@@ -2,9 +2,11 @@
 
 namespace App\Form\Catalog\Picture;
 
+use App\Entity\Catalog\Picture\Version;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class VersionValidatorType extends AbstractType
 {
@@ -37,16 +39,11 @@ class VersionValidatorType extends AbstractType
             ])
         ;
     }
-    
-    public function configureOptions(OptionsResolver|\Symfony\Component\OptionsResolver\OptionsResolver $resolver): void
+
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'prexif' => Version::class,
+            'data_class' => Version::class,
         ]);
     }
-//
-//    public function getBlockPrefix()
-//    {
-//        return uniqid();
-//    }
 }

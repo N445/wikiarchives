@@ -19,10 +19,18 @@ knp_gaufrette:
           create: true
           directory: catalog
           acl: 'public-read'
+    local_picture_adapter:
+      local:
+        directory:  '%kernel.project_dir%/public/uploads/picture'
+        create:     true
+    local_catalog_adapter:
+      local:
+        directory:  '%kernel.project_dir%/public/uploads/catalog'
+        create:     true
 
 
   filesystems:
     picture_fs:
-      adapter: picture_adapter
+      adapter: local_picture_adapter
     catalog_fs:
-      adapter: catalog_adapter
+      adapter: local_catalog_adapter

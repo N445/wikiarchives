@@ -1,7 +1,7 @@
 <?php
-    
+
     namespace App\DataFixtures;
-    
+
     use App\Entity\Catalog\Picture;
     use App\Service\Catalog\PictureExifPopulator;
     use App\Service\Catalog\Version\PictureVersionHelper;
@@ -17,16 +17,21 @@
     class PictureFixtures extends Fixture implements DependentFixtureInterface
     {
         const LOOP = 1000;
-    
+
+        /**
+         * @var \Symfony\Component\HttpKernel\KernelInterface
+         */
+        private KernelInterface $kernel;
+
         public function __construct(KernelInterface $kernel)
         {
             $this->kernel = $kernel;
         }
-        
+
         public function load(ObjectManager $manager): void
         {
             $this->faker = Factory::create();
-            
+
             $images = [
                 'image-1.jpg',
                 'image-2.jpg',
@@ -39,7 +44,7 @@
                 $to = $this->kernel->getProjectDir() . '/public/uploads/catalog/picture/' . $image;
                 copy($from, $to);
             }
-            
+
             foreach (range(1, self::LOOP) as $i) {
                 $file = (new Picture\File())
                     ->setImageName($this->faker->randomElement($images))
@@ -52,36 +57,36 @@
                             $this->faker->numberBetween(1000, 5000),
                         ]
                     );
-                
-                
+
+
                 $picture = (new Picture())
                     ->setEnabled($this->faker->boolean())
                     ->setCatalog($this->getReference(sprintf(CatalogFixtures::REFERENCE, rand(1, CatalogFixtures::LOOP))))
                     ->setFile($file);
-                
+
                 $picture->removeVersion($picture->getValidatedVersion());
-                
+
                 $versions = $this->getVersions();
-                
+
                 foreach ($versions as $version) {
                     $picture->addVersion($version);
                 }
-                
+
                 $picture->setValidatedVersion($this->faker->randomElement($versions));
-                
+
                 if ($this->faker->boolean()) {
                     $picture->setPlace($this->getReference(sprintf(PlaceFixtures::REFERENCE, rand(1, PlaceFixtures::LOOP))));
                 }
-                
+
                 $manager->persist($picture);
                 if ($i % 100 === 0) {
                     $manager->flush();
                 }
             }
-            
+
             $manager->flush();
         }
-        
+
         private function getVersions()
         {
             $versions = [];
@@ -113,15 +118,15 @@
                     ->setOrientation($this->faker->optional()->numberBetween(0, 7))
                     ->setSoftware($this->faker->optional()->realText(50))
                     ->setSource($this->faker->optional()->realText(50));
-                
+
                 if ($this->faker->boolean()) {
                     $exif->setGps([
                         $this->faker->latitude(),
                         $this->faker->longitude(),
                     ]);
                 }
-                
-                
+
+
                 $version = (new Picture\Version())
                     ->setVersionNumber($i)
                     ->setStatus($this->faker->randomElement([
@@ -137,7 +142,7 @@
             }
             return $versions;
         }
-        
+
         public function getDependencies()
         {
             return [

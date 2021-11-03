@@ -1,15 +1,16 @@
 <?php
-    
+
     namespace App\Entity\Catalog\Picture;
-    
-    
+
+
     use App\Entity\Catalog\Picture;
     use Doctrine\ORM\Mapping as ORM;
+    use Gedmo\Mapping\Annotation as Gedmo;
     use Symfony\Component\HttpFoundation\File\File as SymfonyFile;
     use Vich\UploaderBundle\Mapping\Annotation as Vich;
-    use Gedmo\Mapping\Annotation as Gedmo;
-    
+
     /**
+     * @property \DateTimeImmutable $updatedAt
      * @ORM\Entity
      * @ORM\Table(name="catalog_picture_file")
      * @Vich\Uploadable
@@ -23,7 +24,7 @@
          * @ORM\Column(type="integer")
          */
         private $id;
-        
+
         /**
          * @Vich\UploadableField(mapping="catalog_picture",
          *     fileNameProperty="imageName",
@@ -34,47 +35,47 @@
          * )
          */
         private $imageFile;
-        
+
         /**
          * @Gedmo\Versioned
          * @ORM\Column(type="string")
          */
         private ?string $imageName = null;
-        
+
         /**
          * @Gedmo\Versioned
          * @ORM\Column(type="integer")
          */
         private ?int $imageSize = null;
-        
+
         /**
          * @Gedmo\Versioned
          * @ORM\Column(type="string")
          */
         private ?string $imageMimeType = null;
-        
+
         /**
          * @Gedmo\Versioned
          * @ORM\Column(type="string")
          */
         private ?string $imageOriginalName = null;
-        
+
         /**
          * @Gedmo\Versioned
          * @ORM\Column(type="array")
          */
         private ?array $imageDimensions = null;
-        
+
         /**
          * @ORM\OneToOne(targetEntity=Picture::class, mappedBy="file", cascade={"persist", "remove"})
          */
         private $picture;
-        
+
         public function getId(): ?int
         {
             return $this->id;
         }
-        
+
         /**
          * @param SymfonyFile|null $imageFile
          * @return File
@@ -85,27 +86,27 @@
             if (null !== $imageFile) {
                 $this->updatedAt = new \DateTimeImmutable();
             }
-            
+
             return $this;
         }
-        
+
         public function getImageFile(): ?SymfonyFile
         {
             return $this->imageFile;
         }
-        
+
         public function setImageName(?string $imageName): self
         {
             $this->imageName = $imageName;
-            
+
             return $this;
         }
-        
+
         public function getImageName(): ?string
         {
             return $this->imageName;
         }
-        
+
         /**
          * @return int|null
          */
@@ -113,7 +114,7 @@
         {
             return $this->imageSize;
         }
-        
+
         /**
          * @param int|null $imageSize
          * @return self
@@ -123,7 +124,7 @@
             $this->imageSize = $imageSize;
             return $this;
         }
-        
+
         /**
          * @return string|null
          */
@@ -131,7 +132,7 @@
         {
             return $this->imageMimeType;
         }
-        
+
         /**
          * @param string|null $imageMimeType
          * @return self
@@ -141,7 +142,7 @@
             $this->imageMimeType = $imageMimeType;
             return $this;
         }
-        
+
         /**
          * @return string|null
          */
@@ -149,7 +150,7 @@
         {
             return $this->imageOriginalName;
         }
-        
+
         /**
          * @param string|null $imageOriginalName
          * @return self
@@ -159,7 +160,7 @@
             $this->imageOriginalName = $imageOriginalName;
             return $this;
         }
-        
+
         /**
          * @return array|null
          */
@@ -167,7 +168,7 @@
         {
             return $this->imageDimensions;
         }
-        
+
         /**
          * @param array|null $imageDimensions
          * @return self
@@ -177,26 +178,26 @@
             $this->imageDimensions = $imageDimensions;
             return $this;
         }
-        
+
         public function getPicture(): ?Picture
         {
             return $this->picture;
         }
-        
+
         public function setPicture(?Picture $picture): self
         {
             // unset the owning side of the relation if necessary
             if ($picture === null && $this->picture !== null) {
                 $this->picture->setFile(null);
             }
-            
+
             // set the owning side of the relation if necessary
             if ($picture !== null && $picture->getFile() !== $this) {
                 $picture->setFile($this);
             }
-            
+
             $this->picture = $picture;
-            
+
             return $this;
         }
     }

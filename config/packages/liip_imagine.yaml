@@ -27,6 +27,7 @@ liip_imagine:
     filter_sets:
       cache: ~
       catalog_banner:
+        cache: default
         data_loader: loader_aws_s3_catalog
         quality: 75
         filters:
@@ -50,35 +51,41 @@ liip_imagine:
         filters:
           thumbnail: { size: [260, 260], mode: outbound }
       picture:
+        cache: default
         data_loader: loader_aws_s3_picture
         quality: 75
         filters:
           relative_resize:
             widen: 1050
       picture_square:
+        cache: default
         data_loader: loader_aws_s3_picture
         quality: 75
         filters:
           thumbnail: { size: [260, 260], mode: outbound }
       picture_sm:
+        cache: default
         data_loader: loader_aws_s3_picture
         quality: 75
         filters:
           relative_resize:
             widen: 400
       picture_md:
+        cache: default
         data_loader: loader_aws_s3_picture
         quality: 75
         filters:
           relative_resize:
             widen: 800
       picture_lg:
+        cache: default
         data_loader: loader_aws_s3_picture
         quality: 75
         filters:
           relative_resize:
             widen: 2048
       picture_vlg:
+        cache: default
         data_loader: loader_aws_s3_picture
         quality: 75
         filters:

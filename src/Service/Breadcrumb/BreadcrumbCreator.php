@@ -20,21 +20,22 @@ class BreadcrumbCreator
 
     /**
      * @param $object
-     * @return Breadcrumb|void
+     * @return Breadcrumb|null
      * @throws \Exception
      */
-    public function getBreadcrumb($object): Breadcrumb
+    public function getBreadcrumb($object): ?Breadcrumb
     {
         if (!in_array(ClassUtils::getClass($object), [Catalog::class, Picture::class])) {
-            throw new \Exception(sprintf('La class "" n\'est pas valide', ClassUtils::getClass($object)));
+            throw new \Exception(sprintf('La class "%s" n\'est pas valide', ClassUtils::getClass($object)));
         }
-    
+
         if (Catalog::class === ClassUtils::getClass($object)) {
             return $this->getCatalogBreadcrumb($object);
         }
         if (Picture::class === ClassUtils::getClass($object)) {
             return $this->getPictureBreadcrumb($object);
         }
+        return null;
     }
 
     /**
@@ -53,13 +54,13 @@ class BreadcrumbCreator
             ->setLink($this->router->generate('CATALOG', ['id' => $object->getId()]))
             ->setIsActual(true)
         );
-    
+
         if ($parent = $object->getParent()) {
             $this->addCatalogBreadcrumbLink($breadcrumb, $parent);
         }
-        
+
         $this->addHome($breadcrumb);
-    
+
         return $breadcrumb;
     }
 
@@ -77,11 +78,11 @@ class BreadcrumbCreator
             ]))
             ->setIsActual(true)
         );
-    
+
         if ($parent = $object->getCatalog()) {
             $this->addCatalogBreadcrumbLink($breadcrumb, $parent);
         }
-    
+
         $this->addHome($breadcrumb);
 
         return $breadcrumb;
@@ -101,7 +102,7 @@ class BreadcrumbCreator
             $this->addCatalogBreadcrumbLink($breadcrumb, $parent);
         }
     }
-    
+
     private function addHome(Breadcrumb $breadcrumb)
     {
         $breadcrumb->addLink((new BreadcrumbLink())

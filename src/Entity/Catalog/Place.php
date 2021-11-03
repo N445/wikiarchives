@@ -40,13 +40,13 @@ class Place
 
     /**
      * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="float", nullable=true)
      */
     private $lat;
 
     /**
      * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="float", nullable=true)
      */
     private $lng;
 
@@ -112,24 +112,24 @@ class Place
         return $this;
     }
 
-    public function getLat(): ?string
+    public function getLat(): ?float
     {
         return $this->lat;
     }
 
-    public function setLat(?string $lat): self
+    public function setLat(?float $lat): self
     {
         $this->lat = $lat;
 
         return $this;
     }
 
-    public function getLng(): ?string
+    public function getLng(): ?float
     {
         return $this->lng;
     }
 
-    public function setLng(?string $lng): self
+    public function setLng(?float $lng): self
     {
         $this->lng = $lng;
 

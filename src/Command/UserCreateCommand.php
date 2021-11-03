@@ -90,9 +90,9 @@ class UserCreateCommand extends Command
         $errors = $this->validator->validate($user);
 
         if (count($errors) > 0) {
-            $io->error(array_map(function ($error) {
-                return (string)$error;
-            }, $errors));
+            foreach ($errors as $error) {
+                $io->error((string)$error);
+            }
             return Command::FAILURE;
         }
 

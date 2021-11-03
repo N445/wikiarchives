@@ -1,5 +1,5 @@
 <?php
-    
+
     namespace App\Repository\Catalog;
 
     use App\Entity\Catalog\Catalog;
@@ -21,13 +21,13 @@
     class PictureRepository extends ServiceEntityRepository
     {
         private PaginatorInterface $paginator;
-    
+
         public function __construct(ManagerRegistry $registry, PaginatorInterface $paginator)
         {
             parent::__construct($registry, Picture::class);
             $this->paginator = $paginator;
         }
-    
+
         /**
          * @param string|null $query
          * @param Catalog|null $catalog
@@ -38,14 +38,14 @@
         public function search(?string $query, ?Catalog $catalog, int $page, int $nbPerPage = 10)
         {
             $qb = $this->getBaseFrontQuery();
-    
-    
+
+
             if ($query) {
                 $qb->andWhere('picture_validatedversion.name LIKE :query')
                    ->setParameter('query', '%' . $query . '%')
                 ;
             }
-    
+
             if ($catalog) {
                 $qb->andWhere('p.catalog = :catalog')
                    ->setParameter('catalog', $catalog)
@@ -57,7 +57,7 @@
                 $nbPerPage /*limit per page*/
             );
         }
-    
+
         /**
          * @param int $id
          * @return Picture|null
@@ -72,10 +72,10 @@
                         ->getOneOrNullResult()
             ;
         }
-    
+
         /**
          * @param User $user
-         * @return Picture|null
+         * @return array
          */
         public function getUserVersions(User $user): array
         {
@@ -88,10 +88,10 @@
                         ->getResult()
             ;
         }
-    
+
         /**
          * @param User $user
-         * @return Picture|null
+         * @return array
          */
         public function getUserTmpVersions(User $user): array
         {
@@ -104,7 +104,7 @@
                         ->getResult()
             ;
         }
-    
+
         /**
          * @param Catalog $catalog
          * @param int $page
@@ -116,14 +116,14 @@
                           ->andWhere('p.catalog = :catalog')
                           ->setParameter('catalog', $catalog)
                           ->getQuery();
-        
+
             return $this->paginator->paginate(
                 $query, /* query NOT result */
                 $page, /*page number*/
                 $nbPerPage /*limit per page*/
             );
         }
-    
+
         public function byIdAdmin(int $id): ?Picture
         {
             return $this->getBaseAdminQuery()
@@ -134,7 +134,7 @@
                         ->getOneOrNullResult()
             ;
         }
-    
+
         /**
          * @return QueryBuilder
          */
@@ -149,7 +149,7 @@
                         ->leftJoin('pictures_validatedversion.exif', 'pictures_validatedversion_exif')
             ;
         }
-    
+
         /**
          * @return QueryBuilder
          */
@@ -166,7 +166,7 @@
                 ->setParameter('enabled', true)
             ;
         }
-    
+
         // /**
         //  * @return Picture[] Returns an array of Picture objects
         //  */
@@ -183,7 +183,7 @@
             ;
         }
         */
-    
+
         /*
         public function findOneBySomeField($value): ?Picture
         {

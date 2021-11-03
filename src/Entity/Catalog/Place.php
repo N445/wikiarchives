@@ -4,7 +4,6 @@ namespace App\Entity\Catalog;
 
 use App\Entity\User;
 use App\Repository\Catalog\PlaceRepository;
-use App\Traits\BlameableTrait;
 use App\Traits\TimestampableTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -60,13 +59,13 @@ class Place
      * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="place")
      */
     private $pictures;
-    
+
     /**
      * @Gedmo\Blameable(on="create")
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="createdPlaces")
      */
     private $createdBy;
-    
+
     /**
      * @Gedmo\Blameable(on="update")
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="updatedPlaces")
@@ -196,14 +195,26 @@ class Place
 
         return $this;
     }
-    
+
     public function getCreatedBy(): ?User
     {
         return $this->createdBy;
     }
-    
+
+    public function setCreatedBy(?User $user): Place
+    {
+        $this->createdBy = $user;
+        return $this;
+    }
+
     public function getUpdatedBy(): ?User
     {
         return $this->updatedBy;
+    }
+
+    public function setUpdatedBy(?User $user): Place
+    {
+        $this->updatedBy = $user;
+        return $this;
     }
 }

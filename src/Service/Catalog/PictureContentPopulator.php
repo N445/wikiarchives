@@ -3,6 +3,7 @@
 namespace App\Service\Catalog;
 
 use App\Entity\Catalog\Picture;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class PictureContentPopulator
 {
@@ -21,7 +22,9 @@ class PictureContentPopulator
             $picture->getValidatedVersion()->setName($title);
             return;
         }
+
         if ($uploadedfile = $picture->getFile()->getImageFile()) {
+            /** @var UploadedFile $uploadedfile */
             $filename = $uploadedfile->getClientOriginalName();
             $picture->getValidatedVersion()->setName(pathinfo($filename)['filename'] ?? $filename);
             return;

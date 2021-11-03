@@ -3,6 +3,7 @@
 namespace App\Twig;
 
 use App\Entity\Catalog\Catalog;
+use App\Model\Breadcrumb\Breadcrumb;
 use App\Service\Breadcrumb\BreadcrumbCreator;
 use App\Service\Catalog\CatalogHelper;
 use Twig\Environment;
@@ -43,18 +44,18 @@ class TwigFilterExtension extends AbstractExtension
 
         return sprintf("%.{$dec}f", $bytes / pow(1024, $factor)) . @$size[$factor];
     }
-    
+
     /**
-     * @param $object
-     * @return \App\Model\Breadcrumb\Breadcrumb|void
+     * @param object $object
+     * @return Breadcrumb|null
      * @throws \Exception
      */
-    public function getBreadcrumb($object)
+    public function getBreadcrumb(object $object)
     {
         return $this->breadcrumbCreator->getBreadcrumb($object);
     }
-    
-    
+
+
     public function twig_truncate_filter(Environment $env, $value, $length = 30, $preserve = false, $separator = '...')
     {
         if (mb_strlen($value, $env->getCharset()) > $length) {
@@ -63,16 +64,16 @@ class TwigFilterExtension extends AbstractExtension
                 if (false === ($breakpoint = mb_strpos($value, ' ', $length, $env->getCharset()))) {
                     return $value;
                 }
-    
+
                 $length = $breakpoint;
             }
-    
+
             return rtrim(mb_substr($value, 0, $length, $env->getCharset())) . $separator;
         }
-    
+
         return $value;
     }
-    
+
     public function yesNoHtml(bool $value)
     {
         if ($value) {

@@ -19,11 +19,11 @@ class BreadcrumbCreator
     }
 
     /**
-     * @param $object
+     * @param object $object
      * @return Breadcrumb|null
      * @throws \Exception
      */
-    public function getBreadcrumb($object): ?Breadcrumb
+    public function getBreadcrumb(object $object): ?Breadcrumb
     {
         if (!in_array(ClassUtils::getClass($object), [Catalog::class, Picture::class])) {
             throw new \Exception(sprintf('La class "%s" n\'est pas valide', ClassUtils::getClass($object)));

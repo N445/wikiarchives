@@ -65,45 +65,45 @@ class Version
      * @Gedmo\Versioned
      */
     private $exif;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity=Picture::class, inversedBy="versions")
      */
     private $picture;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity=Picture::class, inversedBy="tmpVersions")
      */
     private $tmpPicture;
-    
+
     /**
      * @ORM\Column(type="text", nullable=true)
      */
     private $userComment;
-    
+
     /**
      * @ORM\Column(type="text", nullable=true)
      */
     private $moderatorComment;
-    
+
     /**
      * @Gedmo\Blameable(on="create")
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="createdVersions")
      */
     private $createdBy;
-    
+
     /**
      * @Gedmo\Blameable(on="update")
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="updatedVersions")
      */
     private $updatedBy;
-    
+
     /**
      * @ORM\Column(type="string", length=255)
      * @Gedmo\Versioned
      */
     private $type;
-    
+
     public function __construct()
     {
         $this->versionNumber = 1;
@@ -243,54 +243,66 @@ class Version
 
         return $this;
     }
-    
+
     public function getTmpPicture(): ?Picture
     {
         return $this->tmpPicture;
     }
-    
+
     public function setTmpPicture(?Picture $picture): self
     {
         $this->tmpPicture = $picture;
-        
+
         return $this;
     }
-    
+
     public function getUserComment(): ?string
     {
         return $this->userComment;
     }
-    
+
     public function setUserComment(?string $userComment): self
     {
         $this->userComment = $userComment;
-        
+
         return $this;
     }
-    
+
     public function getModeratorComment(): ?string
     {
         return $this->moderatorComment;
     }
-    
+
     public function setModeratorComment(?string $moderatorComment): self
     {
         $this->moderatorComment = $moderatorComment;
-        
+
         return $this;
     }
-    
-    
+
+
     public function getCreatedBy(): ?User
     {
         return $this->createdBy;
     }
-    
+
+    public function setCreatedBy(?User $user): Version
+    {
+        $this->createdBy = $user;
+        return $this;
+    }
+
     public function getUpdatedBy(): ?User
     {
         return $this->updatedBy;
     }
-    
+
+    public function setUpdatedBy(?User $user): Version
+    {
+        $this->updatedBy = $user;
+        return $this;
+    }
+
     /**
      * @return string
      */
@@ -298,7 +310,7 @@ class Version
     {
         return $this->type;
     }
-    
+
     /**
      * @param string $type
      * @return Version

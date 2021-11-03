@@ -22,10 +22,7 @@ class PictureExifPopulator
         // reader with Native adapter
         $reader = \PHPExif\Reader\Reader::factory(\PHPExif\Reader\Reader::TYPE_NATIVE);
 
-        if (!$read = $reader->read($uploadedFile->getRealPath())) {
-            $picture->getValidatedVersion()->setExif($exif);
-            return;
-        }
+        $read = $reader->read($uploadedFile->getRealPath());
 
         $propertyAccessor = PropertyAccess::createPropertyAccessor();
 

@@ -18,7 +18,7 @@
      */
     class PictureFixtures extends Fixture implements DependentFixtureInterface
     {
-        const LOOP = 5000;
+        const LOOP = 8000;
 
         /**
          * @var \Symfony\Component\HttpKernel\KernelInterface
@@ -81,7 +81,12 @@
                 $versions = $this->getVersions();
     
                 foreach ($versions as $version) {
-                    $picture->addVersion($version);
+                    if(PictureVersionHelper::TYPE_FINAL === $version->getType()){
+                        $picture->addVersion($version);
+                    }
+                    else{
+                        $picture->addTmpVersion($version);
+                    }
                 }
     
                 $validatedVersion = $this->faker->randomElement($versions);
@@ -168,6 +173,12 @@
                     ->setExif($exif)
                     ->setCreatedBy($this->getReference(sprintf(UserFixtures::REFERENCE, rand(1, UserFixtures::LOOP))))
                     ->setCreatedAt($this->faker->dateTimeBetween('-10 month', 'now'));
+    
+                if ($this->faker->boolean()) {
+                    $version->setType(PictureVersionHelper::TYPE_FINAL);
+                } else {
+                    $version->setType(PictureVersionHelper::TYPE_TMP);
+                }
     
                 if ($this->faker->boolean()) {
                     $version->setUpdatedBy($this->getReference(sprintf(UserFixtures::REFERENCE, rand(1, UserFixtures::LOOP))))

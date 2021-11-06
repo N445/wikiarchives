@@ -22,13 +22,21 @@
            data-bs-toggle="tooltip" data-bs-placement="top" title="Download">
             <i class="fas fa-download"></i>
         </a>
+{#        <span class="bubble bubble-wikiarchives-accent" data-bs-toggle="tooltip" data-bs-placement="top"#}
+{#              title="{{ catalog.children|length }} directories">#}
+{#            {{ catalog.children|length }}#}
+{#        </span>#}
+{#        <span class="bubble bubble-wikiarchives-accent" data-bs-toggle="tooltip" data-bs-placement="top"#}
+{#              title="{{ catalog.pictures|length }} pictures">#}
+{#            {{ catalog.pictures|length }}#}
+{#        </span>#}
         <span class="bubble bubble-wikiarchives-accent" data-bs-toggle="tooltip" data-bs-placement="top"
-              title="{{ catalog.children|length }} directories">
-            {{ catalog.children|length }}
+              title="{{ catalog|countChildren }} directories">
+            {{ catalog|countChildren }}
         </span>
         <span class="bubble bubble-wikiarchives-accent" data-bs-toggle="tooltip" data-bs-placement="top"
-              title="{{ catalog.pictures|length }} pictures">
-            {{ catalog.pictures|length }}
+              title="{{ catalog|countPictures }} pictures">
+            {{ catalog|countPictures }}
         </span>
     </div>
     <a href="{{ path('CATALOG', {'id': catalog.id}) }}"

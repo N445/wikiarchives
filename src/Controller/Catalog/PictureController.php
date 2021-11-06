@@ -98,7 +98,10 @@ class PictureController extends AbstractController
             PictureExifPopulator::populate($picture);
             PictureContentPopulator::setContent($picture);
             $this->getDoctrine()->getManager()->flush();
-            
+    
+            return $this->redirectToRoute('ADMIN_CATALOG_CATALOG_TREE', [
+                'id' => $picture->getCatalog()->getId()
+            ], Response::HTTP_SEE_OTHER);
             return $this->redirectToRoute('ADMIN_CATALOG_PICTURE_INDEX', [], Response::HTTP_SEE_OTHER);
         }
         
@@ -115,14 +118,17 @@ class PictureController extends AbstractController
         if (!$picture = $this->pictureRepository->byIdAdmin($id)) {
             return $this->redirectToRoute('ADMIN_CATALOG_PICTURE_INDEX');
         }
-        
+    
         if ($this->isCsrfTokenValid('delete' . $picture->getId(), $request->request->get('_token'))) {
 //            $entityManager = $this->getDoctrine()->getManager();
 //            $entityManager->remove($picture);
 //            $entityManager->flush();
             $pictureRemover->remove($picture);
         }
-        
+    
+        return $this->redirectToRoute('ADMIN_CATALOG_CATALOG_TREE', [
+            'id' => $picture->getCatalog()->getId()
+        ], Response::HTTP_SEE_OTHER);
         return $this->redirectToRoute('ADMIN_CATALOG_PICTURE_INDEX', [], Response::HTTP_SEE_OTHER);
     }
 }

@@ -108,7 +108,7 @@
         "/build/runtime.f3575a88.js"
       ],
       "css": [
-        "/build/map.7ad578e1.css"
+        "/build/map.b6a7d434.css"
       ]
     }
   },
@@ -135,6 +135,6 @@
     "/build/main.0beb5c5f.css": "sha384-nGm5d+O41k4n+ak10N0OHQVCVJlG8+lLrnox8yla7bbSgJiki5oWaQA/A6uUd2b7",
     "/build/admin-tree.5f7001d5.css": "sha384-5qpui7JXLZUbE9G5vpY7r0P9hxV4sgT5p0dxeoxb0yKqHNHTcOO0yST5o+bZ1X3A",
     "/build/admin-catalog-datatable.1c81194e.css": "sha384-9sayb3B1GLr6h1f4y3yiQ7/O4Dt8ueSbsh1F3uN3rPts6Ctm1d0D1gULSkg5GDkp",
-    "/build/map.7ad578e1.css": "sha384-XIFEdNKoOkGzkI/XX862FMiVssdHb2Hrnyz1RiDTWd4mUe8hkZtvCcO0GBbVvBX6"
+    "/build/map.b6a7d434.css": "sha384-8+0C+TR018QgDd2NovoDw/WlMhJ6qIl/ZPAcsfzmNOgbN0oDZOS5TloVoJqYIiF8"
   }
 }

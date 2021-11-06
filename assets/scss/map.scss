@@ -1,17 +1,28 @@
+@import "./imports/variables";
 @import "~leaflet";
 
 #map {
   height: calc(100vh - 150px);
 }
 
+//$map-colors: (
+//        "xs": #2274a0,
+//        "sm": #56a022,
+//        "md": #22a07a,
+//        "lg": #a08b22,
+//        "vlg": #a06922,
+//        "xlg": #a02222,
+//        "all": #000000,
+//);
+
 $map-colors: (
-        "xs": #2274a0,
-        "sm": #56a022,
-        "md": #22a07a,
-        "lg": #a08b22,
-        "vlg": #a06922,
-        "xlg": #a02222,
-        "all": #000000,
+        "xs": $wikiarchives-primary,
+        "sm": #566b9c,
+        "md": #465a82,
+        "lg": #374968,
+        "vlg": #2a384f,
+        "xlg": #1e2838,
+        "all": #131922,
 );
 
 .mycluster {

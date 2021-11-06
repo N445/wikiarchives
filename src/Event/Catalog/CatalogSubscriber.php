@@ -61,12 +61,19 @@ class CatalogSubscriber implements EventSubscriberInterface
         $this->clearCatalogCache($catalog);
     }
     
-    public function clearCatalogCache(Catalog $catalog)
+    public function clearCatalogCache(?Catalog $catalog)
     {
+        if(!$catalog){
+            return;
+        }
         $cache = new TagAwareAdapter(
             new FilesystemAdapter(),
         );
         $cache->invalidateTags(['catalog_' . $catalog->getId()]);
         $cache->invalidateTags(['picture_' . $catalog->getId()]);
+        $this->clearCatalogCache($catalog->getParent());
+//        foreach ($catalog->getChildren() as $child) {
+//            $this->clearCatalogCache($child);
+//        }
     }
 }

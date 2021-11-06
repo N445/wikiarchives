@@ -6,6 +6,7 @@
     use App\Entity\Catalog\Catalog;
     use App\Form\Catalog\AjaxCatalogTreeType;
     use App\Repository\Catalog\CatalogRepository;
+    use App\Service\Catalog\CatalogRemover;
     use Doctrine\ORM\EntityManagerInterface;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -104,7 +105,7 @@
         }
     
         #[Route("/{id}/remove", name: "ADMIN_AJAX_CATALOG_CATALOG_REMOVE", methods: ["POST"])]
-        public function remove(int $id)
+        public function remove(int $id,CatalogRemover $catalogRemover)
         {
             if (!$catalog = $this->catalogRepository->byIdAdmin($id)) {
                 return $this->json([
@@ -112,9 +113,12 @@
                     'message' => 'Pas de dossier trouvé',
                 ]);
             }
-        
-            $this->em->remove($catalog);
-            $this->em->flush();
+    
+            $catalogRemover->remove($catalog);
+//            $this->catalogRepository->removeFromTree($catalog);
+//            $em->clear(); // clear cached nodes
+//            $this->em->remove($catalog);
+//            $this->em->flush();
         
             return $this->json([
                 'success' => true,

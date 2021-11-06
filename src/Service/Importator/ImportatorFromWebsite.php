@@ -13,13 +13,6 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class ImportatorFromWebsite
 {
-    public const FAKE_PICTURES = [
-        'image-5.jpg',
-        'image-4.jpg',
-        'image-3.jpg',
-        'image-2.jpg',
-        'image-1.jpg',
-    ];
     public const DOMAIN = 'https://wikiarchives.space/';
     
     private array $pictures = [];
@@ -29,6 +22,7 @@ class ImportatorFromWebsite
     private HttpClientInterface $wikiarchivesClient;
     private ?Catalog $root;
     private PictureRepository $pictureRepository;
+    private array $fakeImages = [];
     
     public function __construct(
         CatalogRepository      $catalogRepository,
@@ -53,6 +47,10 @@ class ImportatorFromWebsite
     
     private function init()
     {
+        $this->setFakeImages();
+        dump($this->getFakeImages());
+        die;
+    
         foreach ($this->catalogRepository->findAll() as $catalog) {
             if ($piwigoId = $catalog->getPiwigoId()) {
                 $this->catalogs[$piwigoId] = $catalog;
@@ -109,7 +107,7 @@ class ImportatorFromWebsite
             $newCatalog = (new Catalog())
                 ->setPiwigoId($category['id'])
                 ->setName($category['name'])
-                ->setImageName(self::FAKE_PICTURES[array_rand(self::FAKE_PICTURES)]);
+                ->setImageName($this->getFakeImages()[array_rand($this->getFakeImages())]);
             
             $this->catalogs[$newCatalog->getPiwigoId()] = $newCatalog;
             if ($parentId = $category['id_uppercat'] ?? null) {
@@ -156,27 +154,32 @@ class ImportatorFromWebsite
                 if (array_key_exists($pictureRaw['id'], $this->pictures)) {
                     continue;
                 }
+                $pictureFake = $this->getFakeImages()[array_rand($this->getFakeImages())];
+    
+    
                 $newFile = (new Picture\File())
                     ->setImageDimensions([$pictureRaw["width"] ?? 999, $pictureRaw["height"] ?? 666])
                     ->setImageMimeType("image/jpeg")
-                    ->setImageOriginalName('fake.jpg')
+                    ->setImageOriginalName($pictureRaw['file'])
                     ->setImageSize(5000000)
-                    ->setImageName(self::FAKE_PICTURES[array_rand(self::FAKE_PICTURES)]);
-                
-                
+                    ->setImageName($pictureFake);
+    
+    
                 $newPicture = (new Picture())
                     ->setPiwigoId($pictureRaw['id'])
-                    ->setFile($newFile);
-                
-                $newPicture->getValidatedVersion()->setName($pictureRaw['name'])
+                    ->setFile($newFile)
+                    ->setCreatedAt(new \DateTime($pictureRaw['date_available']));
+    
+                $newPicture->getValidatedVersion()
+                           ->setName($pictureRaw['name'])
                            ->setDescription($pictureRaw['comment'])
                            ->setStatus(PictureVersionHelper::STATUS_ACCEPTED)
                 ;
-                
-                
+    
+    
                 PictureExifPopulator::populate($newPicture);
 //                PictureContentPopulator::setContent($newPicture);
-                
+    
                 if ($parentId = $pictureRaw['categories'][0]['id'] ?? null) {
                     $parent = $this->catalogs[$parentId];
                     $newPicture->setCatalog($parent);
@@ -215,5 +218,35 @@ class ImportatorFromWebsite
             'nbPages' => (int)ceil($total / 500),
             'total' => $total,
         ];
+    }
+    
+    /**
+     * @return array
+     */
+    public function getFakeImages(): array
+    {
+        return $this->fakeImages;
+    }
+    
+    /**
+     * @param array $fakeImages
+     * @return ImportatorFromWebsite
+     */
+    public function setFakeImages(): ImportatorFromWebsite
+    {
+        $fakeImages = [
+            'image-5.jpg',
+            'image-4.jpg',
+            'image-3.jpg',
+            'image-2.jpg',
+            'image-1.jpg',
+        ];
+        foreach ($fakeImages as $fakeImage) {
+            $this->fakeImages[] = [
+                'name' => $fakeImage,
+                'exif' => PictureExifPopulator::getExifFromFile(__DIR__ . '/../../DataFixtures/images/' . $fakeImage)
+            ];
+        }
+        return $this;
     }
 }

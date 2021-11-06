@@ -30,14 +30,14 @@
 {#              title="{{ catalog.pictures|length }} pictures">#}
 {#            {{ catalog.pictures|length }}#}
 {#        </span>#}
-        <span class="bubble bubble-wikiarchives-accent" data-bs-toggle="tooltip" data-bs-placement="top"
-              title="{{ catalog|countChildren }} directories">
-            {{ catalog|countChildren }}
-        </span>
-        <span class="bubble bubble-wikiarchives-accent" data-bs-toggle="tooltip" data-bs-placement="top"
-              title="{{ catalog|countPictures }} pictures">
-            {{ catalog|countPictures }}
-        </span>
+{#        <span class="bubble bubble-wikiarchives-accent" data-bs-toggle="tooltip" data-bs-placement="top"#}
+{#              title="{{ catalog|countChildren }} directories">#}
+{#            {{ catalog|countChildren }}#}
+{#        </span>#}
+{#        <span class="bubble bubble-wikiarchives-accent" data-bs-toggle="tooltip" data-bs-placement="top"#}
+{#              title="{{ catalog|countPictures }} pictures">#}
+{#            {{ catalog|countPictures }}#}
+{#        </span>#}
     </div>
     <a href="{{ path('CATALOG', {'id': catalog.id}) }}"
        data-bs-toggle="tooltip"
@@ -49,12 +49,17 @@
         </div>
         <div class="card-body p-1">
             <div class="d-flex flex-column justify-content-between h-100">
-                <p class="card-title text-truncate mb-0">
-                    <small class="">
+                <h3 class="card-title mb-0">
+                    <small>
                         {{ catalog.name }}
                     </small>
-                </p>
+                </h3>
             </div>
+        </div>
+        <div class="card-footer text-muted">
+            <small>
+                {{ catalog|countPictures }} pictures in {{ catalog|countChildren }} sub-catalogs
+            </small>
         </div>
     </a>
 </div>

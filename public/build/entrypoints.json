@@ -46,6 +46,15 @@
         "/build/admin-catalog-datatable-js.2ca84138.js"
       ]
     },
+    "map-js": {
+      "js": [
+        "/build/runtime.f3575a88.js",
+        "/build/755.5a8586e9.js",
+        "/build/773.9fdc0dd7.js",
+        "/build/654.70a2c2d1.js",
+        "/build/map-js.383e6cf0.js"
+      ]
+    },
     "wysiwyg-js": {
       "js": [
         "/build/runtime.f3575a88.js",
@@ -93,6 +102,14 @@
       "css": [
         "/build/admin-catalog-datatable.1c81194e.css"
       ]
+    },
+    "map": {
+      "js": [
+        "/build/runtime.f3575a88.js"
+      ],
+      "css": [
+        "/build/map.7ad578e1.css"
+      ]
     }
   },
   "integrity": {
@@ -109,12 +126,15 @@
     "/build/202.5a1716f8.js": "sha384-hvglsgyPb3WR62p3JJjEY7T8EvvulSQ3/UriLYQ6Jh9VlPQb9joHNNv9lWG0pKYQ",
     "/build/admin-tree-js.a6bd82aa.js": "sha384-LKJAY3rJA5E0PLyS2xiWg3bBj1Lsq/OsZ0bgx5kU4QglddGO5Xzz+ACJVyPNxSQF",
     "/build/admin-catalog-datatable-js.2ca84138.js": "sha384-37IGMvgaJlhIShic/0t0yDbDdQ8WTgBx/m50YFfGW3N4AQj76jqeg10G7ld+DNzl",
+    "/build/654.70a2c2d1.js": "sha384-ezJuH2BjF2HPo2H2VK8EeSWpbbVl64TZaJ9cAEcB2Pcxuj8EW+LBcozyC0aUXlPH",
+    "/build/map-js.383e6cf0.js": "sha384-m+hjLmkDGMFURd+LkyuCxm8wb89pc33PJdPmkS2s5/TY6RMnp8y5722lZVx6Xzc0",
     "/build/137.c4382e34.js": "sha384-TpdMay36CorVajK9yZAgmTYl8CKtDdnNbGYD06xVspI/g04r44qE9iZfwKbuclP6",
     "/build/wysiwyg-js.7b30dd6c.js": "sha384-fSPqQWZMMIRzd08tLh1wx3dAqDs+WYcidg48eC87OP5mKKKrvEOqpToGkUuBvPTQ",
     "/build/globals.dfa5013e.css": "sha384-M/RkAWnT4woe39T0y9CO2hj95NXqmDTP+JoFUN0tklrAEfSiyR0d04FJGOFjB1ly",
     "/build/admin.304512a0.css": "sha384-SFmKnY6nUXhXMmYAPtU4F88oL+qTco5OczlMv9YYj0syRalwQ4wAWXzfxjcjSWpd",
     "/build/main.0beb5c5f.css": "sha384-nGm5d+O41k4n+ak10N0OHQVCVJlG8+lLrnox8yla7bbSgJiki5oWaQA/A6uUd2b7",
     "/build/admin-tree.5f7001d5.css": "sha384-5qpui7JXLZUbE9G5vpY7r0P9hxV4sgT5p0dxeoxb0yKqHNHTcOO0yST5o+bZ1X3A",
-    "/build/admin-catalog-datatable.1c81194e.css": "sha384-9sayb3B1GLr6h1f4y3yiQ7/O4Dt8ueSbsh1F3uN3rPts6Ctm1d0D1gULSkg5GDkp"
+    "/build/admin-catalog-datatable.1c81194e.css": "sha384-9sayb3B1GLr6h1f4y3yiQ7/O4Dt8ueSbsh1F3uN3rPts6Ctm1d0D1gULSkg5GDkp",
+    "/build/map.7ad578e1.css": "sha384-XIFEdNKoOkGzkI/XX862FMiVssdHb2Hrnyz1RiDTWd4mUe8hkZtvCcO0GBbVvBX6"
   }
 }

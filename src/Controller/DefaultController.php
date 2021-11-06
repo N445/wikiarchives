@@ -34,11 +34,20 @@
             ]);
         }
     
+        #[Route('/map', name: 'MAP')]
+        public function map(Request $request)
+        {
+            return $this->render('default/map.html.twig', [
+                'pictureGpsPoints' => dump($this->pictureProvider->getGpsPoints())
+            ]);
+        }
+    
+    
         #[Route('/search', name: 'SEARCH')]
         public function search(Request $request): Response
         {
             $catalogId = $request->get('catalogId', null);
-    
+        
             $catalog = null;
             if ($catalogId) {
                 $catalog = $this->catalogProvider->byId($catalogId);

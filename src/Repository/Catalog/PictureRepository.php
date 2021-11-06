@@ -116,14 +116,29 @@
                           ->andWhere('p.catalog = :catalog')
                           ->setParameter('catalog', $catalog)
                           ->getQuery();
-
+    
             return $this->paginator->paginate(
                 $query, /* query NOT result */
                 $page, /*page number*/
                 $nbPerPage /*limit per page*/
             );
         }
-
+    
+        public function getGpsPointsFront()
+        {
+            return $this->createQueryBuilder('p')
+                        ->addSelect('file', 'validatedVersion', 'exif')
+                        ->leftJoin('p.file', 'file')
+                        ->leftJoin('p.validatedVersion', 'validatedVersion')
+                        ->leftJoin('validatedVersion.exif', 'exif')
+                        ->andWhere('exif.gps IS NOT NULL')
+                        ->andWhere('p.enabled = :enabled')
+                        ->setParameter('enabled', true)
+                        ->getQuery()
+                        ->getResult()
+            ;
+        }
+    
         public function byIdAdmin(int $id): ?Picture
         {
             return $this->getBaseAdminQuery()

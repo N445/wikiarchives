@@ -1,0 +1,57 @@
+@import "~leaflet";
+
+#map {
+  height: calc(100vh - 150px);
+}
+
+$map-colors: (
+        "xs": #2274a0,
+        "sm": #56a022,
+        "md": #22a07a,
+        "lg": #a08b22,
+        "vlg": #a06922,
+        "xlg": #a02222,
+        "all": #000000,
+);
+
+.mycluster {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  color: white;
+  text-align: center;
+  font-size: 20px;
+  line-height: 40px;
+  margin-top: -20px;
+  margin-left: -20px;
+  transition: .2s;
+
+  &:hover {
+    height: 50px;
+    width: 50px;
+    font-size: 25px;
+    line-height: 50px;
+    margin-top: -25px;
+    margin-left: -25px;
+  }
+
+  @each $size, $color in $map-colors {
+    &.mycluster-#{$size} {
+      background-color: $color;
+      color: white;
+
+      &:before {
+        content: '';
+        position: absolute;
+        border-radius: 50%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: calc(100% + 10px);
+        height: calc(100% + 10px);
+        background-color: $color;
+        opacity: .2;
+      }
+    }
+  }
+}

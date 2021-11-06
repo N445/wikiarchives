@@ -42,6 +42,10 @@ Encore
     .addEntry('admin-catalog-datatable-js', './assets/admin/catalog/catalog-datatable.js')
     .addStyleEntry('admin-catalog-datatable', './assets/admin/catalog/catalog-datatable.scss')
 
+    // Map
+    .addEntry('map-js', './assets/map.js')
+    .addStyleEntry('map', './assets/scss/map.scss')
+
     // wysiwyg
     .addEntry('wysiwyg-js', './assets/wysiwyg.js')
 

@@ -5,7 +5,7 @@
     use App\Repository\Catalog\Picture\ExifRepository;
     use Doctrine\ORM\Mapping as ORM;
     use Gedmo\Mapping\Annotation as Gedmo;
-    
+
     /**
      * @ORM\Entity(repositoryClass=ExifRepository::class)
      * @ORM\Table(name="catalog_picture_exif")
@@ -169,25 +169,30 @@
          * @Gedmo\Versioned
          */
         private ?string $software = null;
-        
+    
         /**
          * @ORM\Column(type="string",nullable=true)
          * @Gedmo\Versioned
          */
         private ?string $source = null;
-        
+    
         /**
-         * @ORM\Column(type="array",nullable=true)
          * @Gedmo\Versioned
+         * @ORM\Column(type="float", nullable=true)
          */
-        private ?array $gps = null;
-        
+        private ?float $lat = null;
+    
+        /**
+         * @Gedmo\Versioned
+         * @ORM\Column(type="float", nullable=true)
+         */
+        private ?float $lng = null;
+    
         public function __construct()
         {
             $this->setKeywords([]);
-            $this->setGps([]);
         }
-        
+    
         public function getId(): ?int
         {
             return $this->id;
@@ -240,7 +245,8 @@
                 'orientation' => $this->getOrientation(),
                 'software' => $this->getSoftware(),
                 'source' => $this->getSource(),
-                'gps' => $this->getGps(),
+                'lat' => $this->getLat(),
+                'lng' => $this->getLng(),
             ];
         }
         
@@ -647,8 +653,11 @@
          * @param array|null $keywords
          * @return Exif
          */
-        public function setKeywords(?array $keywords): Exif
+        public function setKeywords(mixed $keywords): Exif
         {
+            if (is_string($keywords)) {
+                $keywords = [$keywords];
+            }
             $this->keywords = $keywords;
             return $this;
         }
@@ -714,7 +723,7 @@
         {
             return $this->source;
         }
-        
+    
         /**
          * @param string|null $source
          * @return Exif
@@ -724,22 +733,62 @@
             $this->source = $source;
             return $this;
         }
-        
-        /**
-         * @return array|null
-         */
-        public function getGps(): ?array
+    
+    
+        public function getGps(): ?string
         {
-            return $this->gps;
+            if ($this->getLat() && $this->getLng()) {
+                return sprintf('%s,%s', $this->getLat(), $this->getLng());
+            }
+            return null;
         }
-        
-        /**
-         * @param array|null $gps
-         * @return Exif
-         */
+    
+    
         public function setGps(?array $gps): Exif
         {
-            $this->gps = $gps;
+            if (count($gps) !== 2) {
+                $this->setLat(null);
+                $this->setLng(null);
+            }
+        
+            $this->setLat($gps[0]);
+            $this->setLng($gps[1]);
+            return $this;
+        }
+    
+        /**
+         * @return float|null
+         */
+        public function getLat(): ?float
+        {
+            return $this->lat;
+        }
+    
+        /**
+         * @param float|null $lat
+         * @return Exif
+         */
+        public function setLat(?float $lat): Exif
+        {
+            $this->lat = $lat;
+            return $this;
+        }
+    
+        /**
+         * @return float|null
+         */
+        public function getLng(): ?float
+        {
+            return $this->lng;
+        }
+    
+        /**
+         * @param float|null $lng
+         * @return Exif
+         */
+        public function setLng(?float $lng): Exif
+        {
+            $this->lng = $lng;
             return $this;
         }
     }

@@ -149,10 +149,8 @@
                     ->setSource($this->faker->optional()->realText(50));
 
                 if ($this->faker->boolean()) {
-                    $exif->setGps([
-                        $this->faker->latitude(),
-                        $this->faker->longitude(),
-                    ]);
+                    $exif->setLat($this->faker->latitude());
+                    $exif->setLng($this->faker->longitude());
                 }
 
 

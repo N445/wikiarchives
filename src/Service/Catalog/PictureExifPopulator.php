@@ -11,6 +11,28 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class PictureExifPopulator
 {
+    public static function getExifFromUrl($url, ?Exif $exif = null)
+    {
+        if (!$exif) {
+            $exif = new Exif();
+        }
+        
+        // reader with Native adapter
+        $reader = \PHPExif\Reader\Reader::factory(\PHPExif\Reader\Reader::TYPE_NATIVE);
+        
+        $read = $reader->read($url);
+        
+        $propertyAccessor = PropertyAccess::createPropertyAccessor();
+        
+        $exifData = $read->getData();
+        foreach ($exifData as $label => $value) {
+            if ($propertyAccessor->isWritable($exif, $label)) {
+                $propertyAccessor->setValue($exif, $label, self::getFormatedValue($label, $value));
+            }
+        }
+        return $exif;
+    }
+    
     public static function getExifFromFile($file, ?Exif $exif = null)
     {
         if (!$file instanceof UploadedFile) {

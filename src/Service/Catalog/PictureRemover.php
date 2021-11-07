@@ -19,6 +19,7 @@ class PictureRemover
         $picture->setValidatedVersion(null);
         foreach ($picture->getVersions() as $version) {
             $this->em->remove($version);
+            $this->em->flush();
         }
         $this->em->flush();
         $this->em->remove($picture);

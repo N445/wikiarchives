@@ -136,10 +136,18 @@ class ExifFrontType extends AbstractType
                 'label' => 'Source',
                 'required' => false,
             ])
-            ->add('gps', TextType::class, [
-                'label' => 'GPS',
+//            ->add('gps', TextType::class, [
+//                'label' => 'GPS',
+//                'required' => false,
+//                'help' => 'Separate by comma'
+//            ])
+            ->add('lat', TextType::class, [
+                'label' => 'Lattitude',
                 'required' => false,
-                'help' => 'Separate by comma'
+            ])
+            ->add('lng', TextType::class, [
+                'label' => 'Longitude',
+                'required' => false,
             ])
         ;
         
@@ -156,18 +164,18 @@ class ExifFrontType extends AbstractType
                     }
                 ))
         ;
-        $builder->get('gps')
-                ->addModelTransformer(new CallbackTransformer(
-                    function ($gpsAsArray) {
-                        // transform the array to a string
-                        return implode(',', $gpsAsArray);
-                    },
-                    function ($gpsAsString) {
-                        // transform the string back to an array
-                        return explode(',', $gpsAsString);
-                    }
-                ))
-        ;
+//        $builder->get('gps')
+//                ->addModelTransformer(new CallbackTransformer(
+//                    function ($gpsAsArray) {
+//                        // transform the array to a string
+//                        return implode(',', $gpsAsArray);
+//                    },
+//                    function ($gpsAsString) {
+//                        // transform the string back to an array
+//                        return explode(',', $gpsAsString);
+//                    }
+//                ))
+//        ;
     }
     
     public function configureOptions(OptionsResolver $resolver): void

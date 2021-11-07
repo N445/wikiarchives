@@ -44,7 +44,9 @@ class PictureVersionCloner
             ->setOrientation($clonedExif->getOrientation())
             ->setSoftware($clonedExif->getSoftware())
             ->setSource($clonedExif->getSource())
-            ->setGps($clonedExif->getGps());
+            ->setLat($clonedExif->getLat())
+            ->setLng($clonedExif->getLng())
+        ;
         
         $newVersion = (new Version())
             ->setStatus(PictureVersionHelper::STATUS_PENDING)

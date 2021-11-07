@@ -72,10 +72,10 @@
                 foreach ($this->pictureRepository->getGpsPointsFront() as $picture) {
                     $item->tag(sprintf('picture_%d', $picture->getId()));
                 
-                    if (!$lat = $picture->getExif()->getGps()[0] ?? null) {
+                    if (!$lat = $picture->getExif()->getLat() ?? null) {
                         continue;
                     }
-                    if (!$lng = $picture->getExif()->getGps()[1] ?? null) {
+                    if (!$lng = $picture->getExif()->getLng() ?? null) {
                         continue;
                     }
                 

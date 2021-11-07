@@ -37,7 +37,7 @@ liip_imagine:
         data_loader: loader_aws_s3_catalog
         quality: 40
         filters:
-          thumbnail: { size: [260, 260], mode: outbound }
+          thumbnail: { size: [330, 330], mode: outbound }
       picture_admin_listing:
         cache: default
         data_loader: loader_aws_s3_picture
@@ -49,7 +49,7 @@ liip_imagine:
         data_loader: loader_aws_s3_picture
         quality: 75
         filters:
-          thumbnail: { size: [260, 260], mode: outbound }
+          thumbnail: { size: [330, 330], mode: outbound }
       picture:
         cache: default
         data_loader: loader_aws_s3_picture

@@ -6,6 +6,7 @@
     use App\Entity\Catalog\Catalog;
     use App\Provider\CatalogProvider;
     use App\Provider\PictureProvider;
+    use App\Service\Catalog\PictureExifPopulator;
     use Doctrine\ORM\EntityManagerInterface;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Request;
@@ -80,18 +81,12 @@
         #[Route('/test', name: 'TEST')]
         public function test(Request $request, EntityManagerInterface $em)
         {
-            $food = new Catalog();
-            $food->setName('Food');
-            $em->persist($food);
-        
-            $fruits = new Catalog();
-            $fruits->setName('Fruits');
-            $fruits->setParent($food);
-    
-            $em->persist($fruits);
-            $em->flush();
+            $url = "http://wikiarchives.space/upload/2020/07/15/20200715113431-f6c23cd8.jpg";
+            dump($url);
+            dump(exif_read_data($url));
+            dump(PictureExifPopulator::getExifFromUrl($url));
             
-            
+            die;
             return $this->render('default/test.html.twig', [
             ]);
         }

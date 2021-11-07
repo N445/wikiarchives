@@ -25,12 +25,17 @@ class CatalogRemover
     
     public function remove(Catalog $catalog, bool $isRecursive = true)
     {
+        ini_set('max_execution_time', '0');
+        ini_set('memory_limit', '2G');
         foreach ($catalog->getPictures() as $picture) {
             $this->pictureRemover->remove($picture);
         }
+        $this->em->flush();
         foreach ($catalog->getChildren() as $child) {
             $this->remove($child);
-            }
+            $this->em->flush();
+        }
+        $this->em->flush();
         $this->em->remove($catalog);
         $this->em->flush();
     }

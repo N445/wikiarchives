@@ -111,9 +111,11 @@
                 ->add('source', TextType::class, [
                     'required' => false,
                 ])
-                ->add('gps', TextType::class, [
+                ->add('lat', TextType::class, [
                     'required' => false,
-                    'help' => 'Separate by comma'
+                ])
+                ->add('lng', TextType::class, [
+                    'required' => false,
                 ])
             ;
             
@@ -130,18 +132,18 @@
                         }
                     ))
             ;
-            $builder->get('gps')
-                    ->addModelTransformer(new CallbackTransformer(
-                        function ($gpsAsArray) {
-                            // transform the array to a string
-                            return implode(',', $gpsAsArray);
-                        },
-                        function ($gpsAsString) {
-                            // transform the string back to an array
-                            return explode(',', $gpsAsString);
-                        }
-                    ))
-            ;
+//            $builder->get('gps')
+//                    ->addModelTransformer(new CallbackTransformer(
+//                        function ($gpsAsArray) {
+//                            // transform the array to a string
+//                            return implode(',', $gpsAsArray);
+//                        },
+//                        function ($gpsAsString) {
+//                            // transform the string back to an array
+//                            return explode(',', $gpsAsString);
+//                        }
+//                    ))
+//            ;
         }
         
         public function configureOptions(OptionsResolver $resolver): void

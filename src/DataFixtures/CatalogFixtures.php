@@ -3,6 +3,7 @@
     namespace App\DataFixtures;
     
     use App\Entity\Catalog\Catalog;
+    use App\Service\Fake\FakeImageProvider;
     use Doctrine\Bundle\FixturesBundle\Fixture;
     use Doctrine\Common\DataFixtures\DependentFixtureInterface;
     use Doctrine\Persistence\ObjectManager;
@@ -17,32 +18,21 @@
         
         private $catalogs = [];
         private KernelInterface $kernel;
-        
-        public function __construct(KernelInterface $kernel)
+        private FakeImageProvider $fakeImageProvider;
+    
+        public function __construct(KernelInterface $kernel, FakeImageProvider $fakeImageProvider)
         {
             $this->kernel = $kernel;
+            $this->fakeImageProvider = $fakeImageProvider;
         }
         
         public function load(ObjectManager $manager): void
         {
             $faker = Factory::create();
     
-            (new Filesystem())->remove([$this->kernel->getProjectDir() . '/public/uploads/catalog/catalog/*']);
-    
-            $images = [
-                'image-1.jpg',
-                'image-2.jpg',
-                'image-3.jpg',
-                'image-4.jpg',
-                'image-5.jpg',
-            ];
-    
-            foreach ($images as $image) {
-                $from = $this->kernel->getProjectDir() . '/src/DataFixtures/images/' . $image;
-                $to = $this->kernel->getProjectDir() . '/public/uploads/catalog/' . $image;
-                copy($from, $to);
-            }
-    
+            $this->fakeImageProvider->setFakeImages();
+            
+            
             $root = (new Catalog())
                 ->setName(Catalog::ROOT)
                 ->setEnabled(true);
@@ -56,7 +46,7 @@
                 $catalog = (new Catalog())
                     ->setName($faker->realText(50))
                     ->setEnabled($faker->boolean())
-                    ->setImageName($faker->randomElement($images))
+                    ->setImageName($faker->randomElement($this->fakeImageProvider->getFakeImages())['name'])
                     ->setCreatedBy($this->getReference(sprintf(UserFixtures::REFERENCE, rand(1, UserFixtures::LOOP))))
                     ->setCreatedAt($faker->dateTimeBetween('-10 month', 'now'));
         

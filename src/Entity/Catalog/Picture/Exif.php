@@ -743,6 +743,17 @@
             return null;
         }
     
+        public function getGpsArray(): ?array
+        {
+            if ($this->getLat() && $this->getLng()) {
+                return [
+                    'lat' => $this->getLat(),
+                    'lng' => $this->getLng()
+                ];
+            }
+            return null;
+        }
+    
     
         public function setGps(?array $gps): Exif
         {

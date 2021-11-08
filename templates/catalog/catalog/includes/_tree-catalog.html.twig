@@ -5,7 +5,7 @@
                 <a class="draggable {{ (catalog.id == node.id)  ? ' jstree-clicked' : '' }}" data-id="{{ node.id }}"
                    href="{{ path('ADMIN_CATALOG_CATALOG_TREE',{id:node.id}) }}" data-type="catalog"
                    data-is-root="{{ node.parent ?'false':'true' }}">
-                    {{ node.name }}
+                    {{ node.name }} [{{ node.isEnabled?'Oui':'Non' }}]
                 </a>
                 {% if node.children|length > 0 %}
                     {{ _self.nodeLine(node.children.toArray(),catalog) }}

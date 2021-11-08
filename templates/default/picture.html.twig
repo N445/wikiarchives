@@ -8,7 +8,9 @@
     <div class="container-fluid">
         <div class="row mb-4">
             <div class="col">
-                <img src="{{ picture.file.imageName|imagine_filter('picture') }}" alt="{{ picture.file.imageName }}"
+{#                <img src="{{ asset(picture.file.imageName)|imagine_filter('picture') }}" alt="{{ picture.file.imageName }}"#}
+{#                     class="img-fluid rounded">#}
+                <img src="{{ asset(picture.file.imageName|imagine_filter('picture')) }}" alt="{{ picture.file.imageName }}"
                      class="img-fluid rounded">
             </div>
             <div class="col">
@@ -22,4 +24,12 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('map') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('map-single-js') }}
 {% endblock %}

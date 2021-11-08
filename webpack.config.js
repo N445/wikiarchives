@@ -43,7 +43,8 @@ Encore
     .addStyleEntry('admin-catalog-datatable', './assets/admin/catalog/catalog-datatable.scss')
 
     // Map
-    .addEntry('map-js', './assets/map.js')
+    .addEntry('map-multiple-js', './assets/map-multiple.js')
+    .addEntry('map-single-js', './assets/map-single.js')
     .addStyleEntry('map', './assets/scss/map.scss')
 
     // wysiwyg

@@ -7,6 +7,7 @@
 
 {% block body %}
     <div class="container my-5">
+        <h1>{{ pictureGpsPoints|length }} pictures</h1>
         <div id="map"
              class="rounded"
              data-pictures="{{ pictureGpsPoints|serialize }}"
@@ -21,5 +22,5 @@
 {% endblock %}
 
 {% block javascripts %}
-    {{ encore_entry_script_tags('map-js') }}
+    {{ encore_entry_script_tags('map-multiple-js') }}
 {% endblock %}

@@ -104,8 +104,8 @@ class ImportatorFromWebsiteToCsv
         
         $this->csvWriter = Writer::createFromString();
         
-        $this->csvWriter->insertOne($header);
-        file_put_contents($csvPath, $this->csvWriter->toString());
+//        $this->csvWriter->insertOne($header);
+//        file_put_contents($csvPath, $this->csvWriter->toString());
     }
     
     private function setPictures()
@@ -195,7 +195,7 @@ class ImportatorFromWebsiteToCsv
                 
                 dump($this->pictures . '/' . $total);
             }
-            file_put_contents($this->kernel->getProjectDir() . '/var/piwigo-data.csv', $this->csvWriter->toString());
+            file_put_contents($this->kernel->getProjectDir() . '/var/piwigo-data.csv', $this->csvWriter->toString(),FILE_APPEND);
         }
     }
     

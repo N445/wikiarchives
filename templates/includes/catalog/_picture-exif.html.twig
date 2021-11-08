@@ -165,3 +165,12 @@
     {% endif %}
     </tbody>
 </table>
+
+
+{% if picture.exif.gps %}
+    <div id="map"
+         class="rounded small"
+         data-picture="{{ picture.exif.gpsArray|serialize }}"
+    >
+    </div>
+{% endif %}

@@ -3,7 +3,11 @@
 
 #map {
   height: calc(100vh - 150px);
+  &.small{
+    height: 500px;
+  }
 }
+
 
 //$map-colors: (
 //        "xs": #2274a0,

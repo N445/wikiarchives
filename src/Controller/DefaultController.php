@@ -38,8 +38,14 @@
         #[Route('/map', name: 'MAP')]
         public function map(Request $request)
         {
+            $gpsPoints = $this->pictureProvider->getGpsPoints();
+            foreach ($gpsPoints as $gpsPoint) {
+                if($gpsPoint->getLat() === 0.0){
+                    dump($gpsPoint);
+                }
+            }
             return $this->render('default/map.html.twig', [
-                'pictureGpsPoints' => dump($this->pictureProvider->getGpsPoints())
+                'pictureGpsPoints' => $gpsPoints
             ]);
         }
     

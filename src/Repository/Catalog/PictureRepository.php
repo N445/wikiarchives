@@ -7,6 +7,7 @@
     use App\Entity\User;
     use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
     use Doctrine\ORM\NonUniqueResultException;
+    use Doctrine\ORM\Query\Expr\Join;
     use Doctrine\ORM\QueryBuilder;
     use Doctrine\Persistence\ManagerRegistry;
     use Knp\Component\Pager\Pagination\PaginationInterface;
@@ -127,14 +128,16 @@
         public function getGpsPointsFront()
         {
             return $this->createQueryBuilder('p')
-                        ->addSelect('file', 'validatedVersion', 'exif')
+                        ->addSelect('file', 'validatedVersion', 'exif', 'catalog')
                         ->leftJoin('p.file', 'file')
                         ->leftJoin('p.validatedVersion', 'validatedVersion')
                         ->leftJoin('validatedVersion.exif', 'exif')
+                        ->leftJoin('p.catalog', 'catalog')
+//                        ->leftJoin('catalog.parent', 'catalog_parent', Join::WITH, 'catalog_parent.enabled = true')
                         ->andWhere('exif.lat IS NOT NULL')
                         ->andWhere('exif.lng IS NOT NULL')
-                        ->andWhere('p.enabled = :enabled')
-                        ->setParameter('enabled', true)
+                        ->andWhere('p.enabled = true')
+                        ->andWhere('catalog.enabled = true')
                         ->getQuery()
                         ->getResult()
             ;

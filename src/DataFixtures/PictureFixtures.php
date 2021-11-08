@@ -6,11 +6,11 @@
     use App\Entity\Catalog\Picture\Exif;
     use App\Entity\Catalog\Picture\Version;
     use App\Service\Catalog\Version\PictureVersionHelper;
+    use App\Service\Fake\FakeImageProvider;
     use Doctrine\Bundle\FixturesBundle\Fixture;
     use Doctrine\Common\DataFixtures\DependentFixtureInterface;
     use Doctrine\Persistence\ObjectManager;
     use Faker\Factory;
-    use Symfony\Component\Filesystem\Filesystem;
     use Symfony\Component\HttpKernel\KernelInterface;
 
     /**
@@ -19,39 +19,29 @@
     class PictureFixtures extends Fixture implements DependentFixtureInterface
     {
         const LOOP = 8000;
-
+    
         /**
          * @var \Symfony\Component\HttpKernel\KernelInterface
          */
         private KernelInterface $kernel;
-
-        public function __construct(KernelInterface $kernel)
+        private FakeImageProvider $fakeImageProvider;
+    
+        public function __construct(KernelInterface $kernel, FakeImageProvider $fakeImageProvider)
         {
             $this->kernel = $kernel;
+            $this->fakeImageProvider = $fakeImageProvider;
         }
-
+    
         public function load(ObjectManager $manager): void
         {
             $this->faker = Factory::create();
-    
-            (new Filesystem())->remove([$this->kernel->getProjectDir() . '/public/uploads/picture/*']);
-    
-            $images = [
-                'image-1.jpg',
-                'image-2.jpg',
-                'image-3.jpg',
-                'image-4.jpg',
-                'image-5.jpg',
-            ];
-            foreach ($images as $image) {
-                $from = $this->kernel->getProjectDir() . '/src/DataFixtures/images/' . $image;
-                $to = $this->kernel->getProjectDir() . '/public/uploads/picture/' . $image;
-                copy($from, $to);
-            }
-
+        
+            $this->fakeImageProvider->setFakeImages();
+        
             foreach (range(1, self::LOOP) as $i) {
+                $fakeImage = $this->faker->randomElement($this->fakeImageProvider->getFakeImages());
                 $file = (new Picture\File())
-                    ->setImageName($this->faker->randomElement($images))
+                    ->setImageName($fakeImage['name'])
                     ->setImageSize($this->faker->numberBetween(50000, 80000000))
                     ->setImageMimeType($this->faker->mimeType())
                     ->setImageOriginalName($this->faker->filePath())
@@ -79,23 +69,63 @@
                 $picture->removeVersion($picture->getValidatedVersion());
     
                 $versions = $this->getVersions();
-    
+            
                 foreach ($versions as $version) {
-                    if(PictureVersionHelper::TYPE_FINAL === $version->getType()){
+                    if (PictureVersionHelper::TYPE_FINAL === $version->getType()) {
                         $picture->addVersion($version);
-                    }
-                    else{
+                    } else {
                         $picture->addTmpVersion($version);
                     }
                 }
-    
+            
+                /** @var Exif $baseExif */
+                $baseExif = $fakeImage['exif'];
+                $exif = (new Exif())
+                    ->setIsVerified($baseExif->isVerified())
+                    ->setTitle($baseExif->getTitle())
+                    ->setAuthor($baseExif->getAuthor())
+                    ->setCamera($baseExif->getCamera())
+                    ->setCaption($baseExif->getCaption())
+                    ->setCopyright($baseExif->getCopyright())
+                    ->setCreationdate($baseExif->getCreationdate())
+                    ->setCredit($baseExif->getCredit())
+                    ->setAperture($baseExif->getAperture())
+                    ->setExposure($baseExif->getExposure())
+                    ->setFocalLength($baseExif->getFocalLength())
+                    ->setFocalDistance($baseExif->getFocalDistance())
+                    ->setIso($baseExif->getIso())
+                    ->setColorSpace($baseExif->getColorSpace())
+                    ->setFileSize($baseExif->getFileSize())
+                    ->setHeight($baseExif->getHeight())
+                    ->setWidth($baseExif->getWidth())
+                    ->setHorizontalResolution($baseExif->getHorizontalResolution())
+                    ->setVerticalResolution($baseExif->getVerticalResolution())
+                    ->setHeadline($baseExif->getHeadline())
+                    ->setJobTitle($baseExif->getJobTitle())
+                    ->setKeywords($baseExif->getKeywords())
+                    ->setMimeType($baseExif->getMimeType())
+                    ->setOrientation($baseExif->getOrientation())
+                    ->setSoftware($baseExif->getSoftware())
+                    ->setSource($baseExif->getSource())
+                    ->setLat($baseExif->getLat())
+                    ->setLng($baseExif->getLng());
+            
+                if (!$exif->getLat()) {
+                    if ($this->faker->boolean) {
+                        $exif->setLat($this->faker->latitude());
+                        $exif->setLng($this->faker->longitude());
+                    }
+                }
+            
+                /** @var Version $validatedVersion */
                 $validatedVersion = $this->faker->randomElement($versions);
                 $validatedVersion
                     ->setStatus(PictureVersionHelper::STATUS_ACCEPTED)
                     ->setType(PictureVersionHelper::TYPE_FINAL)
+                    ->setExif($exif)
                 ;
                 $picture->setValidatedVersion($validatedVersion);
-    
+            
                 if ($this->faker->boolean()) {
                     $picture->setPlace($this->getReference(sprintf(PlaceFixtures::REFERENCE, rand(1, PlaceFixtures::LOOP))));
                 }

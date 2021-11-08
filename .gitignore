@@ -17,8 +17,9 @@ npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
 
-public/uploads/*
+public/uploads/*/*
 !public/uploads/.gitkeep
+!public/uploads/**/aaa-test-image-*.jpg
 
 ###> liip/imagine-bundle ###
 /public/media/cache/

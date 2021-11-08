@@ -57,6 +57,7 @@ class CatalogSubscriber implements EventSubscriberInterface
         $catalog = $object;
         if($object instanceof Picture){
             $catalog = $object->getCatalog();
+            $this->clearPictureCache($object);
         }
         $this->clearCatalogCache($catalog);
     }
@@ -70,10 +71,28 @@ class CatalogSubscriber implements EventSubscriberInterface
             new FilesystemAdapter(),
         );
         $cache->invalidateTags(['catalog_' . $catalog->getId()]);
-        $cache->invalidateTags(['picture_' . $catalog->getId()]);
         $this->clearCatalogCache($catalog->getParent());
+        
+        foreach ($catalog->getPictures() as $picture) {
+            $this->clearPictureCache($picture);
+        }
+        
 //        foreach ($catalog->getChildren() as $child) {
 //            $this->clearCatalogCache($child);
 //        }
+    }
+    
+    public function clearPictureCache(?Picture $picture)
+    {
+        if(!$picture){
+            return;
+        }
+        $cache = new TagAwareAdapter(
+            new FilesystemAdapter(),
+        );
+        dump($picture);
+        $cache->invalidateTags(['catalog_' . $picture->getCatalog()->getId()]);
+        $cache->invalidateTags(['picture_' . $picture->getId()]);
+        $cache->delete('picture_map');
     }
 }

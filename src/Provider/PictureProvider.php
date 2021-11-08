@@ -65,20 +65,19 @@
             );
         
         
-            return $cache->get(sprintf('picture_map'), function (ItemInterface $item) {
+            return $cache->get('aaaafsdfsdfpicture_map', function (ItemInterface $item) {
                 $item->expiresAfter(3600);
-            
+    
                 $mapsPoints = [];
                 foreach ($this->pictureRepository->getGpsPointsFront() as $picture) {
                     $item->tag(sprintf('picture_%d', $picture->getId()));
-                
-                    if (!$lat = $picture->getExif()->getLat() ?? null) {
+                    if (($lat = $picture->getExif()->getLat() ?? null) === null) {
                         continue;
                     }
-                    if (!$lng = $picture->getExif()->getLng() ?? null) {
+                    if (($lng = $picture->getExif()->getLng() ?? null) === null) {
                         continue;
                     }
-                
+        
                     $mapsPoints[] = (new MapPoint())
                         ->setLat($lat)
                         ->setLng($lng)

@@ -46,7 +46,6 @@ class PictureController extends AbstractController
         if (!$picture = $this->pictureProvider->byId($id)) {
             return $this->redirectToRoute('HOMEPAGE');
         }
-        dump($picture);
 //            return $this->redirect($pictureDownloadProvider->getResizedPicture($picture, $size));
         return $pictureDownloadProvider->getResizedPicture($picture, $size);
     }

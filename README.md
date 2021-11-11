@@ -1,5 +1,4 @@
-Installation
-=
+# Installation
 
 ```
 git clone git@github.com:N445/wikiarchives.git
@@ -11,8 +10,8 @@ composer install
 ```
 
 
-Dev
-==
+# Dev
+
 
 ```
 yarn install
@@ -22,3 +21,6 @@ yarn run encore dev --watch
 # or
 yarn run encore production
 ```
+
+# Doc
+https://docs.google.com/document/d/1NwUkFI54Mna4b64JxmgdPNlNK6T2d-96e5_eIgRYe8Q/edit?usp=sharing

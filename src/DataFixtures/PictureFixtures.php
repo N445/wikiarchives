@@ -54,7 +54,8 @@
 
 
                 $picture = (new Picture())
-                    ->setEnabled($this->faker->boolean())
+//                    ->setEnabled($this->faker->boolean())
+                    ->setEnabled(true)
                     ->setCatalog($this->getReference(sprintf(CatalogFixtures::REFERENCE, rand(1, CatalogFixtures::LOOP))))
                     ->setFile($file)
                     ->setCreatedBy($this->getReference(sprintf(UserFixtures::REFERENCE, rand(1, UserFixtures::LOOP))))

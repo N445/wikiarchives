@@ -3,11 +3,11 @@
     namespace App\Controller;
 
 
-    use App\Entity\Catalog\Catalog;
     use App\Provider\CatalogProvider;
     use App\Provider\PictureProvider;
-    use App\Service\Catalog\PictureExifPopulator;
+    use App\Repository\Catalog\CatalogRepository;
     use Doctrine\ORM\EntityManagerInterface;
+    use Doctrine\ORM\Query\ResultSetMapping;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
@@ -38,14 +38,8 @@
         #[Route('/map', name: 'MAP')]
         public function map(Request $request)
         {
-            $gpsPoints = $this->pictureProvider->getGpsPoints();
-            foreach ($gpsPoints as $gpsPoint) {
-                if($gpsPoint->getLat() === 0.0){
-                    dump($gpsPoint);
-                }
-            }
             return $this->render('default/map.html.twig', [
-                'pictureGpsPoints' => $gpsPoints
+                'pictureGpsPoints' => $this->pictureProvider->getGpsPoints()
             ]);
         }
     
@@ -85,13 +79,20 @@
         }
     
         #[Route('/test', name: 'TEST')]
-        public function test(Request $request, EntityManagerInterface $em)
+        public function test(CatalogRepository $catalogRepository, EntityManagerInterface $em)
         {
-            $url = "http://wikiarchives.space/upload/2020/07/15/20200715113431-f6c23cd8.jpg";
-            dump($url);
-            dump(exif_read_data($url));
-            dump(PictureExifPopulator::getExifFromUrl($url));
+//            $catalog = $catalogRepository->find(2);
+            $catalog = $catalogRepository->find(102);
+//            $catalog = $catalogRepository->find(4);
+            dump($catalog);
+
             
+            $start = microtime(true);
+            dump($this->catalogProvider->countAll($catalog));
+            dump(microtime(true) - $start);
+            die;
+    
+    
             die;
             return $this->render('default/test.html.twig', [
             ]);

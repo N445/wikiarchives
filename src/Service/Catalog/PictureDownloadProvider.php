@@ -4,6 +4,7 @@
 
     use App\Entity\Catalog\Catalog;
     use App\Entity\Catalog\Picture;
+    use App\Service\Cache\CacheHelper;
     use Liip\ImagineBundle\Imagine\Cache\CacheManager;
     use Symfony\Component\Cache\Adapter\FilesystemAdapter;
     use Symfony\Component\Cache\Adapter\TagAwareAdapter;
@@ -24,6 +25,7 @@
         public const  LG = 'lg';
         public const  VLG = 'vlg';
         public const  ORIGINAL = 'original';
+    
         private UploaderHelper $uploaderHelper;
         private CacheManager $imagineCacheManager;
         private KernelInterface $kernel;
@@ -59,6 +61,10 @@
 
                 $zip->open($zipPath, \ZipArchive::CREATE);
                 foreach ($catalog->getPictures() as $picture) {
+                    CacheHelper::setTagsFromPicture($item, $picture);
+                    if (!$picture->isEnabled()) {
+                        continue;
+                    }
                     $zip->addFromString(
                         $picture->getFile()->getImageOriginalName(),
                         file_get_contents($this->uploaderHelper->asset($picture->getFile()))
@@ -83,19 +89,24 @@
                 new FilesystemAdapter(),
             );
 
-            return $cache->get(sprintf('download_picture_%s_%s', $picture->getId(), $size), function (ItemInterface $item) use ($picture, $size) {
+            return $cache->get(sprintf('aadownload_picture_%s_%s', $picture->getId(), $size), function (ItemInterface $item) use ($picture, $size) {
                 $item->expiresAfter(3600);
-
-                $item->tag('picture_' . $picture->getId());
+    
+                dump($picture);
+                dump(PictureHelper::checkEnabledRecusively($picture));
+                CacheHelper::setTagsFromPicture($item, $picture);
+                if (!PictureHelper::checkEnabledRecusively($picture)) {
+                    return null;
+                }
                 $imageName = $picture->getFile()->getImageName();
-
+    
                 if ($filter = $this->getLiipFilter($size)) {
                     if (!$this->imagineCacheManager->isStored($imageName, $filter)) {
                         $this->client->request('GET', $this->imagineCacheManager->getBrowserPath($imageName, $filter));
                     }
-
+        
                     $urlPath = $this->imagineCacheManager->resolve($imageName, $filter);
-
+        
                     return $this->getResponse($imageName, $urlPath);
                 }
 

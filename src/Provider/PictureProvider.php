@@ -6,6 +6,11 @@
     use App\Entity\Catalog\Picture;
     use App\Model\Map\MapPoint;
     use App\Repository\Catalog\PictureRepository;
+    use App\Service\Cache\CacheHelper;
+    use App\Service\Catalog\CatalogHelper;
+    use App\Service\Catalog\PictureHelper;
+    use Knp\Component\Pager\Pagination\PaginationInterface;
+    use Psr\Cache\InvalidArgumentException;
     use Symfony\Component\Cache\Adapter\FilesystemAdapter;
     use Symfony\Component\Cache\Adapter\TagAwareAdapter;
     use Symfony\Contracts\Cache\ItemInterface;
@@ -16,6 +21,7 @@
         const CACHE_PICTURE = 'picture-%d';
         private PictureRepository $pictureRepository;
         private Environment $twig;
+        private TagAwareAdapter $cache;
     
         public function __construct(
             PictureRepository $pictureRepository,
@@ -24,60 +30,87 @@
         {
             $this->pictureRepository = $pictureRepository;
             $this->twig = $twig;
+            $this->cache = new TagAwareAdapter(
+                new FilesystemAdapter(),
+            );
         }
     
-        public function search(?string $query, ?Catalog $catalog, int $page, int $nbPerPage = 10)
+        /**
+         * @param string|null $query
+         * @param Catalog|null $catalog
+         * @param int $page
+         * @param int $nbPerPage
+         * @return PaginationInterface
+         */
+        public function search(?string $query, ?Catalog $catalog, int $page, int $nbPerPage = 10): PaginationInterface
         {
             return $this->pictureRepository->search($query, $catalog, $page, $nbPerPage);
         }
-
-        public function byId(int $id)
+    
+        /**
+         * @param int $id
+         * @return Picture|null
+         * @throws InvalidArgumentException
+         */
+        public function byId(int $id): ?Picture
         {
-            return $this->pictureRepository->byIdFront($id);
-        }
-
-        public function byCatalogPaginated(Catalog $catalog, int $page, int $nbPerPage = 10)
-        {
-//            return $this->pictureRepository->byCatalogPaginatedFront($catalog, $page, $nbPerPage);
-
-            $cache = new TagAwareAdapter(
-                new FilesystemAdapter(),
-            );
-
-
-            return $cache->get(sprintf('picture_pagination_%d_%d_%d', $catalog->getId(), $page, $nbPerPage), function (ItemInterface $item) use ($catalog, $page, $nbPerPage) {
+            return $this->cache->get(sprintf(CacheHelper::PICTURE_ID, $id), function (ItemInterface $item) use ($id) {
                 $item->expiresAfter(3600);
-                $item->tag(sprintf('catalog_%d', $catalog->getId()));
-                $pagination = $this->pictureRepository->byCatalogPaginatedFront($catalog, $page, $nbPerPage);
-                /** @var Picture $picture */
-                foreach ($pagination->getItems() as $picture) {
-                    $item->tag(sprintf('picture_%d', $picture->getId()));
+            
+                if (!$picture = $this->pictureRepository->byIdFront($id)) {
+                    return null;
                 }
+                CacheHelper::setTagsFromCatalogWithParent($item, $picture->getCatalog());
+                if (!PictureHelper::checkEnabledRecusively($picture)) {
+                    return null;
+                }
+                return $picture;
+            });
+        }
+    
+        /**
+         * @param Catalog $catalog
+         * @param int $page
+         * @param int $nbPerPage
+         * @return PaginationInterface
+         * @throws InvalidArgumentException
+         */
+        public function byCatalogPaginated(Catalog $catalog, int $page, int $nbPerPage = 10): PaginationInterface
+        {
+            return $this->cache->get(sprintf(CacheHelper::PICTURE_PAGINATION, $catalog->getId(), $page, $nbPerPage), function (ItemInterface $item) use ($catalog, $page, $nbPerPage) {
+                $item->expiresAfter(3600);
+            
+                $pagination = $this->pictureRepository->byCatalogPaginatedFront($catalog, $page, $nbPerPage);
+            
+                CacheHelper::setTagsFromCatalog($item, $catalog);
                 return $pagination;
             });
         }
     
-        public function getGpsPoints()
+        /**
+         * @return MapPoint[]
+         * @throws InvalidArgumentException
+         */
+        public function getGpsPoints(): array
         {
-        
-            $cache = new TagAwareAdapter(
-                new FilesystemAdapter(),
-            );
-        
-        
-            return $cache->get('aaaafsdfsdfpicture_map', function (ItemInterface $item) {
+            return $this->cache->get(CacheHelper::PICTURE_MAP, function (ItemInterface $item) {
                 $item->expiresAfter(3600);
-    
+            
                 $mapsPoints = [];
+                $catalogs = [];
                 foreach ($this->pictureRepository->getGpsPointsFront() as $picture) {
-                    $item->tag(sprintf('picture_%d', $picture->getId()));
+                    $catalogs[$picture->getCatalog()->getId()] = $picture->getCatalog();
+                
                     if (($lat = $picture->getExif()->getLat() ?? null) === null) {
                         continue;
                     }
                     if (($lng = $picture->getExif()->getLng() ?? null) === null) {
                         continue;
                     }
-        
+                    if (!CatalogHelper::checkIfParentsIsEnabled($picture->getCatalog())) {
+                        continue;
+                    }
+                
                     $mapsPoints[] = (new MapPoint())
                         ->setLat($lat)
                         ->setLng($lng)
@@ -86,6 +119,9 @@
                             'picture' => $picture,
                         ]))//                    ->setHtml($picture->getDescription())
                     ;
+                }
+                foreach ($catalogs as $catalog) {
+                    CacheHelper::setTagsFromCatalog($item, $catalog);
                 }
                 return $mapsPoints;
             });

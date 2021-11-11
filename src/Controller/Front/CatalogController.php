@@ -4,6 +4,7 @@ namespace App\Controller\Front;
 
 use App\Provider\CatalogProvider;
 use App\Provider\PictureProvider;
+use App\Service\Catalog\CatalogHelper;
 use App\Service\Catalog\PictureDownloadProvider;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,6 +32,9 @@ class CatalogController extends AbstractController
         if (!$catalog = $this->catalogProvider->byId($id, false)) {
             return $this->redirectToRoute('HOMEPAGE');
         }
+        if (!CatalogHelper::checkEnabledRecusively($catalog)) {
+            return $this->redirectToRoute('HOMEPAGE');
+        }
         
         return $this->render('default/catalog.html.twig', [
             'catalog' => $catalog,
@@ -42,6 +46,9 @@ class CatalogController extends AbstractController
     public function catalogDownload(int $id, PictureDownloadProvider $pictureDownloadProvider)
     {
         if (!$catalog = $this->catalogProvider->byId($id, false)) {
+            return $this->redirectToRoute('HOMEPAGE');
+        }
+        if (!CatalogHelper::checkEnabledRecusively($catalog)) {
             return $this->redirectToRoute('HOMEPAGE');
         }
 

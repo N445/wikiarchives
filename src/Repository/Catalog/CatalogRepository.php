@@ -4,6 +4,7 @@
     
     use App\Entity\Catalog\Catalog;
     use Doctrine\ORM\EntityManagerInterface;
+    use Doctrine\ORM\NonUniqueResultException;
     use Doctrine\ORM\Query\Expr\Join;
     use Doctrine\ORM\QueryBuilder;
     use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
@@ -50,13 +51,14 @@
                       ->getResult()
             ;
         }
-        
+    
         /**
          * @param int $id
+         * @param bool $isFull
          * @return Catalog|null
-         * @throws \Doctrine\ORM\NonUniqueResultException
+         * @throws NonUniqueResultException
          */
-        public function byIdFront(int $id, bool $isFull = false)
+        public function byIdFront(int $id, bool $isFull = false): ?Catalog
         {
             return $this->getBaseFrontQuery($isFull)
                         ->andWhere('c.id = :id')
@@ -69,7 +71,7 @@
         /**
          * @param int $id
          * @return Catalog|null
-         * @throws \Doctrine\ORM\NonUniqueResultException
+         * @throws NonUniqueResultException
          */
         public function byIdAdmin(int $id)
         {
@@ -80,11 +82,12 @@
                         ->getOneOrNullResult()
             ;
         }
-        
+    
         /**
-         * @return Catalog[]
+         * @return Catalog|null
+         * @throws NonUniqueResultException
          */
-        public function getRootFront()
+        public function getRootFront(): ?Catalog
         {
             return $this->getBaseFrontQuery()
 //                        ->andWhere('c.parent IS NULL')
@@ -95,11 +98,12 @@
                         ->getOneOrNullResult()
             ;
         }
-        
+    
         /**
          * @return Catalog|null
+         * @throws NonUniqueResultException
          */
-        public function getRootOne(string $name = Catalog::ROOT)
+        public function getRootOne(string $name = Catalog::ROOT): ?Catalog
         {
             return $this->getBaseAdminQuery()
                         ->where('c.name = :rootName')
@@ -148,8 +152,7 @@
         {
             $qb = $this->createQueryBuilder('c')
                        ->addSelect('children', 'children_pictures', 'pictures')
-                       ->andWhere('c.enabled = :enabled')
-                       ->setParameter('enabled', true)
+                       ->andWhere('c.enabled = true')
                        ->leftJoin('c.children', 'children', Join::WITH, 'children.enabled = true')
                        ->leftJoin('children.pictures', 'children_pictures', Join::WITH, 'children_pictures.enabled = true')
                        ->leftJoin('c.pictures', 'pictures', Join::WITH, 'pictures.enabled = true')

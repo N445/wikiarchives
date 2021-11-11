@@ -26,11 +26,11 @@ class CatalogFilterExtension extends AbstractExtension
     
     public function countChildren(Catalog $catalog)
     {
-        return $this->catalogProvider->countChildren($catalog);
+        return $this->catalogProvider->countAll($catalog)->getNbChildren();
     }
     
     public function countPictures(Catalog $catalog)
     {
-        return $this->catalogProvider->countPictures($catalog);
+        return $this->catalogProvider->countAll($catalog)->getNbPictures();
     }
 }

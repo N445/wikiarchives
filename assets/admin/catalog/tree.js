@@ -67,7 +67,7 @@ class Directory {
                 }
 
                 var $nodeId = tree.jstree().create_node(that.getNodeParent(), {
-                    text: response.catalog.name,
+                    text: `${response.catalog.name} [${response.catalog.enabled?'Oui':'Non'}]`,
                     li_attr: {
                         class: "catalog",
                     },
@@ -122,9 +122,7 @@ class Directory {
                     return false;
                 }
 
-
-                tree.jstree().set_text(that.$node, response.catalog.name);
-
+                tree.jstree().set_text(that.$node, `${response.catalog.name} [${response.catalog.enabled?'Oui':'Non'}]`);
 
                 tree.jstree().deselect_all();
                 tree.jstree().select_node(that.$node);

@@ -7,7 +7,6 @@
     use App\Entity\User;
     use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
     use Doctrine\ORM\NonUniqueResultException;
-    use Doctrine\ORM\Query\Expr\Join;
     use Doctrine\ORM\QueryBuilder;
     use Doctrine\Persistence\ManagerRegistry;
     use Knp\Component\Pager\Pagination\PaginationInterface;
@@ -36,11 +35,11 @@
          * @param int $nbPerPage
          * @return PaginationInterface
          */
-        public function search(?string $query, ?Catalog $catalog, int $page, int $nbPerPage = 10)
+        public function search(?string $query, ?Catalog $catalog, int $page, int $nbPerPage = 10): PaginationInterface
         {
             $qb = $this->getBaseFrontQuery();
-
-
+    
+    
             if ($query) {
                 $qb->andWhere('picture_validatedversion.name LIKE :query')
                    ->setParameter('query', '%' . $query . '%')
@@ -111,13 +110,13 @@
          * @param int $page
          * @return PaginationInterface
          */
-        public function byCatalogPaginatedFront(Catalog $catalog, int $page, int $nbPerPage = 10)
+        public function byCatalogPaginatedFront(Catalog $catalog, int $page, int $nbPerPage = 10): PaginationInterface
         {
             $query = $this->getBaseFrontQuery()
                           ->andWhere('p.catalog = :catalog')
                           ->setParameter('catalog', $catalog)
                           ->getQuery();
-    
+        
             return $this->paginator->paginate(
                 $query, /* query NOT result */
                 $page, /*page number*/
@@ -125,18 +124,22 @@
             );
         }
     
-        public function getGpsPointsFront()
+        /**
+         * @return Picture[]
+         */
+        public function getGpsPointsFront(): array
         {
             return $this->createQueryBuilder('p')
-                        ->addSelect('file', 'validatedVersion', 'exif', 'catalog')
+                        ->addSelect('file', 'validatedVersion', 'exif', 'catalog', 'catalog_parent')
                         ->leftJoin('p.file', 'file')
                         ->leftJoin('p.validatedVersion', 'validatedVersion')
                         ->leftJoin('validatedVersion.exif', 'exif')
                         ->leftJoin('p.catalog', 'catalog')
-//                        ->leftJoin('catalog.parent', 'catalog_parent', Join::WITH, 'catalog_parent.enabled = true')
+                        ->leftJoin('catalog.parent', 'catalog_parent')
                         ->andWhere('exif.lat IS NOT NULL')
                         ->andWhere('exif.lng IS NOT NULL')
                         ->andWhere('p.enabled = true')
+                        ->andWhere('catalog.enabled = true')
                         ->andWhere('catalog.enabled = true')
                         ->getQuery()
                         ->getResult()
@@ -175,14 +178,13 @@
         public function getBaseFrontQuery()
         {
             return $this->createQueryBuilder('p')
-                ->addSelect('catalog', 'catalog_parent', 'pictures_file', 'picture_validatedversion', 'picture_validatedversion_exif')
-                ->leftJoin('p.catalog', 'catalog')
-                ->leftJoin('catalog.parent', 'catalog_parent')
-                ->leftJoin('p.file', 'pictures_file')
-                ->leftJoin('p.validatedVersion', 'picture_validatedversion')
-                ->leftJoin('picture_validatedversion.exif', 'picture_validatedversion_exif')
-                ->andWhere('p.enabled = :enabled')
-                ->setParameter('enabled', true)
+                        ->addSelect('catalog', 'catalog_parent', 'pictures_file', 'picture_validatedversion', 'picture_validatedversion_exif')
+                        ->leftJoin('p.catalog', 'catalog')
+                        ->leftJoin('catalog.parent', 'catalog_parent')
+                        ->leftJoin('p.file', 'pictures_file')
+                        ->leftJoin('p.validatedVersion', 'picture_validatedversion')
+                        ->leftJoin('picture_validatedversion.exif', 'picture_validatedversion_exif')
+                        ->andWhere('p.enabled = true')
             ;
         }
 

@@ -4,6 +4,7 @@ namespace App\Event\Catalog;
 
 use App\Entity\Catalog\Catalog;
 use App\Entity\Catalog\Picture;
+use App\Service\Cache\CacheHelper;
 use Doctrine\Bundle\DoctrineBundle\EventSubscriber\EventSubscriberInterface;
 use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ORM\Events;
@@ -54,12 +55,12 @@ class CatalogSubscriber implements EventSubscriberInterface
         if (!in_array(ClassUtils::getClass($object), [Picture::class, Catalog::class])) {
             return;
         }
-        $catalog = $object;
         if($object instanceof Picture){
-            $catalog = $object->getCatalog();
+//            $catalog = $object->getCatalog();
             $this->clearPictureCache($object);
+            return;
         }
-        $this->clearCatalogCache($catalog);
+        $this->clearCatalogCache($object);
     }
     
     public function clearCatalogCache(?Catalog $catalog)
@@ -70,16 +71,12 @@ class CatalogSubscriber implements EventSubscriberInterface
         $cache = new TagAwareAdapter(
             new FilesystemAdapter(),
         );
-        $cache->invalidateTags(['catalog_' . $catalog->getId()]);
+        $cache->invalidateTags([sprintf(CacheHelper::TAG_CATALOG, $catalog->getId())]);
         $this->clearCatalogCache($catalog->getParent());
         
         foreach ($catalog->getPictures() as $picture) {
             $this->clearPictureCache($picture);
         }
-        
-//        foreach ($catalog->getChildren() as $child) {
-//            $this->clearCatalogCache($child);
-//        }
     }
     
     public function clearPictureCache(?Picture $picture)
@@ -90,9 +87,6 @@ class CatalogSubscriber implements EventSubscriberInterface
         $cache = new TagAwareAdapter(
             new FilesystemAdapter(),
         );
-        dump($picture);
-        $cache->invalidateTags(['catalog_' . $picture->getCatalog()->getId()]);
-        $cache->invalidateTags(['picture_' . $picture->getId()]);
-        $cache->delete('picture_map');
+        $cache->invalidateTags([sprintf(CacheHelper::TAG_PICTURE, $picture->getId())]);
     }
 }

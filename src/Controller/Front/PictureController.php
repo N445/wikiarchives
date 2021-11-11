@@ -6,6 +6,7 @@ use App\Provider\CatalogProvider;
 use App\Provider\PictureProvider;
 use App\Security\Voter\PictureVersionVoter;
 use App\Service\Catalog\PictureDownloadProvider;
+use App\Service\Catalog\PictureHelper;
 use App\Service\Catalog\Version\VersionProposator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -45,7 +46,7 @@ class PictureController extends AbstractController
         if (!$picture = $this->pictureProvider->byId($id)) {
             return $this->redirectToRoute('HOMEPAGE');
         }
-
+        dump($picture);
 //            return $this->redirect($pictureDownloadProvider->getResizedPicture($picture, $size));
         return $pictureDownloadProvider->getResizedPicture($picture, $size);
     }

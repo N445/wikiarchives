@@ -131,9 +131,6 @@ class ResetPasswordController extends AbstractController
         $user = $this->getDoctrine()->getRepository(User::class)->findOneBy([
             'email' => $emailFormData,
         ]);
-        
-        dump($emailFormData);
-        dump($user);
 
         // Do not reveal whether a user account was found or not.
         if (!$user) {
@@ -142,8 +139,6 @@ class ResetPasswordController extends AbstractController
 
         try {
             $resetToken = $this->resetPasswordHelper->generateResetToken($user);
-    
-            dump($resetToken);
             
         } catch (ResetPasswordExceptionInterface $e) {
             // If you want to tell the user why a reset email was not sent, uncomment
@@ -168,9 +163,6 @@ class ResetPasswordController extends AbstractController
             ])
         ;
         
-        dump($email);
-        dump($mailer);
-
         $mailer->send($email);
 
         // Store the token object in session for retrieval in check-email route.

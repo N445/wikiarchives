@@ -44,7 +44,7 @@
                     ->setImageName($fakeImage['name'])
                     ->setImageSize($this->faker->numberBetween(50000, 80000000))
                     ->setImageMimeType($this->faker->mimeType())
-                    ->setImageOriginalName($this->faker->filePath())
+                    ->setImageOriginalName($fakeImage['name'])
                     ->setImageDimensions(
                         [
                             $this->faker->numberBetween(1000, 5000),

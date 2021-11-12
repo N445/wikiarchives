@@ -81,19 +81,6 @@
         #[Route('/test', name: 'TEST')]
         public function test(CatalogRepository $catalogRepository, EntityManagerInterface $em)
         {
-//            $catalog = $catalogRepository->find(2);
-            $catalog = $catalogRepository->find(102);
-//            $catalog = $catalogRepository->find(4);
-            dump($catalog);
-
-            
-            $start = microtime(true);
-            dump($this->catalogProvider->countAll($catalog));
-            dump(microtime(true) - $start);
-            die;
-    
-    
-            die;
             return $this->render('default/test.html.twig', [
             ]);
         }

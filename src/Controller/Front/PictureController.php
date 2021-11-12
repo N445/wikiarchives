@@ -8,6 +8,7 @@ use App\Security\Voter\PictureVersionVoter;
 use App\Service\Catalog\PictureDownloadProvider;
 use App\Service\Catalog\PictureHelper;
 use App\Service\Catalog\Version\VersionProposator;
+use Psr\Cache\InvalidArgumentException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -54,7 +55,9 @@ class PictureController extends AbstractController
      * @param int $catalogId
      * @param int $id
      * @param VersionProposator $versionProposator
+     * @param Request $request
      * @return Response
+     * @throws InvalidArgumentException
      */
     #[Route('/{id}/change', name: 'PICTURE_CHANGE')]
     public function pictureChange(int $catalogId, int $id, VersionProposator $versionProposator, Request $request): Response

@@ -6,6 +6,7 @@
     use App\Entity\Catalog\Picture\Version;
     use App\Entity\User;
     use App\Repository\Catalog\PictureRepository;
+    use App\Service\Catalog\PictureLicenseHelper;
     use App\Traits\TimestampableTrait;
     use Doctrine\Common\Collections\ArrayCollection;
     use Doctrine\Common\Collections\Collection;
@@ -77,13 +78,23 @@
          * @ORM\ManyToOne(targetEntity=User::class, inversedBy="createdPictures")
          */
         private $createdBy;
-
+    
         /**
          * @Gedmo\Blameable(on="update")
          * @ORM\ManyToOne(targetEntity=User::class, inversedBy="updatedPictures")
          */
         private $updatedBy;
-
+    
+        /**
+         * @ORM\Column(type="string", length=255)
+         */
+        private $license;
+    
+        /**
+         * @ORM\Column(type="boolean")
+         */
+        private $isEditedByWikiarchives;
+    
         public function __construct()
         {
             $this->file = new File();
@@ -91,6 +102,8 @@
             $this->tmpVersions = new ArrayCollection();
             $this->validatedVersion = new Version();
             $this->addVersion($this->validatedVersion);
+            $this->setLicense(PictureLicenseHelper::CC_BY);
+            $this->setIsEditedByWikiarchives(false);
         }
 
         public function __toString()
@@ -281,15 +294,39 @@
             $this->createdBy = $user;
             return $this;
         }
-
+    
         public function getUpdatedBy(): ?User
         {
             return $this->updatedBy;
         }
-
+    
         public function setUpdatedBy(?User $user): Picture
         {
             $this->updatedBy = $user;
+            return $this;
+        }
+    
+        public function getLicense(): ?string
+        {
+            return $this->license;
+        }
+    
+        public function setLicense(string $license): self
+        {
+            $this->license = $license;
+        
+            return $this;
+        }
+    
+        public function getIsEditedByWikiarchives(): ?bool
+        {
+            return $this->isEditedByWikiarchives;
+        }
+    
+        public function setIsEditedByWikiarchives(bool $isEditedByWikiarchives): self
+        {
+            $this->isEditedByWikiarchives = $isEditedByWikiarchives;
+        
             return $this;
         }
     }

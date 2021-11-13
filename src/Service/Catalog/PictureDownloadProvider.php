@@ -8,6 +8,7 @@
     use Liip\ImagineBundle\Imagine\Cache\CacheManager;
     use Symfony\Component\Cache\Adapter\FilesystemAdapter;
     use Symfony\Component\Cache\Adapter\TagAwareAdapter;
+    use Symfony\Component\HttpFoundation\BinaryFileResponse;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpFoundation\ResponseHeaderBag;
     use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -19,6 +20,9 @@
 
     class PictureDownloadProvider
     {
+        public const IS_LOCAL = true;
+    
+    
         public const  SQUARE = 'square';
         public const  SM = 'sm';
         public const  MD = 'md';
@@ -49,16 +53,16 @@
             $cache = new TagAwareAdapter(
                 new FilesystemAdapter(),
             );
-
-            return $cache->get('download_catalog_' . $catalog->getId(), function (ItemInterface $item) use ($catalog) {
+    
+            return $cache->get(CacheHelper::CATALOG_DOWNLOAD . $catalog->getId(), function (ItemInterface $item) use ($catalog) {
                 $item->expiresAfter(3600);
-
-                $item->tag('catalog_' . $catalog->getId());
-
+        
+                CacheHelper::setTagsFromCatalog($item, $catalog);
+        
                 $zip = new \ZipArchive();
                 $zipName = sprintf('%s.zip', (new AsciiSlugger())->slug($catalog->getName())->lower());
                 $zipPath = $this->kernel->getProjectDir() . '/var/' . $zipName;
-
+        
                 $zip->open($zipPath, \ZipArchive::CREATE);
                 foreach ($catalog->getPictures() as $picture) {
                     CacheHelper::setTagsFromPicture($item, $picture);
@@ -88,28 +92,29 @@
             $cache = new TagAwareAdapter(
                 new FilesystemAdapter(),
             );
-
-            return $cache->get(sprintf('aadownload_picture_%s_%s', $picture->getId(), $size), function (ItemInterface $item) use ($picture, $size) {
-                $item->expiresAfter(3600);
     
-                dump($picture);
-                dump(PictureHelper::checkEnabledRecusively($picture));
+            return $cache->get(sprintf(CacheHelper::PICTURE_DOWNLOAD, $picture->getId(), $size), function (ItemInterface $item) use ($picture, $size) {
+                $item->expiresAfter(3600);
+        
                 CacheHelper::setTagsFromPicture($item, $picture);
                 if (!PictureHelper::checkEnabledRecusively($picture)) {
                     return null;
                 }
                 $imageName = $picture->getFile()->getImageName();
-    
+        
                 if ($filter = $this->getLiipFilter($size)) {
                     if (!$this->imagineCacheManager->isStored($imageName, $filter)) {
                         $this->client->request('GET', $this->imagineCacheManager->getBrowserPath($imageName, $filter));
                     }
-        
+            
                     $urlPath = $this->imagineCacheManager->resolve($imageName, $filter);
-        
+            
                     return $this->getResponse($imageName, $urlPath);
                 }
-
+        
+                if (self::IS_LOCAL) {
+                    return $this->getResponseLocal($imageName, $this->uploaderHelper->asset($picture->getFile()));
+                }
                 return $this->getResponse($imageName, $this->uploaderHelper->asset($picture->getFile()));
             });
         }
@@ -143,13 +148,21 @@
                     $imageName
                 )
             );
-
+    
             $response->setCallback(function () use ($urlPath) {
                 $c = curl_init($urlPath);
                 curl_exec($c);
                 curl_close($c);
             });
-
+    
+            return $response;
+        }
+    
+        private function getResponseLocal(string $imageName, string $urlPath)
+        {
+            $response = new BinaryFileResponse($urlPath);
+            $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $imageName);
+        
             return $response;
         }
     }

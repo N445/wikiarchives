@@ -7,20 +7,34 @@
     {% include 'includes/catalog/_picture-status-bar.html.twig' %}
     <div class="container-fluid">
         <div class="row mb-4">
-            <div class="col">
-{#                <img src="{{ asset(picture.file.imageName)|imagine_filter('picture') }}" alt="{{ picture.file.imageName }}"#}
-{#                     class="img-fluid rounded">#}
-                <img src="{{ asset(picture.file.imageName|imagine_filter('picture')) }}" alt="{{ picture.file.imageName }}"
+            <div class="col-md-6">
+                {# <img src="{{ asset(picture.file.imageName)|imagine_filter('picture') }}" alt="{{ picture.file.imageName }}" #}
+                {# class="img-fluid rounded"> #}
+                <img src="{{ asset(picture.file.imageName|imagine_filter('picture')) }}"
+                     alt="{{ picture.file.imageName }}"
                      class="img-fluid rounded">
+
+                <div class="catalog-navigation my-5" data-current-picture="{{ picture.id }}">
+                    {% for catalogPicture in picture.catalog.pictures %}
+                        <div class="item{{ catalogPicture.id == picture.id?' current-picture':'' }}">
+                            <div class="catalog-navigation-image rounded">
+                                <a href="{{ path('PICTURE', {'catalogId':picture.catalog.id,'id': catalogPicture.id}) }}">
+                                    <img src="{{ asset(catalogPicture.file.imageName|imagine_filter('picture_card_listing')) }}"
+                                         alt="{{ catalogPicture.name }}">
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
-            <div class="col">
-               <div>
-                   <h2 class="text-white">{{ picture.name }}</h2>
-                   <div class="description">
-                       {{ picture.description|raw }}
-                   </div>
-                   {% include 'includes/catalog/_picture-exif.html.twig' %}
-               </div>
+            <div class="col-md-6">
+                <div>
+                    <h2 class="text-white">{{ picture.name }}</h2>
+                    <div class="description">
+                        {{ picture.description|raw }}
+                    </div>
+                    {% include 'includes/catalog/_picture-exif.html.twig' %}
+                </div>
             </div>
         </div>
     </div>
@@ -28,8 +42,10 @@
 
 {% block stylesheets %}
     {{ encore_entry_link_tags('map') }}
+    {{ encore_entry_link_tags('picture') }}
 {% endblock %}
 
 {% block javascripts %}
     {{ encore_entry_script_tags('map-single-js') }}
+    {{ encore_entry_script_tags('picture-js') }}
 {% endblock %}

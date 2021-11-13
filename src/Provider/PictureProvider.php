@@ -77,7 +77,7 @@
          */
         public function byCatalogPaginated(Catalog $catalog, int $page, int $nbPerPage = 10): PaginationInterface
         {
-            return $this->cache->get(sprintf(CacheHelper::PICTURE_PAGINATION, $catalog->getId(), $page, $nbPerPage), function (ItemInterface $item) use ($catalog, $page, $nbPerPage) {
+             return $this->cache->get(sprintf(CacheHelper::PICTURE_PAGINATION, $catalog->getId(), $page, $nbPerPage), function (ItemInterface $item) use ($catalog, $page, $nbPerPage) {
                 $item->expiresAfter(3600);
             
                 $pagination = $this->pictureRepository->byCatalogPaginatedFront($catalog, $page, $nbPerPage);

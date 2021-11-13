@@ -5,6 +5,7 @@
     use App\Entity\Catalog\Picture;
     use App\Entity\Catalog\Picture\Exif;
     use App\Entity\Catalog\Picture\Version;
+    use App\Service\Catalog\PictureLicenseHelper;
     use App\Service\Catalog\Version\PictureVersionHelper;
     use App\Service\Fake\FakeImageProvider;
     use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -44,7 +45,7 @@
                     ->setImageName($fakeImage['name'])
                     ->setImageSize($this->faker->numberBetween(50000, 80000000))
                     ->setImageMimeType($this->faker->mimeType())
-                    ->setImageOriginalName($this->faker->filePath())
+                    ->setImageOriginalName($fakeImage['name'])
                     ->setImageDimensions(
                         [
                             $this->faker->numberBetween(1000, 5000),
@@ -56,6 +57,8 @@
                 $picture = (new Picture())
 //                    ->setEnabled($this->faker->boolean())
                     ->setEnabled(true)
+                    ->setLicense($this->faker->randomElement(PictureLicenseHelper::getLicensesChoices()))
+                    ->setIsEditedByWikiarchives($this->faker->boolean(20))
                     ->setCatalog($this->getReference(sprintf(CatalogFixtures::REFERENCE, rand(1, CatalogFixtures::LOOP))))
                     ->setFile($file)
                     ->setCreatedBy($this->getReference(sprintf(UserFixtures::REFERENCE, rand(1, UserFixtures::LOOP))))

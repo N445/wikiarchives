@@ -16,10 +16,12 @@ class CacheHelper
     public const CATALOG_COUNT_PICTURES = self::PREFIX . '_catalog_count_pictures_%d';
     public const CATALOG_COUNT_CHILDREN = self::PREFIX . '_catalog_count_children_%d';
     public const CATALOG_COUNT_ALL = self::PREFIX . '_catalog_count_all_%d';
+    public const CATALOG_DOWNLOAD = self::PREFIX . '_catalog_download_%d';
     
     public const PICTURE_ID = self::PREFIX . '_picture_%d';
     public const PICTURE_PAGINATION = self::PREFIX . '_picture_pagination_%d_%d_%d';
     public const PICTURE_MAP = self::PREFIX . '_picture_map';
+    public const PICTURE_DOWNLOAD = self::PREFIX . '_picture_download_%d_%s';
     
     public const TAG_CATALOG = 'tag_catalog_%d';
     public const TAG_PICTURE = 'tag_picture_%d';

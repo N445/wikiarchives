@@ -37,6 +37,7 @@
         "leaflet": "^1.7.1",
         "leaflet.markercluster": "^1.5.3",
         "noty": "^3.2.0-beta-deprecated",
+        "slick-carousel": "^1.8.1",
         "tinymce": "^5"
     }
 }

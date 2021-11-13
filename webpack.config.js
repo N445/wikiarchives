@@ -50,6 +50,10 @@ Encore
     // wysiwyg
     .addEntry('wysiwyg-js', './assets/wysiwyg.js')
 
+    // Picture
+    .addEntry('picture-js', './assets/picture.js')
+    .addStyleEntry('picture', './assets/scss/picture.scss')
+
     .copyFiles({
         from: 'node_modules/tinymce/skins',
         to: 'skins/[path]/[name].[ext]'

@@ -2,8 +2,10 @@
 
 namespace App\Twig;
 
+use App\Entity\Catalog\Picture;
 use App\Entity\Catalog\Picture\Version;
 use App\Service\Breadcrumb\BreadcrumbCreator;
+use App\Service\Catalog\PictureLicenseHelper;
 use App\Service\Catalog\Version\PictureVersionHelper;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -21,6 +23,7 @@ class PictureFilterExtension extends AbstractExtension
     {
         return [
             new TwigFilter('versionStatusLabel', [$this, 'versionStatusLabel']),
+            new TwigFilter('getLicense', [$this, 'getLicense']),
         ];
     }
     
@@ -33,5 +36,10 @@ class PictureFilterExtension extends AbstractExtension
         ];
         
         return $statusLabel[$version->getStatus()] ?? $version->getStatus();
+    }
+    
+    public function getLicense(Picture $picture)
+    {
+        return PictureLicenseHelper::getLicense($picture->getLicense());
     }
 }

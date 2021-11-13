@@ -32,9 +32,9 @@ class CatalogController extends AbstractController
         if (!$catalog = $this->catalogProvider->byId($id, false)) {
             return $this->redirectToRoute('HOMEPAGE');
         }
-        if (!CatalogHelper::checkEnabledRecusively($catalog)) {
-            return $this->redirectToRoute('HOMEPAGE');
-        }
+//        if (!CatalogHelper::checkEnabledRecusively($catalog)) {
+//            return $this->redirectToRoute('HOMEPAGE');
+//        }
         
         return $this->render('default/catalog.html.twig', [
             'catalog' => $catalog,

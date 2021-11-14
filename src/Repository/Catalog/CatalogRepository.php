@@ -3,11 +3,11 @@
     namespace App\Repository\Catalog;
     
     use App\Entity\Catalog\Catalog;
-    use Doctrine\ORM\EntityManagerInterface;
+    use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
     use Doctrine\ORM\NonUniqueResultException;
     use Doctrine\ORM\Query\Expr\Join;
     use Doctrine\ORM\QueryBuilder;
-    use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
+    use Doctrine\Persistence\ManagerRegistry;
 
     /**
      * @method Catalog|null find($id, $lockMode = null, $lockVersion = null)
@@ -15,17 +15,12 @@
      * @method Catalog[]    findAll()
      * @method Catalog[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
      */
-    class CatalogRepository extends NestedTreeRepository
+    class CatalogRepository extends ServiceEntityRepository
     {
-        public function __construct(EntityManagerInterface $manager)
+        public function __construct(ManagerRegistry $registry)
         {
-            parent::__construct($manager, $manager->getClassMetadata(Catalog::class));
+            parent::__construct($registry, Catalog::class);
         }
-
-//        public function __construct(ManagerRegistry $registry)
-//        {
-//            parent::__construct($registry, Catalog::class);
-//        }
         
         /**
          * @param string|null $query
@@ -61,6 +56,25 @@
         public function byIdFront(int $id, bool $isFull = false): ?Catalog
         {
             return $this->getBaseFrontQuery($isFull)
+                        ->andWhere('c.id = :id')
+                        ->setParameter('id', $id)
+                        ->getQuery()
+                        ->getOneOrNullResult()
+            ;
+        }
+    
+        public function test(int $id): ?Catalog
+        {
+//            if ($isFull) {
+//                $qb->addSelect('pictures_file', 'pictures_validatedversion', 'pictures_validatedversion_exif')
+//                   ->leftJoin('pictures.file', 'pictures_file')
+//                   ->leftJoin('pictures.validatedVersion', 'pictures_validatedversion')
+//                   ->leftJoin('pictures_validatedversion.exif', 'pictures_validatedversion_exif')
+//                ;
+//            }
+        
+        
+            return $this->createQueryBuilder('c')
                         ->andWhere('c.id = :id')
                         ->setParameter('id', $id)
                         ->getQuery()

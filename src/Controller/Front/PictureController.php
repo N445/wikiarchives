@@ -5,6 +5,7 @@ namespace App\Controller\Front;
 use App\Provider\CatalogProvider;
 use App\Provider\PictureProvider;
 use App\Security\Voter\PictureVersionVoter;
+use App\Service\Catalog\CatalogHelper;
 use App\Service\Catalog\PictureDownloadProvider;
 use App\Service\Catalog\PictureHelper;
 use App\Service\Catalog\Version\VersionProposator;
@@ -35,9 +36,19 @@ class PictureController extends AbstractController
         if (!$picture = $this->pictureProvider->byId($id)) {
             return $this->redirectToRoute('HOMEPAGE');
         }
+        $catalog = $this->catalogProvider->byId($picture->getCatalog()->getId(), true);
+        dump($catalog);
+//        die;
+//        if (!$catalog = $this->catalogProvider->byId($picture->getCatalog()->getId(), true)) {
+//            return $this->redirectToRoute('HOMEPAGE');
+//        }
+//        if (!CatalogHelper::checkEnabledRecusively($catalog)) {
+//            return $this->redirectToRoute('HOMEPAGE');
+//        }
         
         return $this->render('default/picture.html.twig', [
             'picture' => $picture,
+            'catalog' => null,
         ]);
     }
     

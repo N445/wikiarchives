@@ -10,7 +10,7 @@ use Symfony\Contracts\Cache\ItemInterface;
 
 class CacheHelper
 {
-    public const PREFIX = 220;
+    public const PREFIX = 222;
     
     public const CATALOG_BY_ID = self::PREFIX . '_catalog_by_id_%d_%s';
     public const CATALOG_COUNT_PICTURES = self::PREFIX . '_catalog_count_pictures_%d';

@@ -141,6 +141,16 @@
         {
             return $this->id;
         }
+    
+        /**
+         * @param mixed $id
+         * @return Catalog
+         */
+        public function setId($id)
+        {
+            $this->id = $id;
+            return $this;
+        }
 
         /**
          * @return mixed
@@ -208,9 +218,9 @@
         }
 
         /**
-         * @return PersistentCollection
+         * @return PersistentCollection|ArrayCollection
          */
-        public function getChildren(): PersistentCollection
+        public function getChildren(): PersistentCollection|ArrayCollection
         {
             return $this->children;
         }
@@ -238,9 +248,9 @@
         }
 
         /**
-         * @return Collection|Picture[]
+         * @return Collection|ArrayCollection|Picture[]
          */
-        public function getPictures(): Collection
+        public function getPictures(): Collection|ArrayCollection|array
         {
             return $this->pictures;
         }

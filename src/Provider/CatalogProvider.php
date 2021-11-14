@@ -73,13 +73,27 @@
             $cache = new TagAwareAdapter(
                 new FilesystemAdapter(),
             );
-            
+    
+    
             return $cache->get(sprintf(CacheHelper::CATALOG_BY_ID, $id, $isFull ? 'y' : 'n'), function (ItemInterface $item) use ($id, $isFull) {
                 $item->expiresAfter(3600);
-                
+        
                 CacheHelper::setTagsFromCatalogId($item, $id);
-                
-                return $this->catalogRepository->byIdFront($id, $isFull);
+                $catalog = $this->catalogRepository->byIdFront($id, $isFull);
+        
+                $clonedCatalog = (new Catalog())
+                    ->setId($catalog->getId())
+                    ->setName($catalog->getName())
+                    ->setParent($catalog->getParent());
+        
+                foreach ($catalog->getChildren() as $child) {
+                    $clonedCatalog->addChild($child);
+                }
+        
+                foreach ($catalog->getPictures() as $picture) {
+                    $clonedCatalog->addPicture($picture);
+                }
+                return $clonedCatalog;
             });
 //            return $this->catalogRepository->byIdFront($id, $isFull);
         }

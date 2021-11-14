@@ -6,12 +6,17 @@
     use App\Provider\CatalogProvider;
     use App\Provider\PictureProvider;
     use App\Repository\Catalog\CatalogRepository;
+    use App\Repository\Catalog\PictureRepository;
+    use Doctrine\ORM\Cache;
     use Doctrine\ORM\EntityManagerInterface;
-    use Doctrine\ORM\Query\ResultSetMapping;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\Cache\Adapter\ApcuAdapter;
+    use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+    use Symfony\Component\Cache\Adapter\TagAwareAdapter;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Contracts\Cache\ItemInterface;
 
     class DefaultController extends AbstractController
     {
@@ -19,8 +24,8 @@
         private PictureProvider $pictureProvider;
     
         public function __construct(
-            CatalogProvider   $catalogProvider,
-            PictureProvider   $pictureProvider
+            CatalogProvider $catalogProvider,
+            PictureProvider $pictureProvider
         )
         {
             $this->catalogProvider = $catalogProvider;
@@ -79,8 +84,31 @@
         }
     
         #[Route('/test', name: 'TEST')]
-        public function test(CatalogRepository $catalogRepository, EntityManagerInterface $em)
+        public function test(CatalogRepository $catalogRepository, PictureRepository $pictureRepository, EntityManagerInterface $em)
         {
+            $cache = new TagAwareAdapter(
+                new FilesystemAdapter(),
+            );
+//            $cache = new ApcuAdapter();
+    
+            dump('$data');
+            $data = $cache->get('aaaatest', function (ItemInterface $item) use ($catalogRepository, $pictureRepository) {
+                $item->expiresAfter(3600);
+                dump('test dump');
+//                return $pictureRepository->createQueryBuilder('p')
+//                                             ->getQuery()
+//                                             ->getResult();
+                return $catalogRepository->createQueryBuilder('c')
+                                         ->andWhere('c.id = :id')
+                                         ->setParameter('id', 2)
+                                         ->getQuery()
+                                         ->getOneOrNullResult()
+                ;
+            });
+            dump($data);
+
+//            die;
+        
             return $this->render('default/test.html.twig', [
             ]);
         }

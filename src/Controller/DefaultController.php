@@ -86,6 +86,9 @@
         #[Route('/test', name: 'TEST')]
         public function test(CatalogRepository $catalogRepository, PictureRepository $pictureRepository, EntityManagerInterface $em)
         {
+            $before = memory_get_usage();
+      
+    
             $cache = new TagAwareAdapter(
                 new FilesystemAdapter(),
             );
@@ -105,7 +108,10 @@
                                          ->getOneOrNullResult()
                 ;
             });
+    
+            $after = memory_get_usage();
             dump($data);
+            dump(($after - $before));
 
 //            die;
         

@@ -8,24 +8,24 @@
     <div class="container-fluid">
         <div class="row mb-4">
             <div class="col-md-6">
-                {# <img src="{{ asset(picture.file.imageName)|imagine_filter('picture') }}" alt="{{ picture.file.imageName }}" #}
-                {# class="img-fluid rounded"> #}
-                <img src="{{ asset(picture.file.imageName|imagine_filter('picture')) }}"
-                     alt="{{ picture.file.imageName }}"
-                     class="img-fluid rounded">
+                    {# <img src="{{ asset(picture.file.imageName)|imagine_filter('picture') }}" alt="{{ picture.file.imageName }}" #}
+                    {# class="img-fluid rounded"> #}
+                    <img src="{{ asset(picture.file.imageName|imagine_filter('picture')) }}"
+                         alt="{{ picture.file.imageName }}"
+                         class="img-fluid rounded">
 
-                <div class="catalog-navigation my-5">
-                    {% for catalogPicture in catalog.pictures %}
-                        <div class="item{{ catalogPicture.id == picture.id?' current-picture':'' }}">
-                            <div class="catalog-navigation-image rounded">
-                                <a href="{{ path('PICTURE', {'catalogId':picture.catalog.id,'id': catalogPicture.id}) }}">
-                                    <img src="{{ asset(catalogPicture.file.imageName|imagine_filter('picture_card_listing')) }}"
-                                         alt="{{ catalogPicture.name }}">
-                                </a>
+                    <div class="catalog-navigation my-5">
+                        {% for catalogPicture in catalog.pictures %}
+                            <div class="item{{ catalogPicture.id == picture.id?' current-picture':'' }}">
+                                <div class="catalog-navigation-image rounded">
+                                    <a href="{{ path('PICTURE', {'catalogId':picture.catalog.id,'id': catalogPicture.id}) }}">
+                                        <img src="{{ asset(catalogPicture.file.imageName|imagine_filter('picture_card_listing')) }}"
+                                             alt="{{ catalogPicture.name }}">
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-                    {% endfor %}
-                </div>
+                        {% endfor %}
+                    </div>
             </div>
             <div class="col-md-6">
                 <div>

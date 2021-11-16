@@ -1,15 +1,11 @@
-<nav class="picture-status-bar navbar navbar-expand-lg navbar-dark bg-dark mb-5">
+<nav class="picture-status-bar mb-5 py-2">
     <div class="container-fluid">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <div class="left">
+        <div class="row">
+            <div class="col-md-9">
                 {% include 'includes/catalog/_breadcrumb.html.twig' with {object:picture} %}
             </div>
-            <div class="right ms-auto">
-                <div class="d-flex align-items-center">
+            <div class="col-md-3">
+                <div class="d-flex align-items-center justify-content-end">
                     <div class="me-3">
                         <div class="dropdown">
                             <button class="btn btn-wikiarchives-accent dropdown-toggle" type="button"

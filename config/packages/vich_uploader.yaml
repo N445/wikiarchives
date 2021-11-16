@@ -8,7 +8,7 @@ vich_uploader:
       uri_prefix: "%kernel.project_dir%/public/uploads/picture"
       upload_destination: picture_fs
       namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
-      inject_on_load: true
+      inject_on_load: false
       delete_on_update: true
       delete_on_remove: true
     catalog_cover:
@@ -16,6 +16,6 @@ vich_uploader:
       uri_prefix: "%kernel.project_dir%/public/uploads/catalog"
       upload_destination: catalog_fs
       namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
-      inject_on_load: true
+      inject_on_load: false
       delete_on_update: true
       delete_on_remove: true

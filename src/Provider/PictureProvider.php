@@ -4,8 +4,10 @@
 
     use App\Entity\Catalog\Catalog;
     use App\Entity\Catalog\Picture;
+    use App\Model\Breadcrumb\Breadcrumb;
     use App\Model\Map\MapPoint;
     use App\Repository\Catalog\PictureRepository;
+    use App\Service\Breadcrumb\BreadcrumbCreator;
     use App\Service\Cache\CacheHelper;
     use App\Service\Catalog\CatalogHelper;
     use App\Service\Catalog\PictureHelper;
@@ -22,10 +24,12 @@
         private PictureRepository $pictureRepository;
         private Environment $twig;
         private TagAwareAdapter $cache;
+        private BreadcrumbCreator $breadcrumbCreator;
     
         public function __construct(
             PictureRepository $pictureRepository,
-            Environment       $twig
+            Environment       $twig,
+            BreadcrumbCreator $breadcrumbCreator
         )
         {
             $this->pictureRepository = $pictureRepository;
@@ -33,6 +37,7 @@
             $this->cache = new TagAwareAdapter(
                 new FilesystemAdapter(),
             );
+            $this->breadcrumbCreator = $breadcrumbCreator;
         }
     
         /**
@@ -65,6 +70,22 @@
                     return null;
                 }
                 return $picture;
+            });
+        }
+    
+        /**
+         * @param Picture $picture
+         * @return Breadcrumb
+         * @throws InvalidArgumentException
+         */
+        public function getBreadCrumb(Picture $picture): Breadcrumb
+        {
+            return $this->cache->get(sprintf(CacheHelper::PICTURE_BREADCRUMB_BY_ID, $picture->getId()), function (ItemInterface $item) use ($picture) {
+                $item->expiresAfter(3600);
+    
+                CacheHelper::setTagsFromCatalogWithParent($item, $picture->getCatalog());
+                CacheHelper::setTagsFromPicture($item, $picture);
+                return $this->breadcrumbCreator->getPictureBreadcrumb($picture);
             });
         }
     

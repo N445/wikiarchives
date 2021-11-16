@@ -13,6 +13,7 @@
     use Symfony\Component\HttpFoundation\File\File;
     use Symfony\Component\HttpFoundation\File\UploadedFile;
     use Vich\UploaderBundle\Mapping\Annotation as Vich;
+    use Symfony\Component\Serializer\Annotation\Groups;
 
     /**
      * @ORM\Entity(repositoryClass=CatalogRepository::class)
@@ -125,18 +126,28 @@
          * @ORM\ManyToOne(targetEntity=User::class, inversedBy="updatedCatalogs")
          */
         private $updatedBy;
-
+    
+        /**
+         *
+         */
         public function __construct()
         {
             $this->children = new ArrayCollection();
             $this->pictures = new ArrayCollection();
         }
-
+    
+        /**
+         * @return string|null
+         */
         public function __toString()
         {
             return $this->getName();
         }
-
+    
+        /**
+         * @return int|null
+         * @Groups("cacheable")
+         */
         public function getId(): ?int
         {
             return $this->id;
@@ -154,6 +165,7 @@
 
         /**
          * @return mixed
+         * @Groups("cacheable")
          */
         public function getPiwigoId()
         {
@@ -169,12 +181,20 @@
             $this->piwigoId = $piwigoId;
             return $this;
         }
-
+    
+        /**
+         * @return string|null
+         * @Groups("cacheable")
+         */
         public function getName(): ?string
         {
             return $this->name;
         }
-
+    
+        /**
+         * @param string $name
+         * @return $this
+         */
         public function setName(string $name): self
         {
             $this->name = $name;
@@ -184,6 +204,7 @@
 
         /**
          * @return bool
+         * @Groups("cacheable")
          */
         public function isEnabled(): bool
         {
@@ -199,19 +220,31 @@
             $this->enabled = $enabled;
             return $this;
         }
-
+    
+        /**
+         * @return mixed
+         * @Groups("cacheable")
+         */
         public function getRoot()
         {
             return $this->root;
         }
-
+    
+        /**
+         * @param Catalog|null $parent
+         * @return $this
+         * @Groups("cacheable")
+         */
         public function setParent(Catalog $parent = null): self
         {
             $this->parent = $parent;
 
             return $this;
         }
-
+    
+        /**
+         * @return Catalog|null
+         */
         public function getParent(): ?Catalog
         {
             return $this->parent;
@@ -219,12 +252,17 @@
 
         /**
          * @return PersistentCollection|ArrayCollection
+         * @Groups("cacheable")
          */
         public function getChildren(): PersistentCollection|ArrayCollection
         {
             return $this->children;
         }
-
+    
+        /**
+         * @param Catalog $child
+         * @return $this
+         */
         public function addChild(self $child): self
         {
             if (!$this->children->contains($child)) {
@@ -234,7 +272,11 @@
 
             return $this;
         }
-
+    
+        /**
+         * @param Catalog $child
+         * @return $this
+         */
         public function removeChild(self $child): self
         {
             if ($this->children->removeElement($child)) {
@@ -254,7 +296,11 @@
         {
             return $this->pictures;
         }
-
+    
+        /**
+         * @param Picture $picture
+         * @return $this
+         */
         public function addPicture(Picture $picture): self
         {
             if (!$this->pictures->contains($picture)) {
@@ -264,7 +310,11 @@
 
             return $this;
         }
-
+    
+        /**
+         * @param Picture $picture
+         * @return $this
+         */
         public function removePicture(Picture $picture): self
         {
             if ($this->pictures->removeElement($picture)) {
@@ -276,13 +326,20 @@
 
             return $this;
         }
-
+    
+        /**
+         * @return Place|null
+         * @Groups("cacheable")
+         */
         public function getPlace(): ?Place
         {
             return $this->place;
         }
-
-
+    
+    
+        /**
+         * @return Place|null
+         */
         public function getPlaceRecursive(): ?Place
         {
             if (!$this->place) {
@@ -290,7 +347,11 @@
             }
             return $this->place;
         }
-
+    
+        /**
+         * @param Place|null $place
+         * @return $this
+         */
         public function setPlace(?Place $place): self
         {
             $this->place = $place;
@@ -310,7 +371,10 @@
 
             return $this;
         }
-
+    
+        /**
+         * @return File|null
+         */
         public function getImageFile(): ?File
         {
             return $this->imageFile;
@@ -333,23 +397,39 @@
             $this->imageName = $imageName;
             return $this;
         }
-
+    
+        /**
+         * @return User|null
+         * @Groups("cacheable")
+         */
         public function getCreatedBy(): ?User
         {
             return $this->createdBy;
         }
-
+    
+        /**
+         * @param User|null $user
+         * @return $this
+         */
         public function setCreatedBy(?User $user): Catalog
         {
             $this->createdBy = $user;
             return $this;
         }
-
+    
+        /**
+         * @return User|null
+         * @Groups("cacheable")
+         */
         public function getUpdatedBy(): ?User
         {
             return $this->updatedBy;
         }
-
+    
+        /**
+         * @param User|null $user
+         * @return $this
+         */
         public function setUpdatedBy(?User $user): Catalog
         {
             $this->updatedBy = $user;

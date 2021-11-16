@@ -42,7 +42,7 @@ class BreadcrumbCreator
      * @param Catalog $object
      * @return Breadcrumb
      */
-    private function getCatalogBreadcrumb(Catalog $object): Breadcrumb
+    public function getCatalogBreadcrumb(Catalog $object): Breadcrumb
     {
         $breadcrumb = (new Breadcrumb());
         if (Catalog::ROOT === $object->getName()) {
@@ -68,7 +68,7 @@ class BreadcrumbCreator
      * @param Picture $object
      * @return Breadcrumb
      */
-    private function getPictureBreadcrumb(Picture $object): Breadcrumb
+    public function getPictureBreadcrumb(Picture $object): Breadcrumb
     {
         $breadcrumb = (new Breadcrumb())->addLink((new BreadcrumbLink())
             ->setTitle($object->getName())

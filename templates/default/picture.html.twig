@@ -3,7 +3,7 @@
 {% block title %}{{ parent() }} - {{ picture.name }}{% endblock %}
 
 {% block body %}
-    {% include 'includes/catalog/_catalog-banner.html.twig' with{catalog:picture.catalog,isPicture:true} %}
+    {% include 'includes/catalog/_catalog-banner.html.twig' with{catalog:catalog,isPicture:true} %}
     {% include 'includes/catalog/_picture-status-bar.html.twig' %}
     <div class="container-fluid">
         <div class="row mb-4">
@@ -14,8 +14,8 @@
                      alt="{{ picture.file.imageName }}"
                      class="img-fluid rounded">
 
-                <div class="catalog-navigation my-5" data-current-picture="{{ picture.id }}">
-                    {% for catalogPicture in picture.catalog.pictures %}
+                <div class="catalog-navigation my-5">
+                    {% for catalogPicture in catalog.pictures %}
                         <div class="item{{ catalogPicture.id == picture.id?' current-picture':'' }}">
                             <div class="catalog-navigation-image rounded">
                                 <a href="{{ path('PICTURE', {'catalogId':picture.catalog.id,'id': catalogPicture.id}) }}">

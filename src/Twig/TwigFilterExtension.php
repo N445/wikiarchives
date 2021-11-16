@@ -3,9 +3,13 @@
 namespace App\Twig;
 
 use App\Entity\Catalog\Catalog;
+use App\Entity\Catalog\Picture;
 use App\Model\Breadcrumb\Breadcrumb;
+use App\Provider\CatalogProvider;
+use App\Provider\PictureProvider;
 use App\Service\Breadcrumb\BreadcrumbCreator;
 use App\Service\Catalog\CatalogHelper;
+use Doctrine\Common\Util\ClassUtils;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\Markup;
@@ -13,11 +17,16 @@ use Twig\TwigFilter;
 
 class TwigFilterExtension extends AbstractExtension
 {
-    private BreadcrumbCreator $breadcrumbCreator;
-
-    public function __construct(BreadcrumbCreator $breadcrumbCreator)
+    private CatalogProvider $catalogProvider;
+    private PictureProvider $pictureProvider;
+    
+    public function __construct(
+        CatalogProvider $catalogProvider,
+        PictureProvider $pictureProvider
+    )
     {
-        $this->breadcrumbCreator = $breadcrumbCreator;
+        $this->catalogProvider = $catalogProvider;
+        $this->pictureProvider = $pictureProvider;
     }
 
     public function getFilters(): array
@@ -52,7 +61,17 @@ class TwigFilterExtension extends AbstractExtension
      */
     public function getBreadcrumb(object $object)
     {
-        return $this->breadcrumbCreator->getBreadcrumb($object);
+        if (!in_array(ClassUtils::getClass($object), [Catalog::class, Picture::class])) {
+            throw new \Exception(sprintf('La class "%s" n\'est pas valide', ClassUtils::getClass($object)));
+        }
+    
+        if (Catalog::class === ClassUtils::getClass($object)) {
+            return $this->catalogProvider->getBreadCrumb($object);
+        }
+        if (Picture::class === ClassUtils::getClass($object)) {
+            return $this->pictureProvider->getBreadCrumb($object);
+        }
+        return null;
     }
 
 

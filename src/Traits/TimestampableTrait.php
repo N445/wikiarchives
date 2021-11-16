@@ -26,7 +26,7 @@ trait TimestampableTrait
      */
     private $updatedAt;
     
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): \DateTime|\DateTimeImmutable
     {
         return $this->createdAt;
     }
@@ -41,7 +41,7 @@ trait TimestampableTrait
         return $this;
     }
     
-    public function getUpdatedAt(): \DateTime
+    public function getUpdatedAt(): \DateTime|\DateTimeImmutable
     {
         return $this->updatedAt;
     }

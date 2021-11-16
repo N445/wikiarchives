@@ -10,14 +10,16 @@ use Symfony\Contracts\Cache\ItemInterface;
 
 class CacheHelper
 {
-    public const PREFIX = 220;
+    public const PREFIX = 22253;
     
+    public const CATALOG_BREADCRUMB_BY_ID = self::PREFIX . '_catalog_by_id_%d';
     public const CATALOG_BY_ID = self::PREFIX . '_catalog_by_id_%d_%s';
     public const CATALOG_COUNT_PICTURES = self::PREFIX . '_catalog_count_pictures_%d';
     public const CATALOG_COUNT_CHILDREN = self::PREFIX . '_catalog_count_children_%d';
     public const CATALOG_COUNT_ALL = self::PREFIX . '_catalog_count_all_%d';
     public const CATALOG_DOWNLOAD = self::PREFIX . '_catalog_download_%d';
     
+    public const PICTURE_BREADCRUMB_BY_ID = self::PREFIX . '_picture_by_id_%d';
     public const PICTURE_ID = self::PREFIX . '_picture_%d';
     public const PICTURE_PAGINATION = self::PREFIX . '_picture_pagination_%d_%d_%d';
     public const PICTURE_MAP = self::PREFIX . '_picture_map';

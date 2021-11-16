@@ -3,8 +3,10 @@
     namespace App\Provider;
     
     use App\Entity\Catalog\Catalog;
+    use App\Model\Breadcrumb\Breadcrumb;
     use App\Model\Catalog\CatalogCounter as CatalogCounterModel;
     use App\Repository\Catalog\CatalogRepository;
+    use App\Service\Breadcrumb\BreadcrumbCreator;
     use App\Service\Cache\CacheHelper;
     use App\Service\Catalog\CatalogCounter;
     use Doctrine\ORM\EntityManagerInterface;
@@ -28,20 +30,29 @@
     
         private CatalogRepository $catalogRepository;
         private EntityManagerInterface $em;
+        private BreadcrumbCreator $breadcrumbCreator;
+        private TagAwareAdapter $cache;
     
         /**
          * @param CatalogRepository $catalogRepository
          * @param EntityManagerInterface $em
+         * @param BreadcrumbCreator $breadcrumbCreator
          */
-        public function __construct(CatalogRepository $catalogRepository, EntityManagerInterface $em)
+        public function __construct(
+            CatalogRepository $catalogRepository,
+            EntityManagerInterface $em,
+            BreadcrumbCreator $breadcrumbCreator
+        )
         {
             $this->catalogRepository = $catalogRepository;
             $this->em = $em;
+            $this->breadcrumbCreator = $breadcrumbCreator;
+            $this->cache = new TagAwareAdapter(
+                new FilesystemAdapter(),
+            );
         }
     
         /**
-         * todo ajouter cache
-         *
          * @return Catalog|null
          * @throws NonUniqueResultException
          */
@@ -61,8 +72,6 @@
         }
     
         /**
-         *  todo le cache a pas lair de marcher
-         *
          * @param int $id
          * @param bool $isFull
          * @return Catalog|null
@@ -70,18 +79,28 @@
          */
         public function byId(int $id, bool $isFull = false): ?Catalog
         {
-            $cache = new TagAwareAdapter(
-                new FilesystemAdapter(),
-            );
-            
-            return $cache->get(sprintf(CacheHelper::CATALOG_BY_ID, $id, $isFull ? 'y' : 'n'), function (ItemInterface $item) use ($id, $isFull) {
+            return $this->cache->get(sprintf(CacheHelper::CATALOG_BY_ID, $id, $isFull ? 'y' : 'n'), function (ItemInterface $item) use ($id, $isFull) {
                 $item->expiresAfter(3600);
-                
+        
                 CacheHelper::setTagsFromCatalogId($item, $id);
-                
                 return $this->catalogRepository->byIdFront($id, $isFull);
             });
-//            return $this->catalogRepository->byIdFront($id, $isFull);
+        }
+    
+        /**
+         * @param Catalog $catalog
+         * @return Breadcrumb
+         * @throws InvalidArgumentException
+         */
+        public function getBreadCrumb(Catalog $catalog): Breadcrumb
+        {
+            return $this->cache->get(sprintf(CacheHelper::CATALOG_BREADCRUMB_BY_ID, $catalog->getId()), function (ItemInterface $item) use ($catalog) {
+                $item->expiresAfter(3600);
+        
+                $catalog = $this->catalogRepository->byIdFront($catalog->getId(), false);
+                CacheHelper::setTagsFromCatalogWithParent($item, $catalog);
+                return $this->breadcrumbCreator->getCatalogBreadcrumb($catalog);
+            });
         }
     
         /**
@@ -91,11 +110,7 @@
          */
         public function countAll(Catalog $catalog): CatalogCounterModel
         {
-            $cache = new TagAwareAdapter(
-                new FilesystemAdapter(),
-            );
-        
-            return $cache->get(sprintf(CacheHelper::CATALOG_COUNT_ALL, $catalog->getId()), function (ItemInterface $item) use ($catalog) {
+            return $this->cache->get(sprintf(CacheHelper::CATALOG_COUNT_ALL, $catalog->getId()), function (ItemInterface $item) use ($catalog) {
                 $item->expiresAfter(3600);
             
                 $catalogCounter = new CatalogCounterModel();

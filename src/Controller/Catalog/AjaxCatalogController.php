@@ -6,6 +6,7 @@
     use App\Entity\Catalog\Catalog;
     use App\Form\Catalog\AjaxCatalogTreeType;
     use App\Repository\Catalog\CatalogRepository;
+    use App\Repository\Catalog\CatalogTreeRepository;
     use App\Service\Catalog\CatalogRemover;
     use Doctrine\ORM\EntityManagerInterface;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -19,26 +20,20 @@
     #[Route("/admin/ajax/catalog", options: ["expose" => true]), IsGranted('ROLE_CONTRIBUTOR')]
     class AjaxCatalogController extends AbstractController
     {
-        /**
-         * @var CatalogRepository
-         */
         private CatalogRepository $catalogRepository;
-        /**
-         * @var EntityManagerInterface
-         */
+        private CatalogTreeRepository $catalogTreeRepository;
         private EntityManagerInterface $em;
-        /**
-         * @var CatalogDataTransformer
-         */
         private CatalogDataTransformer $catalogDataTransformer;
     
         public function __construct(
             CatalogRepository      $catalogRepository,
+            CatalogTreeRepository  $catalogTreeRepository,
             EntityManagerInterface $em,
             CatalogDataTransformer $catalogDataTransformer
         )
         {
             $this->catalogRepository = $catalogRepository;
+            $this->catalogTreeRepository = $catalogTreeRepository;
             $this->em = $em;
             $this->catalogDataTransformer = $catalogDataTransformer;
         }
@@ -115,7 +110,7 @@
             }
     
             $catalogRemover->remove($catalog);
-//            $this->catalogRepository->removeFromTree($catalog);
+//            $this->catalogTreeRepository->removeFromTree($catalog);
 //            $em->clear(); // clear cached nodes
 //            $this->em->remove($catalog);
 //            $this->em->flush();
@@ -137,10 +132,10 @@
     
             if ($catalogPrevId = $request->get('catalogPrevId')) {
                 if ($catalogPrev = $this->catalogRepository->byIdAdmin($catalogPrevId)) {
-                    $this->catalogRepository->persistAsNextSiblingOf($directory, $catalogPrev);
+                    $this->catalogTreeRepository->persistAsNextSiblingOf($directory, $catalogPrev);
                 }
             } else {
-                $this->catalogRepository->persistAsFirstChild($directory);
+                $this->catalogTreeRepository->persistAsFirstChild($directory);
             }
     
             if (!$parentId) {

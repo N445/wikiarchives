@@ -146,7 +146,6 @@
     
         /**
          * @return int|null
-         * @Groups("cacheable")
          */
         public function getId(): ?int
         {
@@ -165,7 +164,6 @@
 
         /**
          * @return mixed
-         * @Groups("cacheable")
          */
         public function getPiwigoId()
         {
@@ -184,7 +182,6 @@
     
         /**
          * @return string|null
-         * @Groups("cacheable")
          */
         public function getName(): ?string
         {
@@ -204,7 +201,6 @@
 
         /**
          * @return bool
-         * @Groups("cacheable")
          */
         public function isEnabled(): bool
         {
@@ -223,7 +219,6 @@
     
         /**
          * @return mixed
-         * @Groups("cacheable")
          */
         public function getRoot()
         {
@@ -233,7 +228,6 @@
         /**
          * @param Catalog|null $parent
          * @return $this
-         * @Groups("cacheable")
          */
         public function setParent(Catalog $parent = null): self
         {
@@ -252,7 +246,6 @@
 
         /**
          * @return PersistentCollection|ArrayCollection
-         * @Groups("cacheable")
          */
         public function getChildren(): PersistentCollection|ArrayCollection
         {
@@ -329,7 +322,6 @@
     
         /**
          * @return Place|null
-         * @Groups("cacheable")
          */
         public function getPlace(): ?Place
         {
@@ -400,7 +392,6 @@
     
         /**
          * @return User|null
-         * @Groups("cacheable")
          */
         public function getCreatedBy(): ?User
         {
@@ -419,7 +410,6 @@
     
         /**
          * @return User|null
-         * @Groups("cacheable")
          */
         public function getUpdatedBy(): ?User
         {

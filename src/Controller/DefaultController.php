@@ -8,20 +8,14 @@
     use App\Provider\CatalogProvider;
     use App\Provider\PictureProvider;
     use App\Repository\Catalog\CatalogRepository;
-    use App\Repository\Catalog\CatalogTreeRepository;
     use App\Repository\Catalog\PictureRepository;
-    use App\Repository\TotoRepository;
-    use Doctrine\ORM\EntityManagerInterface;
+    use Knp\Component\Pager\PaginatorInterface;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\Cache\Adapter\FilesystemAdapter;
     use Symfony\Component\Cache\Adapter\TagAwareAdapter;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Annotation\Route;
-    use Symfony\Component\Serializer\Encoder\JsonEncoder;
-    use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-    use Symfony\Component\Serializer\Serializer;
-    use Symfony\Component\Serializer\SerializerInterface;
     use Symfony\Contracts\Cache\ItemInterface;
 
     class DefaultController extends AbstractController
@@ -76,10 +70,10 @@
             if (!$query) {
                 return $this->redirectToRoute('HOMEPAGE');
             }
-        
-        
+    
+    
             $page = $request->get('page', 1);
-        
+    
             return $this->render('default/search.html.twig', [
                 'catalog' => $catalog,
                 'catalogs' => $this->catalogProvider->search($query, $catalog),
@@ -89,12 +83,33 @@
             ]);
         }
     
+        /**
+         * Création de la route "test grid"
+         */
+        #[Route('/test-grid', name: 'TEST_GRID')]
+        public function testGrid(Request $request, PictureRepository $pictureRepository,PaginatorInterface $paginator)
+        {
+            $picturesQb = $pictureRepository->createQueryBuilder('p')
+                                          ->addSelect('v', 'f')
+                                          ->leftJoin('p.validatedVersion', 'v')
+                                          ->leftJoin('p.file', 'f')
+                                          ->getQuery()
+            ;
+    
+            $paginator = $paginator->paginate($picturesQb,1,500);
+        
+            return $this->render('default/test-grid.html.twig', [
+                'pictures' => $paginator
+            ]);
+        }
+    
+    
         #[Route('/test', name: 'TEST')]
         public function test(
             CatalogRepository $catalogRepository,
         )
         {
-    
+        
             $cache = new TagAwareAdapter(
                 new FilesystemAdapter(),
             );

@@ -1,0 +1,140 @@
+@import './imports/variables';
+
+
+$d: 700ms;
+$e: cubic-bezier(0.19, 1, 0.22, 1);
+
+:root {
+  --d: 700ms;
+  --e: cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+body {
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-auto-rows: 200px;
+    grid-gap: 10px;
+    grid-auto-flow: dense;
+
+
+    .picture {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      border: 1px solid $wikiarchives-dark-2;
+
+      .image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        pointer-events: none;
+        transition: transform calc(var(--d) * 1.5) var(--e);
+
+        img {
+          width: 100%;
+          height: 110%;
+          object-fit: cover;
+          transition: transform calc(var(--d) * 1.5) var(--e);
+        }
+      }
+
+      &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 200%;
+        pointer-events: none;
+        background-image: linear-gradient(
+                        to bottom,
+                        hsla(0, 0%, 0%, 0) 0%,
+                        hsla(0, 0%, 0%, 0.009) 11.7%,
+                        hsla(0, 0%, 0%, 0.034) 22.1%,
+                        hsla(0, 0%, 0%, 0.072) 31.2%,
+                        hsla(0, 0%, 0%, 0.123) 39.4%,
+                        hsla(0, 0%, 0%, 0.182) 46.6%,
+                        hsla(0, 0%, 0%, 0.249) 53.1%,
+                        hsla(0, 0%, 0%, 0.320) 58.9%,
+                        hsla(0, 0%, 0%, 0.394) 64.3%,
+                        hsla(0, 0%, 0%, 0.468) 69.3%,
+                        hsla(0, 0%, 0%, 0.540) 74.1%,
+                        hsla(0, 0%, 0%, 0.607) 78.8%,
+                        hsla(0, 0%, 0%, 0.668) 83.6%,
+                        hsla(0, 0%, 0%, 0.721) 88.7%,
+                        hsla(0, 0%, 0%, 0.762) 94.1%,
+                        hsla(0, 0%, 0%, 0.790) 100%
+        );
+        //transform: translateY(-50%);
+        transform: translateY(-30%);
+        transition: transform calc(var(--d) * 2) var(--e);
+      }
+
+      .content {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        bottom: 0;
+        transform: translateY(0);
+        width: 100%;
+        padding: 2rem;
+        transition: calc(var(--d) * 1) var(--e);
+        z-index: 1;
+        color: $wikiarchives-white;
+        //transform: translateY(calc(100% - 4.5rem));
+
+
+        .title {
+          font-size: 15px;
+          margin-bottom: 0;
+        }
+      }
+
+      &:hover {
+
+        &:after {
+          transform: translateY(-50%);
+        }
+
+        .image {
+          img {
+            transform: translateY(-4%);
+          }
+        }
+
+        .content {
+          bottom: 50%;
+          transform: translateY(50%);
+        }
+      }
+
+      &:focus-within {
+        &:before,
+        &:after,
+        .content,
+        .content > *:not(.title) {
+          transition-duration: 0s;
+        }
+      }
+
+      &.div-horizontal {
+        grid-column: span 2;
+      }
+
+      &.div-vertical {
+        grid-row: span 2;
+      }
+
+      &.div-big {
+        grid-column: span 2;
+        grid-row: span 2;
+      }
+    }
+  }
+}

@@ -54,6 +54,8 @@ Encore
     .addEntry('picture-js', './assets/picture.js')
     .addStyleEntry('picture', './assets/scss/picture.scss')
 
+    .addStyleEntry('grid', './assets/scss/grid.scss')
+
     .copyFiles({
         from: 'node_modules/tinymce/skins',
         to: 'skins/[path]/[name].[ext]'

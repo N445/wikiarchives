@@ -4,6 +4,7 @@ namespace App\Service\Importator;
 
 use App\Entity\Catalog\Catalog;
 use App\Entity\Catalog\Picture;
+use App\Message\ImageDownload;
 use App\Repository\Catalog\CatalogRepository;
 use App\Repository\Catalog\PictureRepository;
 use App\Service\Catalog\PictureExifPopulator;
@@ -12,8 +13,11 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Contracts\Cache\ItemInterface;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class ImportatorFromWebsite
 {
@@ -28,13 +32,14 @@ class ImportatorFromWebsite
     private PictureRepository $pictureRepository;
     private array $fakeImages = [];
     private FilesystemAdapter $cache;
-    private $csvWriter;
+    private MessageBusInterface $bus;
     
     public function __construct(
         CatalogRepository      $catalogRepository,
         EntityManagerInterface $em,
         HttpClientInterface    $wikiarchivesClient,
-        PictureRepository      $pictureRepository
+        PictureRepository      $pictureRepository,
+        MessageBusInterface    $bus
     )
     {
         $this->catalogRepository = $catalogRepository;
@@ -42,6 +47,7 @@ class ImportatorFromWebsite
         $this->wikiarchivesClient = $wikiarchivesClient;
         $this->pictureRepository = $pictureRepository;
         $this->cache = new FilesystemAdapter();
+        $this->bus = $bus;
     }
     
     public function import()
@@ -56,6 +62,7 @@ class ImportatorFromWebsite
     {
         dump('init');
         $this->setFakeImages();
+    
     
         foreach ($this->catalogRepository->findAll() as $catalog) {
             if ($piwigoId = $catalog->getPiwigoId()) {
@@ -74,6 +81,8 @@ class ImportatorFromWebsite
         if (!$this->root = $this->catalogRepository->getRootOne()) {
             $this->root = (new Catalog())->setName(Catalog::ROOT);
             $this->em->persist($this->root);
+    
+            dump('flush');
             $this->em->flush();
         }
     }
@@ -131,11 +140,14 @@ class ImportatorFromWebsite
             }
             $this->em->persist($newCatalog);
         }
+    
+        dump('flush');
         $this->em->flush();
     }
     
     private function setPictures()
     {
+//        $start = microtime(true);
         dump('setPictures');
         $infoPagination = $this->getInfoPagination();
     
@@ -144,21 +156,16 @@ class ImportatorFromWebsite
     
     
         foreach (range(1, $nbPages) as $page) {
+            $page = 1;
             dump($page . '/' . $nbPages);
-        
-            $response = $this->cache->get('import_images_' . $page, function (ItemInterface $item) use ($page) {
-                $item->expiresAfter(3600);
-                return $this->wikiarchivesClient->request('GET', "https://wikiarchives.space/ws.php", [
-                    'query' => [
-                        'format' => 'json',
-                        'method' => 'pwg.categories.getImages',
-                        'recursive' => 'true',
-                        'per_page' => 500,
-                        'page' => $page,
-                    ]
-                ]);
-            });
-        
+
+//            $response = $this->cache->get('import_images_' . $page, function (ItemInterface $item) use ($page) {
+//                $item->expiresAfter(36000);
+//                return $this->getResponse($page);
+//            });
+    
+            $response = $this->getResponse($page);
+    
             if (200 !== $response->getStatusCode()) {
                 dump('erreur d\'api');
                 dump($response);
@@ -166,66 +173,97 @@ class ImportatorFromWebsite
             }
             $responseArray = $response->toArray();
             $pictures = $responseArray['result']['images'];
-        
-        
+    
+    
             foreach ($pictures as $key => $pictureRaw) {
-                if (array_key_exists($pictureRaw['id'], $this->pictures)) {
+                $raw_id = $pictureRaw['id'];
+                $raw_width = $pictureRaw['width'] ?? null;
+                $raw_height = $pictureRaw['height'] ?? null;
+                $raw_hit = $pictureRaw['hit'];
+                $raw_file = $pictureRaw['file'];
+                $raw_name = $pictureRaw['name'];
+                $raw_comment = $pictureRaw['comment'];
+                $raw_date_creation = $pictureRaw['date_creation'];
+                $raw_date_available = $pictureRaw['date_available'];
+                $raw_page_url = $pictureRaw['page_url'];
+                $raw_element_url = $pictureRaw['element_url'];
+                $raw_categories = $pictureRaw['categories'];
+        
+                if (array_key_exists($raw_id, $this->pictures)) {
                     continue;
                 }
-                $pictureFake = $this->getFakeImages()[array_rand($this->getFakeImages())];
-            
-                $exif = $this->cache->get('import_images_exif' . $pictureRaw['id'], function (ItemInterface $item) use ($pictureRaw) {
-                    $item->expiresAfter(3600);
-                    return PictureExifPopulator::getExifFromUrl($pictureRaw['element_url']);
-                });
-            
-            
+        
                 $newFile = (new Picture\File())
-                    ->setImageDimensions([$pictureRaw["width"] ?? 999, $pictureRaw["height"] ?? 666])
+                    ->setImageDimensions([$raw_width, $raw_height])
                     ->setImageMimeType("image/jpeg")
-                    ->setImageOriginalName($pictureRaw['file'])
-                    ->setImageSize(5000000)
-                    ->setImageName($pictureFake['name']);
-    
-    
+                    ->setImageOriginalName($raw_file)
+                    ->setImageName($raw_name);
+        
+        
                 $newPicture = (new Picture())
                     ->setPiwigoId($pictureRaw['id'])
                     ->setFile($newFile)
-                    ->setCreatedAt(new \DateTime($pictureRaw['date_available']));
-            
+                    ->setCreatedAt(new \DateTime($raw_date_available));
+        
                 $newPicture->getValidatedVersion()
-                           ->setName($pictureRaw['name'])
-                           ->setDescription($pictureRaw['comment'])
+                           ->setName($raw_name)
+                           ->setDescription($raw_comment)
                            ->setStatus(PictureVersionHelper::STATUS_ACCEPTED)
-                           ->setExif($exif)
                 ;
 
 
 //                PictureExifPopulator::populate($newPicture);
 //                PictureContentPopulator::setContent($newPicture);
-            
-                if ($parentId = $pictureRaw['categories'][0]['id'] ?? null) {
+        
+                if ($parentId = $raw_categories[0]['id'] ?? null) {
                     $parent = $this->catalogs[$parentId];
                     $newPicture->setCatalog($parent);
+                    $this->em->persist($parent);
                 }
                 $this->pictures[$newPicture->getPiwigoId()] = $newPicture;
+        
+                $this->bus->dispatch(new ImageDownload($raw_id, $raw_element_url));
+        
                 $this->em->persist($newPicture);
-                dump(count($this->pictures) . '/' . $total);
                 if ($key % 1000 === 0) {
+                    dump(count($this->pictures) . '/' . $total);
                     dump('flush');
                     $this->em->flush();
-                    $this->em->getUnitOfWork()->clear();
                 }
             }
+    
+            dump('flush');
             $this->em->flush();
         }
+
+//        $time_elapsed_secs = microtime(true) - $start;
+//        dump($time_elapsed_secs);
+//        dump(new \DateInterval($time_elapsed_secs));
+    }
+    
+    /**
+     * @param int $page
+     * @return ResponseInterface
+     * @throws TransportExceptionInterface
+     */
+    private function getResponse(int $page): ResponseInterface
+    {
+        return $this->wikiarchivesClient->request('GET', "https://wikiarchives.space/ws.php", [
+            'query' => [
+                'format' => 'json',
+                'method' => 'pwg.categories.getImages',
+                'recursive' => 'true',
+                'per_page' => 500,
+                'page' => $page,
+            ]
+        ]);
     }
     
     private function getInfoPagination()
     {
         return $this->cache->get('import_pagination', function (ItemInterface $item) {
             $item->expiresAfter(3600);
-        
+            
             $response = $this->wikiarchivesClient->request('GET', "https://wikiarchives.space/ws.php", [
                 'query' => [
                     'format' => 'json',

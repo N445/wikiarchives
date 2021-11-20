@@ -4,13 +4,13 @@
 
 
     use App\Entity\Catalog\Picture;
+    use App\Traits\TimestampableTrait;
     use Doctrine\ORM\Mapping as ORM;
     use Gedmo\Mapping\Annotation as Gedmo;
     use Symfony\Component\HttpFoundation\File\File as SymfonyFile;
     use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
     /**
-     * @property \DateTimeImmutable $updatedAt
      * @ORM\Entity
      * @ORM\Table(name="catalog_picture_file")
      * @Vich\Uploadable
@@ -18,6 +18,8 @@
      */
     class File
     {
+        use TimestampableTrait;
+        
         /**
          * @ORM\Id
          * @ORM\GeneratedValue
@@ -44,25 +46,25 @@
 
         /**
          * @Gedmo\Versioned
-         * @ORM\Column(type="integer")
+         * @ORM\Column(type="integer",nullable=true)
          */
         private ?int $imageSize = null;
 
         /**
          * @Gedmo\Versioned
-         * @ORM\Column(type="string")
+         * @ORM\Column(type="string",nullable=true)
          */
         private ?string $imageMimeType = null;
 
         /**
          * @Gedmo\Versioned
-         * @ORM\Column(type="string")
+         * @ORM\Column(type="string",nullable=true)
          */
         private ?string $imageOriginalName = null;
 
         /**
          * @Gedmo\Versioned
-         * @ORM\Column(type="array")
+         * @ORM\Column(type="array",nullable=true)
          */
         private ?array $imageDimensions = null;
 
@@ -84,7 +86,7 @@
         {
             $this->imageFile = $imageFile;
             if (null !== $imageFile) {
-                $this->updatedAt = new \DateTimeImmutable();
+                $this->setUpdatedAt(new \DateTime());
             }
 
             return $this;

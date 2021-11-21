@@ -8,13 +8,12 @@
         "/build/globalsjs.js"
       ]
     },
-    "adminjs": {
+    "wysiwyg-js": {
       "js": [
         "/build/runtime.js",
         "/build/vendors-node_modules_jquery_dist_jquery_js.js",
-        "/build/vendors-node_modules_core-js_internals_array-iteration_js-node_modules_core-js_internals_export_js.js",
-        "/build/vendors-node_modules_core-js_modules_es_array_find_js-node_modules_core-js_modules_es_array_i-550953.js",
-        "/build/adminjs.js"
+        "/build/vendors-node_modules_tinymce_icons_default_icons_js-node_modules_tinymce_plugins_autoresize_p-3678fd.js",
+        "/build/wysiwyg-js.js"
       ]
     },
     "mainjs": {
@@ -24,6 +23,41 @@
         "/build/vendors-node_modules_core-js_internals_array-iteration_js-node_modules_core-js_internals_export_js.js",
         "/build/vendors-node_modules_core-js_modules_es_array_find_js-node_modules_noty_lib_noty_js.js",
         "/build/mainjs.js"
+      ]
+    },
+    "map-multiple-js": {
+      "js": [
+        "/build/runtime.js",
+        "/build/vendors-node_modules_jquery_dist_jquery_js.js",
+        "/build/vendors-node_modules_core-js_internals_array-iteration_js-node_modules_core-js_internals_export_js.js",
+        "/build/vendors-node_modules_core-js_modules_es_array_map_js-node_modules_leaflet_markercluster_dist_-332fac.js",
+        "/build/map-multiple-js.js"
+      ]
+    },
+    "map-single-js": {
+      "js": [
+        "/build/runtime.js",
+        "/build/vendors-node_modules_jquery_dist_jquery_js.js",
+        "/build/vendors-node_modules_core-js_internals_array-iteration_js-node_modules_core-js_internals_export_js.js",
+        "/build/vendors-node_modules_core-js_modules_es_array_map_js-node_modules_leaflet_markercluster_dist_-332fac.js",
+        "/build/map-single-js.js"
+      ]
+    },
+    "picture-js": {
+      "js": [
+        "/build/runtime.js",
+        "/build/vendors-node_modules_jquery_dist_jquery_js.js",
+        "/build/vendors-node_modules_slick-carousel_slick_slick_js.js",
+        "/build/picture-js.js"
+      ]
+    },
+    "adminjs": {
+      "js": [
+        "/build/runtime.js",
+        "/build/vendors-node_modules_jquery_dist_jquery_js.js",
+        "/build/vendors-node_modules_core-js_internals_array-iteration_js-node_modules_core-js_internals_export_js.js",
+        "/build/vendors-node_modules_core-js_modules_es_array_find_js-node_modules_core-js_modules_es_array_i-550953.js",
+        "/build/adminjs.js"
       ]
     },
     "admin-tree-js": {
@@ -46,40 +80,6 @@
         "/build/admin-catalog-datatable-js.js"
       ]
     },
-    "map-multiple-js": {
-      "js": [
-        "/build/runtime.js",
-        "/build/vendors-node_modules_jquery_dist_jquery_js.js",
-        "/build/vendors-node_modules_core-js_internals_array-iteration_js-node_modules_core-js_internals_export_js.js",
-        "/build/vendors-node_modules_core-js_modules_es_array_map_js-node_modules_leaflet_markercluster_dist_-332fac.js",
-        "/build/map-multiple-js.js"
-      ]
-    },
-    "map-single-js": {
-      "js": [
-        "/build/runtime.js",
-        "/build/vendors-node_modules_jquery_dist_jquery_js.js",
-        "/build/vendors-node_modules_core-js_internals_array-iteration_js-node_modules_core-js_internals_export_js.js",
-        "/build/vendors-node_modules_core-js_modules_es_array_map_js-node_modules_leaflet_markercluster_dist_-332fac.js",
-        "/build/map-single-js.js"
-      ]
-    },
-    "wysiwyg-js": {
-      "js": [
-        "/build/runtime.js",
-        "/build/vendors-node_modules_jquery_dist_jquery_js.js",
-        "/build/vendors-node_modules_tinymce_icons_default_icons_js-node_modules_tinymce_plugins_autoresize_p-3678fd.js",
-        "/build/wysiwyg-js.js"
-      ]
-    },
-    "picture-js": {
-      "js": [
-        "/build/runtime.js",
-        "/build/vendors-node_modules_jquery_dist_jquery_js.js",
-        "/build/vendors-node_modules_slick-carousel_slick_slick_js.js",
-        "/build/picture-js.js"
-      ]
-    },
     "globals": {
       "js": [
         "/build/runtime.js"
@@ -88,36 +88,12 @@
         "/build/globals.css"
       ]
     },
-    "admin": {
-      "js": [
-        "/build/runtime.js"
-      ],
-      "css": [
-        "/build/admin.css"
-      ]
-    },
     "main": {
       "js": [
         "/build/runtime.js"
       ],
       "css": [
         "/build/main.css"
-      ]
-    },
-    "admin-tree": {
-      "js": [
-        "/build/runtime.js"
-      ],
-      "css": [
-        "/build/admin-tree.css"
-      ]
-    },
-    "admin-catalog-datatable": {
-      "js": [
-        "/build/runtime.js"
-      ],
-      "css": [
-        "/build/admin-catalog-datatable.css"
       ]
     },
     "map": {
@@ -142,6 +118,30 @@
       ],
       "css": [
         "/build/grid.css"
+      ]
+    },
+    "admin": {
+      "js": [
+        "/build/runtime.js"
+      ],
+      "css": [
+        "/build/admin.css"
+      ]
+    },
+    "admin-tree": {
+      "js": [
+        "/build/runtime.js"
+      ],
+      "css": [
+        "/build/admin-tree.css"
+      ]
+    },
+    "admin-catalog-datatable": {
+      "js": [
+        "/build/runtime.js"
+      ],
+      "css": [
+        "/build/admin-catalog-datatable.css"
       ]
     }
   }

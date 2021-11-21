@@ -1,5 +1,7 @@
 // const Diff2Html = require('diff2html');
 import htmldiff from './lib/htmldiff';
+require('./lib/startbootstrap-sb-admin-gh-pages/js/scripts')
+require('./lib/startbootstrap-sb-admin-gh-pages/js/datatables-simple-demo')
 
 $.each($('.git-diff'), function (key, item) {
     item = $(item);

@@ -1,6 +1,6 @@
 var $ = jQuery = require("jquery");
 
-require('./../../lib/vakata-jstree/dist/jstree')
+require('./../lib/vakata-jstree/dist/jstree')
 const bootstrap = require('bootstrap');
 require('datatables.net-bs5');
 

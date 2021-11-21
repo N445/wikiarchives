@@ -1,6 +1,6 @@
-@import "imports/variables";
-@import "~slick-carousel/slick/slick";
-@import "~slick-carousel/slick/slick-theme";
+@import "../global/imports/variables";
+@import "../../node_modules/slick-carousel/slick/slick";
+@import "../../node_modules/slick-carousel/slick/slick-theme.css";
 
 
 .catalog-navigation {

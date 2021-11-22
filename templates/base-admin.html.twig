@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Espace d'adminstration{% endblock %}</title>
-    {{ encore_entry_link_tags('globals') }}
+{#    {{ encore_entry_link_tags('globals') }}#}
     {{ encore_entry_link_tags('admin') }}
 
     {# Run `composer require symfony/webpack-encore-bundle`
@@ -16,7 +16,23 @@
 </head>
 <body>
 {% include 'includes/admin/navigation.html.twig' %}
-{% block body %}{% endblock %}
+
+<div id="layoutSidenav">
+    {% include 'includes/admin/side-navigation.html.twig' %}
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <h1 class="mt-4">{% block bodytitle %}Dashboard{% endblock %}</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item active">Dashboard</li>
+                </ol>
+                {% block body %}{% endblock %}
+            </div>
+        </main>
+        {% include 'includes/admin/footer.html.twig' %}
+    </div>
+</div>
+
 
 
 {{ encore_entry_script_tags('globalsjs') }}

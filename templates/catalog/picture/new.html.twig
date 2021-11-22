@@ -1,15 +1,12 @@
 {% extends 'base-admin.html.twig' %}
 
-{% block title %}Création d'une photo - {{ parent() }}{% endblock %}
+{% block title %}Ajout d'une photo - {{ parent() }}{% endblock %}
+{% block bodytitle %}Ajout d'une photo{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <h1>Création d'une photo</h1>
-        <a href="{{ path('ADMIN_CATALOG_PICTURE_INDEX') }}" class="btn btn-primary mb-3">Revenir au listing</a>
+{#        <a href="{{ path('ADMIN_CATALOG_PICTURE_INDEX') }}" class="btn btn-primary mb-3">Revenir au listing</a>#}
 
         {{ include('catalog/picture/_form.html.twig') }}
-
-    </div>
 {% endblock %}
 
 {% block javascripts %}

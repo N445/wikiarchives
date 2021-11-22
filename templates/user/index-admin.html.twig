@@ -1,0 +1,60 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}Liste des utilisateurs - {{ parent() }}{% endblock %}
+{% block bodytitle %}Liste des utilisateurs{% endblock %}
+
+{% block body %}
+    <a href="{{ path('ADMIN_USER_NEW') }}" class="btn btn-primary mb-3">
+        Créer un utilisateur
+    </a>
+    <table class="datatable table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Email</th>
+            <th>Roles</th>
+            <th>actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+                    {% for role in user.roles %}
+                        {% if 'ROLE_MODERATOR' == role %}
+                            <span class="badge bg-info">{{ role }}</span>
+                        {% endif %}
+                        {% if 'ROLE_CONTRIBUTOR' == role %}
+                            <span class="badge bg-success">{{ role }}</span>
+                        {% endif %}
+                        {% if 'ROLE_ADMIN' == role %}
+                            <span class="badge bg-warning">{{ role }}</span>
+                        {% endif %}
+                        {% if 'ROLE_SUPER_ADMIN' == role %}
+                            <span class="badge bg-danger">{{ role }}</span>
+                        {% endif %}
+                    {% endfor %}
+                </td>
+                <td>
+                    <a href="{{ path('user_show', {'id': user.id}) }}" class="btn btn-sm btn-info">Voir</a>
+                    <a href="{{ path('ADMIN_USER_EDIT', {'id': user.id}) }}"
+                       class="btn btn-sm btn-info">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('admin-catalog-datatable') }}
+{% endblock %}
+{% block javascripts %}
+    {{ encore_entry_script_tags('admin-catalog-datatable-js') }}
+{% endblock %}

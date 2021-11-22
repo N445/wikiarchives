@@ -1,5 +1,12 @@
 @import "./lib/startbootstrap-sb-admin-gh-pages/css/styles.css";
 
+@import "~@fortawesome/fontawesome-free/scss/fontawesome";
+@import "~@fortawesome/fontawesome-free/scss/solid";
+@import "~@fortawesome/fontawesome-free/scss/brands";
+@import "~@fortawesome/fontawesome-free/scss/regular";
+
+@import "~select2/dist/css/select2.min.css";
+
 ins {
   text-decoration: none;
   background-color: #d4fcbc;

@@ -8,6 +8,13 @@
         "/build/globalsjs.js"
       ]
     },
+    "fancyboxjs": {
+      "js": [
+        "/build/runtime.js",
+        "/build/vendors-node_modules_fancyapps_ui_dist_fancybox_esm_js.js",
+        "/build/fancyboxjs.js"
+      ]
+    },
     "wysiwyg-js": {
       "js": [
         "/build/runtime.js",
@@ -57,7 +64,16 @@
         "/build/vendors-node_modules_jquery_dist_jquery_js.js",
         "/build/vendors-node_modules_core-js_internals_array-iteration_js-node_modules_core-js_internals_export_js.js",
         "/build/vendors-node_modules_core-js_modules_es_array_find_js-node_modules_core-js_modules_es_array_i-550953.js",
+        "/build/vendors-node_modules_core-js_modules_es_array_slice_js-node_modules_select2_dist_js_select2_js.js",
         "/build/adminjs.js"
+      ]
+    },
+    "filepondjs": {
+      "js": [
+        "/build/runtime.js",
+        "/build/vendors-node_modules_jquery_dist_jquery_js.js",
+        "/build/vendors-node_modules_filepond_dist_filepond_js.js",
+        "/build/filepondjs.js"
       ]
     },
     "admin-tree-js": {
@@ -66,9 +82,10 @@
         "/build/vendors-node_modules_jquery_dist_jquery_js.js",
         "/build/vendors-node_modules_core-js_internals_array-iteration_js-node_modules_core-js_internals_export_js.js",
         "/build/vendors-node_modules_datatables_net-bs5_js_dataTables_bootstrap5_js.js",
+        "/build/vendors-node_modules_filepond_dist_filepond_js.js",
         "/build/vendors-node_modules_bootstrap_dist_js_bootstrap_esm_js-node_modules_core-js_modules_es_array-88fc80.js",
         "/build/vendors-node_modules_core-js_modules_es_array_find_js-node_modules_core-js_modules_es_array_i-550953.js",
-        "/build/vendors-node_modules_core-js_modules_es_array_concat_js-node_modules_core-js_modules_es_array-1f989b.js",
+        "/build/vendors-node_modules_core-js_modules_es_array_concat_js-node_modules_core-js_modules_es_array-a4cd33.js",
         "/build/admin-tree-js.js"
       ]
     },
@@ -86,6 +103,15 @@
       ],
       "css": [
         "/build/globals.css"
+      ]
+    },
+    "fancybox": {
+      "js": [
+        "/build/runtime.js"
+      ],
+      "css": [
+        "/build/vendors-node_modules_fancyapps_ui_dist_fancybox_css.css",
+        "/build/fancybox.css"
       ]
     },
     "main": {
@@ -125,7 +151,17 @@
         "/build/runtime.js"
       ],
       "css": [
+        "/build/vendors-node_modules_select2_dist_css_select2_min_css.css",
         "/build/admin.css"
+      ]
+    },
+    "filepond": {
+      "js": [
+        "/build/runtime.js"
+      ],
+      "css": [
+        "/build/vendors-node_modules_filepond_dist_filepond_min_css.css",
+        "/build/filepond.css"
       ]
     },
     "admin-tree": {

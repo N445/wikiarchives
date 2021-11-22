@@ -34,7 +34,6 @@
         <th>Type mime</th>
         <th>Résolution</th>
         <th>Visible</th>
-        <th>Exif</th>
         {% if is_granted('ROLE_MODERATOR') %}
         <th>Validations en attentes</th>
         {% endif %}
@@ -45,10 +44,15 @@
     {% for picture in catalog.pictures %}
         <tr>
             <td>
-                <img src="{{ picture.file.imageName|imagine_filter('picture_admin_listing') }}"
-                     alt="{{ picture.file.imageOriginalName }}"
-                     width="100"
-                     class="img-fluid rounded">
+                <a href="{{ vich_uploader_asset(picture.file) }}"
+                        data-fancybox="gallery"
+                        data-caption="Optional caption"
+                >
+                    <img src="{{ picture.file.imageName|imagine_filter('picture_admin_listing') }}"
+                         alt="{{ picture.file.imageOriginalName }}"
+                         width="100"
+                         class="img-fluid rounded">
+                </a>
             </td>
             <td>{{ picture.name }}</td>
             <td>{{ picture.file.imageSize|humanFilesize }}</td>
@@ -59,18 +63,6 @@
                     <span class="badge bg-success">Visible</span>
                 {% else %}
                     <span class="badge bg-danger">Non visible</span>
-                {% endif %}
-            </td>
-            <td>
-                {% if picture.exif.isVerified %}
-                    <span class="badge bg-success">Vérifié</span>
-                {% else %}
-                    <span class="badge bg-danger">Non vérifié</span>
-                {% endif %}
-                {% if picture.exif.isCompleted %}
-                    <span class="badge bg-success">Complet</span>
-                {% else %}
-                    <span class="badge bg-danger">Non Complet</span>
                 {% endif %}
             </td>
             {% if is_granted('ROLE_MODERATOR') %}

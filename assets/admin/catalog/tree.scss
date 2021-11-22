@@ -4,3 +4,13 @@
 .filepond--item {
   width: calc(20% - 0.5em);
 }
+
+.filepond--root {
+  max-height: 300px !important;
+  overflow: hidden;
+}
+
+.filepond--list {
+  max-height: 300px;
+  overflow-y: scroll;
+}

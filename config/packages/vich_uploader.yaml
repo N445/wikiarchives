@@ -5,7 +5,7 @@ vich_uploader:
   mappings:
     catalog_picture:
 #      uri_prefix: "%env(AWS_BASE_URL)%/picture"
-      uri_prefix: "%kernel.project_dir%/public/uploads/picture"
+      uri_prefix: "/uploads/picture"
       upload_destination: picture_fs
       namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
       inject_on_load: false
@@ -13,7 +13,7 @@ vich_uploader:
       delete_on_remove: true
     catalog_cover:
 #      uri_prefix: "%env(AWS_BASE_URL)%/catalog"
-      uri_prefix: "%kernel.project_dir%/public/uploads/catalog"
+      uri_prefix: "/uploads/catalog"
       upload_destination: catalog_fs
       namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
       inject_on_load: false

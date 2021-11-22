@@ -2,8 +2,10 @@
 
 namespace App\Controller\Catalog;
 
+use App\Entity\Catalog\Catalog;
 use App\Entity\Catalog\Picture;
 use App\Form\Catalog\PictureType;
+use App\Repository\Catalog\CatalogRepository;
 use App\Repository\Catalog\Picture\VersionRepository;
 use App\Repository\Catalog\PictureRepository;
 use App\Service\Catalog\PictureContentPopulator;
@@ -25,11 +27,13 @@ class PictureController extends AbstractController
      */
     private $pictureRepository;
     private VersionRepository $versionRepository;
+    private CatalogRepository $catalogRepository;
     
-    public function __construct(PictureRepository $pictureRepository, VersionRepository $versionRepository)
+    public function __construct(PictureRepository $pictureRepository, VersionRepository $versionRepository, CatalogRepository $catalogRepository)
     {
         $this->pictureRepository = $pictureRepository;
         $this->versionRepository = $versionRepository;
+        $this->catalogRepository = $catalogRepository;
     }
     
     #[Route('/', name: 'ADMIN_CATALOG_PICTURE_INDEX', methods: ['GET'])]
@@ -40,13 +44,13 @@ class PictureController extends AbstractController
             $request->get('page', 1), /*page number*/
             100 /*limit per page*/
         );
-        
+    
         return $this->render('catalog/picture/index.html.twig', [
             'pagination' => $pagination,
         ]);
     }
     
-    #[Route('/new', name: 'ADMIN_CATALOG_PICTURE_NEW', methods: ['GET', 'POST'])]
+    #[Route('/new/', name: 'ADMIN_CATALOG_PICTURE_NEW', methods: ['GET', 'POST'])]
     public function new(Request $request): Response
     {
         $picture = new Picture();
@@ -63,13 +67,28 @@ class PictureController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($picture);
             $entityManager->flush();
-            
+    
             return $this->redirectToRoute('ADMIN_CATALOG_PICTURE_INDEX', [], Response::HTTP_SEE_OTHER);
         }
-        
+    
         return $this->renderForm('catalog/picture/new.html.twig', [
             'picture' => $picture,
             'form' => $form,
+        ]);
+    }
+    
+    #[Route('/new-multiple/{catalogId}', name: 'ADMIN_CATALOG_PICTURE_NEW_MULTIPLE', methods: ['GET', 'POST'])]
+    public function newMultiple(Request $request, ?int $catalogId = null): Response
+    {
+        $catalog = null;
+        if ($catalogId) {
+            $catalog = $this->catalogRepository->byIdAdmin($catalogId);
+        }
+        return $this->renderForm('catalog/picture/new-multiple.html.twig', [
+            'catalog' => $catalog,
+            'catalogs' => array_filter($this->catalogRepository->findAll(),function($catalog){
+                return Catalog::ROOT !== $catalog->getName();
+            }),
         ]);
     }
     

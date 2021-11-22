@@ -27,6 +27,10 @@ Encore
     .addStyleEntry('globals', './assets/global/globals.scss')
 
     // wysiwyg
+    .addEntry('fancyboxjs', './assets/global/fancybox.js')
+    .addStyleEntry('fancybox', './assets/global/fancybox.scss')
+
+    // fancybox
     .addEntry('wysiwyg-js', './assets/global/wysiwyg.js')
 
     // Custom
@@ -42,10 +46,14 @@ Encore
     .addEntry('picture-js', './assets/front/picture.js')
     .addStyleEntry('picture', './assets/front/picture.scss')
     .addStyleEntry('grid', './assets/front/grid.scss')
-    
+
     // Admin
     .addEntry('adminjs', './assets/admin/admin.js')
     .addStyleEntry('admin', './assets/admin/admin.scss')
+
+    // Admin filepond
+    .addEntry('filepondjs', './assets/admin/filepond.js')
+    .addStyleEntry('filepond', './assets/admin/filepond.scss')
 
     // Admin tree
     .addEntry('admin-tree-js', './assets/admin/catalog/tree.js')

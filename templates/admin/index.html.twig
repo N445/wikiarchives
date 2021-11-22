@@ -1,9 +1,6 @@
 {% extends 'base-admin.html.twig' %}
 
 {% block body %}
-    <div class="container">
-        <h1>Espace d'adminstration</h1>
-        <hr>
         <div class="row">
             <div class="col"><h2>{{ nbCatalog }} catalogues</h2></div>
             <div class="col"><h2>{{ nbPicture }} photos</h2></div>
@@ -39,5 +36,4 @@
                 </tbody>
             </table>
         {% endif %}
-    </div>
 {% endblock %}

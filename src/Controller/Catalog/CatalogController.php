@@ -3,7 +3,6 @@
     namespace App\Controller\Catalog;
     
     use App\Entity\Catalog\Catalog;
-    use App\Form\Catalog\AjaxCatalogTreeType;
     use App\Form\Catalog\CatalogType;
     use App\Repository\Catalog\CatalogRepository;
     use Doctrine\ORM\EntityManagerInterface;
@@ -12,7 +11,7 @@
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Annotation\Route;
-    
+
     #[Route('/admin/catalog/catalog'), IsGranted('ROLE_CONTRIBUTOR')]
     class CatalogController extends AbstractController
     {
@@ -67,20 +66,39 @@
                 ]);
             }
             $catalog = $this->catalogRepository->byIdAdmin($id);
-            
+    
             return $this->render('catalog/catalog/tree.html.twig', [
                 'trees' => $trees,
                 'catalog' => $catalog,
+                'catalogs' => array_filter($this->catalogRepository->findAll(), function (Catalog $catalog) {
+                    return $catalog->getName() !== Catalog::ROOT;
+                }),
             ]);
         }
+    
+        #[Route('/browse/{id}', name: 'ADMIN_CATALOG_CATALOG_BROWSE', methods: ['GET'])]
+        public function browse(?int $id = null): Response
+        {
+            if (!$id) {
+                $catalog = $this->catalogRepository->getRootOne();
+            } else {
+                $catalog = $this->catalogRepository->byIdAdmin($id);
+            }
+            
+            dump($catalog);
         
+            return $this->render('catalog/catalog/browse.html.twig', [
+                'catalog' => $catalog,
+            ]);
+        }
+    
         #[Route('/new', name: 'ADMIN_CATALOG_CATALOG_NEW', methods: ['GET', 'POST'])]
         public function new(Request $request): Response
         {
             $catalog = new Catalog();
             $form = $this->createForm(CatalogType::class, $catalog);
             $form->handleRequest($request);
-            
+        
             if ($form->isSubmitted() && $form->isValid()) {
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($catalog);

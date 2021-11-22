@@ -35,16 +35,19 @@
         #[Route("/new-filepond/{directoryId}", name: "AJAX_CATALOG_PICTURE_FILEPOND", methods: ["POST"])]
         public function ajaxMediaNewFilepond(int $directoryId, Request $request, PictureUploadator $pictureUploadator)
         {
-            if (!$catalog = $this->catalogRepository->byIdAdmin($directoryId)) {
-                return $this->json([
-                    'text' => 'directory not found',
-                ]);
-            }
-            
-            /** @var UploadedFile $uploadedFile */
-            $uploadedFile = $request->files->get('filepond');
-            
-            $pictureUploadator->upload($catalog, $uploadedFile);
+            dump($request);
+            dump($request->attributes->get('directoryId'));
+            dump($request->attributes->get('catalogId'));
+//            if (!$catalog = $this->catalogRepository->byIdAdmin($directoryId)) {
+//                return $this->json([
+//                    'text' => 'directory not found',
+//                ]);
+//            }
+//
+//            /** @var UploadedFile $uploadedFile */
+//            $uploadedFile = $request->files->get('filepond');
+//
+//            $pictureUploadator->upload($catalog, $uploadedFile);
             
             return $this->json([
                 'success' => true,

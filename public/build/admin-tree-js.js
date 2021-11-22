@@ -12350,7 +12350,7 @@ module.exports = JSON.parse('{"base_url":"","routes":{"ADMIN_AJAX_CATALOG_CATALO
 },
 /******/ __webpack_require__ => { // webpackRuntimeModules
 /******/ var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-/******/ __webpack_require__.O(0, ["vendors-node_modules_jquery_dist_jquery_js","vendors-node_modules_core-js_internals_array-iteration_js-node_modules_core-js_internals_export_js","vendors-node_modules_datatables_net-bs5_js_dataTables_bootstrap5_js","vendors-node_modules_bootstrap_dist_js_bootstrap_esm_js-node_modules_core-js_modules_es_array-88fc80","vendors-node_modules_core-js_modules_es_array_find_js-node_modules_core-js_modules_es_array_i-550953","vendors-node_modules_core-js_modules_es_array_concat_js-node_modules_core-js_modules_es_array-1f989b"], () => (__webpack_exec__("./assets/admin/catalog/tree.js")));
+/******/ __webpack_require__.O(0, ["vendors-node_modules_jquery_dist_jquery_js","vendors-node_modules_core-js_internals_array-iteration_js-node_modules_core-js_internals_export_js","vendors-node_modules_datatables_net-bs5_js_dataTables_bootstrap5_js","vendors-node_modules_filepond_dist_filepond_js","vendors-node_modules_bootstrap_dist_js_bootstrap_esm_js-node_modules_core-js_modules_es_array-88fc80","vendors-node_modules_core-js_modules_es_array_find_js-node_modules_core-js_modules_es_array_i-550953","vendors-node_modules_core-js_modules_es_array_concat_js-node_modules_core-js_modules_es_array-a4cd33"], () => (__webpack_exec__("./assets/admin/catalog/tree.js")));
 /******/ var __webpack_exports__ = __webpack_require__.O();
 /******/ }
 ]);

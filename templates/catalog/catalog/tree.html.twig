@@ -1,14 +1,13 @@
 {% extends 'base-admin.html.twig' %}
 
 {% block title %}Arboréscence catalogue - {{ parent() }}{% endblock %}
+{% block bodytitle %}Arborescence{% endblock %}
 
 {% block body %}
-    <div class="container-fluid">
         <div class="row">
             <div class="col-md-4">
                 <div class="card shadow">
                     <div class="card-body">
-                        <h2>Arborescence</h2>
 {#                        <button class="btn btn-success btn-sm add-root-catalog mb-3">#}
 {#                            Ajouter un dossier racine#}
 {#                        </button>#}
@@ -20,9 +19,18 @@
                 <div class="card shadow">
                     <div class="card-body">
                         {% if catalog.id %}
-                            <form method="POST" action="{{ path('AJAX_CATALOG_PICTURE_FILEPOND', {'directoryId': catalog.id}) }}">
-                                <input type="file" class="filepond" name="filepond" data-allow-remove="true">
-                            </form>
+                            {% if 'root' != catalog.name %}
+                                <form method="POST"
+                                      action="{{ path('AJAX_CATALOG_PICTURE_FILEPOND', {'directoryId': catalog.id}) }}">
+
+{#                                    <select class="select2" name="catalogId">#}
+{#                                        {% for catalogSelect in catalogs %}#}
+{#                                            <option value="{{ catalogSelect.id }}" {{ catalogSelect.id == catalog.id?'selected':'' }}>{{ catalogSelect.name }}</option>#}
+{#                                        {% endfor %}#}
+{#                                    </select>#}
+                                    <input type="file" class="filepond" name="filepond" data-allow-remove="true">
+                                </form>
+                            {% endif %}
                             <div class="catalog-content">
                                 {% include 'catalog/catalog/includes/_catalog-content.html.twig' %}
                             </div>
@@ -32,8 +40,6 @@
                 </div>
             </div>
         </div>
-    </div>
-
 
     {# new Catalog #}
     <div class="modal fade" id="catalogModal" tabindex="-1" aria-hidden="true">
@@ -48,9 +54,11 @@
 {% block stylesheets %}
     {{ encore_entry_link_tags('admin-tree') }}
     {{ encore_entry_link_tags('admin-catalog-datatable') }}
+    {{ encore_entry_link_tags('fancybox') }}
 {% endblock %}
 
 {% block javascripts %}
     {{ encore_entry_script_tags('admin-tree-js') }}
     {{ encore_entry_script_tags('admin-catalog-datatable-js') }}
+    {{ encore_entry_script_tags('fancyboxjs') }}
 {% endblock %}

@@ -1,17 +1,15 @@
 {% extends 'base-admin.html.twig' %}
 
-{% block title %}Liste des places - {{ parent() }}{% endblock %}
+{% block title %}Liste des zones - {{ parent() }}{% endblock %}
+{% block bodytitle %}Liste des zones{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <h1>Liste des places</h1>
         <a href="{{ path('ADMIN_CATALOG_PLACE_NEW') }}" class="btn btn-primary mb-3">
-            Créer place
+            Ajouter une zone
         </a>
         <table class="table">
             <thead>
             <tr>
-                <th>Id</th>
                 <th>Name</th>
                 <th>Location</th>
                 <th>Lat</th>
@@ -22,7 +20,6 @@
             <tbody>
             {% for place in places %}
                 <tr>
-                    <td>{{ place.id }}</td>
                     <td>{{ place.name }}</td>
                     <td>{{ place.location }}</td>
                     <td>{{ place.lat }}</td>
@@ -39,5 +36,4 @@
             {% endfor %}
             </tbody>
         </table>
-    </div>
 {% endblock %}

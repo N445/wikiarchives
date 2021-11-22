@@ -8,6 +8,9 @@
   "build/picture-js.js": "/build/picture-js.js",
   "build/adminjs.js": "/build/adminjs.js",
   "build/filepondjs.js": "/build/filepondjs.js",
+  "build/place-map-formjs.js": "/build/place-map-formjs.js",
+  "build/place-map-form.css": "/build/place-map-form.css",
+  "build/place-map-form.js": "/build/place-map-form.js",
   "build/admin-tree-js.js": "/build/admin-tree-js.js",
   "build/admin-catalog-datatable-js.js": "/build/admin-catalog-datatable-js.js",
   "build/globals.css": "/build/globals.css",
@@ -23,10 +26,11 @@
   "build/runtime.js": "/build/runtime.js",
   "build/vendors-node_modules_jquery_dist_jquery_js.js": "/build/vendors-node_modules_jquery_dist_jquery_js.js",
   "build/vendors-node_modules_core-js_internals_array-iteration_js-node_modules_core-js_internals_export_js.js": "/build/vendors-node_modules_core-js_internals_array-iteration_js-node_modules_core-js_internals_export_js.js",
-  "build/vendors-node_modules_core-js_modules_es_array_map_js-node_modules_leaflet_markercluster_dist_-332fac.js": "/build/vendors-node_modules_core-js_modules_es_array_map_js-node_modules_leaflet_markercluster_dist_-332fac.js",
+  "build/vendors-node_modules_core-js_modules_es_array_map_js-node_modules_leaflet_dist_leaflet-src_js-e0c243.js": "/build/vendors-node_modules_core-js_modules_es_array_map_js-node_modules_leaflet_dist_leaflet-src_js-e0c243.js",
   "build/vendors-node_modules_datatables_net-bs5_js_dataTables_bootstrap5_js.js": "/build/vendors-node_modules_datatables_net-bs5_js_dataTables_bootstrap5_js.js",
   "build/vendors-node_modules_filepond_dist_filepond_js.js": "/build/vendors-node_modules_filepond_dist_filepond_js.js",
   "build/vendors-node_modules_bootstrap_dist_js_bootstrap_esm_js-node_modules_core-js_modules_es_array-88fc80.js": "/build/vendors-node_modules_bootstrap_dist_js_bootstrap_esm_js-node_modules_core-js_modules_es_array-88fc80.js",
+  "build/vendors-node_modules_leaflet_markercluster_dist_leaflet_markercluster-src_js.js": "/build/vendors-node_modules_leaflet_markercluster_dist_leaflet_markercluster-src_js.js",
   "build/vendors-node_modules_core-js_modules_es_array_find_js-node_modules_core-js_modules_es_array_i-550953.js": "/build/vendors-node_modules_core-js_modules_es_array_find_js-node_modules_core-js_modules_es_array_i-550953.js",
   "build/vendors-node_modules_core-js_modules_es_array_concat_js-node_modules_core-js_modules_es_array-a4cd33.js": "/build/vendors-node_modules_core-js_modules_es_array_concat_js-node_modules_core-js_modules_es_array-a4cd33.js",
   "build/vendors-node_modules_tinymce_icons_default_icons_js-node_modules_tinymce_plugins_autoresize_p-3678fd.js": "/build/vendors-node_modules_tinymce_icons_default_icons_js-node_modules_tinymce_plugins_autoresize_p-3678fd.js",
@@ -98,5 +102,6 @@
   "build/images/layers.png": "/build/images/layers.416d9136.png",
   "build/images/marker-shadow.png": "/build/images/marker-shadow.a0c6cc14.png",
   "build/skins/ui/oxide-dark/content.mobile.min.css": "/build/skins/ui/oxide-dark//content.mobile.min.css",
-  "build/skins/ui/oxide/content.mobile.min.css": "/build/skins/ui/oxide//content.mobile.min.css"
+  "build/skins/ui/oxide/content.mobile.min.css": "/build/skins/ui/oxide//content.mobile.min.css",
+  "build/vendors-node_modules_select2-bootstrap-5-theme_dist_select2-bootstrap-5-theme_min_css-node_mo-59bd65.css": "/build/vendors-node_modules_select2-bootstrap-5-theme_dist_select2-bootstrap-5-theme_min_css-node_mo-59bd65.css"
 }

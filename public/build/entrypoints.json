@@ -37,7 +37,8 @@
         "/build/runtime.js",
         "/build/vendors-node_modules_jquery_dist_jquery_js.js",
         "/build/vendors-node_modules_core-js_internals_array-iteration_js-node_modules_core-js_internals_export_js.js",
-        "/build/vendors-node_modules_core-js_modules_es_array_map_js-node_modules_leaflet_markercluster_dist_-332fac.js",
+        "/build/vendors-node_modules_core-js_modules_es_array_map_js-node_modules_leaflet_dist_leaflet-src_js-e0c243.js",
+        "/build/vendors-node_modules_leaflet_markercluster_dist_leaflet_markercluster-src_js.js",
         "/build/map-multiple-js.js"
       ]
     },
@@ -46,7 +47,8 @@
         "/build/runtime.js",
         "/build/vendors-node_modules_jquery_dist_jquery_js.js",
         "/build/vendors-node_modules_core-js_internals_array-iteration_js-node_modules_core-js_internals_export_js.js",
-        "/build/vendors-node_modules_core-js_modules_es_array_map_js-node_modules_leaflet_markercluster_dist_-332fac.js",
+        "/build/vendors-node_modules_core-js_modules_es_array_map_js-node_modules_leaflet_dist_leaflet-src_js-e0c243.js",
+        "/build/vendors-node_modules_leaflet_markercluster_dist_leaflet_markercluster-src_js.js",
         "/build/map-single-js.js"
       ]
     },
@@ -74,6 +76,24 @@
         "/build/vendors-node_modules_jquery_dist_jquery_js.js",
         "/build/vendors-node_modules_filepond_dist_filepond_js.js",
         "/build/filepondjs.js"
+      ]
+    },
+    "place-map-formjs": {
+      "js": [
+        "/build/runtime.js",
+        "/build/vendors-node_modules_jquery_dist_jquery_js.js",
+        "/build/vendors-node_modules_core-js_internals_array-iteration_js-node_modules_core-js_internals_export_js.js",
+        "/build/vendors-node_modules_core-js_modules_es_array_map_js-node_modules_leaflet_dist_leaflet-src_js-e0c243.js",
+        "/build/place-map-formjs.js"
+      ]
+    },
+    "place-map-form": {
+      "js": [
+        "/build/runtime.js",
+        "/build/place-map-form.js"
+      ],
+      "css": [
+        "/build/place-map-form.css"
       ]
     },
     "admin-tree-js": {
@@ -151,7 +171,7 @@
         "/build/runtime.js"
       ],
       "css": [
-        "/build/vendors-node_modules_select2_dist_css_select2_min_css.css",
+        "/build/vendors-node_modules_select2-bootstrap-5-theme_dist_select2-bootstrap-5-theme_min_css-node_mo-59bd65.css",
         "/build/admin.css"
       ]
     },

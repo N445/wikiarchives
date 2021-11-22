@@ -55,6 +55,10 @@ Encore
     .addEntry('filepondjs', './assets/admin/filepond.js')
     .addStyleEntry('filepond', './assets/admin/filepond.scss')
 
+    // Admin place map
+    .addEntry('place-map-formjs', './assets/admin/place/map-form.js')
+    .addEntry('place-map-form', './assets/admin/place/map-form.scss')
+
     // Admin tree
     .addEntry('admin-tree-js', './assets/admin/catalog/tree.js')
     .addStyleEntry('admin-tree', './assets/admin/catalog/tree.scss')

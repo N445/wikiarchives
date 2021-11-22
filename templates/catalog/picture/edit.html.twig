@@ -1,11 +1,9 @@
 {% extends 'base-admin.html.twig' %}
 
-{% block title %}Modification d'une photo {{ picture.name }} - {{ parent() }}{% endblock %}
+{% block title %}Modification de "{{ picture.name }}" - {{ parent() }}{% endblock %}
+{% block bodytitle %}Modification de "{{ picture.name }}"{% endblock %}
 
 {% block body %}
-<div class="container">
-    <h1>Modification d'une photo {{ picture.name }}</h1>
-
     <a href="{{ path('ADMIN_CATALOG_PICTURE_INDEX') }}" class="btn btn-primary mb-3">
         Revenir au listing
     </a>
@@ -13,7 +11,6 @@
     {{ include('catalog/picture/_delete_form.html.twig') }}
 
     {{ include('catalog/picture/_form.html.twig', {'button_label': 'Modifier'}) }}
-</div>
 {% endblock %}
 
 {% block javascripts %}

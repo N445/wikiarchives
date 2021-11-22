@@ -36,7 +36,7 @@ class PictureController extends AbstractController
         $this->catalogRepository = $catalogRepository;
     }
     
-    #[Route('/', name: 'ADMIN_CATALOG_PICTURE_INDEX', methods: ['GET'])]
+    #[Route('/all', name: 'ADMIN_CATALOG_PICTURE_INDEX', methods: ['GET'])]
     public function index(Request $request, PaginatorInterface $paginator): Response
     {
         $pagination = $paginator->paginate(
@@ -47,6 +47,19 @@ class PictureController extends AbstractController
     
         return $this->render('catalog/picture/index.html.twig', [
             'pagination' => $pagination,
+        ]);
+    }
+    
+    #[Route('/catalog/{catalogId}', name: 'ADMIN_CATALOG_PICTURE_INDEX_CATALOG', methods: ['GET'])]
+    public function indexCatalog(int $catalogId, Request $request, PaginatorInterface $paginator): Response
+    {
+        if (!$catalog = $this->catalogRepository->byIdAdmin($catalogId)) {
+            return $this->redirectToRoute('ADMIN_CATALOG_CATALOG_BROWSE');
+        }
+        
+        return $this->render('catalog/picture/index-catalog.html.twig', [
+            'catalog' => $catalog,
+            'pictures' => $catalog->getPictures(),
         ]);
     }
     

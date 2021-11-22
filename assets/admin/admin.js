@@ -1,8 +1,8 @@
 // const Diff2Html = require('diff2html');
 import htmldiff from './lib/htmldiff';
-require('./lib/startbootstrap-sb-admin-gh-pages/js/scripts')
-require('./lib/startbootstrap-sb-admin-gh-pages/js/datatables-simple-demo')
-require('select2')
+require('./lib/startbootstrap-sb-admin-gh-pages/js/scripts');
+require('./lib/startbootstrap-sb-admin-gh-pages/js/datatables-simple-demo');
+require('select2');
 
 $.each($('.git-diff'), function (key, item) {
     item = $(item);
@@ -14,7 +14,9 @@ $.each($('.git-diff'), function (key, item) {
     item.find('.final').html(output)
 })
 
-$('.select2').select2();
+$('.select2').select2({
+    theme: "bootstrap-5",
+});
 
 
 // let originalHTML = $('.current').html();

@@ -11,11 +11,3 @@ vich_uploader:
       inject_on_load: false
       delete_on_update: true
       delete_on_remove: true
-    catalog_cover:
-#      uri_prefix: "%env(AWS_BASE_URL)%/catalog"
-      uri_prefix: "/uploads/catalog"
-      upload_destination: catalog_fs
-      namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
-      inject_on_load: false
-      delete_on_update: true
-      delete_on_remove: true

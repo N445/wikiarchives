@@ -104,7 +104,7 @@
                 $entityManager->persist($catalog);
                 $entityManager->flush();
                 
-                return $this->redirectToRoute('ADMIN_CATALOG_CATALOG_INDEX', [], Response::HTTP_SEE_OTHER);
+                return $this->redirectToRoute('ADMIN_CATALOG_CATALOG_BROWSE', [], Response::HTTP_SEE_OTHER);
             }
             
             return $this->renderForm('catalog/catalog/new.html.twig', [
@@ -133,7 +133,7 @@
             if ($form->isSubmitted() && $form->isValid()) {
                 $this->getDoctrine()->getManager()->flush();
                 
-                return $this->redirectToRoute('ADMIN_CATALOG_CATALOG_INDEX', [], Response::HTTP_SEE_OTHER);
+                return $this->redirectToRoute('ADMIN_CATALOG_CATALOG_BROWSE', [], Response::HTTP_SEE_OTHER);
             }
             
             return $this->renderForm('catalog/catalog/edit.html.twig', [

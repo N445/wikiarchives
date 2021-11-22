@@ -12,6 +12,7 @@
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                 <li><a class="dropdown-item" href="{{ path('ADMIN_CATALOG_CATALOG_EDIT', {'id': catalog.id}) }}">Modifier</a></li>
                 <li><a class="dropdown-item" href="{{ path('ADMIN_CATALOG_CATALOG_BROWSE', {'id': catalog.id}) }}">Sous albums</a></li>
+                <li><a class="dropdown-item" href="{{ path('ADMIN_CATALOG_PICTURE_INDEX_CATALOG', {'catalogId': catalog.id}) }}">Voir les photos</a></li>
                 <li><a class="dropdown-item" href="{{ path('ADMIN_CATALOG_PICTURE_NEW_MULTIPLE', {'catalogId': catalog.id}) }}">Ajouter des photos</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="{{ path('CATALOG', {'id': catalog.id}) }}">Voir en front</a></li>
@@ -32,6 +33,7 @@
                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                    <li><a class="dropdown-item" href="{{ path('ADMIN_CATALOG_CATALOG_EDIT', {'id': child.id}) }}">Modifier</a></li>
                                    <li><a class="dropdown-item" href="{{ path('ADMIN_CATALOG_CATALOG_BROWSE', {'id': child.id}) }}">Sous albums</a></li>
+                                   <li><a class="dropdown-item" href="{{ path('ADMIN_CATALOG_PICTURE_INDEX_CATALOG', {'catalogId': child.id}) }}">Voir les photos</a></li>
                                    <li><a class="dropdown-item" href="{{ path('ADMIN_CATALOG_PICTURE_NEW_MULTIPLE', {'catalogId': child.id}) }}">Ajouter des photos</a></li>
                                    <li><hr class="dropdown-divider"></li>
                                    <li><a class="dropdown-item" href="{{ path('CATALOG', {'id': child.id}) }}">Voir en front</a></li>

@@ -15,6 +15,8 @@ class PictureLicenseHelper
     public const CC_BY_NC = 'cc-by-nc';
     public const CC_BY_NC_SA = 'cc-by-nc-sa';
     public const CC_BY_NC_ND = 'cc-by-nc-nd';
+    public const CC_BY_SA_3_0_IGO = 'cc-by-sa-3-0-igo';
+    public const ALL_RIGHTS_RESERVED = 'all-rights-reserved';
     
     public const NAME = 'name';
     public const DESCRIPTION = 'description';
@@ -24,13 +26,15 @@ class PictureLicenseHelper
     public static function getLicensesChoices()
     {
         return [
-            'CC0' => self::CC0,
             'CC-by' => self::CC_BY,
             'CC-by-sa' => self::CC_BY_SA,
             'CC-by-nd' => self::CC_BY_ND,
             'CC-by-nc' => self::CC_BY_NC,
             'CC-by-nc-sa' => self::CC_BY_NC_SA,
             'CC-by-nc-nd' => self::CC_BY_NC_ND,
+            'CC BY-SA 3.0 IGO' => self::CC_BY_SA_3_0_IGO,
+            'All rights reserved' => self::ALL_RIGHTS_RESERVED,
+            'CC0' => self::CC0,
         ];
     }
     
@@ -42,6 +46,18 @@ class PictureLicenseHelper
     public static function getLicenses()
     {
         return [
+            self::CC_BY_SA_3_0_IGO => [
+                self::NAME => 'CC BY-SA 3.0 IGO',
+                self::DESCRIPTION => 'Partage dans les Mêmes Conditions 3.0 Organisations Internationales',
+                self::IMAGE => null,
+                self::URL => 'https://creativecommons.org/licenses/by-sa/3.0/igo/deed.fr',
+            ],
+            self::ALL_RIGHTS_RESERVED => [
+                self::NAME => 'All rights reserved',
+                self::DESCRIPTION => 'All rights reserved',
+                self::IMAGE => null,
+                self::URL => null,
+            ],
             self::CC0 => [
                 self::NAME => 'CC0',
                 self::DESCRIPTION => 'No Rights Reserved',

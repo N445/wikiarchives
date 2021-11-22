@@ -1,4 +1,15 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn btn-success mb-3">{{ button_label|default('Enregistrer') }}</button>
+<div class="row">
+    <div class="col-md-6">
+        {{ form_row(form.name) }}
+        {{ form_row(form.recursivInfo) }}
+        {{ form_row(form.place) }}
+        {{ form_row(form.imageFile) }}
+    </div>
+    <div class="col-md-6">
+        {{ form_row(form.description) }}
+    </div>
+</div>
+{{ form_widget(form) }}
+<button class="btn btn-success mb-3">{{ button_label|default('Enregistrer') }}</button>
 {{ form_end(form) }}

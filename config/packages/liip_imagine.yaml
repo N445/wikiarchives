@@ -6,9 +6,6 @@ liip_imagine:
       loader_picture:
         stream:
           wrapper: gaufrette://picture_fs/
-      loader_catalog:
-        stream:
-          wrapper: gaufrette://catalog_fs/
     resolvers:
       aws_s3_resolver:
         aws_s3:
@@ -28,13 +25,13 @@ liip_imagine:
       cache: ~
       catalog_banner:
         cache: default
-        data_loader: loader_catalog
+        data_loader: loader_picture
         quality: 75
         filters:
           thumbnail: { size: [1920, 500], mode: outbound }
       catalog_card_listing:
         cache: default
-        data_loader: loader_catalog
+        data_loader: loader_picture
         quality: 40
         filters:
           thumbnail: { size: [330, 330], mode: outbound }

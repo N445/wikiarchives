@@ -1,0 +1,56 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}Liste des photos de "{{ catalog.name}}" - {{ parent() }}{% endblock %}
+{% block bodytitle %}Liste des photos de "{{ catalog.name}}" - {{ parent() }}{% endblock %}
+
+{% block body %}
+        <a href="{{ path('ADMIN_CATALOG_PICTURE_NEW') }}" class="btn btn-primary mb-3">
+            Créer photo
+        </a>
+        <table class="datatable table">
+            <thead>
+            <tr>
+                <th>Image</th>
+                <th>Nom</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for picture in pictures %}
+                <tr>
+                    <td>
+                        <a href="{{ vich_uploader_asset(picture.file) }}"
+                           data-fancybox="gallery"
+                           data-caption="Optional caption"
+                        >
+                            <img src="{{ picture.file.imageName|imagine_filter('picture_admin_listing') }}"
+                                 alt="{{ picture.file.imageOriginalName }}"
+                                 width="100"
+                                 class="img-fluid rounded">
+                        </a>
+                    </td>
+                    <td>{{ picture.name }}</td>
+                    <td>
+                        <a href="{{ path('ADMIN_CATALOG_PICTURE_SHOW', {'id': picture.id}) }}" class="btn btn-sm btn-info">Voir</a>
+                        <a href="{{ path('ADMIN_CATALOG_PICTURE_EDIT', {'id': picture.id}) }}" class="btn btn-sm btn-info">Modifier</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+
+{% endblock %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('admin-catalog-datatable') }}
+    {{ encore_entry_link_tags('fancybox') }}
+{% endblock %}
+{% block javascripts %}
+    {{ encore_entry_script_tags('admin-catalog-datatable-js') }}
+    {{ encore_entry_script_tags('fancyboxjs') }}
+{% endblock %}

@@ -1,4 +1,21 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn btn-success">{{ button_label|default('Enregistrer') }}</button>
+<div class="row">
+    <div class="col-md-6">
+        {{ form_row(form.name) }}
+    </div>
+    <div class="col-md-6">
+        {{ form_row(form.location) }}
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        {{ form_row(form.lat) }}
+    </div>
+    <div class="col-md-6">
+        {{ form_row(form.lng) }}
+    </div>
+</div>
+<div id="map"{% if place.id %} data-position="{{ place.latLng|json_encode }}"{% endif %}></div>
+{{ form_widget(form) }}
+<button class="btn btn-success">{{ button_label|default('Enregistrer') }}</button>
 {{ form_end(form) }}

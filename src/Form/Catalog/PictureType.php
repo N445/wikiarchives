@@ -23,21 +23,38 @@ class PictureType extends AbstractType
             ->add('enabled', CheckboxType::class, [
                 'label' => 'Visible',
                 'required' => false,
+                'label_attr' => [
+                    'class' => 'checkbox-switch',
+                ],
             ])
             ->add('isEditedByWikiarchives', CheckboxType::class, [
                 'label' => 'Modifié par Wikiarchives',
                 'required' => false,
+                'label_attr' => [
+                    'class' => 'checkbox-switch',
+                ],
             ])
             ->add('license', ChoiceType::class, [
                 'label' => 'License',
                 'choices' => PictureLicenseHelper::getLicensesChoices()
             ])
-            ->add('validatedVersion', VersionType::class)
+            ->add('validatedVersion', VersionType::class, [
+                'label' => false
+            ])
             ->add('file', PictureFileType::class, [
+                'label' => false,
                 'data' => $builder->getData()->getfile()
             ])
             ->add('catalog', EntityType::class, [
                 'class' => Catalog::class,
+                'attr' => [
+                    'class' => 'select2'
+                ]
+            ])
+            ->add('catalogsIllustrations', EntityType::class, [
+                'class' => Catalog::class,
+                'multiple' => true,
+                'required' => false,
                 'attr' => [
                     'class' => 'select2'
                 ]

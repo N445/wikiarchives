@@ -24,9 +24,15 @@ class PlaceType extends AbstractType
             ])
             ->add('lat', TextType::class, [
                 'label' => 'Latitude',
+                'attr' => [
+                    'class' => 'place-map-lat'
+                ]
             ])
             ->add('lng', TextType::class, [
                 'label' => 'Longitude',
+                'attr' => [
+                    'class' => 'place-map-lng'
+                ]
             ])
             ->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) {
                 if(!$event->getData()->getLocation()){

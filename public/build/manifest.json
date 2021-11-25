@@ -8,6 +8,7 @@
   "build/picture-js.js": "/build/picture-js.js",
   "build/adminjs.js": "/build/adminjs.js",
   "build/filepondjs.js": "/build/filepondjs.js",
+  "build/filepond-dynamique-catalogjs.js": "/build/filepond-dynamique-catalogjs.js",
   "build/place-map-formjs.js": "/build/place-map-formjs.js",
   "build/place-map-form.css": "/build/place-map-form.css",
   "build/place-map-form.js": "/build/place-map-form.js",
@@ -27,8 +28,8 @@
   "build/vendors-node_modules_jquery_dist_jquery_js.js": "/build/vendors-node_modules_jquery_dist_jquery_js.js",
   "build/vendors-node_modules_core-js_internals_array-iteration_js-node_modules_core-js_internals_export_js.js": "/build/vendors-node_modules_core-js_internals_array-iteration_js-node_modules_core-js_internals_export_js.js",
   "build/vendors-node_modules_core-js_modules_es_array_map_js-node_modules_leaflet_dist_leaflet-src_js-e0c243.js": "/build/vendors-node_modules_core-js_modules_es_array_map_js-node_modules_leaflet_dist_leaflet-src_js-e0c243.js",
-  "build/vendors-node_modules_datatables_net-bs5_js_dataTables_bootstrap5_js.js": "/build/vendors-node_modules_datatables_net-bs5_js_dataTables_bootstrap5_js.js",
   "build/vendors-node_modules_filepond_dist_filepond_js.js": "/build/vendors-node_modules_filepond_dist_filepond_js.js",
+  "build/vendors-node_modules_datatables_net-bs5_js_dataTables_bootstrap5_js.js": "/build/vendors-node_modules_datatables_net-bs5_js_dataTables_bootstrap5_js.js",
   "build/vendors-node_modules_bootstrap_dist_js_bootstrap_esm_js-node_modules_core-js_modules_es_array-88fc80.js": "/build/vendors-node_modules_bootstrap_dist_js_bootstrap_esm_js-node_modules_core-js_modules_es_array-88fc80.js",
   "build/vendors-node_modules_leaflet_markercluster_dist_leaflet_markercluster-src_js.js": "/build/vendors-node_modules_leaflet_markercluster_dist_leaflet_markercluster-src_js.js",
   "build/vendors-node_modules_core-js_modules_es_array_find_js-node_modules_core-js_modules_es_array_i-550953.js": "/build/vendors-node_modules_core-js_modules_es_array_find_js-node_modules_core-js_modules_es_array_i-550953.js",
@@ -36,7 +37,7 @@
   "build/vendors-node_modules_tinymce_icons_default_icons_js-node_modules_tinymce_plugins_autoresize_p-3678fd.js": "/build/vendors-node_modules_tinymce_icons_default_icons_js-node_modules_tinymce_plugins_autoresize_p-3678fd.js",
   "build/vendors-node_modules_core-js_modules_es_array_find_js-node_modules_noty_lib_noty_js.js": "/build/vendors-node_modules_core-js_modules_es_array_find_js-node_modules_noty_lib_noty_js.js",
   "build/vendors-node_modules_core-js_modules_es_array_slice_js-node_modules_select2_dist_js_select2_js.js": "/build/vendors-node_modules_core-js_modules_es_array_slice_js-node_modules_select2_dist_js_select2_js.js",
-  "build/vendors-node_modules_select2_dist_css_select2_min_css.css": "/build/vendors-node_modules_select2_dist_css_select2_min_css.css",
+  "build/vendors-node_modules_select2-bootstrap-5-theme_dist_select2-bootstrap-5-theme_min_css-node_mo-59bd65.css": "/build/vendors-node_modules_select2-bootstrap-5-theme_dist_select2-bootstrap-5-theme_min_css-node_mo-59bd65.css",
   "build/vendors-node_modules_filepond_dist_filepond_min_css.css": "/build/vendors-node_modules_filepond_dist_filepond_min_css.css",
   "build/vendors-node_modules_fancyapps_ui_dist_fancybox_css.css": "/build/vendors-node_modules_fancyapps_ui_dist_fancybox_css.css",
   "build/vendors-node_modules_slick-carousel_slick_slick_js.js": "/build/vendors-node_modules_slick-carousel_slick_slick_js.js",
@@ -103,5 +104,9 @@
   "build/images/marker-shadow.png": "/build/images/marker-shadow.a0c6cc14.png",
   "build/skins/ui/oxide-dark/content.mobile.min.css": "/build/skins/ui/oxide-dark//content.mobile.min.css",
   "build/skins/ui/oxide/content.mobile.min.css": "/build/skins/ui/oxide//content.mobile.min.css",
-  "build/vendors-node_modules_select2-bootstrap-5-theme_dist_select2-bootstrap-5-theme_min_css-node_mo-59bd65.css": "/build/vendors-node_modules_select2-bootstrap-5-theme_dist_select2-bootstrap-5-theme_min_css-node_mo-59bd65.css"
+  "build/vendors-node_modules_core-js_internals_add-to-unscopables_js-node_modules_core-js_modules_es_-4a17ad.js": "/build/vendors-node_modules_core-js_internals_add-to-unscopables_js-node_modules_core-js_modules_es_-4a17ad.js",
+  "build/vendors-node_modules_core-js_modules_es_array_for-each_js-node_modules_core-js_modules_es_obj-04c62c.js": "/build/vendors-node_modules_core-js_modules_es_array_for-each_js-node_modules_core-js_modules_es_obj-04c62c.js",
+  "build/vendors-node_modules_core-js_modules_es_array_concat_js-node_modules_core-js_modules_es_array-2707f8.js": "/build/vendors-node_modules_core-js_modules_es_array_concat_js-node_modules_core-js_modules_es_array-2707f8.js",
+  "build/vendors-node_modules_core-js_modules_es_array_find_js-node_modules_core-js_modules_es_array_s-3f77ce.js": "/build/vendors-node_modules_core-js_modules_es_array_find_js-node_modules_core-js_modules_es_array_s-3f77ce.js",
+  "build/vendor_friendsofsymfony_jsrouting-bundle_Resources_public_js_router_min_js-public_js_fos_js_r-064a7f.js": "/build/vendor_friendsofsymfony_jsrouting-bundle_Resources_public_js_router_min_js-public_js_fos_js_r-064a7f.js"
 }

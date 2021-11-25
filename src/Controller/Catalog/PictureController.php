@@ -50,6 +50,20 @@ class PictureController extends AbstractController
         ]);
     }
     
+    
+    #[Route('/orphelines', name: 'ADMIN_CATALOG_PICTURE_ORPHELINES', methods: ['GET'])]
+    public function orphelines(): Response
+    {
+        return $this->render('catalog/picture/index-catalog.html.twig', [
+            'catalog' => (new Catalog())->setName('Orphelines'),
+            'pictures' => $this->pictureRepository->createQueryBuilder('p')
+                                                  ->where('p.catalog is null')
+                                                  ->getQuery()
+                                                  ->getResult()
+            ,
+        ]);
+    }
+    
     #[Route('/catalog/{catalogId}', name: 'ADMIN_CATALOG_PICTURE_INDEX_CATALOG', methods: ['GET'])]
     public function indexCatalog(int $catalogId, Request $request, PaginatorInterface $paginator): Response
     {
@@ -90,20 +104,16 @@ class PictureController extends AbstractController
         ]);
     }
     
-    #[Route('/new-multiple/{catalogId}', name: 'ADMIN_CATALOG_PICTURE_NEW_MULTIPLE', methods: ['GET', 'POST'])]
-    public function newMultiple(Request $request, ?int $catalogId = null): Response
+    #[Route('/new-multiple/', name: 'ADMIN_CATALOG_PICTURE_NEW_MULTIPLE', methods: ['GET', 'POST'])]
+    public function newMultiple(): Response
     {
-        $catalog = null;
-        if ($catalogId) {
-            $catalog = $this->catalogRepository->byIdAdmin($catalogId);
-        }
         return $this->renderForm('catalog/picture/new-multiple.html.twig', [
-            'catalog' => $catalog,
-            'catalogs' => array_filter($this->catalogRepository->findAll(),function($catalog){
+            'catalogs' => array_filter($this->catalogRepository->findAll(), function ($catalog) {
                 return Catalog::ROOT !== $catalog->getName();
             }),
         ]);
     }
+    
     
     #[Route('/{id}', name: 'ADMIN_CATALOG_PICTURE_SHOW', methods: ['GET'])]
     public function show(int $id): Response
@@ -131,10 +141,9 @@ class PictureController extends AbstractController
             PictureContentPopulator::setContent($picture);
             $this->getDoctrine()->getManager()->flush();
     
-            return $this->redirectToRoute('ADMIN_CATALOG_CATALOG_TREE', [
-                'id' => $picture->getCatalog()->getId()
+            return $this->redirectToRoute('ADMIN_CATALOG_PICTURE_EDIT', [
+                'id' => $picture->getId()
             ], Response::HTTP_SEE_OTHER);
-            return $this->redirectToRoute('ADMIN_CATALOG_PICTURE_INDEX', [], Response::HTTP_SEE_OTHER);
         }
         
         return $this->renderForm('catalog/picture/edit.html.twig', [

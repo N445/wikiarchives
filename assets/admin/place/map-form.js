@@ -26,8 +26,8 @@ if ($('#map').data('position') !== undefined) {
 
 if(!$('#map').hasClass('read-only')){
     map.on('click', function (e) {
-        $('#place_lat').val(e.latlng.lat);
-        $('#place_lng').val(e.latlng.lng);
+        $('.place-map-lat').val(e.latlng.lat);
+        $('.place-map-lng').val(e.latlng.lng);
         if (marker !== undefined) {
             map.removeLayer(marker)
         }

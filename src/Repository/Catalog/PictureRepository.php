@@ -130,8 +130,7 @@
         public function getGpsPointsFront(): array
         {
             return $this->createQueryBuilder('p')
-                        ->addSelect('file', 'validatedVersion', 'exif', 'catalog', 'catalog_parent')
-                        ->leftJoin('p.file', 'file')
+                        ->addSelect( 'validatedVersion', 'exif', 'catalog', 'catalog_parent')
                         ->leftJoin('p.validatedVersion', 'validatedVersion')
                         ->leftJoin('validatedVersion.exif', 'exif')
                         ->leftJoin('p.catalog', 'catalog')
@@ -163,9 +162,8 @@
         public function getBaseAdminQuery()
         {
             return $this->createQueryBuilder('p')
-                        ->addSelect('catalog', 'pictures_file', 'pictures_versions', 'pictures_validatedversion', 'pictures_validatedversion_exif')
+                        ->addSelect('catalog', 'pictures_versions', 'pictures_validatedversion', 'pictures_validatedversion_exif')
                         ->leftJoin('p.catalog', 'catalog')
-                        ->leftJoin('p.file', 'pictures_file')
                         ->leftJoin('p.versions', 'pictures_versions')
                         ->leftJoin('p.validatedVersion', 'pictures_validatedversion')
                         ->leftJoin('pictures_validatedversion.exif', 'pictures_validatedversion_exif')
@@ -178,42 +176,12 @@
         public function getBaseFrontQuery()
         {
             return $this->createQueryBuilder('p')
-                        ->addSelect('catalog', 'catalog_parent', 'pictures_file', 'picture_validatedversion', 'picture_validatedversion_exif')
+                        ->addSelect('catalog', 'catalog_parent', 'picture_validatedversion', 'picture_validatedversion_exif')
                         ->leftJoin('p.catalog', 'catalog')
                         ->leftJoin('catalog.parent', 'catalog_parent')
-                        ->leftJoin('p.file', 'pictures_file')
                         ->leftJoin('p.validatedVersion', 'picture_validatedversion')
                         ->leftJoin('picture_validatedversion.exif', 'picture_validatedversion_exif')
                         ->andWhere('p.enabled = true')
             ;
         }
-
-        // /**
-        //  * @return Picture[] Returns an array of Picture objects
-        //  */
-        /*
-        public function findByExampleField($value)
-        {
-            return $this->createQueryBuilder('p')
-                ->andWhere('p.exampleField = :val')
-                ->setParameter('val', $value)
-                ->orderBy('p.id', 'ASC')
-                ->setMaxResults(10)
-                ->getQuery()
-                ->getResult()
-            ;
-        }
-        */
-
-        /*
-        public function findOneBySomeField($value): ?Picture
-        {
-            return $this->createQueryBuilder('p')
-                ->andWhere('p.exampleField = :val')
-                ->setParameter('val', $value)
-                ->getQuery()
-                ->getOneOrNullResult()
-            ;
-        }
-        */
     }

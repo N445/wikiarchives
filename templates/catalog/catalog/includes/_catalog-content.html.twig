@@ -1,6 +1,7 @@
 <h2>Contenu de {{ catalog.name }}</h2>
-{% if catalog.imageName %}
-    <img src="{{ vich_uploader_asset(catalog) }}" alt="{{ catalog.name }}" class="img-fluid rounded my-3" width="100px">
+{% if catalog.illustration %}
+    <img src="{{ vich_uploader_asset(catalog.illustration.file) }}" alt="{{ catalog.name }}"
+         class="img-fluid rounded my-3" width="100px">
 {% else %}
     <p>
         <span class="badge bg-danger">Pas de couverture</span>
@@ -31,7 +32,6 @@
         <th></th>
         <th>Nom</th>
         <th>Taille</th>
-        <th>Type mime</th>
         <th>Résolution</th>
         <th>Visible</th>
         {% if is_granted('ROLE_MODERATOR') %}
@@ -45,18 +45,16 @@
         <tr>
             <td>
                 <a href="{{ vich_uploader_asset(picture.file) }}"
-                        data-fancybox="gallery"
-                        data-caption="Optional caption"
-                >
+                   data-fancybox="gallery">
                     <img src="{{ picture.file.imageName|imagine_filter('picture_admin_listing') }}"
                          alt="{{ picture.file.imageOriginalName }}"
                          width="100"
-                         class="img-fluid rounded">
+                         class="img-fluid rounded"
+                         loading="lazy">
                 </a>
             </td>
             <td>{{ picture.name }}</td>
             <td>{{ picture.file.imageSize|humanFilesize }}</td>
-            <td>{{ picture.file.imageMimeType }}</td>
             <td>{{ picture.file.imageDimensions|join('x') }}</td>
             <td>
                 {% if picture.enabled %}

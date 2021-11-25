@@ -21,9 +21,7 @@
                     <th>Image</th>
                     <td>
                         <a href="{{ vich_uploader_asset(picture.file) }}"
-                           data-fancybox="gallery"
-                           data-caption="Optional caption"
-                        >
+                           data-fancybox="gallery">
                             <img src="{{ picture.file.imageName|imagine_filter('picture_card_listing') }}"
                                  alt="{{ picture.file.imageOriginalName }}"
                                  class="img-fluid rounded">
@@ -67,11 +65,4 @@
                 </table>
             </div>
         </div>
-{% endblock %}
-
-{% block stylesheets %}
-    {{ encore_entry_link_tags('fancybox') }}
-{% endblock %}
-{% block javascripts %}
-    {{ encore_entry_script_tags('fancyboxjs') }}
 {% endblock %}

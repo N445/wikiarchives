@@ -1,56 +1,59 @@
 {% extends 'base-admin.html.twig' %}
 
 {% block title %}Liste des photos de "{{ catalog.name}}" - {{ parent() }}{% endblock %}
-{% block bodytitle %}Liste des photos de "{{ catalog.name}}" - {{ parent() }}{% endblock %}
+{% block bodytitle %}Liste des photos de "{{ catalog.name}}"{% endblock %}
 
 {% block body %}
-        <a href="{{ path('ADMIN_CATALOG_PICTURE_NEW') }}" class="btn btn-primary mb-3">
-            Créer photo
-        </a>
-        <table class="datatable table">
-            <thead>
+    <p>
+        {{ pictures|length }} photos
+    </p>
+    <a href="{{ path('ADMIN_CATALOG_PICTURE_NEW_MULTIPLE',{'catalogId':catalog.id}) }}" class="btn btn-primary mb-3">
+        Ajouter photos
+    </a>
+
+    <div class="row g-3">
+        {% for picture in pictures %}
+            <div class="col-md-2">
+                <div class="card h-100">
+                    <a href="{{ vich_uploader_asset(picture.file) }}"
+                       data-fancybox="gallery">
+                        <img src="{{ picture.file.imageName|imagine_filter('picture_admin_listing') }}"
+                             alt="{{ picture.file.imageOriginalName }}"
+                             class="card-img-top" loading="lazy">
+                    </a>
+                    <div class="card-body">
+                       <div class="d-flex flex-column justify-content-between h-100">
+                           <p class="card-text">{{ picture.name }}</p>
+                           <div class="dropdown">
+                               <button class="btn btn-sm w-100 btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                                       data-bs-toggle="dropdown" aria-expanded="false">
+                                   Actions
+                               </button>
+                               <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                   <li><a class="dropdown-item"
+                                          href="{{ path('ADMIN_CATALOG_PICTURE_SHOW', {'id': picture.id}) }}">Voir</a></li>
+                                   <li><a class="dropdown-item"
+                                          href="{{ path('ADMIN_CATALOG_PICTURE_EDIT', {'id': picture.id}) }}">Modifier</a>
+                                   </li>
+                               </ul>
+                           </div>
+                       </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
             <tr>
-                <th>Image</th>
-                <th>Nom</th>
-                <th>Actions</th>
+                <td colspan="3">no records found</td>
             </tr>
-            </thead>
-            <tbody>
-            {% for picture in pictures %}
-                <tr>
-                    <td>
-                        <a href="{{ vich_uploader_asset(picture.file) }}"
-                           data-fancybox="gallery"
-                           data-caption="Optional caption"
-                        >
-                            <img src="{{ picture.file.imageName|imagine_filter('picture_admin_listing') }}"
-                                 alt="{{ picture.file.imageOriginalName }}"
-                                 width="100"
-                                 class="img-fluid rounded">
-                        </a>
-                    </td>
-                    <td>{{ picture.name }}</td>
-                    <td>
-                        <a href="{{ path('ADMIN_CATALOG_PICTURE_SHOW', {'id': picture.id}) }}" class="btn btn-sm btn-info">Voir</a>
-                        <a href="{{ path('ADMIN_CATALOG_PICTURE_EDIT', {'id': picture.id}) }}" class="btn btn-sm btn-info">Modifier</a>
-                    </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="3">no records found</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+        {% endfor %}
+    </div>
 
 
 {% endblock %}
 
 {% block stylesheets %}
     {{ encore_entry_link_tags('admin-catalog-datatable') }}
-    {{ encore_entry_link_tags('fancybox') }}
 {% endblock %}
 {% block javascripts %}
     {{ encore_entry_script_tags('admin-catalog-datatable-js') }}
-    {{ encore_entry_script_tags('fancyboxjs') }}
 {% endblock %}

@@ -19,7 +19,7 @@
                             <div class="item{{ catalogPicture.id == picture.id?' current-picture':'' }}">
                                 <div class="catalog-navigation-image rounded">
                                     <a href="{{ path('PICTURE', {'catalogId':picture.catalog.id,'id': catalogPicture.id}) }}">
-                                        <img src="{{ asset(catalogPicture.file.imageName|imagine_filter('picture_card_listing')) }}"
+                                        <img data-lazy="{{ asset(catalogPicture.file.imageName|imagine_filter('picture_card_listing')) }}"
                                              alt="{{ catalogPicture.name }}">
                                     </a>
                                 </div>

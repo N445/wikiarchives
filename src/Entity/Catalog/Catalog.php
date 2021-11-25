@@ -10,9 +10,6 @@
     use Doctrine\ORM\Mapping as ORM;
     use Doctrine\ORM\PersistentCollection;
     use Gedmo\Mapping\Annotation as Gedmo;
-    use Symfony\Component\HttpFoundation\File\File;
-    use Symfony\Component\HttpFoundation\File\UploadedFile;
-    use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
     /**
      * @ORM\Entity(repositoryClass=CatalogRepository::class)
@@ -110,12 +107,17 @@
          * @ORM\ManyToOne(targetEntity=User::class, inversedBy="createdCatalogs")
          */
         private $createdBy;
-
+    
         /**
          * @Gedmo\Blameable(on="update")
          * @ORM\ManyToOne(targetEntity=User::class, inversedBy="updatedCatalogs")
          */
         private $updatedBy;
+    
+        /**
+         * @ORM\ManyToOne(targetEntity=Picture::class, inversedBy="catalogsIllustrations", fetch="EAGER")
+         */
+        private $illustration;
     
         /**
          *
@@ -392,6 +394,24 @@
         public function setUpdatedBy(?User $user): Catalog
         {
             $this->updatedBy = $user;
+            return $this;
+        }
+    
+        public function getIllustration(): ?Picture
+        {
+            if($this->illustration){
+                return $this->illustration;
+            }
+            if($this->getPictures()->first()){
+                return $this->getPictures()->first();
+            }
+            return null;
+        }
+    
+        public function setIllustration(?Picture $illustration): self
+        {
+            $this->illustration = $illustration;
+        
             return $this;
         }
     }

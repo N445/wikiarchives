@@ -53,6 +53,7 @@ Encore
 
     // Admin filepond
     .addEntry('filepondjs', './assets/admin/filepond.js')
+    .addEntry('filepond-dynamique-catalogjs', './assets/admin/filepond-dynamique-catalog.js')
     .addStyleEntry('filepond', './assets/admin/filepond.scss')
 
     // Admin place map

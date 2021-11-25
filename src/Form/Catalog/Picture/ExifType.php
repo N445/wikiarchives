@@ -4,11 +4,7 @@
     
     use App\Entity\Catalog\Picture\Exif;
     use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\Form\CallbackTransformer;
-    use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
     use Symfony\Component\Form\Extension\Core\Type\DateType;
-    use Symfony\Component\Form\Extension\Core\Type\NumberType;
-    use Symfony\Component\Form\Extension\Core\Type\TextareaType;
     use Symfony\Component\Form\Extension\Core\Type\TextType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -22,6 +18,7 @@
 //                    'required' => false,
 //                ])
                 ->add('author', TextType::class, [
+                    'label' => 'Auteur',
                     'required' => false,
                 ])
 //                ->add('camera', TextType::class, [
@@ -34,10 +31,12 @@
 //                    'required' => false,
 //                ])
                 ->add('creationdate', DateType::class, [
+                    'label' => 'Date de prise de vue',
                     'required' => false,
                     'widget' => 'single_text',
                 ])
                 ->add('credit', TextType::class, [
+                    'label' => 'Credit',
                     'required' => false,
                 ])
 //                ->add('aperture', TextType::class, [
@@ -109,13 +108,20 @@
 //                    'required' => false,
 //                ])
                 ->add('source', TextType::class, [
+                    'label' => 'Source',
                     'required' => false,
                 ])
                 ->add('lat', TextType::class, [
                     'required' => false,
+                    'attr' => [
+                        'class' => 'place-map-lat'
+                    ]
                 ])
                 ->add('lng', TextType::class, [
                     'required' => false,
+                    'attr' => [
+                        'class' => 'place-map-lng'
+                    ]
                 ])
             ;
             

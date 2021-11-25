@@ -294,7 +294,7 @@ window.addEventListener('DOMContentLoaded', function (event) {
 },
 /******/ __webpack_require__ => { // webpackRuntimeModules
 /******/ var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-/******/ __webpack_require__.O(0, ["vendors-node_modules_jquery_dist_jquery_js","vendors-node_modules_core-js_internals_array-iteration_js-node_modules_core-js_internals_export_js","vendors-node_modules_core-js_modules_es_array_find_js-node_modules_core-js_modules_es_array_i-550953","vendors-node_modules_core-js_modules_es_array_slice_js-node_modules_select2_dist_js_select2_js"], () => (__webpack_exec__("./assets/admin/admin.js")));
+/******/ __webpack_require__.O(0, ["vendors-node_modules_jquery_dist_jquery_js","vendors-node_modules_core-js_internals_array-iteration_js-node_modules_core-js_internals_export_js","vendors-node_modules_core-js_internals_add-to-unscopables_js-node_modules_core-js_modules_es_-4a17ad","vendors-node_modules_core-js_modules_es_array_find_js-node_modules_core-js_modules_es_array_s-3f77ce"], () => (__webpack_exec__("./assets/admin/admin.js")));
 /******/ var __webpack_exports__ = __webpack_require__.O();
 /******/ }
 ]);

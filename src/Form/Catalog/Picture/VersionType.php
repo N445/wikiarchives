@@ -25,7 +25,9 @@
                         'class' => 'wysiwyg',
                     ]
                 ])
-                ->add('exif', ExifType::class)
+                ->add('exif', ExifType::class, [
+                    'label' => false
+                ])
             ;
         }
         

@@ -1,15 +1,22 @@
 {% extends 'base-admin.html.twig' %}
 
 {% block title %}Ajout multiple de photos - {{ parent() }}{% endblock %}
-{% block bodytitle %}Ajout multiple de photos {% if catalog is not null %} sur {{ catalog.name }}{% endif %}{% endblock %}
+{% block bodytitle %}Ajout multiple de photos{% endblock %}
 
 {% block body %}
 {#    {% if catalog is null and 'root' != catalog.name %}#}
         <p>
             Des images ou des zip
         </p>
-        <form method="POST"
-              action="{{ path('AJAX_CATALOG_PICTURE_FILEPOND', {'directoryId': catalog.id}) }}">
+        <form method="POST" action="#">
+            <div class="mb-3">
+                <select name="catalog" class="select2">
+                    {% for catalog in catalogs %}
+                        <option value="{{ catalog.id }}">{{ catalog.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
             <input type="file" class="filepond" name="filepond" data-allow-remove="true">
         </form>
 {#    {% endif %}#}
@@ -20,5 +27,5 @@
 {% endblock %}
 
 {% block javascripts %}
-    {{ encore_entry_script_tags('filepondjs') }}
+    {{ encore_entry_script_tags('filepond-dynamique-catalogjs') }}
 {% endblock %}

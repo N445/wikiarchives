@@ -5,6 +5,7 @@
     <title>{% block title %}Espace d'adminstration{% endblock %}</title>
 {#    {{ encore_entry_link_tags('globals') }}#}
     {{ encore_entry_link_tags('admin') }}
+    {{ encore_entry_link_tags('fancybox') }}
 
     {# Run `composer require symfony/webpack-encore-bundle`
            and uncomment the following Encore helpers to start using Symfony UX #}
@@ -37,6 +38,8 @@
 
 {{ encore_entry_script_tags('globalsjs') }}
 {{ encore_entry_script_tags('adminjs') }}
+{{ encore_entry_script_tags('fancyboxjs') }}
+
 {% block javascripts %}
     {# {{ encore_entry_script_tags('app') }} #}
 {% endblock %}

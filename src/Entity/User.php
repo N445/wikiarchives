@@ -130,7 +130,9 @@
             // guarantee every user at least has ROLE_USER
             $roles[] = UserRoles::ROLE_USER;
             
-            return array_unique($roles);
+            $roles = array_unique($roles);
+            sort($roles);
+            return $roles;
         }
         
         public function setRoles(array $roles): self

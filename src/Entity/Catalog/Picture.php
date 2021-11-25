@@ -69,7 +69,7 @@
         private $tmpVersions;
 
         /**
-         * @ORM\OneToOne(targetEntity=File::class, inversedBy="picture", cascade={"persist", "remove"})
+         * @ORM\OneToOne(targetEntity=File::class, inversedBy="picture", cascade={"persist", "remove"}, fetch="EAGER")
          */
         private $file;
 
@@ -94,6 +94,11 @@
          * @ORM\Column(type="boolean")
          */
         private $isEditedByWikiarchives;
+
+        /**
+         * @ORM\OneToMany(targetEntity=Catalog::class, mappedBy="illustration")
+         */
+        private $catalogsIllustrations;
     
         public function __construct()
         {
@@ -104,6 +109,7 @@
             $this->addVersion($this->validatedVersion);
             $this->setLicense(PictureLicenseHelper::CC_BY);
             $this->setIsEditedByWikiarchives(false);
+            $this->catalogsIllustrations = new ArrayCollection();
         }
 
         public function __toString()
@@ -327,6 +333,36 @@
         {
             $this->isEditedByWikiarchives = $isEditedByWikiarchives;
         
+            return $this;
+        }
+
+        /**
+         * @return Collection|Catalog[]
+         */
+        public function getCatalogsIllustrations(): Collection
+        {
+            return $this->catalogsIllustrations;
+        }
+
+        public function addCatalogsIllustration(Catalog $catalogsIllustration): self
+        {
+            if (!$this->catalogsIllustrations->contains($catalogsIllustration)) {
+                $this->catalogsIllustrations[] = $catalogsIllustration;
+                $catalogsIllustration->setIllustration($this);
+            }
+
+            return $this;
+        }
+
+        public function removeCatalogsIllustration(Catalog $catalogsIllustration): self
+        {
+            if ($this->catalogsIllustrations->removeElement($catalogsIllustration)) {
+                // set the owning side to null (unless already changed)
+                if ($catalogsIllustration->getIllustration() === $this) {
+                    $catalogsIllustration->setIllustration(null);
+                }
+            }
+
             return $this;
         }
     }

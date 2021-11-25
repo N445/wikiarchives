@@ -149,10 +149,9 @@
         public function getBaseAdminQuery()
         {
             return $this->createQueryBuilder('c')
-                        ->addSelect('children', 'pictures', 'pictures_file', 'pictures_validatedversion', 'pictures_validatedversion_exif')
+                        ->addSelect('children', 'pictures', 'pictures_validatedversion', 'pictures_validatedversion_exif')
                         ->leftJoin('c.children', 'children')
                         ->leftJoin('c.pictures', 'pictures')
-                        ->leftJoin('pictures.file', 'pictures_file')
                         ->leftJoin('pictures.validatedVersion', 'pictures_validatedversion')
                         ->leftJoin('pictures_validatedversion.exif', 'pictures_validatedversion_exif')
                         ->leftJoin('pictures.tmpVersions', 'pictures_tmpVersions')
@@ -165,18 +164,18 @@
         public function getBaseFrontQuery(bool $isFull = false)
         {
             $qb = $this->createQueryBuilder('c')
-                       ->addSelect('children', 'children_pictures', 'pictures')
+                       ->addSelect('children', 'children_pictures', 'pictures', 'illustration')
                        ->andWhere('c.enabled = true')
                        ->leftJoin('c.children', 'children', Join::WITH, 'children.enabled = true')
                        ->leftJoin('children.pictures', 'children_pictures', Join::WITH, 'children_pictures.enabled = true')
                        ->leftJoin('c.pictures', 'pictures', Join::WITH, 'pictures.enabled = true')
+                       ->leftJoin('c.illustration', 'illustration')
                        ->addOrderBy('c.lft', 'ASC')
                        ->addOrderBy('children.lft', 'ASC')
             ;
         
             if ($isFull) {
-                $qb->addSelect('pictures_file', 'pictures_validatedversion', 'pictures_validatedversion_exif')
-                   ->leftJoin('pictures.file', 'pictures_file')
+                $qb->addSelect( 'pictures_validatedversion', 'pictures_validatedversion_exif')
                    ->leftJoin('pictures.validatedVersion', 'pictures_validatedversion')
                    ->leftJoin('pictures_validatedversion.exif', 'pictures_validatedversion_exif')
                 ;

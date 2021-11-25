@@ -8,7 +8,7 @@
                     Acceder au site
                 </a>
                 <div class="sb-sidenav-menu-heading">Core</div>
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="{{ path('ADMIN') }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                     Dashboard
                 </a>
@@ -37,7 +37,7 @@
                     <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
                         <a class="nav-link" href="{{ path('ADMIN_CATALOG_PICTURE_NEW_MULTIPLE') }}">Ajouter</a>
                         <a class="nav-link" href="layout-sidenav-light.html">Gestion par lot</a>
-                        <a class="nav-link" href="layout-sidenav-light.html">Orphelines</a>
+                        <a class="nav-link" href="{{ path('ADMIN_CATALOG_PICTURE_ORPHELINES') }}">Orphelines</a>
                     </nav>
                 </div>
                 <a class="nav-link" href="{{ path('ADMIN_CATALOG_PLACE_INDEX') }}">

@@ -65,8 +65,8 @@
         "/build/runtime.js",
         "/build/vendors-node_modules_jquery_dist_jquery_js.js",
         "/build/vendors-node_modules_core-js_internals_array-iteration_js-node_modules_core-js_internals_export_js.js",
-        "/build/vendors-node_modules_core-js_modules_es_array_find_js-node_modules_core-js_modules_es_array_i-550953.js",
-        "/build/vendors-node_modules_core-js_modules_es_array_slice_js-node_modules_select2_dist_js_select2_js.js",
+        "/build/vendors-node_modules_core-js_internals_add-to-unscopables_js-node_modules_core-js_modules_es_-4a17ad.js",
+        "/build/vendors-node_modules_core-js_modules_es_array_find_js-node_modules_core-js_modules_es_array_s-3f77ce.js",
         "/build/adminjs.js"
       ]
     },
@@ -76,6 +76,18 @@
         "/build/vendors-node_modules_jquery_dist_jquery_js.js",
         "/build/vendors-node_modules_filepond_dist_filepond_js.js",
         "/build/filepondjs.js"
+      ]
+    },
+    "filepond-dynamique-catalogjs": {
+      "js": [
+        "/build/runtime.js",
+        "/build/vendors-node_modules_jquery_dist_jquery_js.js",
+        "/build/vendors-node_modules_core-js_internals_array-iteration_js-node_modules_core-js_internals_export_js.js",
+        "/build/vendors-node_modules_filepond_dist_filepond_js.js",
+        "/build/vendors-node_modules_core-js_internals_add-to-unscopables_js-node_modules_core-js_modules_es_-4a17ad.js",
+        "/build/vendors-node_modules_core-js_modules_es_array_for-each_js-node_modules_core-js_modules_es_obj-04c62c.js",
+        "/build/vendor_friendsofsymfony_jsrouting-bundle_Resources_public_js_router_min_js-public_js_fos_js_r-064a7f.js",
+        "/build/filepond-dynamique-catalogjs.js"
       ]
     },
     "place-map-formjs": {
@@ -101,11 +113,13 @@
         "/build/runtime.js",
         "/build/vendors-node_modules_jquery_dist_jquery_js.js",
         "/build/vendors-node_modules_core-js_internals_array-iteration_js-node_modules_core-js_internals_export_js.js",
-        "/build/vendors-node_modules_datatables_net-bs5_js_dataTables_bootstrap5_js.js",
         "/build/vendors-node_modules_filepond_dist_filepond_js.js",
+        "/build/vendors-node_modules_core-js_internals_add-to-unscopables_js-node_modules_core-js_modules_es_-4a17ad.js",
+        "/build/vendors-node_modules_datatables_net-bs5_js_dataTables_bootstrap5_js.js",
         "/build/vendors-node_modules_bootstrap_dist_js_bootstrap_esm_js-node_modules_core-js_modules_es_array-88fc80.js",
-        "/build/vendors-node_modules_core-js_modules_es_array_find_js-node_modules_core-js_modules_es_array_i-550953.js",
-        "/build/vendors-node_modules_core-js_modules_es_array_concat_js-node_modules_core-js_modules_es_array-a4cd33.js",
+        "/build/vendors-node_modules_core-js_modules_es_array_for-each_js-node_modules_core-js_modules_es_obj-04c62c.js",
+        "/build/vendors-node_modules_core-js_modules_es_array_concat_js-node_modules_core-js_modules_es_array-2707f8.js",
+        "/build/vendor_friendsofsymfony_jsrouting-bundle_Resources_public_js_router_min_js-public_js_fos_js_r-064a7f.js",
         "/build/admin-tree-js.js"
       ]
     },

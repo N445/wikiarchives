@@ -38,9 +38,9 @@ liip_imagine:
       picture_admin_listing:
         cache: default
         data_loader: loader_picture
-        quality: 50
+        quality: 75
         filters:
-          thumbnail: { size: [66, 45], mode: outbound }
+          thumbnail: { size: [250, 170], mode: outbound }
       picture_card_listing:
         cache: default
         data_loader: loader_picture

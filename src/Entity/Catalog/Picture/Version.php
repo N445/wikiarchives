@@ -61,7 +61,7 @@ class Version
     private $description;
 
     /**
-     * @ORM\OneToOne(targetEntity=Exif::class, cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Exif::class, cascade={"persist", "remove"}, fetch="EAGER")
      * @Gedmo\Versioned
      */
     private $exif;

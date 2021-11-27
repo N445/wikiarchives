@@ -123,6 +123,13 @@
         "/build/admin-tree-js.js"
       ]
     },
+    "pictues-mass-edit-js": {
+      "js": [
+        "/build/runtime.js",
+        "/build/vendors-node_modules_jquery_dist_jquery_js.js",
+        "/build/pictues-mass-edit-js.js"
+      ]
+    },
     "admin-catalog-datatable-js": {
       "js": [
         "/build/runtime.js",
@@ -204,6 +211,14 @@
       ],
       "css": [
         "/build/admin-tree.css"
+      ]
+    },
+    "pictues-mass-edit": {
+      "js": [
+        "/build/runtime.js"
+      ],
+      "css": [
+        "/build/pictues-mass-edit.css"
       ]
     },
     "admin-catalog-datatable": {

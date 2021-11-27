@@ -54,7 +54,7 @@
         private $place;
 
         /**
-         * @ORM\OneToOne(targetEntity=Version::class, cascade={"persist", "remove"})
+         * @ORM\OneToOne(targetEntity=Version::class, cascade={"persist", "remove"}, fetch="EAGER")
          */
         private $validatedVersion;
 
@@ -317,7 +317,7 @@
             return $this->license;
         }
     
-        public function setLicense(string $license): self
+        public function setLicense(?string $license): self
         {
             $this->license = $license;
         

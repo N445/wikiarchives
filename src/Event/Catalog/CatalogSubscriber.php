@@ -68,6 +68,7 @@ class CatalogSubscriber implements EventSubscriberInterface
         if(!$catalog){
             return;
         }
+        dump($catalog);
         $cache = new TagAwareAdapter(
             new FilesystemAdapter(),
         );

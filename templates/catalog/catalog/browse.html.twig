@@ -1,3 +1,5 @@
+{% import 'macro/admin/_catalog-actions.html.twig' as catalogMacro %}
+
 {% extends 'base-admin.html.twig' %}
 
 {% block title %}Parcourir - {{ parent() }}{% endblock %}
@@ -5,19 +7,12 @@
 
 {% block body %}
     {% if 'root' != catalog.name %}
-        <div class="dropdown mb-5">
-            <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                Actions
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <li><a class="dropdown-item" href="{{ path('ADMIN_CATALOG_CATALOG_EDIT', {'id': catalog.id}) }}">Modifier</a></li>
-                <li><a class="dropdown-item" href="{{ path('ADMIN_CATALOG_CATALOG_BROWSE', {'id': catalog.id}) }}">Sous albums</a></li>
-                <li><a class="dropdown-item" href="{{ path('ADMIN_CATALOG_PICTURE_INDEX_CATALOG', {'catalogId': catalog.id}) }}">Voir les photos</a></li>
-                <li><a class="dropdown-item" href="{{ path('ADMIN_CATALOG_PICTURE_NEW_MULTIPLE', {'catalogId': catalog.id}) }}">Ajouter des photos</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="{{ path('CATALOG', {'id': catalog.id}) }}">Voir en front</a></li>
-            </ul>
-        </div>
+       <div class="btn-group mb-5">
+           <a href="{{ path('ADMIN_CATALOG_CATALOG_BROWSE', {'id': catalog.parent.id}) }}" class="btn btn-sm btn-outline-secondary">
+               Parent
+           </a>
+           {{ catalogMacro.catalogActionsButtons(catalog) }}
+       </div>
     {% endif %}
     <div class="row g-3">
         {% for child in catalog.children %}
@@ -26,19 +21,7 @@
                     <div class="card-body">
                        <div class="h-100 d-flex flex-column justify-content-between">
                            <h5 class="card-title">{{ child.name }}</h5>
-                           <div class="dropdown">
-                               <button class="btn btn-sm w-100 btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                   Actions
-                               </button>
-                               <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                   <li><a class="dropdown-item" href="{{ path('ADMIN_CATALOG_CATALOG_EDIT', {'id': child.id}) }}">Modifier</a></li>
-                                   <li><a class="dropdown-item" href="{{ path('ADMIN_CATALOG_CATALOG_BROWSE', {'id': child.id}) }}">Sous albums</a></li>
-                                   <li><a class="dropdown-item" href="{{ path('ADMIN_CATALOG_PICTURE_INDEX_CATALOG', {'catalogId': child.id}) }}">Voir les photos</a></li>
-                                   <li><a class="dropdown-item" href="{{ path('ADMIN_CATALOG_PICTURE_NEW_MULTIPLE', {'catalogId': child.id}) }}">Ajouter des photos</a></li>
-                                   <li><hr class="dropdown-divider"></li>
-                                   <li><a class="dropdown-item" href="{{ path('CATALOG', {'id': child.id}) }}">Voir en front</a></li>
-                               </ul>
-                           </div>
+                           {{ catalogMacro.catalogActionsButtons(child) }}
                        </div>
                     </div>
                     <div class="card-footer text-muted">

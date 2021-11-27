@@ -1,0 +1,78 @@
+{% import 'macro/admin/_catalog-actions.html.twig' as catalogMacro %}
+
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}Edition multiple de photos - {{ parent() }}{% endblock %}
+{% block bodytitle %}Edition multiple de photos "{{ catalog.name }}"{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-6">
+          <div class="sticky-top">
+              {{ catalogMacro.catalogActionsButtons(catalog) }}
+              {{ form_start(form) }}
+              <div class="row align-items-end">
+                  <div class="col-md-4">{{ form_row(form.enabled) }}</div>
+                  <div class="col-md-4">{{ form_row(form.isEditedByWikiarchives) }}</div>
+                  <div class="col-md-4">{{ form_row(form.license) }}</div>
+              </div>
+              <div class="row align-items-end">
+                  <div class="col-md-3">{{ form_row(form.author) }}</div>
+                  <div class="col-md-3">{{ form_row(form.creationdate) }}</div>
+                  <div class="col-md-3">{{ form_row(form.credit) }}</div>
+                  <div class="col-md-3">{{ form_row(form.source) }}</div>
+              </div>
+              <div class="row align-items-end">
+                  <div class="col-md-6">{{ form_row(form.newCatalog) }}</div>
+                  <div class="col-md-6">{{ form_row(form.place) }}</div>
+              </div>
+              <div class="d-none">
+                  {{ form_row(form.pictures) }}
+              </div>
+              {{ form_widget(form) }}
+              <button type="submit" class="btn btn-primary">
+                  Modifier en mass
+              </button>
+              {{ form_end(form) }}
+          </div>
+        </div>
+        <div class="col-md-6">
+            <div class="btn-group mb-3">
+                <button data-button-action="all" class="btn btn-outline-secondary active">Tout</button>
+                <button data-button-action="none" class="btn btn-outline-secondary">Aucun</button>
+                <button data-button-action="custom" class="btn btn-outline-secondary">Personnalisé</button>
+            </div>
+            <div class="row g-3 pictures-selection">
+                {% for picture in catalog.pictures %}
+                    <div class="col-md-4">
+                        <div id="{{ picture.id }}" class="card h-100 picture-card selected">
+                            <div class="selected-icon">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div class="unselected-icon">
+                                <i class="fas fa-times"></i>
+                            </div>
+{#                            <a href="{{ vich_uploader_asset(picture.file) }}"#}
+{#                               data-fancybox="gallery">#}
+                                <img src="{{ picture.file.imageName|imagine_filter('picture_admin_listing') }}"
+                                     alt="{{ picture.file.imageOriginalName }}"
+                                     class="card-img-top" loading="lazy">
+{#                            </a>#}
+                            <div class="card-body">
+                                <div class="d-flex flex-column justify-content-between h-100">
+                                    <p class="card-text">{{ picture.name }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block stylesheets %}
+    {{ encore_entry_link_tags('pictues-mass-edit') }}
+{% endblock %}
+{% block javascripts %}
+    {{ encore_entry_script_tags('pictues-mass-edit-js') }}
+{% endblock %}

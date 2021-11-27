@@ -4,13 +4,16 @@ namespace App\Controller\Catalog;
 
 use App\Entity\Catalog\Catalog;
 use App\Entity\Catalog\Picture;
+use App\Form\Catalog\PictureMassEditType;
 use App\Form\Catalog\PictureType;
+use App\Model\Catalog\PicturesMassEdit;
 use App\Repository\Catalog\CatalogRepository;
 use App\Repository\Catalog\Picture\VersionRepository;
 use App\Repository\Catalog\PictureRepository;
 use App\Service\Catalog\PictureContentPopulator;
 use App\Service\Catalog\PictureExifPopulator;
 use App\Service\Catalog\PictureRemover;
+use App\Service\Catalog\PicturesMassEditHelper;
 use App\Service\Catalog\Version\PictureVersionHelper;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -104,10 +107,39 @@ class PictureController extends AbstractController
         ]);
     }
     
-    #[Route('/new-multiple/', name: 'ADMIN_CATALOG_PICTURE_NEW_MULTIPLE', methods: ['GET', 'POST'])]
+    #[Route('/ajout-multiple/', name: 'ADMIN_CATALOG_PICTURE_NEW_MULTIPLE', methods: ['GET', 'POST'])]
     public function newMultiple(): Response
     {
         return $this->renderForm('catalog/picture/new-multiple.html.twig', [
+            'catalogs' => array_filter($this->catalogRepository->findAll(), function ($catalog) {
+                return Catalog::ROOT !== $catalog->getName();
+            }),
+        ]);
+    }
+    
+    #[Route('/modification-multiple/{catalogId}', name: 'ADMIN_CATALOG_PICTURE_EDIT_MULTIPLE', methods: ['GET', 'POST'])]
+    public function editMultiple(?int $catalogId, Request $request, PicturesMassEditHelper $pictureMassEdit): Response
+    {
+        if (!$catalog = $this->catalogRepository->byIdAdmin($catalogId)) {
+            return $this->redirectToRoute('ADMIN_CATALOG_CATALOG_BROWSE');
+        }
+        
+        $picturesMassEdit = (new PicturesMassEdit())
+            ->setOriginalCatalog($catalog)
+            ->setNewCatalog($catalog)
+            ->setPictures($catalog->getPictures()->toArray());
+        $form = $this->createForm(PictureMassEditType::class, $picturesMassEdit);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $pictureMassEdit->massEdit($picturesMassEdit);
+            return $this->redirectToRoute('ADMIN_CATALOG_PICTURE_EDIT_MULTIPLE', [
+                'catalogId' => $catalogId
+            ]);
+        }
+        
+        return $this->renderForm('catalog/picture/edit-multiple.html.twig', [
+            'catalog' => $catalog,
+            'form' => $form,
             'catalogs' => array_filter($this->catalogRepository->findAll(), function ($catalog) {
                 return Catalog::ROOT !== $catalog->getName();
             }),

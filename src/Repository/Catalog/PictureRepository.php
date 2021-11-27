@@ -130,9 +130,7 @@
         public function getGpsPointsFront(): array
         {
             return $this->createQueryBuilder('p')
-                        ->addSelect( 'validatedVersion', 'exif', 'catalog', 'catalog_parent')
-                        ->leftJoin('p.validatedVersion', 'validatedVersion')
-                        ->leftJoin('validatedVersion.exif', 'exif')
+                        ->addSelect( 'catalog', 'catalog_parent')
                         ->leftJoin('p.catalog', 'catalog')
                         ->leftJoin('catalog.parent', 'catalog_parent')
                         ->andWhere('exif.lat IS NOT NULL')
@@ -162,11 +160,9 @@
         public function getBaseAdminQuery()
         {
             return $this->createQueryBuilder('p')
-                        ->addSelect('catalog', 'pictures_versions', 'pictures_validatedversion', 'pictures_validatedversion_exif')
+                        ->addSelect('catalog', 'pictures_versions')
                         ->leftJoin('p.catalog', 'catalog')
                         ->leftJoin('p.versions', 'pictures_versions')
-                        ->leftJoin('p.validatedVersion', 'pictures_validatedversion')
-                        ->leftJoin('pictures_validatedversion.exif', 'pictures_validatedversion_exif')
             ;
         }
 
@@ -176,11 +172,9 @@
         public function getBaseFrontQuery()
         {
             return $this->createQueryBuilder('p')
-                        ->addSelect('catalog', 'catalog_parent', 'picture_validatedversion', 'picture_validatedversion_exif')
+                        ->addSelect('catalog', 'catalog_parent')
                         ->leftJoin('p.catalog', 'catalog')
                         ->leftJoin('catalog.parent', 'catalog_parent')
-                        ->leftJoin('p.validatedVersion', 'picture_validatedversion')
-                        ->leftJoin('picture_validatedversion.exif', 'picture_validatedversion_exif')
                         ->andWhere('p.enabled = true')
             ;
         }

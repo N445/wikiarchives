@@ -64,6 +64,10 @@ Encore
     .addEntry('admin-tree-js', './assets/admin/catalog/tree.js')
     .addStyleEntry('admin-tree', './assets/admin/catalog/tree.scss')
 
+    // Admin pictues mass edit
+    .addEntry('pictues-mass-edit-js', './assets/admin/catalog/pictues-mass-edit.js')
+    .addStyleEntry('pictues-mass-edit', './assets/admin/catalog/pictues-mass-edit.scss')
+
     // Admin Datatable
     .addEntry('admin-catalog-datatable-js', './assets/admin/catalog/catalog-datatable.js')
     .addStyleEntry('admin-catalog-datatable', './assets/admin/catalog/catalog-datatable.scss')

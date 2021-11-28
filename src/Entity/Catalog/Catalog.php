@@ -10,17 +10,12 @@
     use Doctrine\ORM\Mapping as ORM;
     use Doctrine\ORM\PersistentCollection;
     use Gedmo\Mapping\Annotation as Gedmo;
-    use Symfony\Component\HttpFoundation\File\File;
-    use Symfony\Component\HttpFoundation\File\UploadedFile;
-    use Vich\UploaderBundle\Mapping\Annotation as Vich;
-    use Symfony\Component\Serializer\Annotation\Groups;
 
     /**
      * @ORM\Entity(repositoryClass=CatalogRepository::class)
      * @ORM\Table(name="catalog")
      * @Gedmo\Tree(type="nested")
      * @Gedmo\Loggable
-     * @Vich\Uploadable
      */
     class Catalog
     {
@@ -33,24 +28,30 @@
          * @ORM\Column(type="integer")
          */
         private $id;
-
+    
         /**
          * @ORM\Column(type="integer",nullable=true)
          */
         private $piwigoId;
-
+    
         /**
          * @Gedmo\Versioned
          * @ORM\Column(type="string", length=255)
          */
         private $name;
-
+    
+        /**
+         * @Gedmo\Versioned
+         * @ORM\Column(type="text",nullable=true)
+         */
+        private $description;
+    
         /**
          * @Gedmo\Versioned
          * @ORM\Column(type="boolean")
          */
         private $enabled = true;
-
+    
         /**
          * @Gedmo\TreeLeft
          * @ORM\Column(name="lft", type="integer")
@@ -102,30 +103,21 @@
         private $place;
 
         /**
-         * @Vich\UploadableField(mapping="catalog_cover",fileNameProperty="imageName")
-         *
-         * @var File|null
-         */
-        private $imageFile;
-
-        /**
-         * @Gedmo\Versioned
-         * @ORM\Column(type="string",nullable=true)
-         * @var string|null
-         */
-        private $imageName;
-
-        /**
          * @Gedmo\Blameable(on="create")
          * @ORM\ManyToOne(targetEntity=User::class, inversedBy="createdCatalogs")
          */
         private $createdBy;
-
+    
         /**
          * @Gedmo\Blameable(on="update")
          * @ORM\ManyToOne(targetEntity=User::class, inversedBy="updatedCatalogs")
          */
         private $updatedBy;
+    
+        /**
+         * @ORM\ManyToOne(targetEntity=Picture::class, inversedBy="catalogsIllustrations", fetch="EAGER")
+         */
+        private $illustration;
     
         /**
          *
@@ -195,10 +187,28 @@
         public function setName(string $name): self
         {
             $this->name = $name;
-
+        
             return $this;
         }
-
+    
+        /**
+         * @return string|null
+         */
+        public function getDescription()
+        {
+            return $this->description;
+        }
+    
+        /**
+         * @param string|null $description
+         * @return Catalog
+         */
+        public function setDescription(?string $description)
+        {
+            $this->description = $description;
+            return $this;
+        }
+    
         /**
          * @return bool
          */
@@ -206,7 +216,7 @@
         {
             return $this->enabled;
         }
-
+    
         /**
          * @param bool $enabled
          * @return Catalog
@@ -350,45 +360,6 @@
 
             return $this;
         }
-
-        /**
-         * @param File|UploadedFile|null $imageFile
-         */
-        public function setImageFile(?File $imageFile = null): self
-        {
-            $this->imageFile = $imageFile;
-            if (null !== $imageFile) {
-                $this->updatedAt = new \DateTimeImmutable();
-            }
-
-            return $this;
-        }
-    
-        /**
-         * @return File|null
-         */
-        public function getImageFile(): ?File
-        {
-            return $this->imageFile;
-        }
-
-        /**
-         * @return string|null
-         */
-        public function getImageName(): ?string
-        {
-            return $this->imageName;
-        }
-
-        /**
-         * @param string|null $imageName
-         * @return Catalog
-         */
-        public function setImageName(?string $imageName): Catalog
-        {
-            $this->imageName = $imageName;
-            return $this;
-        }
     
         /**
          * @return User|null
@@ -423,6 +394,27 @@
         public function setUpdatedBy(?User $user): Catalog
         {
             $this->updatedBy = $user;
+            return $this;
+        }
+    
+        public function getIllustration(): ?Picture
+        {
+            if($this->illustration){
+                return $this->illustration;
+            }
+            if($this->getPictures()->first()){
+                return $this->getPictures()->first();
+            }
+            if($this->getChildren()->first()){
+                return $this->getChildren()->first()->getIllustration();
+            }
+            return null;
+        }
+    
+        public function setIllustration(?Picture $illustration): self
+        {
+            $this->illustration = $illustration;
+        
             return $this;
         }
     }

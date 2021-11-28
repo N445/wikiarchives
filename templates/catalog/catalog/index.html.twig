@@ -1,10 +1,9 @@
 {% extends 'base-admin.html.twig' %}
 
-{% block title %}Catalogues listing - {{ parent() }}{% endblock %}
+{% block title %}Liste des dossiers - {{ parent() }}{% endblock %}
+{% block bodytitle %}Liste des dossiers{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <h1>Catalogues listing</h1>
         <a href="{{ path('ADMIN_CATALOG_CATALOG_NEW') }}" class="btn btn-primary mb-3">
             Créer catalogue
         </a>
@@ -39,7 +38,6 @@
             {% endfor %}
             </tbody>
         </table>
-    </div>
 
 {% endblock %}
 

@@ -8,15 +8,18 @@ class BreadcrumbLink
      * @var string
      */
     private $title;
+    
     /**
-     * @var string
+     * @var string|null
      */
     private $link;
-    /**
-     * @var bool
-     */
-    private $isActual;
-
+    
+    public function __construct(string $title, ?string $link = null)
+    {
+        $this->title = $title;
+        $this->link = $link;
+    }
+    
     /**
      * @return string
      */
@@ -26,48 +29,10 @@ class BreadcrumbLink
     }
 
     /**
-     * @param string $title
-     * @return BreadcrumbLink
+     * @return string|null
      */
-    public function setTitle(string $title): BreadcrumbLink
-    {
-        $this->title = $title;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLink(): string
+    public function getLink(): ?string
     {
         return $this->link;
-    }
-
-    /**
-     * @param string $link
-     * @return BreadcrumbLink
-     */
-    public function setLink(string $link): BreadcrumbLink
-    {
-        $this->link = $link;
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isActual(): bool
-    {
-        return $this->isActual;
-    }
-
-    /**
-     * @param bool $isActual
-     * @return BreadcrumbLink
-     */
-    public function setIsActual(bool $isActual): BreadcrumbLink
-    {
-        $this->isActual = $isActual;
-        return $this;
     }
 }

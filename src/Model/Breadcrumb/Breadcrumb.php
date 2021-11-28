@@ -8,7 +8,12 @@ class Breadcrumb
      * @var BreadcrumbLink[]
      */
     private $links = [];
-
+    
+    public function __construct(?array $links = [])
+    {
+        $this->links = array_filter($links);
+    }
+    
     /**
      * @return BreadcrumbLink[]
      */
@@ -16,7 +21,7 @@ class Breadcrumb
     {
         return $this->links;
     }
-
+    
     /**
      * @return BreadcrumbLink[]
      */

@@ -1,13 +1,18 @@
 {% extends 'base-admin.html.twig' %}
 
-{% block title %}Création d'une place - {{ parent() }}{% endblock %}
+{% block title %}Création d'une zone - {{ parent() }}{% endblock %}
+{% block bodytitle %}Création d'une zone{% endblock %}
 
 {% block body %}
-   <div class="container">
-       <h1>Création d'une place</h1>
-
        {{ include('catalog/place/_form.html.twig') }}
 
        <a href="{{ path('ADMIN_CATALOG_PLACE_INDEX') }}" class="btn btn-primary mt-3">Revenir au listing</a>
-   </div>
+{% endblock %}
+
+{% block stylesheets %}
+       {{ encore_entry_link_tags('place-map-form') }}
+{% endblock %}
+
+{% block javascripts %}
+       {{ encore_entry_script_tags('place-map-formjs') }}
 {% endblock %}

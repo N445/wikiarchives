@@ -47,7 +47,6 @@
                     ->setName($faker->realText(50))
 //                    ->setEnabled($faker->boolean())
                     ->setEnabled(true)
-                    ->setImageName($faker->randomElement($this->fakeImageProvider->getFakeImages())['name'])
                     ->setCreatedBy($this->getReference(sprintf(UserFixtures::REFERENCE, rand(1, UserFixtures::LOOP))))
                     ->setCreatedAt($faker->dateTimeBetween('-10 month', 'now'));
         

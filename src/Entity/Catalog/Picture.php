@@ -2,6 +2,7 @@
 
     namespace App\Entity\Catalog;
 
+    use App\Entity\Catalog\Picture\Exif;
     use App\Entity\Catalog\Picture\File;
     use App\Entity\Catalog\Picture\Version;
     use App\Entity\User;
@@ -54,7 +55,7 @@
         private $place;
 
         /**
-         * @ORM\OneToOne(targetEntity=Version::class, cascade={"persist", "remove"})
+         * @ORM\OneToOne(targetEntity=Version::class, cascade={"persist", "remove"}, fetch="EAGER")
          */
         private $validatedVersion;
 
@@ -69,7 +70,7 @@
         private $tmpVersions;
 
         /**
-         * @ORM\OneToOne(targetEntity=File::class, inversedBy="picture", cascade={"persist", "remove"})
+         * @ORM\OneToOne(targetEntity=File::class, inversedBy="picture", cascade={"persist", "remove"}, fetch="EAGER")
          */
         private $file;
 
@@ -94,6 +95,17 @@
          * @ORM\Column(type="boolean")
          */
         private $isEditedByWikiarchives;
+
+        /**
+         * @ORM\OneToMany(targetEntity=Catalog::class, mappedBy="illustration")
+         */
+        private $catalogsIllustrations;
+        
+        /**
+         * @ORM\OneToOne(targetEntity=Exif::class, cascade={"persist", "remove"}, fetch="EAGER")
+         * @Gedmo\Versioned
+         */
+        private $exif;
     
         public function __construct()
         {
@@ -104,6 +116,8 @@
             $this->addVersion($this->validatedVersion);
             $this->setLicense(PictureLicenseHelper::CC_BY);
             $this->setIsEditedByWikiarchives(false);
+            $this->catalogsIllustrations = new ArrayCollection();
+            $this->exif = new Exif();
         }
 
         public function __toString()
@@ -160,11 +174,6 @@
         public function getDescription()
         {
             return $this->getValidatedVersion()?->getDescription();
-        }
-
-        public function getExif()
-        {
-            return $this->getValidatedVersion()?->getExif();
         }
 
         public function getCatalog(): ?Catalog
@@ -311,7 +320,7 @@
             return $this->license;
         }
     
-        public function setLicense(string $license): self
+        public function setLicense(?string $license): self
         {
             $this->license = $license;
         
@@ -326,6 +335,49 @@
         public function setIsEditedByWikiarchives(bool $isEditedByWikiarchives): self
         {
             $this->isEditedByWikiarchives = $isEditedByWikiarchives;
+        
+            return $this;
+        }
+
+        /**
+         * @return Collection|Catalog[]
+         */
+        public function getCatalogsIllustrations(): Collection
+        {
+            return $this->catalogsIllustrations;
+        }
+
+        public function addCatalogsIllustration(Catalog $catalogsIllustration): self
+        {
+            if (!$this->catalogsIllustrations->contains($catalogsIllustration)) {
+                $this->catalogsIllustrations[] = $catalogsIllustration;
+                $catalogsIllustration->setIllustration($this);
+            }
+
+            return $this;
+        }
+
+        public function removeCatalogsIllustration(Catalog $catalogsIllustration): self
+        {
+            if ($this->catalogsIllustrations->removeElement($catalogsIllustration)) {
+                // set the owning side to null (unless already changed)
+                if ($catalogsIllustration->getIllustration() === $this) {
+                    $catalogsIllustration->setIllustration(null);
+                }
+            }
+
+            return $this;
+        }
+    
+    
+        public function getExif(): ?Exif
+        {
+            return $this->exif;
+        }
+    
+        public function setExif(?Exif $exif): self
+        {
+            $this->exif = $exif;
         
             return $this;
         }

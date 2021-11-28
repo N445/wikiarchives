@@ -49,11 +49,7 @@ class BreadcrumbCreator
             $this->addHome($breadcrumb);
             return $breadcrumb;
         }
-        $breadcrumb->addLink((new BreadcrumbLink())
-            ->setTitle($object->getName())
-            ->setLink($this->router->generate('CATALOG', ['id' => $object->getId()]))
-            ->setIsActual(true)
-        );
+        $breadcrumb->addLink(new BreadcrumbLink($object->getName()));
 
         if ($parent = $object->getParent()) {
             $this->addCatalogBreadcrumbLink($breadcrumb, $parent);
@@ -70,19 +66,12 @@ class BreadcrumbCreator
      */
     public function getPictureBreadcrumb(Picture $object): Breadcrumb
     {
-        $breadcrumb = (new Breadcrumb())->addLink((new BreadcrumbLink())
-            ->setTitle($object->getName())
-            ->setLink($this->router->generate('PICTURE', [
-                'catalogId' => $object->getCatalog()->getId(),
-                'id' => $object->getId(),
-            ]))
-            ->setIsActual(true)
-        );
-
+        $breadcrumb = (new Breadcrumb())->addLink(new BreadcrumbLink($object->getName()));
+    
         if ($parent = $object->getCatalog()) {
             $this->addCatalogBreadcrumbLink($breadcrumb, $parent);
         }
-
+    
         $this->addHome($breadcrumb);
 
         return $breadcrumb;
@@ -93,11 +82,7 @@ class BreadcrumbCreator
         if (Catalog::ROOT === $object->getName()) {
             return;
         }
-        $breadcrumb->addLink((new BreadcrumbLink())
-            ->setTitle($object->getName())
-            ->setLink($this->router->generate('CATALOG', ['id' => $object->getId()]))
-            ->setIsActual(false)
-        );
+        $breadcrumb->addLink(new BreadcrumbLink($object->getName(), $this->router->generate('CATALOG', ['id' => $object->getId()])));
         if ($parent = $object->getParent()) {
             $this->addCatalogBreadcrumbLink($breadcrumb, $parent);
         }
@@ -105,11 +90,7 @@ class BreadcrumbCreator
 
     private function addHome(Breadcrumb $breadcrumb)
     {
-        $breadcrumb->addLink((new BreadcrumbLink())
-            ->setTitle('Home')
-            ->setLink($this->router->generate('HOMEPAGE'))
-            ->setIsActual(false)
-        );
+        $breadcrumb->addLink(new BreadcrumbLink('Home', $this->router->generate('HOMEPAGE')));
     }
 
 

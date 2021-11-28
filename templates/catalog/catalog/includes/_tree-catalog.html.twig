@@ -15,6 +15,6 @@
     </ul>
 {% endmacro %}
 
-<div id="jstree-catalog" data-current-catalog="{{ catalog.id }}">
+<div id="jstree-catalog" data-current-catalog="{{ catalog.id }}" style="overflow:auto;">
     <div class="tree">{{ _self.nodeLine(trees,catalog) }}</div>
 </div>

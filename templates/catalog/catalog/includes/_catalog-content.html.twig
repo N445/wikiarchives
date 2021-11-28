@@ -1,28 +1,21 @@
+{% import 'macro/admin/_catalog-actions.html.twig' as catalogMacro %}
+
 <h2>Contenu de {{ catalog.name }}</h2>
-{% if catalog.imageName %}
-    <img src="{{ vich_uploader_asset(catalog) }}" alt="{{ catalog.name }}" class="img-fluid rounded my-3" width="100px">
+{{ catalogMacro.catalogActionsButtons(catalog) }}
+{% if catalog.illustration %}
+    <br>
+    <img src="{{ vich_uploader_asset(catalog.illustration.file) }}" alt="{{ catalog.name }}"
+         class="img-fluid rounded my-3" width="100px">
 {% else %}
     <p>
         <span class="badge bg-danger">Pas de couverture</span>
     </p>
 {% endif %}
 {% if catalog.placeRecursive %}
-    <table class="table table-sm table-bordered">
-        <thead>
-        <tr>
-            <th>Nom</th>
-            <th>Location</th>
-            <th>Lat,Lng</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>{{ catalog.placeRecursive.name }}</td>
-            <td>{{ catalog.placeRecursive.location }}</td>
-            <td>{{ catalog.placeRecursive.lat }} ; {{ catalog.placeRecursive.lng }}</td>
-        </tr>
-        </tbody>
-    </table>
+    <p>
+        <i class="fas fa-map-marked-alt"></i>
+        {{ catalog.placeRecursive.name }}
+    </p>
 {% endif %}
 
 <table class="datatable table table-sm table-bordered">
@@ -31,10 +24,8 @@
         <th></th>
         <th>Nom</th>
         <th>Taille</th>
-        <th>Type mime</th>
         <th>Résolution</th>
         <th>Visible</th>
-        <th>Exif</th>
         {% if is_granted('ROLE_MODERATOR') %}
         <th>Validations en attentes</th>
         {% endif %}
@@ -45,32 +36,23 @@
     {% for picture in catalog.pictures %}
         <tr>
             <td>
-                <img src="{{ picture.file.imageName|imagine_filter('picture_admin_listing') }}"
-                     alt="{{ picture.file.imageOriginalName }}"
-                     width="100"
-                     class="img-fluid rounded">
+                <a href="{{ vich_uploader_asset(picture.file) }}"
+                   data-fancybox="gallery">
+                    <img src="{{ picture.file.imageName|imagine_filter('picture_admin_listing') }}"
+                         alt="{{ picture.file.imageOriginalName }}"
+                         width="100"
+                         class="img-fluid rounded"
+                         loading="lazy">
+                </a>
             </td>
             <td>{{ picture.name }}</td>
             <td>{{ picture.file.imageSize|humanFilesize }}</td>
-            <td>{{ picture.file.imageMimeType }}</td>
             <td>{{ picture.file.imageDimensions|join('x') }}</td>
             <td>
                 {% if picture.enabled %}
                     <span class="badge bg-success">Visible</span>
                 {% else %}
                     <span class="badge bg-danger">Non visible</span>
-                {% endif %}
-            </td>
-            <td>
-                {% if picture.exif.isVerified %}
-                    <span class="badge bg-success">Vérifié</span>
-                {% else %}
-                    <span class="badge bg-danger">Non vérifié</span>
-                {% endif %}
-                {% if picture.exif.isCompleted %}
-                    <span class="badge bg-success">Complet</span>
-                {% else %}
-                    <span class="badge bg-danger">Non Complet</span>
                 {% endif %}
             </td>
             {% if is_granted('ROLE_MODERATOR') %}

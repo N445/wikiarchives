@@ -42,21 +42,21 @@
                     continue;
                 }
                 
-                $finalExif = $finalVersion->getExif();
-                foreach ($propertiesExif as $propertyExif) {
-                    $baseValueExif = $propertyAccessor->getValue($baseValue, $propertyExif);
-                    $currentValueExif = $propertyAccessor->getValue($currentValue, $propertyExif);
-                    $proposedValueExif = $propertyAccessor->getValue($proposedValue, $propertyExif);
-    
-                    $propertyAccessor->setValue($finalExif, $propertyExif, self::getValue2(
-                        $baseValueExif,
-                        $currentValueExif,
-                        $proposedValueExif,
-                        $currentVersion,
-                        $proposedVersion
-                    ));
-                }
-                $finalVersion->setExif($finalExif);
+//                $finalExif = $finalVersion->getExif();
+//                foreach ($propertiesExif as $propertyExif) {
+//                    $baseValueExif = $propertyAccessor->getValue($baseValue, $propertyExif);
+//                    $currentValueExif = $propertyAccessor->getValue($currentValue, $propertyExif);
+//                    $proposedValueExif = $propertyAccessor->getValue($proposedValue, $propertyExif);
+//
+//                    $propertyAccessor->setValue($finalExif, $propertyExif, self::getValue2(
+//                        $baseValueExif,
+//                        $currentValueExif,
+//                        $proposedValueExif,
+//                        $currentVersion,
+//                        $proposedVersion
+//                    ));
+//                }
+//                $finalVersion->setExif($finalExif);
             }
             
             return $finalVersion;

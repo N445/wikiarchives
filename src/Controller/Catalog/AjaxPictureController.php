@@ -22,7 +22,7 @@
          * @var EntityManagerInterface
          */
         private EntityManagerInterface $em;
-        
+    
         public function __construct(
             CatalogRepository      $catalogRepository,
             EntityManagerInterface $em
@@ -32,20 +32,20 @@
             $this->em = $em;
         }
     
-        #[Route("/new-filepond/{directoryId}", name: "AJAX_CATALOG_PICTURE_FILEPOND", methods: ["POST"])]
-        public function ajaxMediaNewFilepond(int $directoryId, Request $request, PictureUploadator $pictureUploadator)
+        #[Route("/new-filepond/{catalogId}", name: "AJAX_CATALOG_PICTURE_FILEPOND", methods: ["POST"], options: ['expose' => true])]
+        public function ajaxMediaNewFilepond(int $catalogId, Request $request, PictureUploadator $pictureUploadator)
         {
-            if (!$catalog = $this->catalogRepository->byIdAdmin($directoryId)) {
+            if (!$catalog = $this->catalogRepository->byIdAdmin($catalogId)) {
                 return $this->json([
                     'text' => 'directory not found',
-                ]);
+                ], 500);
             }
-            
+        
             /** @var UploadedFile $uploadedFile */
             $uploadedFile = $request->files->get('filepond');
-            
+        
             $pictureUploadator->upload($catalog, $uploadedFile);
-            
+        
             return $this->json([
                 'success' => true,
             ]);

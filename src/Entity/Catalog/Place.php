@@ -128,14 +128,22 @@ class Place
     {
         return $this->lng;
     }
-
+    
     public function setLng(?float $lng): self
     {
         $this->lng = $lng;
-
+        
         return $this;
     }
-
+    
+    public function getLatLng()
+    {
+        return [
+            'lat' => $this->getLat(),
+            'lng' => $this->getLng(),
+        ];
+    }
+    
     /**
      * @return Collection|Catalog[]
      */
@@ -143,7 +151,7 @@ class Place
     {
         return $this->catalogs;
     }
-
+    
     public function addCatalog(Catalog $catalog): self
     {
         if (!$this->catalogs->contains($catalog)) {

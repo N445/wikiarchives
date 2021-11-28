@@ -1,4 +1,30 @@
+{% import 'macro/admin/_catalog-actions.html.twig' as catalogMacro %}
+
+<div class="btn-group">
+    <a href="{{ path('ADMIN_CATALOG_CATALOG_BROWSE', {'id': catalog.parent.id}) }}" class="btn btn-sm btn-outline-secondary">
+        Parent
+    </a>
+    {{ catalogMacro.catalogActionsButtons(catalog) }}
+</div>
+<br>
+{% if catalog.illustration %}
+    <img src="{{ vich_uploader_asset(catalog.illustration.file) }}"
+         alt="{{ catalog.name }}" class="img-fluid rounded my-3" width="200">
+{% endif %}
+
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn btn-success mb-3">{{ button_label|default('Enregistrer') }}</button>
+<div class="row">
+    <div class="col-md-6">
+        {{ form_row(form.enabled) }}
+        {{ form_row(form.name) }}
+        {{ form_row(form.recursivInfo) }}
+        {{ form_row(form.place) }}
+{#        {{ form_row(form.illustration) }}#}
+    </div>
+    <div class="col-md-6">
+        {{ form_row(form.description) }}
+    </div>
+</div>
+{{ form_widget(form) }}
+<button class="btn btn-success mb-3">{{ button_label|default('Enregistrer') }}</button>
 {{ form_end(form) }}

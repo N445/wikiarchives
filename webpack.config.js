@@ -23,36 +23,55 @@ Encore
     .enableStimulusBridge('./assets/controllers.json')
 
     // Globals
-    .addEntry('globalsjs', './assets/globals.js')
-    .addStyleEntry('globals', './assets/scss/globals.scss')
+    .addEntry('globalsjs', './assets/global/globals.js')
+    .addStyleEntry('globals', './assets/global/globals.scss')
+    .addEntry('flatpikr', './assets/global/flatpikr.js')
 
-    // Admin
-    .addEntry('adminjs', './assets/admin.js')
-    .addStyleEntry('admin', './assets/scss/admin.scss')
+    // wysiwyg
+    .addEntry('fancyboxjs', './assets/global/fancybox.js')
+    .addStyleEntry('fancybox', './assets/global/fancybox.scss')
+
+    // fancybox
+    .addEntry('wysiwyg-js', './assets/global/wysiwyg.js')
 
     // Custom
-    .addEntry('mainjs', './assets/main.js')
-    .addStyleEntry('main', './assets/scss/main.scss')
+    .addEntry('mainjs', './assets/front/main.js')
+    .addStyleEntry('main', './assets/front/main.scss')
+
+    // Map
+    .addEntry('map-multiple-js', './assets/front/map-multiple.js')
+    .addEntry('map-single-js', './assets/front/map-single.js')
+    .addStyleEntry('map', './assets/front/map.scss')
+
+    // Picture
+    .addEntry('picture-js', './assets/front/picture.js')
+    .addStyleEntry('picture', './assets/front/picture.scss')
+    .addStyleEntry('grid', './assets/front/grid.scss')
+
+    // Admin
+    .addEntry('adminjs', './assets/admin/admin.js')
+    .addStyleEntry('admin', './assets/admin/admin.scss')
+
+    // Admin filepond
+    .addEntry('filepondjs', './assets/admin/filepond.js')
+    .addEntry('filepond-dynamique-catalogjs', './assets/admin/filepond-dynamique-catalog.js')
+    .addStyleEntry('filepond', './assets/admin/filepond.scss')
+
+    // Admin place map
+    .addEntry('place-map-formjs', './assets/admin/place/map-form.js')
+    .addEntry('place-map-form', './assets/admin/place/map-form.scss')
 
     // Admin tree
     .addEntry('admin-tree-js', './assets/admin/catalog/tree.js')
     .addStyleEntry('admin-tree', './assets/admin/catalog/tree.scss')
 
-    // Datatable
+    // Admin pictues mass edit
+    .addEntry('pictues-mass-edit-js', './assets/admin/catalog/pictues-mass-edit.js')
+    .addStyleEntry('pictues-mass-edit', './assets/admin/catalog/pictues-mass-edit.scss')
+
+    // Admin Datatable
     .addEntry('admin-catalog-datatable-js', './assets/admin/catalog/catalog-datatable.js')
     .addStyleEntry('admin-catalog-datatable', './assets/admin/catalog/catalog-datatable.scss')
-
-    // Map
-    .addEntry('map-multiple-js', './assets/map-multiple.js')
-    .addEntry('map-single-js', './assets/map-single.js')
-    .addStyleEntry('map', './assets/scss/map.scss')
-
-    // wysiwyg
-    .addEntry('wysiwyg-js', './assets/wysiwyg.js')
-
-    // Picture
-    .addEntry('picture-js', './assets/picture.js')
-    .addStyleEntry('picture', './assets/scss/picture.scss')
 
     .copyFiles({
         from: 'node_modules/tinymce/skins',

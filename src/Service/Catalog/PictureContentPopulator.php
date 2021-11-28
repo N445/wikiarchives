@@ -18,7 +18,7 @@ class PictureContentPopulator
         if ($picture->getValidatedVersion()->getName()) {
             return;
         }
-        if ($title = $picture->getValidatedVersion()->getExif()->getTitle()) {
+        if ($title = $picture->getExif()->getTitle()) {
             $picture->getValidatedVersion()->setName($title);
             return;
         }

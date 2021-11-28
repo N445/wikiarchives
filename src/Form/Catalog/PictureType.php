@@ -2,10 +2,13 @@
 
 namespace App\Form\Catalog;
 
+use App\Entity\Catalog\Catalog;
 use App\Entity\Catalog\Picture;
+use App\Entity\Catalog\Place;
 use App\Form\Catalog\Picture\PictureFileType;
 use App\Form\Catalog\Picture\VersionType;
 use App\Service\Catalog\PictureLicenseHelper;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -20,22 +23,54 @@ class PictureType extends AbstractType
             ->add('enabled', CheckboxType::class, [
                 'label' => 'Visible',
                 'required' => false,
+                'label_attr' => [
+                    'class' => 'checkbox-switch',
+                ],
             ])
             ->add('isEditedByWikiarchives', CheckboxType::class, [
                 'label' => 'Modifié par Wikiarchives',
                 'required' => false,
+                'label_attr' => [
+                    'class' => 'checkbox-switch',
+                ],
             ])
             ->add('license', ChoiceType::class, [
                 'label' => 'License',
-                'choices' => PictureLicenseHelper::getLicensesChoices()
+                'choices' => PictureLicenseHelper::getLicensesChoices(),
+                'attr' => [
+                    'class' => 'select2'
+                ]
             ])
-            ->add('validatedVersion', VersionType::class)
-            ->add('file', PictureFileType::class,[
-                'data'=>   $builder->getData()->getfile()
+            ->add('validatedVersion', VersionType::class, [
+                'label' => false
             ])
-            ->add('catalog');
+            ->add('file', PictureFileType::class, [
+                'label' => false,
+                'data' => $builder->getData()->getfile()
+            ])
+            ->add('catalog', EntityType::class, [
+                'class' => Catalog::class,
+                'attr' => [
+                    'class' => 'select2'
+                ]
+            ])
+            ->add('catalogsIllustrations', EntityType::class, [
+                'class' => Catalog::class,
+                'multiple' => true,
+                'required' => false,
+                'attr' => [
+                    'class' => 'select2'
+                ]
+            ])
+            ->add('place', EntityType::class, [
+                'class' => Place::class,
+                'attr' => [
+                    'class' => 'select2'
+                ]
+            ])
+        ;
     }
-
+    
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

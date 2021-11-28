@@ -1,0 +1,51 @@
+{% import 'macro/admin/_catalog-actions.html.twig' as catalogMacro %}
+
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}Liste des photos orphelines - {{ parent() }}{% endblock %}
+{% block bodytitle %}Liste des photos orphelines{% endblock %}
+
+{% block body %}
+    <p>
+        {{ pictures|length }} photos
+    </p>
+
+    <div class="row g-3">
+        {% for picture in pictures %}
+            <div class="col-md-2">
+                <div class="card h-100">
+                    <a href="{{ vich_uploader_asset(picture.file) }}"
+                       data-fancybox="gallery">
+                        <img src="{{ picture.file.imageName|imagine_filter('picture_admin_listing') }}"
+                             alt="{{ picture.file.imageOriginalName }}"
+                             class="card-img-top" loading="lazy">
+                    </a>
+                    <div class="card-body">
+                        <div class="d-flex flex-column justify-content-between h-100">
+                            <p class="card-text">{{ picture.name }}</p>
+                            <div class="dropdown">
+                                <button class="btn btn-sm w-100 btn-secondary dropdown-toggle" type="button"
+                                        id="dropdownMenuButton1"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                    Actions
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item"
+                                           href="{{ path('ADMIN_CATALOG_PICTURE_SHOW', {'id': picture.id}) }}">Voir</a>
+                                    </li>
+                                    <li><a class="dropdown-item"
+                                           href="{{ path('ADMIN_CATALOG_PICTURE_EDIT', {'id': picture.id}) }}">Modifier</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <p>
+                no records found
+            </p>
+        {% endfor %}
+    </div>
+{% endblock %}

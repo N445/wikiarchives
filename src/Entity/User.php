@@ -56,6 +56,11 @@
         private $isVerified = false;
         
         /**
+         * @ORM\Column(type="boolean")
+         */
+        private $isBlocked = false;
+        
+        /**
          * @ORM\OneToOne(targetEntity=Info::class, cascade={"persist", "remove"}, fetch="EAGER")
          * @ORM\JoinColumn(nullable=false)
          */
@@ -130,7 +135,9 @@
             // guarantee every user at least has ROLE_USER
             $roles[] = UserRoles::ROLE_USER;
             
-            return array_unique($roles);
+            $roles = array_unique($roles);
+            sort($roles);
+            return $roles;
         }
         
         public function setRoles(array $roles): self
@@ -192,6 +199,24 @@
         {
             $this->isVerified = $isVerified;
             
+            return $this;
+        }
+    
+        /**
+         * @return bool
+         */
+        public function isBlocked(): bool
+        {
+            return $this->isBlocked;
+        }
+    
+        /**
+         * @param bool $isBlocked
+         * @return User
+         */
+        public function setIsBlocked(bool $isBlocked): User
+        {
+            $this->isBlocked = $isBlocked;
             return $this;
         }
         

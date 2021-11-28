@@ -126,9 +126,11 @@
                 $validatedVersion
                     ->setStatus(PictureVersionHelper::STATUS_ACCEPTED)
                     ->setType(PictureVersionHelper::TYPE_FINAL)
+                ;
+                $picture
+                    ->setValidatedVersion($validatedVersion)
                     ->setExif($exif)
                 ;
-                $picture->setValidatedVersion($validatedVersion);
             
                 if ($this->faker->boolean()) {
                     $picture->setPlace($this->getReference(sprintf(PlaceFixtures::REFERENCE, rand(1, PlaceFixtures::LOOP))));
@@ -202,7 +204,7 @@
                     ->setBasedVersion($this->faker->randomElement($versions))
                     ->setName($this->faker->realText(50))
                     ->setDescription($this->faker->optional()->realText(500))
-                    ->setExif($exif)
+//                    ->setExif($exif)
                     ->setCreatedBy($this->getReference(sprintf(UserFixtures::REFERENCE, rand(1, UserFixtures::LOOP))))
                     ->setCreatedAt($this->faker->dateTimeBetween('-10 month', 'now'));
     

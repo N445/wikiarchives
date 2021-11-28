@@ -10,27 +10,11 @@ knp_gaufrette:
           create: true
           directory: picture
           acl: 'public-read'
-    catalog_adapter:
-      aws_s3:
-        service_id: s3uplaoder
-        bucket_name: '%env(AWS_BUCKET_NAME)%'
-        detect_content_type: true
-        options:
-          create: true
-          directory: catalog
-          acl: 'public-read'
     local_picture_adapter:
       local:
         directory:  '%kernel.project_dir%/public/uploads/picture'
         create:     true
-    local_catalog_adapter:
-      local:
-        directory:  '%kernel.project_dir%/public/uploads/catalog'
-        create:     true
-
 
   filesystems:
     picture_fs:
       adapter: local_picture_adapter
-    catalog_fs:
-      adapter: local_catalog_adapter

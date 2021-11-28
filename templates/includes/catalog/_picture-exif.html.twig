@@ -7,7 +7,11 @@
             <th>License</th>
             <td>
                 <a href="{{ license.url }}" title="{{ license.name }}" rel="nofollow" target="_blank">
-                    <img src="{{ asset('images/license/'~license.image) }}" alt="{{ license.name }}">
+                    {% if license.image %}
+                        <img src="{{ asset('images/license/'~license.image) }}" alt="{{ license.name }}">
+                    {% else %}
+                        {{ license.name }}
+                    {% endif %}
                 </a>
             </td>
         </tr>

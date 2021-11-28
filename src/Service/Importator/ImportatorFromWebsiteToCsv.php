@@ -117,7 +117,7 @@ class ImportatorFromWebsiteToCsv
         $total = $infoPagination['total'];
         
         
-        foreach (range(21, $nbPages) as $page) {
+        foreach (range(1, $nbPages) as $page) {
             dump($page . '/' . $nbPages);
             
             $response = $this->cache->get('import_images_' . $page, function (ItemInterface $item) use ($page) {

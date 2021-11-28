@@ -10,16 +10,16 @@ L.Icon.Default.mergeOptions({
     shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
 });
 
-if($('[data-picture]').length > 0){
-    // initialize the map on the "map" div with a given center and zoom
-    const picture = JSON.parse($('[data-picture]').attr('data-picture'));
-    var map = L.map('map',{
-        center: [picture.lat, picture.lng],
-        zoom:12
-    });
+
+// initialize the map on the "map" div with a given center and zoom
+const picture = JSON.parse($('[data-picture]').attr('data-picture'));
+var map = L.map('map',{
+    center: [picture.lat, picture.lng],
+    zoom:12
+});
 
 // L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png', {}).addTo(map);
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {}).addTo(map);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {}).addTo(map);
 
-    L.marker([picture.lat, picture.lng]).addTo(map);
-}
+L.marker([picture.lat, picture.lng]).addTo(map);
+

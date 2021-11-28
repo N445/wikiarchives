@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid">
+        {{ pictures|length }}
+        <div class="grid">
+            {% for picture in pictures %}
+                <a href="{{ path('PICTURE', {'catalogId':picture.catalog.id,'id': picture.id}) }}" class="rounded picture div-{{ random(['big','vertical','horizontal','small']) }}">
+                    <div class="image">
+                        <img src="{{ picture.file.imageName|imagine_filter('picture') }}" alt="{{ picture.name }}"
+                             class="img-fluid">
+                    </div>
+                    <div class="content">
+                        <h3 class="title">{{ picture.name }}</h3>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('grid') }}
+{% endblock %}

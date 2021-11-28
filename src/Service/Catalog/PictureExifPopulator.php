@@ -63,11 +63,11 @@ class PictureExifPopulator
         if (!$uploadedFile = $picture->getFile()->getImageFile()) {
             return;
         }
-        if (!$exif = $picture->getValidatedVersion()->getExif()) {
+        if (!$exif = $picture->getExif()) {
             $exif = new Exif();
         }
         
-        $picture->getValidatedVersion()->setExif(self::getExifFromFile($uploadedFile, $exif));
+        $picture->setExif(self::getExifFromFile($uploadedFile, $exif));
     }
 
     private static function getFormatedValue($label, $value)

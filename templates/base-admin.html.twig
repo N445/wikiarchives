@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Espace d'adminstration{% endblock %}</title>
-    {{ encore_entry_link_tags('globals') }}
+{#    {{ encore_entry_link_tags('globals') }}#}
     {{ encore_entry_link_tags('admin') }}
+    {{ encore_entry_link_tags('fancybox') }}
 
     {# Run `composer require symfony/webpack-encore-bundle`
            and uncomment the following Encore helpers to start using Symfony UX #}
@@ -16,11 +17,28 @@
 </head>
 <body>
 {% include 'includes/admin/navigation.html.twig' %}
-{% block body %}{% endblock %}
+
+<div id="layoutSidenav">
+    {% include 'includes/admin/side-navigation.html.twig' %}
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <h1 class="mt-4">{% block bodytitle %}Dashboard{% endblock %}</h1>
+                <h2 class="mb-3">{% block objecttitle %}{% endblock %}</h2>
+                {% include 'includes/admin/_breadcrumb.html.twig' %}
+                {% block body %}{% endblock %}
+            </div>
+        </main>
+        {% include 'includes/admin/footer.html.twig' %}
+    </div>
+</div>
+
 
 
 {{ encore_entry_script_tags('globalsjs') }}
 {{ encore_entry_script_tags('adminjs') }}
+{{ encore_entry_script_tags('fancyboxjs') }}
+
 {% block javascripts %}
     {# {{ encore_entry_script_tags('app') }} #}
 {% endblock %}

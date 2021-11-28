@@ -43,10 +43,12 @@
        data-bs-toggle="tooltip"
        data-bs-placement="top" title="{{ catalog.name }}"
     >
-        <div class="image">
-            <img src="{{ catalog.imageName|imagine_filter('catalog_card_listing') }}" class="card-img-top"
-                 alt="{{ catalog.name }}">
-        </div>
+        {% if catalog.illustration %}
+            <div class="image">
+                <img src="{{ catalog.illustration.file.imageName|imagine_filter('catalog_card_listing') }}" class="card-img-top"
+                     alt="{{ catalog.name }}">
+            </div>
+        {% endif %}
         <div class="card-body p-1">
             <div class="d-flex flex-column justify-content-between h-100">
                 <h3 class="card-title mb-0">

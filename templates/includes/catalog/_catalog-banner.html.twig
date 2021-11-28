@@ -1,6 +1,6 @@
 <div class="catalog-banner">
-    {% if catalog.imageName %}
-        <img src="{{ catalog.imageName|imagine_filter('catalog_banner') }}" alt="" class="img-fluid">
+    {% if catalog.illustration %}
+        <img src="{{ catalog.illustration.file.imageName|imagine_filter('catalog_banner') }}" alt="{{ catalog.name }}" class="img-fluid">
     {% endif %}
     <div class="content">
         <div class="container">

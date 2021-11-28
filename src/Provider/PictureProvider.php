@@ -61,11 +61,16 @@
         {
             return $this->cache->get(sprintf(CacheHelper::PICTURE_ID, $id), function (ItemInterface $item) use ($id) {
                 $item->expiresAfter(3600);
-            
+    
+    
+                CacheHelper::setTagsFromPictureId($item, $id);
+    
                 if (!$picture = $this->pictureRepository->byIdFront($id)) {
                     return null;
                 }
+                
                 CacheHelper::setTagsFromCatalogWithParent($item, $picture->getCatalog());
+                
                 if (!PictureHelper::checkEnabledRecusively($picture)) {
                     return null;
                 }

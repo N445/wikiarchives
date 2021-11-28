@@ -1,6 +1,16 @@
-@import "assets/lib/vakata-jstree/src/themes/default/style";
+@import "assets/admin/lib/vakata-jstree/src/themes/default/style";
 @import "~filepond/dist/filepond.min";
 
 .filepond--item {
   width: calc(20% - 0.5em);
+}
+
+.filepond--root {
+  max-height: 300px !important;
+  overflow: hidden;
+}
+
+.filepond--list {
+  max-height: 300px;
+  overflow-y: scroll;
 }

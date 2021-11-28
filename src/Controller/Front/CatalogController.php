@@ -36,9 +36,6 @@ class CatalogController extends AbstractController
             return $this->redirectToRoute('HOMEPAGE');
         }
         
-        dump($catalog);
-        dump($catalog->getIllustration());
-        
         return $this->render('default/catalog.html.twig', [
             'catalog' => $catalog,
             'pagination' => $this->pictureProvider->byCatalogPaginated($catalog, $request->get('page', 1), 12 * 5),

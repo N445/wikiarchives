@@ -1,0 +1,1 @@
+(self.webpackChunk=self.webpackChunk||[]).push([[350],{2992:(a,e,n)=>{var t=n(9755);n(3333),t(document).ready((function(){t(".datatable").DataTable()}))}},a=>{a.O(0,[526,333],(()=>{return e=2992,a(a.s=e);var e}));a.O()}]);

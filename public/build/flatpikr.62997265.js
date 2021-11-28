@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk=self.webpackChunk||[]).push([[351],{9427:(e,a,t)=>{var n=t(8527),r=t(401);(0,n.Z)(".flatpikr-taken-at",{altInput:!0,altFormat:"F j, Y H:i:S",enableTime:!0,dateFormat:"Y-m-d H:i:S",time_24hr:!0,enableSeconds:!0,locale:r.French,minuteIncrement:1})}},e=>{e.O(0,[526,765],(()=>{return a=9427,e(e.s=a);var a}));e.O()}]);

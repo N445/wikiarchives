@@ -16,7 +16,7 @@ $(function () {
         allowRevert: false,
         labelIdle: 'Glissez et déposez vos fichiers ou <span class="filepond--label-action"> Parcourir </span>',
         allowFileTypeValidation: true,
-        acceptedFileTypes: ['image/png'],
+        acceptedFileTypes: ['image/*','application/zip'],
     });
 
 

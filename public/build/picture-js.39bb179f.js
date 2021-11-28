@@ -1,0 +1,1 @@
+(self.webpackChunk=self.webpackChunk||[]).push([[496],{4125:(s,a,e)=>{var i=e(9755);e(9154);i(".catalog-navigation").slick({infinite:!0,slidesToShow:5,slidesToScroll:5,arrows:!1})}},s=>{s.O(0,[526,154],(()=>{return a=4125,s(s.s=a);var a}));s.O()}]);

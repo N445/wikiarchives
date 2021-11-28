@@ -8,18 +8,20 @@
 
 {% block body %}
     {% if 'root' != catalog.name %}
+        <div>
             {{ catalogMacro.catalogActionsButtons(catalog) }}
             {% if catalog.illustration %}
                 <br>
                 <img src="{{ vich_uploader_asset(catalog.illustration.file) }}"
                      alt="{{ catalog.name }}" class="img-fluid rounded mt-3" width="200">
             {% endif %}
+        </div>
     {% endif %}
 
 
     <div class="row">
         <div class="col-md-6">
-            <div class="sticky-top">
+            <div style="position: sticky; top:50px;">
                 {{ form_start(form) }}
                 <div class="row align-items-end">
                     <div class="col-md-6">

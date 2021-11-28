@@ -13,15 +13,18 @@ class PicturesMassEditHelper
 {
     private EntityManagerInterface $em;
     private TagAwareAdapter $cache;
+    private PictureRemover $pictureRemover;
     
     public function __construct(
         EntityManagerInterface $em,
+        PictureRemover $pictureRemover
     )
     {
         $this->em = $em;
         $this->cache = new TagAwareAdapter(
             new FilesystemAdapter(),
         );
+        $this->pictureRemover = $pictureRemover;
     }
     
     public function massEdit(PicturesMassEdit $picturesMassEdit)
@@ -30,10 +33,30 @@ class PicturesMassEditHelper
         if ($picturesMassEdit->getNewCatalog()) {
             $this->cache->invalidateTags([sprintf(CacheHelper::TAG_CATALOG, $picturesMassEdit->getNewCatalog()->getId())]);
         }
+        if ($picturesMassEdit->isDelete()) {
+            $this->delete($picturesMassEdit);
+        } else {
+            $this->edit($picturesMassEdit);
+        }
     
+    }
+    
+    private function delete(PicturesMassEdit $picturesMassEdit)
+    {
         $chunkedArray = array_chunk($picturesMassEdit->getPictures(), 1000);
-
+        foreach ($chunkedArray as $chunkedItem) {
+            foreach ($chunkedItem as $picture) {
+                $this->pictureRemover->remove($picture);
+                $this->cache->invalidateTags([sprintf(CacheHelper::TAG_PICTURE, $picture->getId())]);
+            }
+            $this->em->flush();
+        }
+        $this->em->flush();
+    }
     
+    private function edit(PicturesMassEdit $picturesMassEdit)
+    {
+        $chunkedArray = array_chunk($picturesMassEdit->getPictures(), 1000);
         foreach ($chunkedArray as $chunkedItem) {
             foreach ($chunkedItem as $picture) {
                 $this->setValues($picturesMassEdit, $picture);
@@ -44,6 +67,7 @@ class PicturesMassEditHelper
         }
         $this->em->flush();
     }
+    
     
     private function setValues(PicturesMassEdit $picturesMassEdit, Picture $picture)
     {

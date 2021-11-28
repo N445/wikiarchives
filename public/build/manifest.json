@@ -110,5 +110,6 @@
   "build/images/layers.png": "/build/images/layers.416d9136.png",
   "build/images/marker-shadow.png": "/build/images/marker-shadow.a0c6cc14.png",
   "build/skins/ui/oxide-dark/content.mobile.min.css": "/build/skins/ui/oxide-dark//content.mobile.min.css",
-  "build/skins/ui/oxide/content.mobile.min.css": "/build/skins/ui/oxide//content.mobile.min.css"
+  "build/skins/ui/oxide/content.mobile.min.css": "/build/skins/ui/oxide//content.mobile.min.css",
+  "build/vendors-node_modules_bootbox_bootbox_all_js-node_modules_core-js_modules_es_array_concat_js-n-81f151.js": "/build/vendors-node_modules_bootbox_bootbox_all_js-node_modules_core-js_modules_es_array_concat_js-n-81f151.js"
 }

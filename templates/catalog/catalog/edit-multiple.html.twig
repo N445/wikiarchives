@@ -22,9 +22,11 @@
             <div class="sticky-top">
                 {{ form_start(form) }}
                 <div class="row align-items-end">
-                    <div class="col-md-4">{{ form_row(form.enabled) }}</div>
-                    <div class="col-md-4">{{ form_row(form.isEditedByWikiarchives) }}</div>
-                    <div class="col-md-4">{{ form_row(form.license) }}</div>
+                    <div class="col-md-6">
+                        {{ form_row(form.enabled) }}
+                        {{ form_row(form.isEditedByWikiarchives) }}
+                    </div>
+                    <div class="col-md-6">{{ form_row(form.license) }}</div>
                     <div class="col-md-6">{{ form_row(form.author) }}</div>
                     <div class="col-md-6">{{ form_row(form.creationdate) }}</div>
                     <div class="col-md-6">{{ form_row(form.credit) }}</div>
@@ -35,18 +37,31 @@
                 <div class="d-none">
                     {{ form_row(form.pictures) }}
                 </div>
+
+                {{ form_row(form.delete) }}
                 {{ form_widget(form) }}
                 <button type="submit" class="btn btn-primary">
-                    Modifier en mass [<span id="nb-pictures-to-edit">{{ catalog.pictures|length }}</span>]
+                    Modifier en masse [<span id="nb-pictures-to-edit">{{ catalog.pictures|length }}</span>]
                 </button>
               {{ form_end(form) }}
-          </div>
+            </div>
         </div>
         <div class="col-md-6">
-            <div class="btn-group mb-3">
-                <button data-button-action="all" class="btn btn-outline-secondary active">Tout</button>
-                <button data-button-action="none" class="btn btn-outline-secondary">Aucun</button>
-                <button data-button-action="custom" class="btn btn-outline-secondary">Personnalisé</button>
+            <div class="d-flex justify-content-between">
+                <div class="left">
+                    <div class="btn-group mb-3">
+                        <button data-button-action="all" class="btn btn-outline-secondary active">Toutes</button>
+                        <button data-button-action="none" class="btn btn-outline-secondary">Aucune</button>
+                        <button data-button-action="custom" class="btn btn-outline-secondary">Personnalisée</button>
+                    </div>
+                </div>
+                <div class="right">
+                    <div class="btn-group mb-3">
+                        <button data-button-filter="all" class="btn btn-outline-secondary active">Tout</button>
+                        <button data-button-filter="selected" class="btn btn-outline-secondary">Séléctionnée</button>
+                        <button data-button-filter="notselected" class="btn btn-outline-secondary">Non Séléctionnée</button>
+                    </div>
+                </div>
             </div>
             <div class="row g-3 pictures-selection">
                 {% for picture in catalog.pictures %}

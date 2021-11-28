@@ -25,6 +25,13 @@ class PictureMassEditType extends AbstractType
         $catalog = $builder->getData()->getOriginalCatalog();
         
         $builder
+            ->add('delete', CheckboxType::class, [
+                'label' => 'Supprimer la selection',
+                'required' => false,
+                'label_attr' => [
+                    'class' => 'checkbox-switch',
+                ],
+            ])
             ->add('enabled', CheckboxType::class, [
                 'label' => 'Visible',
                 'required' => false,
@@ -33,7 +40,7 @@ class PictureMassEditType extends AbstractType
                 ],
             ])
             ->add('isEditedByWikiarchives', CheckboxType::class, [
-                'label' => 'Modifié par Wikiarchives',
+                'label' => 'Modifié par Wikiarchives Oui/Non',
                 'required' => false,
                 'label_attr' => [
                     'class' => 'checkbox-switch',
@@ -67,6 +74,7 @@ class PictureMassEditType extends AbstractType
                 'required' => false,
             ])
             ->add('newCatalog', EntityType::class, [
+                'label' => 'Catalogue',
                 'class' => Catalog::class,
                 'required' => false,
                 'attr' => [
@@ -80,6 +88,7 @@ class PictureMassEditType extends AbstractType
                 },
             ])
             ->add('place', EntityType::class, [
+                'label' => 'Zone',
                 'class' => Place::class,
                 'required' => false,
                 'attr' => [

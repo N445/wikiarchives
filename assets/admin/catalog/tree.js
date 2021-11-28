@@ -1,7 +1,8 @@
-var $ = jQuery = require("jquery");
+let $ = jQuery = require("jquery");
 
 require('./../lib/vakata-jstree/dist/jstree')
 const bootstrap = require('bootstrap');
+const bootbox = require('bootbox');
 require('datatables.net-bs5');
 
 const routes = require('../../../public/js/fos_js_routes.json');
@@ -9,7 +10,27 @@ import Routing from '../../../vendor/friendsofsymfony/jsrouting-bundle/Resources
 
 Routing.setRoutingData(routes);
 
+const tinymce = require('tinymce');
+require('tinymce/themes/silver/theme');
+require('tinymce/icons/default/icons');
+
+// require('tinymce/plugins/quickbars/plugin');
+require('tinymce/plugins/table/plugin');
+// require('tinymce/plugins/link/plugin');
+require('tinymce/plugins/lists/plugin');
+// require('tinymce/plugins/media/plugin');
+require('tinymce/plugins/autoresize/plugin');
+require('tinymce/plugins/help/plugin');
+require('tinymce/plugins/textpattern/plugin');
+
 let tree;
+let wysiwyg = tinymce.init({
+    selector: '.wysiwyg',
+    plugins: 'table lists autoresize help textpattern',
+    // toolbar: 'undo redo | formatselect | bold italic | alignleft aligncentre alignright alignjustify | indent outdent | bullist numlist',
+    menubar: false,
+    toolbar: 'undo redo | bold italic| indent outdent | bullist numlist',
+});
 
 class Directory {
     id;
@@ -20,12 +41,12 @@ class Directory {
     inputDirectoryParent;
 
     constructor() {
-        var that = this;
+        let that = this;
         that.modal = new bootstrap.Modal($('#catalogModal'));
     }
 
     add() {
-        var that = this;
+        let that = this;
         $.ajax({
             url: Routing.generate('ADMIN_AJAX_CATALOG_CATALOG_ADD', {
                 parentCatalogId: that.id
@@ -40,7 +61,7 @@ class Directory {
     }
 
     addSubmit() {
-        var that = this;
+        let that = this;
         $.ajax({
             url: Routing.generate('ADMIN_AJAX_CATALOG_CATALOG_ADD'),
             method: 'POST',
@@ -56,8 +77,8 @@ class Directory {
                     return false;
                 }
 
-                var $nodeId = tree.jstree().create_node(that.getNodeParent(), {
-                    text: `${response.catalog.name} [${response.catalog.enabled?'Oui':'Non'}]`,
+                let $nodeId = tree.jstree().create_node(that.getNodeParent(), {
+                    text: `${response.catalog.name} [${response.catalog.enabled ? 'Oui' : 'Non'}]`,
                     li_attr: {
                         class: "catalog",
                     },
@@ -67,7 +88,7 @@ class Directory {
                     },
                 }, "first");
 
-                var $node = tree.jstree().get_node($nodeId);
+                let $node = tree.jstree().get_node($nodeId);
 
                 tree.jstree().deselect_all();
                 tree.jstree().select_node($node);
@@ -79,7 +100,7 @@ class Directory {
     }
 
     edit() {
-        var that = this;
+        let that = this;
         $.ajax({
             url: Routing.generate('ADMIN_AJAX_CATALOG_CATALOG_EDIT', {
                 id: that.id,
@@ -94,7 +115,7 @@ class Directory {
     }
 
     editSubmit() {
-        var that = this;
+        let that = this;
         $.ajax({
             url: Routing.generate('ADMIN_AJAX_CATALOG_CATALOG_EDIT', {
                 id: that.id,
@@ -124,8 +145,9 @@ class Directory {
     }
 
     setForm(response, type) {
-        var that = this;
-        var form = $(response.form).on('submit', function (e) {
+        tinymce.remove('.wysiwyg');
+        let that = this;
+        let form = $(response.form).on('submit', function (e) {
             e.preventDefault();
             if ('new' === type) {
                 that.addSubmit();
@@ -134,6 +156,13 @@ class Directory {
             }
         });
         $(that.modal._element).find('.modal-content').html(form);
+        wysiwyg = tinymce.init({
+            selector: '.wysiwyg',
+            plugins: 'table lists autoresize help textpattern',
+            // toolbar: 'undo redo | formatselect | bold italic | alignleft aligncentre alignright alignjustify | indent outdent | bullist numlist',
+            menubar: false,
+            toolbar: 'undo redo | bold italic| indent outdent | bullist numlist',
+        });
     }
 
     getForm() {
@@ -157,32 +186,33 @@ class Directory {
     }
 
     remove() {
-        var that = this;
-        // bootbox.confirm("Supprimer le dossier (les dossiers enfants serons aussi supprimé)", function (result) {
-        $.ajax({
-            url: Routing.generate('ADMIN_AJAX_CATALOG_CATALOG_REMOVE', {
-                id: that.id,
-            }),
-            method: 'POST',
-            dataType: 'json',
-        })
-            .done(function (response) {
-                tree.jstree().delete_node(that.$node);
-                selectNode($('.tree a[data-id]'));
+        console.log('remove')
+        let that = this;
+        bootbox.confirm("Supprimer le dossier (les dossiers enfants serons aussi supprimé)", function (result) {
+            $.ajax({
+                url: Routing.generate('ADMIN_AJAX_CATALOG_CATALOG_REMOVE', {
+                    id: that.id,
+                }),
+                method: 'POST',
+                dataType: 'json',
             })
-        ;
-        // });
+                .done(function (response) {
+                    tree.jstree().delete_node(that.$node);
+                    selectNode($('.tree a[data-id]'));
+                })
+            ;
+        });
     }
 
     open() {
-        var that = this;
+        let that = this;
         $.ajax({
             url: Routing.generate('ADMIN_AJAX_CATALOG_CATALOG_OPEN', {
                 id: that.id,
             }),
         })
             .done(function (response) {
-                var html = $(response.html);
+                let html = $(response.html);
                 $('.catalog-content').html(html);
                 $('.datatable').DataTable();
             })
@@ -267,24 +297,24 @@ $(function () {
                             directory.edit();
                         },
                     },
-                    "remove": {
-                        "separator_before": false,
-                        "separator_after": false,
-                        "label": "Supprimer (récursif)",
-                        "action": function (obj) {
-                            directory.id = $node.a_attr["data-id"];
-                            directory.$node = $node;
-                            directory.remove($node);
-                        },
-                    },
+                    // "remove": {
+                    //     "separator_before": false,
+                    //     "separator_after": false,
+                    //     "label": "Supprimer (récursif)",
+                    //     "action": function (obj) {
+                    //         directory.id = $node.a_attr["data-id"];
+                    //         directory.$node = $node;
+                    //         directory.remove($node);
+                    //     },
+                    // },
                 };
             },
         },
 
     }).on('move_node.jstree', function (data, element, helper, event) {
-        var node = element.node;
-        var parent = tree.jstree().get_node(tree.jstree().get_parent(node));
-        var parentId = parent.a_attr ? parent.a_attr["data-id"] : null;
+        let node = element.node;
+        let parent = tree.jstree().get_node(tree.jstree().get_parent(node));
+        let parentId = parent.a_attr ? parent.a_attr["data-id"] : null;
         directory.$node = node;
         directory.$nodeParent = parent;
         directory.id = node.a_attr["data-id"];

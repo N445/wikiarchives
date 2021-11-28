@@ -210,9 +210,6 @@
             return $this->renderForm('catalog/catalog/new-multiple.html.twig', [
                 'catalog' => $catalog,
                 'breadcrumb' => $breadcrumb,
-//                'catalogs' => array_filter($this->catalogRepository->findAll(), function ($catalog) {
-//                    return Catalog::ROOT !== $catalog->getName();
-//                }),
             ]);
         }
     

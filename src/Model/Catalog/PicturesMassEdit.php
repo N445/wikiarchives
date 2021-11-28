@@ -11,6 +11,13 @@ class PicturesMassEdit
     /**
      * @var bool|null
      */
+    private $delete = false;
+    /**
+     * @var bool|null
+     *
+    /**
+     * @var bool|null
+     */
     private $enabled = true;
     /**
      * @var bool|null
@@ -55,6 +62,24 @@ class PicturesMassEdit
      * @var Picture[]
      */
     private $pictures = [];
+    
+    /**
+     * @return bool|null
+     */
+    public function isDelete(): ?bool
+    {
+        return $this->delete;
+    }
+    
+    /**
+     * @param bool|null $delete
+     * @return PicturesMassEdit
+     */
+    public function setDelete(?bool $delete): PicturesMassEdit
+    {
+        $this->delete = $delete;
+        return $this;
+    }
     
     /**
      * @return bool|null

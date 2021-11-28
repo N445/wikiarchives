@@ -1,6 +1,6 @@
 import 'flatpickr/dist/flatpickr.css';
 import flatpickr from "flatpickr";
-import French from "flatpickr/dist/l10n/fr";
+import {French} from "flatpickr/dist/l10n/fr";
 
 flatpickr(".flatpikr-taken-at", {
     altInput: true,

@@ -4,9 +4,13 @@
 </div>
 {{ form_start(newCatalogForm) }}
 <div class="modal-body">
+
     {{ form_row(newCatalogForm.enabled) }}
-    {{ form_row(newCatalogForm.name) }}
-    {{ form_row(newCatalogForm.place) }}
+    <div class="row">
+        <div class="col-md-6">{{ form_row(newCatalogForm.name) }}</div>
+        <div class="col-md-6">{{ form_row(newCatalogForm.place) }}</div>
+    </div>
+    {{ form_row(newCatalogForm.description) }}
     <div class="d-none">
         {{ form_row(newCatalogForm.parent) }}
     </div>

@@ -1,0 +1,5 @@
+security:
+  password_hashers:
+    Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'md5'
+    App\Entity\User:
+      algorithm: 'md5'

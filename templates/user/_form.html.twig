@@ -1,19 +1,28 @@
 {{ form_start(form) }}
 <div class="row">
     <div class="col-md-6">
-        {{ form_row(form.email) }}
-        {{ form_row(form.isVerified) }}
-        {{ form_row(form.info.lastname) }}
-        {{ form_row(form.info.firstname) }}
-        {{ form_row(form.info.country) }}
-        {{ form_row(form.info.city) }}
-        {{ form_row(form.info.address) }}
+
+        <div class="row align-items-end">
+            <div class="col-md-6">{{ form_row(form.email) }}</div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-6">{{ form_row(form.isVerified) }}</div>
+                    <div class="col-md-6">{{ form_row(form.isBlocked) }}</div>
+                </div>
+            </div>
+            <div class="col-md-6">{{ form_row(form.info.lastname) }}</div>
+            <div class="col-md-6">{{ form_row(form.info.firstname) }}</div>
+            <div class="col-md-6">{{ form_row(form.info.country) }}</div>
+            <div class="col-md-6">{{ form_row(form.info.city) }}</div>
+            <div class="col-md-6">{{ form_row(form.info.address) }}</div>
+        </div>
     </div>
     <div class="col-md-6">
+        {{ form_row(form.roles) }}
         {{ form_row(form.rights.hasVersionCreator) }}
     </div>
 </div>
 
 {{ form_widget(form) }}
-<button class="btn btn-success">{{ button_label|default('Save') }}</button>
+<button class="btn btn-success">{{ button_label|default('Ajouter') }}</button>
 {{ form_end(form) }}

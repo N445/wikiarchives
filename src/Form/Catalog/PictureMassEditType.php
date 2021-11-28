@@ -11,9 +11,9 @@ use App\Service\Catalog\PictureLicenseHelper;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -40,18 +40,23 @@ class PictureMassEditType extends AbstractType
                 ],
             ])
             ->add('license', ChoiceType::class, [
-                'label' => 'License',
+                'label' => 'Licence',
                 'required' => false,
-                'choices' => PictureLicenseHelper::getLicensesChoices()
+                'choices' => PictureLicenseHelper::getLicensesChoices(),
+                'attr' => [
+                    'class' => 'select2'
+                ]
             ])
             ->add('author', TextType::class, [
                 'label' => 'Auteur',
                 'required' => false,
             ])
-            ->add('creationdate', DateType::class, [
+            ->add('creationdate', TextType::class, [
                 'label' => 'Date de prise de vue',
                 'required' => false,
-                'widget' => 'single_text',
+                'attr' => [
+                    'class' => 'flatpikr-taken-at'
+                ],
             ])
             ->add('credit', TextType::class, [
                 'label' => 'Credit',
@@ -93,6 +98,15 @@ class PictureMassEditType extends AbstractType
                 },
             ])
         ;
+    
+        $builder->get('creationdate')->addModelTransformer(new CallbackTransformer(
+            function (?\DateTime $objectToString) {
+                return $objectToString?->format('Y-m-d H:i:s');
+            },
+            function (?string $stringToObject) {
+                return $stringToObject ? new \DateTime($stringToObject) : null;
+            }
+        ));
     }
     
     public function configureOptions(OptionsResolver $resolver): void

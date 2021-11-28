@@ -65,15 +65,6 @@
     
         public function test(int $id): ?Catalog
         {
-//            if ($isFull) {
-//                $qb->addSelect('pictures_file', 'pictures_validatedversion', 'pictures_validatedversion_exif')
-//                   ->leftJoin('pictures.file', 'pictures_file')
-//                   ->leftJoin('pictures.validatedVersion', 'pictures_validatedversion')
-//                   ->leftJoin('pictures_validatedversion.exif', 'pictures_validatedversion_exif')
-//                ;
-//            }
-        
-        
             return $this->createQueryBuilder('c')
                         ->andWhere('c.id = :id')
                         ->setParameter('id', $id)
@@ -149,11 +140,9 @@
         public function getBaseAdminQuery()
         {
             return $this->createQueryBuilder('c')
-                        ->addSelect('children', 'pictures', 'pictures_validatedversion', 'pictures_validatedversion_exif')
+                        ->addSelect('children', 'pictures', 'pictures_tmpVersions')
                         ->leftJoin('c.children', 'children')
                         ->leftJoin('c.pictures', 'pictures')
-                        ->leftJoin('pictures.validatedVersion', 'pictures_validatedversion')
-                        ->leftJoin('pictures_validatedversion.exif', 'pictures_validatedversion_exif')
                         ->leftJoin('pictures.tmpVersions', 'pictures_tmpVersions')
             ;
         }
@@ -173,13 +162,6 @@
                        ->addOrderBy('c.lft', 'ASC')
                        ->addOrderBy('children.lft', 'ASC')
             ;
-        
-            if ($isFull) {
-                $qb->addSelect( 'pictures_validatedversion', 'pictures_validatedversion_exif')
-                   ->leftJoin('pictures.validatedVersion', 'pictures_validatedversion')
-                   ->leftJoin('pictures_validatedversion.exif', 'pictures_validatedversion_exif')
-                ;
-            }
         
             return $qb;
         }

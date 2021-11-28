@@ -25,6 +25,7 @@ Encore
     // Globals
     .addEntry('globalsjs', './assets/global/globals.js')
     .addStyleEntry('globals', './assets/global/globals.scss')
+    .addEntry('flatpikr', './assets/global/flatpikr.js')
 
     // wysiwyg
     .addEntry('fancyboxjs', './assets/global/fancybox.js')

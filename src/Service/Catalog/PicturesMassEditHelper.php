@@ -26,18 +26,22 @@ class PicturesMassEditHelper
     
     public function massEdit(PicturesMassEdit $picturesMassEdit)
     {
-        dump($picturesMassEdit);
         $this->cache->invalidateTags([sprintf(CacheHelper::TAG_CATALOG, $picturesMassEdit->getOriginalCatalog()->getId())]);
-        if($picturesMassEdit->getNewCatalog()){
+        if ($picturesMassEdit->getNewCatalog()) {
             $this->cache->invalidateTags([sprintf(CacheHelper::TAG_CATALOG, $picturesMassEdit->getNewCatalog()->getId())]);
         }
-        foreach ($picturesMassEdit->getPictures() as $picture) {
-            $this->setValues($picturesMassEdit, $picture);
-            $this->em->persist($picture);
-            $this->cache->invalidateTags([sprintf(CacheHelper::TAG_PICTURE, $picture->getId())]);
+    
+        $chunkedArray = array_chunk($picturesMassEdit->getPictures(), 1000);
+
+    
+        foreach ($chunkedArray as $chunkedItem) {
+            foreach ($chunkedItem as $picture) {
+                $this->setValues($picturesMassEdit, $picture);
+                $this->em->persist($picture);
+                $this->cache->invalidateTags([sprintf(CacheHelper::TAG_PICTURE, $picture->getId())]);
+            }
+            $this->em->flush();
         }
-        dump($picturesMassEdit);
-//    die;
         $this->em->flush();
     }
     
@@ -48,11 +52,10 @@ class PicturesMassEditHelper
                 ->setCatalog($picturesMassEdit->getNewCatalog() ?: $picture->getCatalog())
                 ->setPlace($picturesMassEdit->getPlace() ?: $picture->getPlace())
                 ->getValidatedVersion()
-                ->getExif()
-                ->setAuthor($picturesMassEdit->getAuthor() ?: $picture->getValidatedVersion()->getExif()->getAuthor())
-                ->setCreationdate($picturesMassEdit->getCreationdate() ?: $picture->getValidatedVersion()->getExif()->getCreationdate())
-                ->setCredit($picturesMassEdit->getCredit() ?: $picture->getValidatedVersion()->getExif()->getCredit())
-                ->setSource($picturesMassEdit->getSource() ?: $picture->getValidatedVersion()->getExif()->getSource())
+                ->setAuthor($picturesMassEdit->getAuthor() ?: $picture->getValidatedVersion()->getAuthor())
+                ->setCreationdate($picturesMassEdit->getCreationdate() ?: $picture->getValidatedVersion()->getCreationdate())
+                ->setCredit($picturesMassEdit->getCredit() ?: $picture->getValidatedVersion()->getCredit())
+                ->setSource($picturesMassEdit->getSource() ?: $picture->getValidatedVersion()->getSource())
         ;
     }
 }

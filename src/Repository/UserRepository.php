@@ -3,9 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\User;
+use App\Service\User\UserRoles;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
+use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 
@@ -17,9 +19,12 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
  */
 class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
-    public function __construct(ManagerRegistry $registry)
+    private RoleHierarchyInterface $roleHierarchy;
+    
+    public function __construct(ManagerRegistry $registry, RoleHierarchyInterface $roleHierarchy)
     {
         parent::__construct($registry, User::class);
+        $this->roleHierarchy = $roleHierarchy;
     }
     
     /**
@@ -68,40 +73,31 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         if (!$user instanceof User) {
             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', \get_class($user)));
         }
-        
+    
         $user->setPassword($newHashedPassword);
         $this->_em->persist($user);
         $this->_em->flush();
     }
     
-    
-    
-    // /**
-    //  * @return User[] Returns an array of User objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function getUsers()
     {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('u.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $users = $this->createQueryBuilder('u')
+                      ->getQuery()
+                      ->getResult();
+        
+        return array_filter($users, function ($user) {
+            return !in_array(UserRoles::ROLE_ADMIN, $this->roleHierarchy->getReachableRoleNames($user->getRoles()));
+        });
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?User
+    
+    public function getAdmins()
     {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $users = $this->createQueryBuilder('u')
+                      ->getQuery()
+                      ->getResult();
+        
+        return array_filter($users, function ($user) {
+            return in_array(UserRoles::ROLE_ADMIN, $this->roleHierarchy->getReachableRoleNames($user->getRoles()));
+        });
     }
-    */
 }

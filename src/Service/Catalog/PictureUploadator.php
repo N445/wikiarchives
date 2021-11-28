@@ -14,6 +14,8 @@
 
     class PictureUploadator
     {
+        public const SUPPORTED_PICTURES_EXTENSIONS = ['bmp', 'gif', 'ico', 'jpeg', 'jpg', 'png', 'svg', 'tif', 'tiff', 'webp'];
+    
         private EntityManagerInterface $em;
         private KernelInterface $kernel;
     
@@ -41,10 +43,18 @@
                 $zip->extractTo($tmp);
                 $zip->close();
                 $finder->files()->in($tmp);
-            
+    
+                $i = 0;
                 foreach ($finder as $file) {
+                    if (!in_array($file->getExtension(), self::SUPPORTED_PICTURES_EXTENSIONS)) {
+                        continue;
+                    }
                     $uploadedFile = new UploadedFile($file->getPathname(), $file->getFilename(), null, null, true);
                     $this->uploadPicturefile($catalog, $uploadedFile, false);
+                    $i++;
+                    if ($i % 1000 === 0) {
+                        $this->em->flush();
+                    }
                 }
             }
             $this->em->flush();

@@ -1,0 +1,13 @@
+{% if breadcrumb is defined %}
+    <ol class="breadcrumb mb-3 shadow-sm border rounded py-2 px-3">
+        {% for link in breadcrumb.links %}
+            <li class="breadcrumb-item active">
+                {% if link.link %}
+                    <a href="{{ link.link }}">{{ link.title }}</a>
+                    {% else %}
+                    {{ link.title }}
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ol>
+{% endif %}

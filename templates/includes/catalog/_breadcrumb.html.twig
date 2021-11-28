@@ -1,13 +1,13 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb mb-0">
         {% for breadcrumbLink in object|getBreadcrumb.linksReversed %}
-            <li class="breadcrumb-item{{ breadcrumbLink.isActual?' active':'' }}">
-                {% if breadcrumbLink.isActual %}
-                    {{ breadcrumbLink.title }}
-                {% else %}
+            <li class="breadcrumb-item{{ breadcrumbLink.link?'':' active' }}">
+                {% if breadcrumbLink.link %}
                     <a href="{{ breadcrumbLink.link }}">
                         {{ breadcrumbLink.title }}
                     </a>
+                {% else %}
+                    {{ breadcrumbLink.title }}
                 {% endif %}
             </li>
         {% endfor %}

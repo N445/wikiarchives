@@ -11,11 +11,11 @@ class PicturesMassEdit
     /**
      * @var bool|null
      */
-    private $enabled;
+    private $enabled = true;
     /**
      * @var bool|null
      */
-    private $isEditedByWikiarchives;
+    private $isEditedByWikiarchives = false;
     /**
      * @var string|null
      */

@@ -3,36 +3,42 @@
 {% extends 'base-admin.html.twig' %}
 
 {% block title %}Edition multiple de photos - {{ parent() }}{% endblock %}
-{% block bodytitle %}Edition multiple de photos "{{ catalog.name }}"{% endblock %}
+{% block bodytitle %}Edition multiple de photos{% endblock %}
+{% block objecttitle %}{{ catalog.name }}{% endblock %}
 
 {% block body %}
+    {% if 'root' != catalog.name %}
+            {{ catalogMacro.catalogActionsButtons(catalog) }}
+            {% if catalog.illustration %}
+                <br>
+                <img src="{{ vich_uploader_asset(catalog.illustration.file) }}"
+                     alt="{{ catalog.name }}" class="img-fluid rounded mt-3" width="200">
+            {% endif %}
+    {% endif %}
+
+
     <div class="row">
         <div class="col-md-6">
-          <div class="sticky-top">
-              {{ catalogMacro.catalogActionsButtons(catalog) }}
-              {{ form_start(form) }}
-              <div class="row align-items-end">
-                  <div class="col-md-4">{{ form_row(form.enabled) }}</div>
-                  <div class="col-md-4">{{ form_row(form.isEditedByWikiarchives) }}</div>
-                  <div class="col-md-4">{{ form_row(form.license) }}</div>
-              </div>
-              <div class="row align-items-end">
-                  <div class="col-md-3">{{ form_row(form.author) }}</div>
-                  <div class="col-md-3">{{ form_row(form.creationdate) }}</div>
-                  <div class="col-md-3">{{ form_row(form.credit) }}</div>
-                  <div class="col-md-3">{{ form_row(form.source) }}</div>
-              </div>
-              <div class="row align-items-end">
-                  <div class="col-md-6">{{ form_row(form.newCatalog) }}</div>
-                  <div class="col-md-6">{{ form_row(form.place) }}</div>
-              </div>
-              <div class="d-none">
-                  {{ form_row(form.pictures) }}
-              </div>
-              {{ form_widget(form) }}
-              <button type="submit" class="btn btn-primary">
-                  Modifier en mass
-              </button>
+            <div class="sticky-top">
+                {{ form_start(form) }}
+                <div class="row align-items-end">
+                    <div class="col-md-4">{{ form_row(form.enabled) }}</div>
+                    <div class="col-md-4">{{ form_row(form.isEditedByWikiarchives) }}</div>
+                    <div class="col-md-4">{{ form_row(form.license) }}</div>
+                    <div class="col-md-6">{{ form_row(form.author) }}</div>
+                    <div class="col-md-6">{{ form_row(form.creationdate) }}</div>
+                    <div class="col-md-6">{{ form_row(form.credit) }}</div>
+                    <div class="col-md-6">{{ form_row(form.source) }}</div>
+                    <div class="col-md-6">{{ form_row(form.newCatalog) }}</div>
+                    <div class="col-md-6">{{ form_row(form.place) }}</div>
+                </div>
+                <div class="d-none">
+                    {{ form_row(form.pictures) }}
+                </div>
+                {{ form_widget(form) }}
+                <button type="submit" class="btn btn-primary">
+                    Modifier en mass [<span id="nb-pictures-to-edit">{{ catalog.pictures|length }}</span>]
+                </button>
               {{ form_end(form) }}
           </div>
         </div>
@@ -72,7 +78,9 @@
 {% endblock %}
 {% block stylesheets %}
     {{ encore_entry_link_tags('pictues-mass-edit') }}
+    {{ encore_entry_link_tags('flatpikr') }}
 {% endblock %}
 {% block javascripts %}
     {{ encore_entry_script_tags('pictues-mass-edit-js') }}
+    {{ encore_entry_script_tags('flatpikr') }}
 {% endblock %}

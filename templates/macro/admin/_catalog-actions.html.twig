@@ -1,14 +1,16 @@
 {% macro catalogActionsButtons(catalog) %}
     <div class="btn-group">
+        <a href="{{ path('ADMIN_CATALOG_CATALOG_BROWSE', {'id': catalog.id}) }}" class="btn btn-sm btn-secondary">
+            Ouvrir
+        </a>
         <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
             Actions
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <li><a class="dropdown-item" href="{{ path('ADMIN_CATALOG_CATALOG_EDIT', {'id': catalog.id}) }}">Modifier</a></li>
-            <li><a class="dropdown-item" href="{{ path('ADMIN_CATALOG_CATALOG_BROWSE', {'id': catalog.id}) }}">Sous albums</a></li>
-            <li><a class="dropdown-item" href="{{ path('ADMIN_CATALOG_PICTURE_INDEX_CATALOG', {'catalogId': catalog.id}) }}">Voir les photos</a></li>
-            <li><a class="dropdown-item" href="{{ path('ADMIN_CATALOG_PICTURE_EDIT_MULTIPLE', {'catalogId': catalog.id}) }}">Editer les photos</a></li>
-            <li><a class="dropdown-item" href="{{ path('ADMIN_CATALOG_PICTURE_NEW_MULTIPLE', {'catalogId': catalog.id}) }}">Ajouter des photos</a></li>
+{#            <li><a class="dropdown-item" href="{{ path('ADMIN_CATALOG_CATALOG_BROWSE', {'id': catalog.id}) }}">Ouvrir</a></li>#}
+            <li><a class="dropdown-item" href="{{ path('ADMIN_CATALOG_EDIT_MULTIPLE', {'id': catalog.id}) }}">Editer les photos</a></li>
+            <li><a class="dropdown-item" href="{{ path('ADMIN_CATALOG_NEW_MULTIPLE', {'id': catalog.id}) }}">Ajouter des photos</a></li>
+            <li><a class="dropdown-item" href="{{ path('ADMIN_CATALOG_CATALOG_EDIT', {'id': catalog.id}) }}">Modifier le catalogue</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="{{ path('CATALOG', {'id': catalog.id}) }}">Voir en front</a></li>
         </ul>

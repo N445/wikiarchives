@@ -1,4 +1,6 @@
 {{ form_start(form) }}
+
+<button class="btn btn-success mb-3">{{ button_label|default('Enregistrer') }}</button>
 <div class="row">
     <div class="col-md-6">
         <div class="card shadow mb-5">
@@ -6,21 +8,42 @@
                 <span>Fichier</span>
             </div>
             <div class="card-body">
-                {% if picture.file.id %}
-                    <p>
-                        <a href="{{ vich_uploader_asset(picture.file) }}"
-                           data-fancybox="gallery"
-                           data-caption="Optional caption"
-                        >
-                            <img src="{{ vich_uploader_asset(picture.file) }}"
-                                 alt="{{ picture.file.imageOriginalName }}" class="img-fluid rounded" width="200">
-                        </a>
-                    </p>
-                {% endif %}
-                {{ form_row(form.file) }}
+                <div class="row">
+                    <div class="col-md-3">
+                        {% if picture.file.id %}
+                            <p>
+                                <a href="{{ vich_uploader_asset(picture.file) }}"
+                                   data-fancybox="gallery"
+                                   data-caption="Optional caption"
+                                >
+                                    <img src="{{ vich_uploader_asset(picture.file) }}"
+                                         alt="{{ picture.file.imageOriginalName }}" class="img-fluid rounded" width="200">
+                                </a>
+                            </p>
+                        {% endif %}
+                    </div>
+                    <div class="col-md">
+                        {{ form_row(form.file) }}
+                    </div>
+                </div>
+
             </div>
         </div>
-
+        <div class="card shadow">
+            <div class="card-header">
+                <span>Zone</span>
+            </div>
+            <div class="card-body">
+                {{ form_row(form.place) }}
+                {#                <div class="row">#}
+                {#                    <div class="col-md-6">{{ form_row(form.validatedVersion.exif.lat) }}</div>#}
+                {#                    <div class="col-md-6">{{ form_row(form.validatedVersion.exif.lng) }}</div>#}
+                {#                </div>#}
+                {#                <div id="map"{% if picture.exif.gpsArray %} data-position="{{ picture.exif.gpsArray|json_encode }}"{% endif %}></div>#}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
         <div class="card shadow">
             <div class="card-header">
                 <span>Information</span>
@@ -29,50 +52,20 @@
                 <div class="row">
                     <div class="col-md-6">{{ form_row(form.enabled) }}</div>
                     <div class="col-md-6">{{ form_row(form.isEditedByWikiarchives) }}</div>
-                </div>
-                <div class="row">
                     <div class="col-md-6">{{ form_row(form.catalog) }}</div>
                     <div class="col-md-6">{{ form_row(form.catalogsIllustrations) }}</div>
                 </div>
                 <hr>
-
                 <div class="row">
                     <div class="col-md-6">{{ form_row(form.license) }}</div>
                     <div class="col-md-6">{{ form_row(form.validatedVersion.name) }}</div>
+                    <div class="col-md-6">{{ form_row(form.validatedVersion.author) }}</div>
+                    <div class="col-md-6">{{ form_row(form.validatedVersion.creationdate) }}</div>
+                    <div class="col-md-6">{{ form_row(form.validatedVersion.credit) }}</div>
+                    <div class="col-md-6">{{ form_row(form.validatedVersion.source) }}</div>
                 </div>
 
                 {{ form_row(form.validatedVersion.description) }}
-            </div>
-        </div>
-        <button class="btn btn-success">{{ button_label|default('Enregistrer') }}</button>
-    </div>
-    <div class="col-md-6">
-        <div class="card shadow mb-5">
-            <div class="card-header">
-                <span>Plus d'info</span>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-6">{{ form_row(form.validatedVersion.exif.author) }}</div>
-                    <div class="col-md-6">{{ form_row(form.validatedVersion.exif.creationdate) }}</div>
-                    <div class="col-md-6">{{ form_row(form.validatedVersion.exif.credit) }}</div>
-                    <div class="col-md-6">{{ form_row(form.validatedVersion.exif.source) }}</div>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="card shadow">
-            <div class="card-header">
-                <span>Zone</span>
-            </div>
-            <div class="card-body">
-                {{ form_row(form.place) }}
-                <div class="row">
-                    <div class="col-md-6">{{ form_row(form.validatedVersion.exif.lat) }}</div>
-                    <div class="col-md-6">{{ form_row(form.validatedVersion.exif.lng) }}</div>
-                </div>
-                <div id="map"{% if picture.exif.gpsArray %} data-position="{{ picture.exif.gpsArray|json_encode }}"{% endif %}></div>
             </div>
         </div>
     </div>

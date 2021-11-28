@@ -17,6 +17,7 @@ function refreshform() {
         let pictureID = $(item).attr('id');
         $(`#picture_mass_edit_pictures option[value="${pictureID}"]`).prop("selected", true)
     })
+    $('#nb-pictures-to-edit').html($('.picture-card.selected').length)
 }
 
 $(function () {

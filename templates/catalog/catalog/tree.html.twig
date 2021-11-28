@@ -19,18 +19,6 @@
                 <div class="card shadow">
                     <div class="card-body">
                         {% if catalog.id %}
-                            {% if 'root' != catalog.name %}
-                                <form method="POST"
-                                      action="{{ path('AJAX_CATALOG_PICTURE_FILEPOND', {'directoryId': catalog.id}) }}">
-
-{#                                    <select class="select2" name="catalogId">#}
-{#                                        {% for catalogSelect in catalogs %}#}
-{#                                            <option value="{{ catalogSelect.id }}" {{ catalogSelect.id == catalog.id?'selected':'' }}>{{ catalogSelect.name }}</option>#}
-{#                                        {% endfor %}#}
-{#                                    </select>#}
-                                    <input type="file" class="filepond" name="filepond" data-allow-remove="true">
-                                </form>
-                            {% endif %}
                             <div class="catalog-content">
                                 {% include 'catalog/catalog/includes/_catalog-content.html.twig' %}
                             </div>
@@ -54,9 +42,11 @@
 {% block stylesheets %}
     {{ encore_entry_link_tags('admin-tree') }}
     {{ encore_entry_link_tags('admin-catalog-datatable') }}
+    {{ encore_entry_link_tags('place-map-form') }}
 {% endblock %}
 
 {% block javascripts %}
     {{ encore_entry_script_tags('admin-tree-js') }}
     {{ encore_entry_script_tags('admin-catalog-datatable-js') }}
+    {{ encore_entry_script_tags('place-map-formjs') }}
 {% endblock %}

@@ -1,15 +1,34 @@
+{% import 'macro/admin/_catalog-actions.html.twig' as catalogMacro %}
+
 {% extends 'base-admin.html.twig' %}
 
 {% block title %}Liste des photos de "{{ catalog.name}}" - {{ parent() }}{% endblock %}
-{% block bodytitle %}Liste des photos de "{{ catalog.name}}"{% endblock %}
+{% block bodytitle %}Liste des photos{% endblock %}
+{% block title %}{{ catalog.name}}{% endblock %}
 
 {% block body %}
     <p>
         {{ pictures|length }} photos
     </p>
-    <a href="{{ path('ADMIN_CATALOG_PICTURE_NEW_MULTIPLE',{'catalogId':catalog.id}) }}" class="btn btn-primary mb-3">
-        Ajouter photos
-    </a>
+    {% if 'root' != catalog.name %}
+        <div class="row mb-5">
+            {% if catalog.illustration %}
+                <div class="col-md-2">
+                    <img src="{{ vich_uploader_asset(catalog.illustration.file) }}"
+                         alt="{{ catalog.name }}" class="img-fluid rounded" width="200">
+                </div>
+            {% endif %}
+            <div class="col-md">
+                <div class="btn-group mb-5">
+                    <a href="{{ path('ADMIN_CATALOG_CATALOG_BROWSE', {'id': catalog.parent.id}) }}"
+                       class="btn btn-sm btn-outline-secondary">
+                        Parent
+                    </a>
+                    {{ catalogMacro.catalogActionsButtons(catalog) }}
+                </div>
+            </div>
+        </div>
+    {% endif %}
 
     <div class="row g-3">
         {% for picture in pictures %}

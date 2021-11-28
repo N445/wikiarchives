@@ -56,6 +56,11 @@
         private $isVerified = false;
         
         /**
+         * @ORM\Column(type="boolean")
+         */
+        private $isBlocked = false;
+        
+        /**
          * @ORM\OneToOne(targetEntity=Info::class, cascade={"persist", "remove"}, fetch="EAGER")
          * @ORM\JoinColumn(nullable=false)
          */
@@ -194,6 +199,24 @@
         {
             $this->isVerified = $isVerified;
             
+            return $this;
+        }
+    
+        /**
+         * @return bool
+         */
+        public function isBlocked(): bool
+        {
+            return $this->isBlocked;
+        }
+    
+        /**
+         * @param bool $isBlocked
+         * @return User
+         */
+        public function setIsBlocked(bool $isBlocked): User
+        {
+            $this->isBlocked = $isBlocked;
             return $this;
         }
         

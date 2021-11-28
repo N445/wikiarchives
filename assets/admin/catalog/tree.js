@@ -4,22 +4,12 @@ require('./../lib/vakata-jstree/dist/jstree')
 const bootstrap = require('bootstrap');
 require('datatables.net-bs5');
 
-
-// const FilePond = require('filepond');
-import * as FilePond from "filepond";
-
-// import FilePond from 'filepond';
-// require('jquery-filepond/filepond.jquery');
-// var bootbox = require('bootbox');
-// const noty = require('noty');
-
 const routes = require('../../../public/js/fos_js_routes.json');
 import Routing from '../../../vendor/friendsofsymfony/jsrouting-bundle/Resources/public/js/router.min.js';
 
 Routing.setRoutingData(routes);
 
 let tree;
-let filepond;
 
 class Directory {
     id;
@@ -232,25 +222,6 @@ let directory = new Directory();
 
 
 $(function () {
-    // FilePond.create($('.filepond'));
-
-
-    const inputElement = document.querySelector('.filepond');
-    filepond = FilePond.create(inputElement, {
-        allowMultiple: true,
-        server: {
-            process: {
-                method: 'POST',
-                url: $('.filepond').closest('form').attr('action')
-            },
-        },
-        maxParallelUploads: 10,
-        allowDrop: true,
-        allowRevert: false,
-        labelIdle: 'Glissez et déposez vos fichiers ou <span class="filepond--label-action"> Parcourir </span>',
-    });
-
-
     tree = $('#jstree-catalog .tree').jstree({
         "core": {
             "check_callback": true,
@@ -328,37 +299,13 @@ $(function () {
     $('body')
         .on('click', '.tree a[data-id]', function () {
             selectNode($(this));
-            redirect($(this));
+            directory.open();
+            // redirect($(this));
         })
         .on('contextmenu', '.tree a[data-id]', function () {
             selectNode($(this));
         })
     ;
-
-    $('.add-root-catalog').on('click', function () {
-        directory.id = null;
-        directory.$nodeParent = '#';
-        directory.add();
-    })
-    ;
-
-    $('body').on('click', '.law-delete', function (e) {
-        e.preventDefault();
-        $.ajax({
-            url: $(this).attr('action'),
-            method: 'POST',
-            data: $(this).serialize(),
-        })
-            .done(function (response) {
-                directory.open();
-            })
-        ;
-    });
-
-    document.addEventListener('FilePond:processfiles', (e) => {
-        directory.open();
-        filepond.removeFiles();
-    });
 });
 
 
@@ -374,21 +321,4 @@ function selectNode(element) {
     }
 
     directory.id = element.attr('data-id');
-
-
-    // tree.jstree().deselect_node(tree.jstree().node);
-    // tree.jstree().select_node(tree.jstree().get_node(element.attr('id')));
-
-    // directory.open();
-
-    filepond.removeFiles();
-    filepond.setOptions({
-        server: {
-            process: {
-                url: Routing.generate('AJAX_CATALOG_PICTURE_FILEPOND', {
-                    'directoryId': directory.id,
-                }),
-            },
-        },
-    });
 }

@@ -71,7 +71,7 @@ final class ImageDownloadHandler implements MessageHandlerInterface
         $exif = PictureExifPopulator::getExifFromFile($uploadedfile, $picture->getExif());
         
         $picture->setFile($file);
-        $picture->getValidatedVersion()->setExif($exif);
+        $picture->setExif($exif);
     }
     
     private function setFakeImage(Picture $picture)
@@ -79,7 +79,7 @@ final class ImageDownloadHandler implements MessageHandlerInterface
         $pictureFake = $this->getFakeImages()[array_rand($this->getFakeImages())];
         
         $picture->getFile()->setImageName($pictureFake['name']);
-        $picture->getValidatedVersion()->setExif($pictureFake['exif']);
+        $picture->setExif($pictureFake['exif']);
     }
     
     /**

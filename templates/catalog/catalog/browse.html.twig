@@ -3,26 +3,51 @@
 {% extends 'base-admin.html.twig' %}
 
 {% block title %}Parcourir - {{ parent() }}{% endblock %}
-{% block bodytitle %}Parcourir - {{ catalog.name }}{% endblock %}
+{% block bodytitle %}Parcourir{% endblock %}
+{% block objecttitle %}{{ catalog.name }}{% endblock %}
 
 {% block body %}
     {% if 'root' != catalog.name %}
-       <div class="btn-group mb-5">
-           <a href="{{ path('ADMIN_CATALOG_CATALOG_BROWSE', {'id': catalog.parent.id}) }}" class="btn btn-sm btn-outline-secondary">
-               Parent
-           </a>
-           {{ catalogMacro.catalogActionsButtons(catalog) }}
-       </div>
+        <p>
+        <div class="btn-group">
+            <a href="{{ path('ADMIN_CATALOG_CATALOG_BROWSE', {'id': catalog.parent.id}) }}"
+               class="btn btn-sm btn-outline-secondary">
+                Parent
+            </a>
+            {{ catalogMacro.catalogActionsButtons(catalog) }}
+        </div>
+        {% if catalog.illustration %}
+            <br>
+            <img src="{{ vich_uploader_asset(catalog.illustration.file) }}"
+                 alt="{{ catalog.name }}" class="img-fluid rounded mt-3" width="200">
+        {% endif %}
+        </p>
     {% endif %}
-    <div class="row g-3">
+    {% if catalog.placeRecursive %}
+        <p>
+            <i class="fas fa-map-marked-alt"></i>
+            {{ catalog.placeRecursive.name }}
+        </p>
+    {% endif %}
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#catalogModal">
+        Ajouter un catalog dans "{{ catalog.name }}"
+    </button>
+    <div class="row g-3 my-3">
         {% for child in catalog.children %}
             <div class="col-md-2">
                 <div class="card h-100 shadow">
+                    {{ isVisiblePastille(child.isEnabled) }}
+                    {% if child.illustration %}
+                        <img src="{{ child.illustration.file.imageName|imagine_filter('picture_admin_listing') }}"
+                             alt="{{ child.name }}"
+                             class="card-img-top" loading="lazy">
+                    {% endif %}
                     <div class="card-body">
-                       <div class="h-100 d-flex flex-column justify-content-between">
-                           <h5 class="card-title">{{ child.name }}</h5>
-                           {{ catalogMacro.catalogActionsButtons(child) }}
-                       </div>
+                        <div class="h-100 d-flex flex-column justify-content-between">
+                            <h5 class="card-title">{{ child.name }}</h5>
+                            {{ catalogMacro.catalogActionsButtons(child) }}
+                        </div>
                     </div>
                     <div class="card-footer text-muted">
                         <small>{{ child.pictures|length }} photos - {{ child.children|length }} dossiers</small>
@@ -31,4 +56,56 @@
             </div>
         {% endfor %}
     </div>
+    <hr>
+    <h2>Photos [{{ catalog.pictures|length }}]</h2>
+    <div class="row g-3">
+        {% for picture in catalog.pictures %}
+            <div class="col-md-2">
+                <div class="card h-100">
+                    {{ isVisiblePastille(picture.isEnabled) }}
+                    <a href="{{ vich_uploader_asset(picture.file) }}"
+                       data-fancybox="gallery">
+                        <img src="{{ picture.file.imageName|imagine_filter('picture_admin_listing') }}"
+                             alt="{{ picture.file.imageOriginalName }}"
+                             class="card-img-top" loading="lazy">
+                    </a>
+                    <div class="card-body">
+                        <div class="d-flex flex-column justify-content-between h-100">
+                            <p class="card-text">{{ picture.name }}</p>
+                            <div class="dropdown">
+                                <button class="btn btn-sm w-100 btn-secondary dropdown-toggle" type="button"
+                                        id="dropdownMenuButton1"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                    Actions
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item"
+                                           href="{{ path('ADMIN_CATALOG_PICTURE_SHOW', {'id': picture.id}) }}">Voir</a>
+                                    </li>
+                                    <li><a class="dropdown-item"
+                                           href="{{ path('ADMIN_CATALOG_PICTURE_EDIT', {'id': picture.id}) }}">Modifier</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <p>no records found</p>
+        {% endfor %}
+    </div>
+
+    {# new Catalog #}
+    <div class="modal fade" id="catalogModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                {% include 'catalog/catalog/includes/_modal-new-catalog.html.twig' %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('wysiwyg-js') }}
 {% endblock %}

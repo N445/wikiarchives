@@ -8,6 +8,17 @@
         "/build/globalsjs.js"
       ]
     },
+    "flatpikr": {
+      "js": [
+        "/build/runtime.js",
+        "/build/vendors-node_modules_jquery_dist_jquery_js.js",
+        "/build/vendors-node_modules_flatpickr_dist_esm_index_js-node_modules_flatpickr_dist_l10n_fr_js-node_-ee5118.js",
+        "/build/flatpikr.js"
+      ],
+      "css": [
+        "/build/vendors-node_modules_flatpickr_dist_esm_index_js-node_modules_flatpickr_dist_l10n_fr_js-node_-ee5118.css"
+      ]
+    },
     "fancyboxjs": {
       "js": [
         "/build/runtime.js",
@@ -74,7 +85,7 @@
       "js": [
         "/build/runtime.js",
         "/build/vendors-node_modules_jquery_dist_jquery_js.js",
-        "/build/vendors-node_modules_filepond_dist_filepond_js.js",
+        "/build/vendors-node_modules_filepond-plugin-file-validate-type_dist_filepond-plugin-file-validate-ty-f96cf8.js",
         "/build/filepondjs.js"
       ]
     },
@@ -83,8 +94,8 @@
         "/build/runtime.js",
         "/build/vendors-node_modules_jquery_dist_jquery_js.js",
         "/build/vendors-node_modules_core-js_internals_array-iteration_js-node_modules_core-js_internals_export_js.js",
-        "/build/vendors-node_modules_filepond_dist_filepond_js.js",
         "/build/vendors-node_modules_core-js_internals_add-to-unscopables_js-node_modules_core-js_modules_es_-4a17ad.js",
+        "/build/vendors-node_modules_filepond-plugin-file-validate-type_dist_filepond-plugin-file-validate-ty-f96cf8.js",
         "/build/vendors-node_modules_core-js_modules_es_array_for-each_js-node_modules_core-js_modules_es_obj-04c62c.js",
         "/build/vendor_friendsofsymfony_jsrouting-bundle_Resources_public_js_router_min_js-public_js_fos_js_r-064a7f.js",
         "/build/filepond-dynamique-catalogjs.js"
@@ -113,7 +124,6 @@
         "/build/runtime.js",
         "/build/vendors-node_modules_jquery_dist_jquery_js.js",
         "/build/vendors-node_modules_core-js_internals_array-iteration_js-node_modules_core-js_internals_export_js.js",
-        "/build/vendors-node_modules_filepond_dist_filepond_js.js",
         "/build/vendors-node_modules_core-js_internals_add-to-unscopables_js-node_modules_core-js_modules_es_-4a17ad.js",
         "/build/vendors-node_modules_datatables_net-bs5_js_dataTables_bootstrap5_js.js",
         "/build/vendors-node_modules_bootstrap_dist_js_bootstrap_esm_js-node_modules_core-js_modules_es_array-88fc80.js",

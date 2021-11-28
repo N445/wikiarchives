@@ -30,16 +30,19 @@ class Version
 
     /**
      * @ORM\Column(type="integer")
+     * @Gedmo\Versioned
      */
     private $versionNumber;
 
     /**
      * @ORM\Column(type="string")
+     * @Gedmo\Versioned
      */
     private $status;
 
     /**
      * @ORM\ManyToOne(targetEntity=Version::class, inversedBy="versions")
+     * @Gedmo\Versioned
      */
     private $basedVersion;
 
@@ -52,49 +55,79 @@ class Version
      * @ORM\Column(type="string", length=255)
      * @Gedmo\Versioned
      */
-    private $name;
-
+    private ?string $name = null;
+    
     /**
      * @ORM\Column(type="text", nullable=true)
      * @Gedmo\Versioned
      */
-    private $description;
-
+    private ?string $description = null;
+    
     /**
-     * @ORM\OneToOne(targetEntity=Exif::class, cascade={"persist", "remove"}, fetch="EAGER")
+     * @ORM\Column(type="string",nullable=true)
      * @Gedmo\Versioned
      */
-    private $exif;
-
+    private ?string $author = null;
+    
+    /**
+     * @ORM\Column(type="string",nullable=true)
+     * @Gedmo\Versioned
+     */
+    private ?string $copyright = null;
+    
+    /**
+     * @ORM\Column(type="datetime",nullable=true)
+     * @Gedmo\Versioned
+     */
+    private ?\DateTime $creationdate = null;
+    
+    /**
+     * @ORM\Column(type="string",nullable=true)
+     * @Gedmo\Versioned
+     */
+    private ?string $credit = null;
+    
+    /**
+     * @ORM\Column(type="string",nullable=true)
+     * @Gedmo\Versioned
+     */
+    private ?string $source = null;
+    
     /**
      * @ORM\ManyToOne(targetEntity=Picture::class, inversedBy="versions")
+     * @Gedmo\Versioned
      */
     private $picture;
-
+    
     /**
      * @ORM\ManyToOne(targetEntity=Picture::class, inversedBy="tmpVersions")
+     * @Gedmo\Versioned
      */
     private $tmpPicture;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Gedmo\Versioned
      */
     private $userComment;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Gedmo\Versioned
      */
     private $moderatorComment;
 
     /**
      * @Gedmo\Blameable(on="create")
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="createdVersions")
+     * @Gedmo\Versioned
      */
     private $createdBy;
 
     /**
      * @Gedmo\Blameable(on="update")
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="updatedVersions")
+     * @Gedmo\Versioned
      */
     private $updatedBy;
 
@@ -103,16 +136,21 @@ class Version
      * @Gedmo\Versioned
      */
     private $type;
-
+    
+    /**
+     *
+     */
     public function __construct()
     {
         $this->versionNumber = 1;
         $this->status = PictureVersionHelper::STATUS_PENDING;
         $this->type = PictureVersionHelper::TYPE_FINAL;
         $this->versions = new ArrayCollection();
-        $this->exif = new Exif();
     }
-
+    
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
@@ -153,12 +191,19 @@ class Version
         $this->status = $status;
         return $this;
     }
-
+    
+    /**
+     * @return $this|null
+     */
     public function getBasedVersion(): ?self
     {
         return $this->basedVersion;
     }
-
+    
+    /**
+     * @param Version|null $basedVersion
+     * @return $this
+     */
     public function setBasedVersion(?self $basedVersion): self
     {
         $this->basedVersion = $basedVersion;
@@ -173,7 +218,11 @@ class Version
     {
         return $this->versions;
     }
-
+    
+    /**
+     * @param Version $version
+     * @return $this
+     */
     public function addVersion(self $version): self
     {
         if (!$this->versions->contains($version)) {
@@ -183,7 +232,11 @@ class Version
 
         return $this;
     }
-
+    
+    /**
+     * @param Version $version
+     * @return $this
+     */
     public function removeVersion(self $version): self
     {
         if ($this->versions->removeElement($version)) {
@@ -195,108 +248,245 @@ class Version
 
         return $this;
     }
-
+    
+    /**
+     * @return string|null
+     */
     public function getName(): ?string
     {
         return $this->name;
     }
-
+    
+    /**
+     * @param string $name
+     * @return $this
+     */
     public function setName(string $name): self
     {
         $this->name = $name;
 
         return $this;
     }
-
+    
+    /**
+     * @return string|null
+     */
     public function getDescription(): ?string
     {
         return $this->description;
     }
-
+    
+    /**
+     * @param string|null $description
+     * @return $this
+     */
     public function setDescription(?string $description): self
     {
         $this->description = $description;
 
         return $this;
     }
-
-    public function getExif(): ?Exif
+    
+    /**
+     * @return string|null
+     */
+    public function getAuthor(): ?string
     {
-        return $this->exif;
+        return $this->author;
     }
-
-    public function setExif(?Exif $exif): self
+    
+    /**
+     * @param string|null $author
+     * @return $this
+     */
+    public function setAuthor(?string $author): self
     {
-        $this->exif = $exif;
-
+        $this->author = $author;
         return $this;
     }
-
+    
+    
+    /**
+     * @return string|null
+     */
+    public function getCopyright(): ?string
+    {
+        return $this->copyright;
+    }
+    
+    /**
+     * @param string|null $copyright
+     * @return $this
+     */
+    public function setCopyright(?string $copyright): self
+    {
+        $this->copyright = $copyright;
+        return $this;
+    }
+    
+    
+    /**
+     * @return \DateTime|null
+     */
+    public function getCreationdate(): ?\DateTime
+    {
+        return $this->creationdate;
+    }
+    
+    /**
+     * @param \DateTime|null $creationdate
+     * @return $this
+     */
+    public function setCreationdate(?\DateTime $creationdate): self
+    {
+        $this->creationdate = $creationdate;
+        return $this;
+    }
+    
+    
+    /**
+     * @return string|null
+     */
+    public function getCredit(): ?string
+    {
+        return $this->credit;
+    }
+    
+    /**
+     * @param string|null $credit
+     * @return $this
+     */
+    public function setCredit(?string $credit): self
+    {
+        $this->credit = $credit;
+        return $this;
+    }
+    
+    
+    /**
+     * @return string|null
+     */
+    public function getSource(): ?string
+    {
+        return $this->source;
+    }
+    
+    /**
+     * @param string|null $source
+     * @return $this
+     */
+    public function setSource(?string $source): self
+    {
+        $this->source = $source;
+        return $this;
+    }
+    
+    /**
+     * @return Picture|null
+     */
     public function getPicture(): ?Picture
     {
         return $this->picture;
     }
-
+    
+    /**
+     * @param Picture|null $picture
+     * @return $this
+     */
     public function setPicture(?Picture $picture): self
     {
         $this->picture = $picture;
 
         return $this;
     }
-
+    
+    /**
+     * @return Picture|null
+     */
     public function getTmpPicture(): ?Picture
     {
         return $this->tmpPicture;
     }
-
+    
+    /**
+     * @param Picture|null $picture
+     * @return $this
+     */
     public function setTmpPicture(?Picture $picture): self
     {
         $this->tmpPicture = $picture;
 
         return $this;
     }
-
+    
+    /**
+     * @return string|null
+     */
     public function getUserComment(): ?string
     {
         return $this->userComment;
     }
-
+    
+    /**
+     * @param string|null $userComment
+     * @return $this
+     */
     public function setUserComment(?string $userComment): self
     {
         $this->userComment = $userComment;
 
         return $this;
     }
-
+    
+    /**
+     * @return string|null
+     */
     public function getModeratorComment(): ?string
     {
         return $this->moderatorComment;
     }
-
+    
+    /**
+     * @param string|null $moderatorComment
+     * @return $this
+     */
     public function setModeratorComment(?string $moderatorComment): self
     {
         $this->moderatorComment = $moderatorComment;
 
         return $this;
     }
-
-
+    
+    /**
+     * @return User|null
+     */
     public function getCreatedBy(): ?User
     {
         return $this->createdBy;
     }
-
+    
+    /**
+     * @param User|null $user
+     * @return $this
+     */
     public function setCreatedBy(?User $user): Version
     {
         $this->createdBy = $user;
         return $this;
     }
-
+    
+    /**
+     * @return User|null
+     */
     public function getUpdatedBy(): ?User
     {
         return $this->updatedBy;
     }
-
+    
+    /**
+     * @param User|null $user
+     * @return $this
+     */
     public function setUpdatedBy(?User $user): Version
     {
         $this->updatedBy = $user;

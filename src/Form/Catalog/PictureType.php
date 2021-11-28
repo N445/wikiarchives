@@ -36,7 +36,10 @@ class PictureType extends AbstractType
             ])
             ->add('license', ChoiceType::class, [
                 'label' => 'License',
-                'choices' => PictureLicenseHelper::getLicensesChoices()
+                'choices' => PictureLicenseHelper::getLicensesChoices(),
+                'attr' => [
+                    'class' => 'select2'
+                ]
             ])
             ->add('validatedVersion', VersionType::class, [
                 'label' => false

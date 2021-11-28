@@ -4,6 +4,9 @@ namespace App\Form\User;
 
 use App\Entity\User\Info;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -12,11 +15,25 @@ class InfoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('lastname')
-            ->add('firstname')
-            ->add('country')
-            ->add('city')
-            ->add('address')
+            ->add('lastname', TextType::class, [
+                'label' => 'Nom'
+            ])
+            ->add('firstname', TextType::class, [
+                'label' => 'Prénom'
+            ])
+            ->add('country', CountryType::class, [
+                'label' => 'Pays',
+                'attr' => [
+                    'class' => 'select2'
+                ],
+                'preferred_choices' => ['FR', 'US', 'GB'],
+            ])
+            ->add('city', TextType::class, [
+                'label' => 'Ville'
+            ])
+            ->add('address', TextareaType::class, [
+                'label' => 'Adresse'
+            ])
         ;
     }
 

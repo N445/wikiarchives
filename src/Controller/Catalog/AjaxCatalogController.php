@@ -59,12 +59,10 @@
     
                     return $this->getFormResponse($newcatalog, $newCatalogForm, true, 'new');
                 }
-    
-    
+                
                 return $this->getFormResponse($newcatalog, $newCatalogForm, false, 'new');
             }
-        
-        
+            
             return $this->getFormResponse($newcatalog, $newCatalogForm, true, 'new');
         }
     
@@ -110,10 +108,6 @@
             }
     
             $catalogRemover->remove($catalog);
-//            $this->catalogTreeRepository->removeFromTree($catalog);
-//            $em->clear(); // clear cached nodes
-//            $this->em->remove($catalog);
-//            $this->em->flush();
         
             return $this->json([
                 'success' => true,

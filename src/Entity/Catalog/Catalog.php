@@ -405,6 +405,9 @@
             if($this->getPictures()->first()){
                 return $this->getPictures()->first();
             }
+            if($this->getChildren()->first()){
+                return $this->getChildren()->first()->getIllustration();
+            }
             return null;
         }
     

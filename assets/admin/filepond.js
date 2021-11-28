@@ -1,6 +1,8 @@
 const $ = jQuery = require("jquery");
 
 import * as FilePond from "filepond";
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
+FilePond.registerPlugin(FilePondPluginFileValidateType);
 
 let filepond;
 
@@ -13,6 +15,8 @@ $(function () {
         allowDrop: true,
         allowRevert: false,
         labelIdle: 'Glissez et déposez vos fichiers ou <span class="filepond--label-action"> Parcourir </span>',
+        allowFileTypeValidation: true,
+        acceptedFileTypes: ['image/png'],
     });
 
 

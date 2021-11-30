@@ -26,28 +26,28 @@ class PictureMassEditType extends AbstractType
         
         $builder
             ->add('delete', CheckboxType::class, [
-                'label' => 'Supprimer la selection',
+                'label' => 'catalog.form.mass_edit.delete',
                 'required' => false,
                 'label_attr' => [
                     'class' => 'checkbox-switch',
                 ],
             ])
             ->add('enabled', CheckboxType::class, [
-                'label' => 'Visible',
+                'label' => 'catalog.form.mass_edit.enabled',
                 'required' => false,
                 'label_attr' => [
                     'class' => 'checkbox-switch',
                 ],
             ])
             ->add('isEditedByWikiarchives', CheckboxType::class, [
-                'label' => 'Modifié par Wikiarchives Oui/Non',
+                'label' => 'catalog.form.mass_edit.isEditedByWikiarchives',
                 'required' => false,
                 'label_attr' => [
                     'class' => 'checkbox-switch',
                 ],
             ])
             ->add('license', ChoiceType::class, [
-                'label' => 'Licence',
+                'label' => 'catalog.form.mass_edit.license',
                 'required' => false,
                 'choices' => PictureLicenseHelper::getLicensesChoices(),
                 'attr' => [
@@ -55,26 +55,26 @@ class PictureMassEditType extends AbstractType
                 ]
             ])
             ->add('author', TextType::class, [
-                'label' => 'Auteur',
+                'label' => 'catalog.form.mass_edit.author',
                 'required' => false,
             ])
             ->add('creationdate', TextType::class, [
-                'label' => 'Date de prise de vue',
+                'label' => 'catalog.form.mass_edit.creationdate',
                 'required' => false,
                 'attr' => [
                     'class' => 'flatpikr-taken-at'
                 ],
             ])
             ->add('credit', TextType::class, [
-                'label' => 'Credit',
+                'label' => 'catalog.form.mass_edit.credit',
                 'required' => false,
             ])
             ->add('source', TextType::class, [
-                'label' => 'Source',
+                'label' => 'catalog.form.mass_edit.source',
                 'required' => false,
             ])
             ->add('newCatalog', EntityType::class, [
-                'label' => 'Catalogue',
+                'label' => 'catalog.form.mass_edit.newCatalog',
                 'class' => Catalog::class,
                 'required' => false,
                 'attr' => [
@@ -88,7 +88,7 @@ class PictureMassEditType extends AbstractType
                 },
             ])
             ->add('place', EntityType::class, [
-                'label' => 'Zone',
+                'label' => 'catalog.form.mass_edit.place',
                 'class' => Place::class,
                 'required' => false,
                 'attr' => [
@@ -96,6 +96,7 @@ class PictureMassEditType extends AbstractType
                 ]
             ])
             ->add('pictures', EntityType::class, [
+                'label' => 'catalog.form.mass_edit.pictures',
                 'class' => Picture::class,
                 'multiple' => true,
                 'required' => false,
@@ -122,6 +123,7 @@ class PictureMassEditType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => PicturesMassEdit::class,
+            'translation_domain' => 'admin',
         ]);
     }
 }

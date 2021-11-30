@@ -28,7 +28,7 @@
                         <td>
                             <a href="{{ path('ADMIN_MODERATION_PICTURE_TMP_VERSIONS_SHOW', {'id': version.tmpPicture.id, 'versionId': version.id}) }}"
                                class="btn btn-sm btn-info">
-                                Voir
+                                {{ 'actions.see'|trans([],'admin') }}
                             </a>
                         </td>
                     </tr>

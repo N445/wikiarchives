@@ -1,18 +1,18 @@
 {% macro catalogActionsButtons(catalog) %}
     <div class="btn-group">
         <a href="{{ path('ADMIN_CATALOG_CATALOG_BROWSE', {'id': catalog.id}) }}" class="btn btn-sm btn-secondary">
-            Ouvrir
+            {{ 'catalog.actions.open'|trans([],'admin') }}
         </a>
         <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-            Actions
+            {{ 'actions.actions'|trans([],'admin') }}
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
 {#            <li><a class="dropdown-item" href="{{ path('ADMIN_CATALOG_CATALOG_BROWSE', {'id': catalog.id}) }}">Ouvrir</a></li>#}
-            <li><a class="dropdown-item" href="{{ path('ADMIN_CATALOG_EDIT_MULTIPLE', {'id': catalog.id}) }}">Editer les photos</a></li>
-            <li><a class="dropdown-item" href="{{ path('ADMIN_CATALOG_NEW_MULTIPLE', {'id': catalog.id}) }}">Ajouter des photos</a></li>
-            <li><a class="dropdown-item" href="{{ path('ADMIN_CATALOG_CATALOG_EDIT', {'id': catalog.id}) }}">Modifier le catalogue</a></li>
+            <li><a class="dropdown-item" href="{{ path('ADMIN_CATALOG_EDIT_MULTIPLE', {'id': catalog.id}) }}">{{ 'catalog.actions.edit_pictures'|trans([],'admin') }}</a></li>
+            <li><a class="dropdown-item" href="{{ path('ADMIN_CATALOG_NEW_MULTIPLE', {'id': catalog.id}) }}">{{ 'catalog.actions.add_pictures'|trans([],'admin') }}</a></li>
+            <li><a class="dropdown-item" href="{{ path('ADMIN_CATALOG_CATALOG_EDIT', {'id': catalog.id}) }}">{{ 'catalog.actions.edit'|trans([],'admin') }}</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="{{ path('CATALOG', {'id': catalog.id}) }}">Voir en front</a></li>
+            <li><a class="dropdown-item" href="{{ path('CATALOG', {'id': catalog.id}) }}">{{ 'catalog.actions.see_front'|trans([],'admin') }}</a></li>
         </ul>
     </div>
 {% endmacro %}

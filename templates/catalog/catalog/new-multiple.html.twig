@@ -2,17 +2,20 @@
 
 {% extends 'base-admin.html.twig' %}
 
-{% block title %}Ajout multiple de photos - {{ parent() }}{% endblock %}
-{% block bodytitle %}Ajout multiple de photos{% endblock %}
+{% block title %}{{ 'catalog.form.add_multiple.label'|trans([],'admin') }} - {{ parent() }}{% endblock %}
+{% block bodytitle %}{{ 'catalog.form.add_multiple.label'|trans([],'admin') }}{% endblock %}
 {% block objecttitle %}{{ catalog.name }}{% endblock %}
 
 {% block body %}
     <div class="btn-group mb-3">
         {{ catalogMacro.catalogActionsButtons(catalog) }}
     </div>
-        <form method="POST" action="{{ path('AJAX_CATALOG_PICTURE_FILEPOND', {'catalogId': catalog.id}) }}">
-            <input type="file" class="filepond" name="filepond" data-allow-remove="true">
-        </form>
+    <p>
+        {{ 'catalog.form.add_multiple.instruction'|trans([],'admin') }}
+    </p>
+    <form method="POST" action="{{ path('AJAX_CATALOG_PICTURE_FILEPOND', {'catalogId': catalog.id}) }}">
+        <input type="file" class="filepond" name="filepond" data-allow-remove="true">
+    </form>
 {% endblock %}
 
 {% block stylesheets %}

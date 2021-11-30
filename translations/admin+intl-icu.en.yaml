@@ -1,0 +1,89 @@
+title : Administration area
+
+navigation:
+  website: The site
+  go_to_website: Access to the site
+  dashboard: Dashboard
+  catalog: Catalog
+  directory:
+    label: Folders
+    tree: Tree structure
+    browse: Browse
+  images:
+    label: Images
+    add: Add
+    orphan: Orphans
+  zone: Zones
+  community:
+    label: Community
+    admin: Administrator
+    users: Users
+    contact: Contact
+
+logged_at: Logged in as
+logout: Logout
+
+actions:
+  actions: Actions
+  add: Add
+  see: View
+  edit: Modify
+  delete: Remove
+
+catalog:
+  label: >-
+    {number, plural,
+        =0 {Directory}
+        =1 {Directory}
+        other   {Directories}
+    }
+  tree:
+    label: Tree
+    content_of: Content of
+  browse:
+    label: Browse
+  actions:
+      parent: Parent
+      open: Open
+      edit_pictures: Edit pictures
+      add_pictures: Add pictures
+      edit: Edit catalog
+      see_front: See front
+      add_catalog_in: Add a catalog in
+  form:
+    mass_edit:
+      label : Batch editing
+      delete: Delete the selection
+      enabled: Visible
+      isEditedByWikiarchives: Edited by Wikiarchives Yes/No
+      license: License
+      author: Author
+      creationdate: Date taken
+      credit: Credit
+      source: Source
+      newCatalog: Catalog
+      place: Zone
+      pictures: Photos
+      submit: Modify in bulk
+      selection:
+        all: All
+        none: None
+        custom: Custom
+      filter:
+        all: All
+        selected: Selected
+        not_selected: Not selected
+    add_multiple:
+      label: Add multiple pictures
+      instruction: Images or zip files
+
+picture:
+  label: >-
+    {number, plural,
+        =0 {Picture}
+        =1 {Picture}
+        other   {Pictures}
+    }
+
+
+no_records_found:  No data found

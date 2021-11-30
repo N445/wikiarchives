@@ -5,6 +5,7 @@
     use App\Entity\User\Info;
     use App\Entity\User\Rights;
     use App\Repository\UserRepository;
+    use App\Service\Language\LanguageHelper;
     use App\Service\User\UserRoles;
     use App\Traits\User\CatalogBlameableTrait;
     use App\Traits\User\Picture\VersionBlameableTrait;
@@ -65,13 +66,19 @@
          * @ORM\JoinColumn(nullable=false)
          */
         private $info;
-        
+    
         /**
          * @ORM\OneToOne(targetEntity=Rights::class, cascade={"persist", "remove"}, fetch="EAGER")
          * @ORM\JoinColumn(nullable=false)
          */
         private $rights;
-        
+    
+        /**
+         * @ORM\Column(type="string", length=5)
+         */
+        private $locale;
+    
+    
         public function __construct()
         {
             $this->info = new Info();
@@ -84,6 +91,7 @@
             $this->updatedPlaces = new ArrayCollection();
             $this->createdVersions = new ArrayCollection();
             $this->updatedVersions = new ArrayCollection();
+            $this->locale = LanguageHelper::EN;
         }
         
         public function __toString(): string
@@ -264,5 +272,23 @@
                 // see section on salt below
                 // $this->salt
                 ) = unserialize($serialized);
+        }
+    
+        /**
+         * @return mixed
+         */
+        public function getLocale()
+        {
+            return $this->locale;
+        }
+    
+        /**
+         * @param mixed $locale
+         * @return User
+         */
+        public function setLocale($locale)
+        {
+            $this->locale = $locale;
+            return $this;
         }
     }

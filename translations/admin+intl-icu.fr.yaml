@@ -1,0 +1,91 @@
+title : Espace d'adminstration
+
+navigation:
+  website: Le site
+  go_to_website: Acceder au site
+  dashboard: Dashboard
+  catalog: Catalogue
+  directory:
+    label: Dossiers
+    tree: Arborescence
+    browse: Parcourir
+  images:
+    label: Images
+    add: Ajouter
+    orphan: Orphelines
+  zone: Zones
+  community:
+    label: Communauté
+    admin: Administrateur
+    users: Utilisateurs
+    contact: Contact
+
+logged_at: Connecté en tant que
+logout: Déconnexion
+
+
+actions:
+  actions: Actions
+  add: Ajouter
+  see: Voir
+  edit: Modifier
+  delete: Supprimer
+
+catalog:
+  label: >-
+    {number, plural,
+        =0 {Catalogue}
+        =1 {Catalogue}
+        other   {Catalogues}
+    }
+  tree:
+    label: Arborescence
+    content_of: Contenu de
+  browse:
+    label: Parcourir
+  actions:
+    parent: Parent
+    open: Ouvrir
+    edit_pictures: Editer les photos
+    add_pictures: Ajouter des photos
+    edit: Modifier le catalogue
+    see_front: Voir en front
+    add_catalog_in: Ajouter un catalogue dans
+  form:
+    mass_edit:
+      label : Edition par lot
+      delete: Supprimer la selection
+      enabled: Visible
+      isEditedByWikiarchives: Modifié par Wikiarchives Oui/Non
+      license: Licence
+      author: Auteur
+      creationdate: Date de prise de vue
+      credit: Credit
+      source: Source
+      newCatalog: Catalogue
+      place: Zone
+      pictures: Photos
+      submit: Modifier en masse
+      selection:
+        all: Toutes
+        none: Aucune
+        custom: Personnalisée
+      filter:
+        all: Tout
+        selected: Séléctionnée
+        not_selected: Non Séléctionnée
+    add_multiple:
+      label: Ajout multiple de photos
+      instruction : Des images ou des zip
+picture:
+  label: >-
+    {number, plural,
+        =0 {Photo}
+        =1 {Photo}
+        other   {Photos}
+    }
+
+
+
+
+no_records_found:  Aucunes données trouvées

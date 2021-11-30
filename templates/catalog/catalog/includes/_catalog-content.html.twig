@@ -1,6 +1,6 @@
 {% import 'macro/admin/_catalog-actions.html.twig' as catalogMacro %}
 
-<h2>Contenu de {{ catalog.name }}</h2>
+<h2>{{ catalog.name }}</h2>
 {{ catalogMacro.catalogActionsButtons(catalog) }}
 {% if catalog.illustration %}
     <br>

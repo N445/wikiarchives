@@ -1,66 +1,66 @@
 <div id="layoutSidenav_nav">
     <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
         <div class="sb-sidenav-menu">
-            <div class="nav">
-                <div class="sb-sidenav-menu-heading">Le site</div>
+            <div class="nav sticky-top">
+                <div class="sb-sidenav-menu-heading">{{ 'navigation.website'|trans([],'admin') }}</div>
                 <a class="nav-link" href="{{ path('HOMEPAGE') }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                    Acceder au site
+                    {{ 'navigation.go_to_website'|trans([],'admin') }}
                 </a>
                 <div class="sb-sidenav-menu-heading">Core</div>
                 <a class="nav-link" href="{{ path('ADMIN') }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                    Dashboard
+                    {{ 'navigation.dashboard'|trans([],'admin') }}
                 </a>
-                <div class="sb-sidenav-menu-heading">Catalogue</div>
+                <div class="sb-sidenav-menu-heading">{{ 'navigation.catalog'|trans([],'admin') }}</div>
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts"
                    aria-expanded="false" aria-controls="collapseLayouts">
                     <div class="sb-nav-link-icon"><i class="fas fa-folder-open"></i></div>
-                    Dossiers
+                    {{ 'navigation.directory.label'|trans([],'admin') }}
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
                 <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
                      data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="{{ path('ADMIN_CATALOG_CATALOG_TREE') }}">Arborescence</a>
-                        <a class="nav-link" href="{{ path('ADMIN_CATALOG_CATALOG_BROWSE') }}">Parcourir</a>
+                        <a class="nav-link" href="{{ path('ADMIN_CATALOG_CATALOG_TREE') }}">{{ 'navigation.directory.tree'|trans([],'admin') }}</a>
+                        <a class="nav-link" href="{{ path('ADMIN_CATALOG_CATALOG_BROWSE') }}">{{ 'navigation.directory.browse'|trans([],'admin') }}</a>
                     </nav>
                 </div>
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages"
                    aria-expanded="false" aria-controls="collapsePages">
                     <div class="sb-nav-link-icon"><i class="fas fa-images"></i></div>
-                    Images
+                    {{ 'navigation.images.label'|trans([],'admin') }}
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
                 <div class="collapse" id="collapsePages" aria-labelledby="headingTwo"
                      data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                        <a class="nav-link" href="{{ path('ADMIN_CATALOG_PICTURE_NEW_MULTIPLE') }}">Ajouter</a>
+                        <a class="nav-link" href="{{ path('ADMIN_CATALOG_PICTURE_NEW_MULTIPLE') }}">{{ 'navigation.images.add'|trans([],'admin') }}</a>
 {#                        <a class="nav-link" href="layout-sidenav-light.html">Gestion par lot</a>#}
-                        <a class="nav-link" href="{{ path('ADMIN_CATALOG_PICTURE_ORPHELINES') }}">Orphelines</a>
+                        <a class="nav-link" href="{{ path('ADMIN_CATALOG_PICTURE_ORPHELINES') }}">{{ 'navigation.images.orphan'|trans([],'admin') }}</a>
                     </nav>
                 </div>
                 <a class="nav-link" href="{{ path('ADMIN_CATALOG_PLACE_INDEX') }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-map-marked-alt"></i></div>
-                    Zones
+                    {{ 'navigation.zone'|trans([],'admin') }}
                 </a>
-                <div class="sb-sidenav-menu-heading">Communauté</div>
+                <div class="sb-sidenav-menu-heading">{{ 'navigation.community.label'|trans([],'admin') }}</div>
                 <a class="nav-link" href="{{ path('ADMIN_USER_INDEX_ADMIN') }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
-                    Administrateur
+                    {{ 'navigation.community.admin'|trans([],'admin') }}
                 </a>
                 <a class="nav-link" href="{{ path('ADMIN_USER_INDEX') }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
-                    Utilisateurs
+                    {{ 'navigation.community.users'|trans([],'admin') }}
                 </a>
                 <a class="nav-link" href="tables.html">
                     <div class="sb-nav-link-icon"><i class="fas fa-envelope"></i></div>
-                    Contact
+                    {{ 'navigation.community.contact'|trans([],'admin') }}
                 </a>
             </div>
         </div>
         <div class="sb-sidenav-footer">
-            <div class="small">Connecté en tant que : {{ app.user.userIdentifier }}</div>
+            <div class="small">{{ 'logged_at'|trans([],'admin') }} : {{ app.user.userIdentifier }}</div>
         </div>
     </nav>
 </div>

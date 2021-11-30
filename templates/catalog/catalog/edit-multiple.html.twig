@@ -2,8 +2,8 @@
 
 {% extends 'base-admin.html.twig' %}
 
-{% block title %}Edition multiple de photos - {{ parent() }}{% endblock %}
-{% block bodytitle %}Edition multiple de photos{% endblock %}
+{% block title %}{{ 'catalog.form.mass_edit.label'|trans([],'admin') }} - {{ parent() }}{% endblock %}
+{% block bodytitle %}{{ 'catalog.form.mass_edit.label'|trans([],'admin') }}{% endblock %}
 {% block objecttitle %}{{ catalog.name }}{% endblock %}
 
 {% block body %}
@@ -43,7 +43,7 @@
                 {{ form_row(form.delete) }}
                 {{ form_widget(form) }}
                 <button type="submit" class="btn btn-primary">
-                    Modifier en masse [<span id="nb-pictures-to-edit">{{ catalog.pictures|length }}</span>]
+                    {{ 'catalog.form.mass_edit.submit'|trans([],'admin') }} [<span id="nb-pictures-to-edit">{{ catalog.pictures|length }}</span>]
                 </button>
               {{ form_end(form) }}
             </div>
@@ -52,16 +52,28 @@
             <div class="d-flex justify-content-between">
                 <div class="left">
                     <div class="btn-group mb-3">
-                        <button data-button-action="all" class="btn btn-outline-secondary active">Toutes</button>
-                        <button data-button-action="none" class="btn btn-outline-secondary">Aucune</button>
-                        <button data-button-action="custom" class="btn btn-outline-secondary">Personnalisée</button>
+                        <button data-button-action="all" class="btn btn-sm btn-outline-secondary active">
+                            {{ 'catalog.form.mass_edit.selection.all'|trans([],'admin') }}
+                        </button>
+                        <button data-button-action="none" class="btn btn-sm btn-outline-secondary">
+                            {{ 'catalog.form.mass_edit.selection.none'|trans([],'admin') }}
+                        </button>
+                        <button data-button-action="custom" class="btn btn-sm btn-outline-secondary">
+                            {{ 'catalog.form.mass_edit.selection.custom'|trans([],'admin') }}
+                        </button>
                     </div>
                 </div>
                 <div class="right">
                     <div class="btn-group mb-3">
-                        <button data-button-filter="all" class="btn btn-outline-secondary active">Tout</button>
-                        <button data-button-filter="selected" class="btn btn-outline-secondary">Séléctionnée</button>
-                        <button data-button-filter="notselected" class="btn btn-outline-secondary">Non Séléctionnée</button>
+                        <button data-button-filter="all" class="btn btn-sm btn-outline-secondary active">
+                            {{ 'catalog.form.mass_edit.filter.all'|trans([],'admin') }}
+                        </button>
+                        <button data-button-filter="selected" class="btn btn-sm btn-outline-secondary">
+                            {{ 'catalog.form.mass_edit.filter.selected'|trans([],'admin') }}
+                        </button>
+                        <button data-button-filter="notselected" class="btn btn-sm btn-outline-secondary">
+                            {{ 'catalog.form.mass_edit.filter.not_selected'|trans([],'admin') }}
+                        </button>
                     </div>
                 </div>
             </div>

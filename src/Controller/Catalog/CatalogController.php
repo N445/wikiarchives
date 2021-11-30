@@ -79,8 +79,8 @@
             $catalog = $this->catalogRepository->byIdAdmin($id);
     
             $breadcrumb = new Breadcrumb([
-                new BreadcrumbLink('Dashboard', $this->generateUrl('ADMIN')),
-                new BreadcrumbLink('Arborescence', $this->generateUrl('ADMIN_CATALOG_CATALOG_TREE')),
+                new BreadcrumbLink('navigation.dashboard', $this->generateUrl('ADMIN')),
+                new BreadcrumbLink('catalog.tree.label', $this->generateUrl('ADMIN_CATALOG_CATALOG_TREE')),
             ]);
     
             return $this->render('catalog/catalog/tree.html.twig', [
@@ -103,8 +103,8 @@
             }
         
             $breadcrumb = new Breadcrumb([
-                new BreadcrumbLink('Dashboard', $this->generateUrl('ADMIN')),
-                new BreadcrumbLink('Catalogues', $this->generateUrl('ADMIN_CATALOG_CATALOG_BROWSE')),
+                new BreadcrumbLink('navigation.dashboard', $this->generateUrl('ADMIN')),
+                new BreadcrumbLink('catalog.browse.label', $this->generateUrl('ADMIN_CATALOG_CATALOG_BROWSE')),
             ]);
         
             foreach ($this->catalogTreeRepository->getPath($catalog) as $item) {
@@ -191,7 +191,8 @@
             }
         
             $breadcrumb = new Breadcrumb([
-                new BreadcrumbLink('Dashboard', $this->generateUrl('ADMIN')),
+                new BreadcrumbLink('navigation.dashboard', $this->generateUrl('ADMIN')),
+                new BreadcrumbLink('catalog.browse.label', $this->generateUrl('ADMIN_CATALOG_CATALOG_BROWSE')),
             ]);
         
             foreach ($this->catalogTreeRepository->getPath($catalog) as $item) {
@@ -202,7 +203,7 @@
                 }
             }
         
-            $breadcrumb->addLink(new BreadcrumbLink('Ajout multiple', $this->generateUrl('ADMIN_CATALOG_EDIT_MULTIPLE', [
+            $breadcrumb->addLink(new BreadcrumbLink('catalog.form.add_multiple.label', $this->generateUrl('ADMIN_CATALOG_EDIT_MULTIPLE', [
                 'id' => $catalog->getId()
             ])));
         
@@ -234,7 +235,8 @@
             }
         
             $breadcrumb = new Breadcrumb([
-                new BreadcrumbLink('Dashboard', $this->generateUrl('ADMIN')),
+                new BreadcrumbLink('navigation.dashboard', $this->generateUrl('ADMIN')),
+                new BreadcrumbLink('catalog.browse.label', $this->generateUrl('ADMIN_CATALOG_CATALOG_BROWSE')),
             ]);
         
             foreach ($this->catalogTreeRepository->getPath($catalog) as $item) {
@@ -245,7 +247,7 @@
                 }
             }
         
-            $breadcrumb->addLink(new BreadcrumbLink('Edition par lot', $this->generateUrl('ADMIN_CATALOG_EDIT_MULTIPLE', [
+            $breadcrumb->addLink(new BreadcrumbLink('catalog.form.mass_edit.label', $this->generateUrl('ADMIN_CATALOG_EDIT_MULTIPLE', [
                 'id' => $catalog->getId()
             ])));
         

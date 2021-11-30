@@ -44,7 +44,7 @@
             </div>
         {% else %}
             <p>
-                no records found
+                {{ 'no_records_found'|trans([],'admin') }}
             </p>
         {% endfor %}
     </div>

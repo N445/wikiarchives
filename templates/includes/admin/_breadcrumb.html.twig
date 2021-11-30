@@ -3,9 +3,9 @@
         {% for link in breadcrumb.links %}
             <li class="breadcrumb-item active">
                 {% if link.link %}
-                    <a href="{{ link.link }}">{{ link.title }}</a>
+                    <a href="{{ link.link }}">{{ link.title|trans([],'admin') }}</a>
                     {% else %}
-                    {{ link.title }}
+                    {{ link.title|trans([],'admin') }}
                 {% endif %}
             </li>
         {% endfor %}

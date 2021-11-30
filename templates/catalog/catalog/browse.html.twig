@@ -2,8 +2,8 @@
 
 {% extends 'base-admin.html.twig' %}
 
-{% block title %}Parcourir - {{ parent() }}{% endblock %}
-{% block bodytitle %}Parcourir{% endblock %}
+{% block title %}{{ 'catalog.browse.label'|trans([],'admin') }} - {{ parent() }}{% endblock %}
+{% block bodytitle %}{{ 'catalog.browse.label'|trans([],'admin') }}{% endblock %}
 {% block objecttitle %}{{ catalog.name }}{% endblock %}
 
 {% block body %}
@@ -12,7 +12,7 @@
         <div class="btn-group">
             <a href="{{ path('ADMIN_CATALOG_CATALOG_BROWSE', {'id': catalog.parent.id}) }}"
                class="btn btn-sm btn-outline-secondary">
-                Parent
+                {{ 'catalog.actions.parent'|trans([],'admin') }}
             </a>
             {{ catalogMacro.catalogActionsButtons(catalog) }}
         </div>
@@ -31,7 +31,7 @@
     {% endif %}
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#catalogModal">
-        Ajouter un catalog dans "{{ catalog.name }}"
+        {{ 'catalog.actions.add_catalog_in'|trans([],'admin') }} "{{ catalog.name }}"
     </button>
     <div class="row g-3 my-3">
         {% for child in catalog.children %}
@@ -50,14 +50,17 @@
                         </div>
                     </div>
                     <div class="card-footer text-muted">
-                        <small>{{ child.pictures|length }} photos - {{ child.children|length }} dossiers</small>
+                        <small>
+                            {{ child.pictures|length }} {{ 'picture.label'|trans({'number':child.pictures|length},'admin') }} -
+                            {{ child.children|length }} {{ 'catalog.label'|trans({'number':child.children|length},'admin') }}
+                        </small>
                     </div>
                 </div>
             </div>
         {% endfor %}
     </div>
     <hr>
-    <h2>Photos [{{ catalog.pictures|length }}]</h2>
+    <h2>{{ 'picture.label'|trans({'number':catalog.pictures|length},'admin') }} [{{ catalog.pictures|length }}]</h2>
     <div class="row g-3">
         {% for picture in catalog.pictures %}
             <div class="col-md-2">
@@ -92,7 +95,7 @@
                 </div>
             </div>
         {% else %}
-            <p>no records found</p>
+            <p>{{ 'no_records_found'|trans([],'admin') }}</p>
         {% endfor %}
     </div>
 

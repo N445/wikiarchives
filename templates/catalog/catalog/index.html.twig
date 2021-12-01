@@ -5,15 +5,15 @@
 
 {% block body %}
         <a href="{{ path('ADMIN_CATALOG_CATALOG_NEW') }}" class="btn btn-primary mb-3">
-            Créer catalogue
+            {{ 'catalog.actions.create'|trans([],'admin') }}
         </a>
         <table class="table table-sm table-bordered">
             <thead>
             <tr>
-                <th>Nom</th>
-                <th>Parent</th>
-                <th>Photos</th>
-                <th>Actions</th>
+                <th>{{ 'catalog.properties.name'|trans([],'admin') }}</th>
+                <th>{{ 'catalog.properties.parent'|trans([],'admin') }}</th>
+                <th>{{ 'catalog.properties.pictures'|trans([],'admin') }}</th>
+                <th>{{ 'actions.actions'|trans([],'admin') }}</th>
             </tr>
             </thead>
             <tbody>
@@ -25,12 +25,12 @@
                     <td>
                         <a href="{{ path('ADMIN_CATALOG_CATALOG_SHOW', {'id': catalog.id}) }}"
                            class="btn btn-sm btn-info">
-                            Voir
+                            {{ 'actions.see'|trans([],'admin') }}
                         </a>
                         {% if constant('ROOT',catalog) != catalog.name %}
                             <a href="{{ path('ADMIN_CATALOG_CATALOG_EDIT', {'id': catalog.id}) }}"
                                class="btn btn-sm btn-info">
-                                Modifier
+                                {{ 'actions.edit'|trans([],'admin') }}
                             </a>
                         {% endif %}
                     </td>

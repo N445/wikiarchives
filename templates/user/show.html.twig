@@ -80,7 +80,7 @@
             </div>
         </div>
 
-        <a href="{{ path('ADMIN_USER_INDEX') }}" class="btn btn-primary mb-3">Revenir au listing</a>
+        <a href="{{ path('ADMIN_USER_INDEX') }}" class="btn btn-primary mb-3">{{ 'actions.back_listing'|trans([],'admin') }}</a>
         <br>
         <a href="{{ path('ADMIN_USER_EDIT', {'id': user.id}) }}" class="btn btn-success mb-3">
             Modifier

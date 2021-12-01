@@ -14,7 +14,7 @@ class PictureFileType extends AbstractType
     {
         $builder
             ->add('imageFile', VichFileType::class, [
-                'label' => 'Fichier',
+                'label' => 'picture.properties.file',
                 'required' => $builder->getData()->getImageName() ? false : true,
                 'allow_delete' => false,
                 'asset_helper' => true,
@@ -25,6 +25,7 @@ class PictureFileType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => File::class,
+            'translation_domain' => 'admin',
         ]);
     }
 }

@@ -11,6 +11,12 @@ let filepond;
 let inputElement;
 let form = $('form');
 
+const lang = $('html').attr('lang');
+let labelIdle = 'Drag and drop your files or <span class="filepond--label-action"> Browse </span>';
+if ('fr' === lang) {
+    labelIdle = 'Glissez et déposez vos fichiers ou <span class="filepond--label-action"> Parcourir </span>';
+}
+
 $(function () {
     inputElement = document.querySelector('.filepond');
     filepond = FilePond.create(inputElement, {
@@ -19,7 +25,7 @@ $(function () {
         maxParallelUploads: 10,
         allowDrop: true,
         allowRevert: false,
-        labelIdle: 'Glissez et déposez vos fichiers ou <span class="filepond--label-action"> Parcourir </span>',
+        labelIdle: labelIdle,
         allowFileTypeValidation: true,
         acceptedFileTypes: ['image/*','application/zip'],
     });

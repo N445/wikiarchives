@@ -1,12 +1,14 @@
 {% extends 'base-admin.html.twig' %}
 
-{% block title %}Création d'une zone - {{ parent() }}{% endblock %}
-{% block bodytitle %}Création d'une zone{% endblock %}
+{% block title %}{{ 'zone.form.create_label'|trans([],'admin') }} - {{ parent() }}{% endblock %}
+{% block bodytitle %}{{ 'zone.form.create_label'|trans([],'admin') }}{% endblock %}
 
 {% block body %}
        {{ include('catalog/place/_form.html.twig') }}
 
-       <a href="{{ path('ADMIN_CATALOG_PLACE_INDEX') }}" class="btn btn-primary mt-3">Revenir au listing</a>
+       <a href="{{ path('ADMIN_CATALOG_PLACE_INDEX') }}" class="btn btn-primary mt-3">
+              {{ 'actions.back_listing'|trans([],'admin') }}
+       </a>
 {% endblock %}
 
 {% block stylesheets %}

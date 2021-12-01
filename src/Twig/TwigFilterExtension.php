@@ -10,6 +10,7 @@ use App\Provider\PictureProvider;
 use App\Service\Breadcrumb\BreadcrumbCreator;
 use App\Service\Catalog\CatalogHelper;
 use Doctrine\Common\Util\ClassUtils;
+use Symfony\Component\Intl\Locales;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\Markup;
@@ -37,6 +38,7 @@ class TwigFilterExtension extends AbstractExtension
             new TwigFilter('getBreadcrumb', [$this, 'getBreadcrumb']),
             new TwigFilter('truncate', [$this, 'twig_truncate_filter'], ['needs_environment' => true]),
             new TwigFilter('yesNoHtml', [$this, 'yesNoHtml']),
+            new TwigFilter('getLocalName', [Locales::class, 'getName']),
         ];
     }
 

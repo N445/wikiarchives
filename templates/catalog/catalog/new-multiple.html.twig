@@ -2,8 +2,8 @@
 
 {% extends 'base-admin.html.twig' %}
 
-{% block title %}{{ 'catalog.form.add_multiple.label'|trans([],'admin') }} - {{ parent() }}{% endblock %}
-{% block bodytitle %}{{ 'catalog.form.add_multiple.label'|trans([],'admin') }}{% endblock %}
+{% block title %}{{ 'picture.form.add_multiple.label'|trans([],'admin') }} - {{ parent() }}{% endblock %}
+{% block bodytitle %}{{ 'picture.form.add_multiple.label'|trans([],'admin') }}{% endblock %}
 {% block objecttitle %}{{ catalog.name }}{% endblock %}
 
 {% block body %}
@@ -11,7 +11,7 @@
         {{ catalogMacro.catalogActionsButtons(catalog) }}
     </div>
     <p>
-        {{ 'catalog.form.add_multiple.instruction'|trans([],'admin') }}
+        {{ 'picture.form.add_multiple.instruction'|trans([],'admin') }}
     </p>
     <form method="POST" action="{{ path('AJAX_CATALOG_PICTURE_FILEPOND', {'catalogId': catalog.id}) }}">
         <input type="file" class="filepond" name="filepond" data-allow-remove="true">

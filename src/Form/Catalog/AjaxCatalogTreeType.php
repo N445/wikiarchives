@@ -19,27 +19,27 @@
         {
             $builder
                 ->add('name', TextType::class, [
-                    'label' => 'Nom'
+                    'label' => 'catalog.properties.name'
                 ])
                 ->add('description', TextareaType::class, [
-                    'label' => 'Description',
+                    'label' => 'catalog.properties.description',
                     'required' => false,
                     'attr' => [
                         'class' => 'wysiwyg'
                     ]
                 ])
                 ->add('enabled', CheckboxType::class, [
-                    'label' => 'Visible',
+                    'label' => 'catalog.properties.enabled',
                     'required' => false,
                 ])
                 ->add('parent', EntityType::class, [
-                    'label' => 'Catalog parent',
+                    'label' => 'catalog.properties.parent',
                     'class' => Catalog::class,
                     'required' => false,
                     'choice_label' => 'name',
                 ])
                 ->add('place', EntityType::class, [
-                    'label' => 'Zone',
+                    'label' => 'catalog.properties.place',
                     'class' => Place::class,
                     'required' => false,
                     'choice_label' => 'name',
@@ -51,6 +51,7 @@
         {
             $resolver->setDefaults([
                 'data_class' => Catalog::class,
+                'translation_domain' => 'admin',
             ]);
         }
     }

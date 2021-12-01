@@ -8,7 +8,6 @@ use App\Form\Catalog\PictureType;
 use App\Model\Breadcrumb\Breadcrumb;
 use App\Model\Breadcrumb\BreadcrumbLink;
 use App\Repository\Catalog\CatalogRepository;
-use App\Repository\Catalog\Picture\VersionRepository;
 use App\Repository\Catalog\PictureRepository;
 use App\Service\Catalog\PictureContentPopulator;
 use App\Service\Catalog\PictureExifPopulator;
@@ -24,17 +23,12 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/admin/catalog/picture'), IsGranted('ROLE_CONTRIBUTOR')]
 class PictureController extends AbstractController
 {
-    /**
-     * @var PictureRepository
-     */
-    private $pictureRepository;
-    private VersionRepository $versionRepository;
+    private PictureRepository $pictureRepository;
     private CatalogRepository $catalogRepository;
     
-    public function __construct(PictureRepository $pictureRepository, VersionRepository $versionRepository, CatalogRepository $catalogRepository)
+    public function __construct(PictureRepository $pictureRepository, CatalogRepository $catalogRepository)
     {
         $this->pictureRepository = $pictureRepository;
-        $this->versionRepository = $versionRepository;
         $this->catalogRepository = $catalogRepository;
     }
     
@@ -49,7 +43,7 @@ class PictureController extends AbstractController
     
         $breadcrumb = new Breadcrumb([
             new BreadcrumbLink('Dashboard', $this->generateUrl('ADMIN')),
-            new BreadcrumbLink('Toutes les photos', $this->generateUrl('ADMIN_CATALOG_PICTURE_INDEX')),
+            new BreadcrumbLink('picture.listing.label', $this->generateUrl('ADMIN_CATALOG_PICTURE_INDEX')),
         ]);
     
         return $this->render('catalog/picture/index.html.twig', [

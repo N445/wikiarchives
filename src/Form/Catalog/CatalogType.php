@@ -19,21 +19,21 @@ class CatalogType extends AbstractType
     {
         $builder
             ->add('enabled', CheckboxType::class, [
-                'label' => 'Visible',
+                'label' => 'catalog.properties.enabled',
                 'required' => false,
             ])
             ->add('name', TextType::class, [
-                'label' => 'Nom'
+                'label' => 'catalog.properties.name'
             ])
             ->add('description', TextareaType::class, [
-                'label' => 'Description',
+                'label' => 'catalog.properties.description',
                 'required' => false,
                 'attr' => [
                     'class' => 'wysiwyg'
                 ]
             ])
             ->add('recursivInfo', CheckboxType::class, [
-                'label' => 'Zone recursif',
+                'label' => 'catalog.form.edit.recursive_zone',
                 'required' => false,
                 'mapped' => false,
                 'label_attr' => [
@@ -41,7 +41,7 @@ class CatalogType extends AbstractType
                 ],
             ])
             ->add('place', EntityType::class, [
-                'label' => 'Zone',
+                'label' => 'catalog.properties.place',
                 'class' => Place::class,
                 'required' => false,
                 'attr' => [
@@ -66,6 +66,7 @@ class CatalogType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Catalog::class,
+            'translation_domain' => 'admin',
         ]);
     }
 }

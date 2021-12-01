@@ -17,33 +17,33 @@
         {
             $builder
                 ->add('name', TextType::class, [
-                    'label' => 'Nom',
+                    'label' => 'picture.properties.name',
                     'required' => false
                 ])
                 ->add('description', TextareaType::class, [
-                    'label' => 'Description',
+                    'label' => 'picture.properties.description',
                     'required' => false,
                     'attr' => [
                         'class' => 'wysiwyg',
                     ]
                 ])
                 ->add('author', TextType::class, [
-                    'label' => 'Auteur',
+                    'label' => 'picture.properties.author',
                     'required' => false,
                 ])
                 ->add('creationdate', TextType::class, [
-                    'label' => 'Date de prise de vue',
+                    'label' => 'picture.properties.creationdate',
                     'required' => false,
                     'attr' => [
                         'class' => 'flatpikr-taken-at'
                     ],
                 ])
                 ->add('credit', TextType::class, [
-                    'label' => 'Credit',
+                    'label' => 'picture.properties.credit',
                     'required' => false,
                 ])
                 ->add('source', TextType::class, [
-                    'label' => 'Source',
+                    'label' => 'picture.properties.source',
                     'required' => false,
                 ])
             ;
@@ -62,6 +62,7 @@
         {
             $resolver->setDefaults([
                 'data_class' => Version::class,
+                'translation_domain' => 'admin',
             ]);
         }
     }

@@ -4,9 +4,9 @@
 {% block bodytitle %}Modification de la zone {{ place.name }}{% endblock %}
 
 {% block body %}
-        {{ include('catalog/place/_form.html.twig', {'button_label': 'Modifier'}) }}
+        {{ include('catalog/place/_form.html.twig', {'button_label': 'actions.edit'}) }}
 
-        <a href="{{ path('ADMIN_CATALOG_PLACE_INDEX') }}" class="btn btn-primary my-3">Revenir au listing</a>
+        <a href="{{ path('ADMIN_CATALOG_PLACE_INDEX') }}" class="btn btn-primary my-3">{{ 'actions.back_listing'|trans([],'admin') }}</a>
 
         {{ include('catalog/place/_delete_form.html.twig') }}
 {% endblock %}

@@ -1,16 +1,15 @@
 {% extends 'base-admin.html.twig' %}
 
-{% block title %}Liste des photos - {{ parent() }}{% endblock %}
+{% block title %}{{ 'picture.listing.label'|trans([],'admin') }} - {{ parent() }}{% endblock %}
+{% block bodytitle %}{{ 'picture.listing.label'|trans([],'admin') }}{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <h1>Liste des photos</h1>
         <a href="{{ path('ADMIN_CATALOG_PICTURE_NEW') }}" class="btn btn-primary mb-3">
-            Créer photo
+            {{ 'picture.actions.create'|trans([],'admin') }}
         </a>
         {# total items count #}
         <div class="count">
-            <h3>{{ pagination.getTotalItemCount }} pictures</h3>
+            <h3>{{ pagination.getTotalItemCount }} {{ 'picture.label'|trans({'number':pagination.getTotalItemCount},'admin') }}</h3>
         </div>
         <div class="navigation">
             {{ knp_pagination_render(pagination) }}
@@ -19,9 +18,9 @@
         <table class="table">
             <thead>
             <tr>
-                <th>Nom</th>
-                <th>Catalog</th>
-                <th>Actions</th>
+                <th>{{ 'picture.properties.name'|trans([],'admin') }}</th>
+                <th>{{ 'picture.properties.catalog'|trans([],'admin') }}</th>
+                <th>{{ 'actions.actions'|trans([],'admin') }}</th>
             </tr>
             </thead>
             <tbody>
@@ -50,45 +49,4 @@
         <div class="navigation">
             {{ knp_pagination_render(pagination) }}
         </div>
-
-
-        {#<table class="datatable table">
-            <thead>
-            <tr>
-                <th>Nom</th>
-                <th>Catalog</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for picture in pictures %}
-                <tr>
-                    <td>{{ picture.name }}</td>
-                    <td>
-                        <a href="{{ path('ADMIN_CATALOG_CATALOG_SHOW', {'id': picture.catalog.id}) }}">
-                            {{ picture.catalog.name }}
-                        </a>
-                    </td>
-                    <td>
-                        <a href="{{ path('ADMIN_CATALOG_PICTURE_SHOW', {'id': picture.id}) }}" class="btn btn-sm btn-info">Voir</a>
-                        <a href="{{ path('ADMIN_CATALOG_PICTURE_EDIT', {'id': picture.id}) }}" class="btn btn-sm btn-info">Modifier</a>
-                    </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="3">{{ 'no_records_found'|trans([],'admin') }}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>#}
-
-
-    </div>
-{% endblock %}
-
-{% block stylesheets %}
-    {{ encore_entry_link_tags('admin-catalog-datatable') }}
-{% endblock %}
-{% block javascripts %}
-    {{ encore_entry_script_tags('admin-catalog-datatable-js') }}
 {% endblock %}

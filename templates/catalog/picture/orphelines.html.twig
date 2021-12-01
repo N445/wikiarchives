@@ -2,12 +2,12 @@
 
 {% extends 'base-admin.html.twig' %}
 
-{% block title %}Liste des photos orphelines - {{ parent() }}{% endblock %}
-{% block bodytitle %}Liste des photos orphelines{% endblock %}
+{% block title %}{{ 'picture.orphans.label'|trans([],'admin') }} - {{ parent() }}{% endblock %}
+{% block bodytitle %}{{ 'picture.orphans.label'|trans([],'admin') }}{% endblock %}
 
 {% block body %}
     <p>
-        {{ pictures|length }} photos
+        {{ pictures|length }} {{ 'picture.label'|trans({'number':pictures|length},'admin') }}
     </p>
 
     <div class="row g-3">

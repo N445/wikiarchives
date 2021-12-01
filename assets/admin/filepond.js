@@ -8,9 +8,9 @@ FilePond.registerPlugin(FilePondPluginFileValidateType);
 let filepond;
 
 const lang = $('html').attr('lang');
-let labelIdle = 'Glissez et déposez vos fichiers ou <span class="filepond--label-action"> Parcourir </span>';
-if ('en' === lang) {
-    labelIdle = 'Drag and drop your files or <span class="filepond--label-action"> Browse </span>';
+let labelIdle = 'Drag and drop your files or <span class="filepond--label-action"> Browse </span>';
+if ('fr' === lang) {
+    labelIdle = 'Glissez et déposez vos fichiers ou <span class="filepond--label-action"> Parcourir </span>';
 }
 
 $(function () {

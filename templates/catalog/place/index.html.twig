@@ -1,20 +1,20 @@
 {% extends 'base-admin.html.twig' %}
 
-{% block title %}Liste des zones - {{ parent() }}{% endblock %}
-{% block bodytitle %}Liste des zones{% endblock %}
+{% block title %}{{ 'zone.listing.label'|trans([],'admin') }} - {{ parent() }}{% endblock %}
+{% block bodytitle %}{{ 'zone.listing.label'|trans([],'admin') }}{% endblock %}
 
 {% block body %}
         <a href="{{ path('ADMIN_CATALOG_PLACE_NEW') }}" class="btn btn-primary mb-3">
-            Ajouter une zone
+            {{ 'zone.add'|trans([],'admin') }}
         </a>
         <table class="table">
             <thead>
             <tr>
-                <th>Name</th>
-                <th>Location</th>
-                <th>Lat</th>
-                <th>Lng</th>
-                <th>actions</th>
+                <th>{{ 'zone.properties.name'|trans([],'admin') }}</th>
+                <th>{{ 'zone.properties.front_name'|trans([],'admin') }}</th>
+                <th>{{ 'zone.properties.lat'|trans([],'admin') }}</th>
+                <th>{{ 'zone.properties.lng'|trans([],'admin') }}</th>
+                <th>{{ 'zone.properties.actions'|trans([],'admin') }}</th>
             </tr>
             </thead>
             <tbody>
@@ -25,8 +25,12 @@
                     <td>{{ place.lat }}</td>
                     <td>{{ place.lng }}</td>
                     <td>
-                        <a href="{{ path('ADMIN_CATALOG_PLACE_SHOW', {'id': place.id}) }}" class="btn btn-sm btn-info">Voir</a>
-                        <a href="{{ path('ADMIN_CATALOG_PLACE_EDIT', {'id': place.id}) }}" class="btn btn-sm btn-info">Modifier</a>
+                        <a href="{{ path('ADMIN_CATALOG_PLACE_SHOW', {'id': place.id}) }}" class="btn btn-sm btn-info">
+                            {{ 'actions.see'|trans([],'admin') }}
+                        </a>
+                        <a href="{{ path('ADMIN_CATALOG_PLACE_EDIT', {'id': place.id}) }}" class="btn btn-sm btn-info">
+                            {{ 'actions.edit'|trans([],'admin') }}
+                        </a>
                     </td>
                 </tr>
             {% else %}

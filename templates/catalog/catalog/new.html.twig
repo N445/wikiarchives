@@ -1,15 +1,14 @@
 {% extends 'base-admin.html.twig' %}
 
-{% block title %}Nouveau catalogue - {{ parent() }}{% endblock %}
+{% block title %}{{ 'catalog.actions.create'|trans([],'admin') }} - {{ parent() }}{% endblock %}
+{% block bodytitle %}{{ 'catalog.actions.create'|trans([],'admin') }}{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <h1>Nouveau catalogue</h1>
 
-        {{ include('catalog/catalog/_form.html.twig') }}
+    {{ include('catalog/catalog/_form.html.twig') }}
 
-        <a href="{{ path('ADMIN_CATALOG_CATALOG_INDEX') }}" class="btn btn-primary">Revenir au listing</a>
-    </div>
+    <a href="{{ path('ADMIN_CATALOG_CATALOG_INDEX') }}"
+       class="btn btn-primary">{{ 'actions.back_listing'|trans([],'admin') }}</a>
 {% endblock %}
 
 {% block javascripts %}

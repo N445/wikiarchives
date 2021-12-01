@@ -21,21 +21,21 @@ class PictureType extends AbstractType
     {
         $builder
             ->add('enabled', CheckboxType::class, [
-                'label' => 'Visible',
+                'label' => 'picture.properties.enabled',
                 'required' => false,
                 'label_attr' => [
                     'class' => 'checkbox-switch',
                 ],
             ])
             ->add('isEditedByWikiarchives', CheckboxType::class, [
-                'label' => 'Modifié par Wikiarchives',
+                'label' => 'picture.properties.isEditedByWikiarchives',
                 'required' => false,
                 'label_attr' => [
                     'class' => 'checkbox-switch',
                 ],
             ])
             ->add('license', ChoiceType::class, [
-                'label' => 'License',
+                'label' => 'picture.properties.license',
                 'choices' => PictureLicenseHelper::getLicensesChoices(),
                 'attr' => [
                     'class' => 'select2'
@@ -49,12 +49,14 @@ class PictureType extends AbstractType
                 'data' => $builder->getData()->getfile()
             ])
             ->add('catalog', EntityType::class, [
+                'label'=>'picture.properties.catalog',
                 'class' => Catalog::class,
                 'attr' => [
                     'class' => 'select2'
                 ]
             ])
             ->add('catalogsIllustrations', EntityType::class, [
+                'label'=>'picture.properties.catalogsIllustrations',
                 'class' => Catalog::class,
                 'multiple' => true,
                 'required' => false,
@@ -63,6 +65,7 @@ class PictureType extends AbstractType
                 ]
             ])
             ->add('place', EntityType::class, [
+                'label'=>'picture.properties.place',
                 'class' => Place::class,
                 'attr' => [
                     'class' => 'select2'
@@ -75,6 +78,7 @@ class PictureType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Picture::class,
+            'translation_domain' => 'admin',
         ]);
     }
 }

@@ -22,14 +22,20 @@ navigation:
 
 logged_at: Connecté en tant que
 logout: Déconnexion
-
+visible: Visible
+not_visible: Non Visible
+vich_uploader.link.download: Télécharger
 
 actions:
   actions: Actions
   add: Ajouter
   see: Voir
+  save: Enregistrer
   edit: Modifier
+  modification: Modification
+  modification_of: Modification de
   delete: Supprimer
+  back_listing: Revenir au listing
 
 catalog:
   label: >-
@@ -38,6 +44,22 @@ catalog:
         =1 {Catalogue}
         other   {Catalogues}
     }
+  properties:
+    piwigoId: Id piwigo
+    name: Nom
+    description: Description
+    enabled: Visible
+    lft: Gauche
+    lvl: Niveau
+    rgt: Droite
+    root: Racine
+    parent: Parent
+    children: Enfants
+    pictures: Photos
+    place: Zone
+    createdBy: Ajouté par
+    updatedBy: Modifié par
+    illustration: Illustration
   tree:
     label: Arborescence
     content_of: Contenu de
@@ -49,9 +71,12 @@ catalog:
     edit_pictures: Editer les photos
     add_pictures: Ajouter des photos
     edit: Modifier le catalogue
+    create: Créer catalogue
     see_front: Voir en front
     add_catalog_in: Ajouter un catalogue dans
   form:
+    edit:
+      recursive_zone: Zone recursif
     mass_edit:
       label : Edition par lot
       delete: Supprimer la selection
@@ -74,9 +99,7 @@ catalog:
         all: Tout
         selected: Séléctionnée
         not_selected: Non Séléctionnée
-    add_multiple:
-      label: Ajout multiple de photos
-      instruction : Des images ou des zip
+
 picture:
   label: >-
     {number, plural,
@@ -84,8 +107,89 @@ picture:
         =1 {Photo}
         other   {Photos}
     }
+  orphans:
+    label: Liste des photos orphelines
+  listing:
+    label: Liste des photos
+  form:
+    file: Fichier
+    zone: Zone
+    info: Information
+    add_multiple:
+      label: Ajout multiple de photos
+      instruction : Des images ou des zip
+  actions:
+    edit: Modifier la photo
+    create: Ajouter une photo
+  properties:
+    piwigoId: Id piwigo
+    enabled: Visible
+    catalog: Catalogue
+    place: Zone
+    validatedVersion: Version en cours
+    versions: Versions
+    tmpVersions: Version temporaire
+    file: Image
+    createdBy: Ajouté par
+    updatedBy: Modifié par
+    license: Licence
+    isEditedByWikiarchives: Modifié par WikiArchives
+    catalogsIllustrations: Catalogue illustration
+    exif:
+      label: EXIF
+      title: Titre
+      author: Author
+      camera: Caméra
+      caption: Légende
+      copyright: Copyright
+      creationdate: Date de prise de vue
+      credit: Crédit
+      aperture: Ouverture
+      exposure: Exposition
+      exposureMilliseconds: Exposition millisecondes
+      focalLength: Longueur focale
+      focalDistance: Distance focale
+      iso: ISO
+      colorSpace: Espace de couleur
+      fileSize: Taille
+      height: Hauteur
+      width: Largeur
+      horizontalResolution: Résolution horizontale
+      verticalResolution: Résolution verticale
+      headline: Titre
+      jobTitle: Titre du poste
+      keywords: Mots-clés
+      mimeType: Mime Type
+      orientation: Orientation
+      software: Logiciel
+      source: Source
+      lat: Latitude
+      lng: Longitude
+    versionNumber: Numéro de version
+    status: Status
+    basedVersion: Version de base
+    userComment: Commentaire utilisateur
+    moderatorComment: Commentaire modérateur
+    type: Type
+    name: Nom
+    description: Description
+    author: Auteur
+    copyright: Copyright
+    creationdate: Date de prise de vue
+    credit: Crédit
+    source: Source
 
-
-
-
+zone:
+  add: Ajouter une zone
+  properties:
+    name: Nom
+    front_name: Nom front
+    lat: Latitude
+    lng: Longitude
+    actions: Actions
+  listing:
+    label: Liste des zones
+  form:
+    create_label: Création d'une zone
+    edit_label: Edition d'une zone
 no_records_found:  Aucunes données trouvées

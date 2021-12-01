@@ -1,13 +1,13 @@
 {% extends 'base-admin.html.twig' %}
 
-{% block title %}Ajout multiple de photos - {{ parent() }}{% endblock %}
-{% block bodytitle %}Ajout multiple de photos{% endblock %}
+{% block title %}{{ 'picture.form.add_multiple.label'|trans([],'admin') }} - {{ parent() }}{% endblock %}
+{% block bodytitle %}{{ 'picture.form.add_multiple.label'|trans([],'admin') }}{% endblock %}
 
 {% block body %}
 {#    {% if catalog is null and 'root' != catalog.name %}#}
-        <p>
-            Des images ou des zip
-        </p>
+    <p>
+        {{ 'picture.form.add_multiple.instruction'|trans([],'admin') }}
+    </p>
         <form method="POST" action="#">
             <div class="mb-3">
                 <select name="catalog" class="select2">

@@ -1,11 +1,11 @@
 {{ form_start(form) }}
 
-<button class="btn btn-success mb-3">{{ button_label|default('Enregistrer') }}</button>
+<button class="btn btn-success mb-3">{{ button_label|default('acttions.save')|trans([],'admin') }}</button>
 <div class="row">
     <div class="col-md-6">
         <div class="card shadow mb-5">
             <div class="card-header">
-                <span>Fichier</span>
+                <span>{{ 'picture.form.file'|trans([],'admin') }}</span>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -31,7 +31,7 @@
         </div>
         <div class="card shadow">
             <div class="card-header">
-                <span>Zone</span>
+                <span>{{ 'picture.form.zone'|trans([],'admin') }}</span>
             </div>
             <div class="card-body">
                 {{ form_row(form.place) }}
@@ -46,7 +46,7 @@
     <div class="col-md-6">
         <div class="card shadow">
             <div class="card-header">
-                <span>Information</span>
+                <span>{{ 'picture.form.info'|trans([],'admin') }}</span>
             </div>
             <div class="card-body">
                 <div class="row">

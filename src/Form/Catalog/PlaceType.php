@@ -16,20 +16,20 @@ class PlaceType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => 'Nom',
+                'label' => 'zone.properties.name',
             ])
             ->add('location', TextType::class, [
-                'label' => 'Nom front',
+                'label' => 'zone.properties.front_name',
                 'required' => false
             ])
             ->add('lat', TextType::class, [
-                'label' => 'Latitude',
+                'label' => 'zone.properties.lat',
                 'attr' => [
                     'class' => 'place-map-lat'
                 ]
             ])
             ->add('lng', TextType::class, [
-                'label' => 'Longitude',
+                'label' => 'zone.properties.lng',
                 'attr' => [
                     'class' => 'place-map-lng'
                 ]
@@ -46,6 +46,7 @@ class PlaceType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Place::class,
+            'translation_domain' => 'admin',
         ]);
     }
 }

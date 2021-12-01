@@ -4,7 +4,7 @@
 {% block bodytitle %}Ajout d'une photo{% endblock %}
 
 {% block body %}
-{#        <a href="{{ path('ADMIN_CATALOG_PICTURE_INDEX') }}" class="btn btn-primary mb-3">Revenir au listing</a>#}
+{#        <a href="{{ path('ADMIN_CATALOG_PICTURE_INDEX') }}" class="btn btn-primary mb-3">{{ 'actions.back_listing'|trans([],'admin') }}</a>#}
 
         {{ include('catalog/picture/_form.html.twig') }}
 {% endblock %}

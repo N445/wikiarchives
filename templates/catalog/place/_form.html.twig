@@ -17,5 +17,5 @@
 </div>
 <div id="map"{% if place.id %} data-position="{{ place.latLng|json_encode }}"{% endif %}></div>
 {{ form_widget(form) }}
-<button class="btn btn-success">{{ button_label|default('Enregistrer') }}</button>
+<button class="btn btn-success">{{ button_label|default('actions.save')|trans([],'admin') }}</button>
 {{ form_end(form) }}

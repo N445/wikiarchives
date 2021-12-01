@@ -79,14 +79,20 @@
                                 <button class="btn btn-sm w-100 btn-secondary dropdown-toggle" type="button"
                                         id="dropdownMenuButton1"
                                         data-bs-toggle="dropdown" aria-expanded="false">
-                                    Actions
+                                    {{ 'actions.actions'|trans([],'admin') }}
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item"
-                                           href="{{ path('ADMIN_CATALOG_PICTURE_SHOW', {'id': picture.id}) }}">Voir</a>
+                                    <li>
+                                        <a class="dropdown-item"
+                                           href="{{ path('ADMIN_CATALOG_PICTURE_SHOW', {'id': picture.id}) }}">
+                                            {{ 'actions.see'|trans([],'admin') }}
+                                        </a>
                                     </li>
-                                    <li><a class="dropdown-item"
-                                           href="{{ path('ADMIN_CATALOG_PICTURE_EDIT', {'id': picture.id}) }}">Modifier</a>
+                                    <li>
+                                        <a class="dropdown-item"
+                                           href="{{ path('ADMIN_CATALOG_PICTURE_EDIT', {'id': picture.id}) }}">
+                                            {{ 'actions.edit'|trans([],'admin') }}
+                                        </a>
                                     </li>
                                 </ul>
                             </div>

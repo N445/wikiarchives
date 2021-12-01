@@ -10,15 +10,15 @@
             <table class="table">
                 <tbody>
                 <tr>
-                    <th>Nom</th>
+                    <th>{{ 'picture.properties.name'|trans([],'admin') }}</th>
                     <td>{{ picture.name }}</td>
                 </tr>
                 <tr>
-                    <th>Description</th>
+                    <th>{{ 'picture.properties.description'|trans([],'admin') }}</th>
                     <td>{{ picture.description|raw }}</td>
                 </tr>
                 <tr>
-                    <th>Image</th>
+                    <th>{{ 'picture.properties.file'|trans([],'admin') }}</th>
                     <td>
                         <a href="{{ vich_uploader_asset(picture.file) }}"
                            data-fancybox="gallery">
@@ -31,17 +31,17 @@
                 </tbody>
             </table>
 
-            <a href="{{ path('ADMIN_CATALOG_PICTURE_INDEX') }}" class="btn btn-primary mb-3">Revenir au listing</a>
+            <a href="{{ path('ADMIN_CATALOG_PICTURE_INDEX') }}" class="btn btn-primary mb-3">{{ 'actions.back_listing'|trans([],'admin') }}</a>
             <br>
 
             <a href="{{ path('ADMIN_CATALOG_PICTURE_EDIT', {'id': picture.id}) }}"
-               class="btn btn-success mb-3">Modifier</a>
+               class="btn btn-success mb-3">{{ 'actions.edit'|trans([],'admin') }}</a>
             <br>
 
             {{ include('catalog/picture/_delete_form.html.twig') }}
             </div>
             <div class="col-md-6">
-                <h2>Versions</h2>
+                <h2>{{ 'picture.properties.versions'|trans([],'admin') }}</h2>
                 {% if is_granted('ROLE_MODERATOR') %}
                     <a href="{{ path('ADMIN_MODERATION_PICTURE_TMP_VERSIONS', {'id': picture.id}) }}">
                         {{ picture.tmpVersions|length }} modifications en attente

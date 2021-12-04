@@ -8,19 +8,19 @@
                 <div class="d-flex align-items-center justify-content-end">
                     <div class="me-3">
                         <a href="{{ path('CATALOG_DOWNLOAD', {'id': catalog.id}) }}" class="btn btn-wikiarchives-accent"
-                           title="Open">
-                            Download
+                           title="{{ 'actions.download'|trans([],'front') }}">
+                            {{ 'actions.download'|trans([],'front') }}
                         </a>
                     </div>
                     <div class="me-3">
-                        {{ pagination.getTotalItemCount }} pictures
+                        {{ pagination.getTotalItemCount }} {{ 'picture.label'|trans({'number':pagination.getTotalItemCount},'front') }}
                     </div>
                     <form action="{{ path('SEARCH') }}" class="d-flex">
                         <div class="input-group">
-                            <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="q"
+                            <input class="form-control" type="search" placeholder="{{ 'actions.search_placeholder'|trans([],'front') }}" aria-label="Search" name="q"
                                    value="{{ query??'' }}">
                             <input type="hidden" name="catalogId" value="{{ catalog.id }}"/>
-                            <button class="btn btn-wikiarchives-accent" type="submit">Search</button>
+                            <button class="btn btn-wikiarchives-accent" type="submit">{{ 'actions.search_submit'|trans([],'front') }}</button>
                         </div>
                     </form>
                 </div>

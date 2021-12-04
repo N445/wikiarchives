@@ -9,20 +9,20 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('HOMEPAGE') }}">
-                        Homepage
+                        {{ 'navbar.homepage'|trans([],'front') }}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('MAP') }}">
-                        Map
+                        {{ 'navbar.map'|trans([],'front') }}
                     </a>
                 </li>
             </ul>
             <form action="{{ path('SEARCH') }}" class="d-flex">
                 <div class="input-group">
-                    <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="q"
+                    <input class="form-control" type="search" placeholder="{{ 'actions.search_placeholder'|trans([],'front') }}" aria-label="Search" name="q"
                            value="{{ query??'' }}">
-                    <button class="btn btn-wikiarchives-primary" type="submit">Search</button>
+                    <button class="btn btn-wikiarchives-primary" type="submit">{{ 'actions.search_submit'|trans([],'front') }}</button>
                 </div>
             </form>
             <div class="login ms-3">
@@ -36,20 +36,20 @@
                             <span class="visually-hidden">Dropdown</span>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="{{ path('PROFILE') }}">Profile</a></li>
-                            <li><a class="dropdown-item" href="{{ path('APP_LOGOUT') }}">Logout</a></li>
+                            <li><a class="dropdown-item" href="{{ path('PROFILE') }}">{{ 'actions.profile'|trans([],'front') }}</a></li>
+                            <li><a class="dropdown-item" href="{{ path('APP_LOGOUT') }}">{{ 'actions.logout'|trans([],'front') }}</a></li>
                         </ul>
                     </div>
 
                 {% else %}
                     <div class="btn-group">
-                        <a href="{{ path('APP_LOGIN') }}" type="button" class="btn btn-outline-wikiarchives-primary">Login</a>
+                        <a href="{{ path('APP_LOGIN') }}" type="button" class="btn btn-outline-wikiarchives-primary">{{ 'actions.login'|trans([],'front') }}</a>
                         <button type="button" class="btn btn-wikiarchives-primary dropdown-toggle dropdown-toggle-split"
                                 data-bs-toggle="dropdown" aria-expanded="false">
                             <span class="visually-hidden">Toggle Dropdown</span>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="{{ path('APP_REGISTER') }}">Sign up</a></li>
+                            <li><a class="dropdown-item" href="{{ path('APP_REGISTER') }}">{{ 'actions.sign_up'|trans([],'front') }}</a></li>
                         </ul>
                     </div>
                 {% endif %}

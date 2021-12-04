@@ -1,0 +1,97 @@
+navbar:
+  homepage: Homepage
+  map: Map
+
+actions:
+  search_placeholder: Search
+  search_submit: Search
+  profile: Profile
+  logout: Logout
+  login: Login
+  sign_up: Sign up
+  move_up_folder: Move up from a folder
+  download: Download
+  download_square : Square
+  download_sm : Small size
+  download_md : Middle size
+  download_lg : Large size
+  download_vlg : Very large size
+  download_original : Original
+  propose_version: Suggest a change
+
+login:
+  logged_as: You are logged in as
+  title: Please sign in
+  email:  Email
+  password: Password
+  submit:
+  create_account: New to Wikiarchives ?
+  create_account_link: Create an account.
+  forgot_password: Forgot password ?
+  forgot_password_link: Reset password.
+
+sign_up:
+  title: Register
+  email: Email
+  password: Password
+  terms:  Agree terms
+
+reset_password:
+  title: Reset your password
+  email: Email
+  help: Enter your email address and we will send you a link to reset your password.
+  submit: Send password reset email
+
+catalog:
+  label: >-
+    {number, plural,
+        =0 {Directory}
+        =1 {Directory}
+        other   {Directories}
+    }
+  sub_label: >-
+    {number, plural,
+        =0 {Sub directory}
+        =1 {Sub directory}
+        other   {Sub directories}
+    }
+  catalog_card:
+    in: in
+#    footer: >-
+#    { number_picture, plural,
+#      =0 {{number_catalog, plural,
+#      =0 {{number_picture } picture dans {number_catalog} catalog}
+#    =1 {{number_picture} picture dans {number_catalog} catalog}
+#    other   {{number_picture} pictures dans {number_catalog} catalogs}
+#    }}
+#    =1 {{number_catalog, plural,
+#    =0 {{number_picture} picture dans {number_catalog} catalog}
+#    =1 {{number_picture} picture dans {number_catalog} catalog}
+#    other   {{number_picture} pictures dans {number_catalog} catalogs}
+#    }}
+#    other   {{number_catalog, plural,
+#    =0 {{number_picture} picture dans {number_catalog} catalog}
+#    =1 {{number_picture} picture dans {number_catalog} catalog}
+#    other   {{number_picture} pictures dans {number_catalog} catalogs}
+#    }}
+#    }
+
+picture:
+  label: >-
+    {number, plural,
+        =0 {Picture}
+        =1 {Picture}
+        other   {Pictures}
+    }
+  change_form:
+    actions:
+      submit: Submit
+    properties:
+      userComment: Comment
+      moderatorComment: Moderator comment
+      name: Name
+      description: Description
+      author: Author
+      creationdate: Date taken
+      credit: Credit
+      source: Source

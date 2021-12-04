@@ -11,34 +11,34 @@
                             <button class="btn btn-wikiarchives-accent dropdown-toggle" type="button"
                                     id="dropdownMenuButton1"
                                     data-bs-toggle="dropdown" aria-expanded="false">
-                                Download
+                                {{ 'actions.download'|trans([],'front') }}
                             </button>
 
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
                                 <li>
                                     <a target="_blank" class="dropdown-item"
                                        href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'square'}) }}">
-                                        Square
+                                        {{ 'actions.download_square'|trans([],'front') }}
                                     </a>
                                     <a target="_blank" class="dropdown-item"
                                        href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'sm'}) }}">
-                                        Small size
+                                        {{ 'actions.download_sm'|trans([],'front') }}
                                     </a>
                                     <a target="_blank" class="dropdown-item"
                                        href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'md'}) }}">
-                                        Middle size
+                                        {{ 'actions.download_md'|trans([],'front') }}
                                     </a>
                                     <a target="_blank" class="dropdown-item"
                                        href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'lg'}) }}">
-                                        Large size
+                                        {{ 'actions.download_lg'|trans([],'front') }}
                                     </a>
                                     <a target="_blank" class="dropdown-item"
                                        href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'vlg'}) }}">
-                                        Very large size
+                                        {{ 'actions.download_vlg'|trans([],'front') }}
                                     </a>
                                     <a target="_blank" class="dropdown-item"
                                        href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'original'}) }}">
-                                        Original
+                                        {{ 'actions.download_original'|trans([],'front') }}
                                     </a>
                                 </li>
                             </ul>
@@ -48,7 +48,7 @@
                         <div>
                             <a class="btn btn-wikiarchives-primary"
                                href="{{ path('PICTURE_CHANGE', {'catalogId': picture.catalog.id, 'id': picture.id}) }}">
-                                Proposer une modification
+                                {{ 'actions.propose_version'|trans([],'front') }}
                             </a>
                         </div>
                     {% endif %}

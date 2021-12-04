@@ -1,0 +1,102 @@
+navbar:
+  homepage: Accueil
+  map: Carte
+
+actions:
+  search_placeholder: Rechercher
+  search_submit: Rechercher
+  profile: Profile
+  logout: Déconnexion
+  login: Connexion
+  sign_up: S'inscrire
+  move_up_folder: Remonter d'un dossier
+  download: Télécharger
+  download_square: Carré
+  download_sm: Petite taille
+  download_md: Taille moyenne
+  download_lg: Grande taille
+  download_vlg: Très grande taille
+  download_original: Original
+  propose_version: Proposer une modification
+
+login:
+  logged_as: Vous êtes connecté en tant que
+  title: Veuillez vous identifier
+  email: Email
+  password: Mot de passe
+  submit:
+  create_account: Nouveau sur Wikiarchives ?
+  create_account_link: Créez un compte.
+  forgot_password: Mot de passe oublié ?
+  forgot_password_link: Réinitialiser le mot de passe.
+
+sign_up:
+  title: Inscription
+  email: Email
+  password: Mot de passe
+  terms: Accepter les conditions
+
+reset_password:
+  title: Réinitialiser votre mot de passe
+  email: Email
+  help: Saisissez votre email et nous vous enverrons un lien pour réinitialiser votre mot de passe.
+  submit: Envoyer un email de réinitialisation du mot de passe
+
+catalog:
+  label: >-
+    {number, plural,
+        =0 {Catalogue}
+        =1 {Catalogue}
+        other   {Catalogues}
+    }
+  sub_label: >-
+    {number, plural,
+        =0 {Sous catalogue}
+        =1 {Sous catalogue}
+        other   {Sous catalogues}
+    }
+  catalog_card:
+    in: dans
+#    footer: >-
+#    {number_picture, plural,
+#        =0 {
+#          {number_catalog, plural,
+#            =0    {{number_picture} photo dans {number_catalog} catalogue}
+#            =1    {{number_picture} photo dans {number_catalog} catalogue}
+#            other {{number_picture} photo dans {number_catalog} catalogues}
+#         }
+#        =1 {
+#          {number_catalog, plural,
+#            =0    {{number_picture} photo dans {number_catalog} catalogue}
+#            =1    {{number_picture} photo dans {number_catalog} catalogue}
+#            other {{number_picture} photo dans {number_catalog} catalogues}
+#         }
+#        other {
+#          {number_catalog, plural,
+#            =0    {{number_picture} photos dans {number_catalog} catalogue}
+#            =1    {{number_picture} photos dans {number_catalog} catalogue}
+#            other {{number_picture} photos dans {number_catalog} catalogues}
+#         }
+#      }
+#    }
+
+
+picture:
+  label: >-
+    {number, plural,
+        =0 {Photo}
+        =1 {Photo}
+        other   {Photos}
+    }
+  change_form:
+    actions:
+      submit: Proposer
+    properties:
+      userComment: Commentaire
+      moderatorComment: Commentaire modérateur
+      name: Nom
+      description: Description
+      author: Auteur
+      creationdate: Date de prise de vue
+      credit: Crédit
+      source: Source

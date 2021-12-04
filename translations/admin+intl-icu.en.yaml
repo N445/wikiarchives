@@ -165,6 +165,7 @@ picture:
       source: Source
       lat: Latitude
       lng: Longitude
+      gps: GPS
     versionNumber: Version number
     status: Status
     basedVersion: Basic version

@@ -60,7 +60,11 @@
         </div>
         <div class="card-footer text-muted">
             <small>
-                {{ catalog|countPictures }} pictures in {{ catalog|countChildren }} sub-catalogs
+                {{ catalog|countPictures }} {{ 'picture.label'|trans({'number':catalog|countPictures},'front') }}
+                {{ 'catalog.catalog_card.in'|trans({},'front') }}
+                {{ catalog|countChildren }} {{ 'catalog.sub_label'|trans({'number':catalog|countChildren},'front') }}
+{#                {{ 'catalog.catalog_card.footer'|trans({'number_picture':catalog|countPictures,'number_catalog':catalog|countChildren},'front') }}#}
+{#                {{ catalog|countPictures }} pictures in {{ catalog|countChildren }} sub-catalogs#}
             </small>
         </div>
     </a>

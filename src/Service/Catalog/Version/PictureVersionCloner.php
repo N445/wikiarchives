@@ -3,7 +3,6 @@
 namespace App\Service\Catalog\Version;
 
 use App\Entity\Catalog\Picture;
-use App\Entity\Catalog\Picture\Exif;
 use App\Entity\Catalog\Picture\Version;
 
 class PictureVersionCloner
@@ -47,11 +46,15 @@ class PictureVersionCloner
 //            ->setLat($clonedExif->getLat())
 //            ->setLng($clonedExif->getLng())
 //        ;
+        $versionNumber=1;
+        if($lastVersion = $picture->getVersions()->last()){
+            $versionNumber = $lastVersion->getVersionNumber() + 1 ;
+        }
         
         $newVersion = (new Version())
             ->setStatus(PictureVersionHelper::STATUS_PENDING)
             ->setType(PictureVersionHelper::TYPE_TMP)
-            ->setVersionNumber($picture->getVersions()->last()->getVersionNumber() + 1)
+            ->setVersionNumber($versionNumber)
             ->setBasedVersion($clonedVersion)
             ->setName($clonedVersion->getName())
             ->setDescription($clonedVersion->getDescription())

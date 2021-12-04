@@ -4,7 +4,7 @@
     {% set license = picture|getLicense %}
     {% if license %}
         <tr class="align-middle">
-            <th>License</th>
+            <th>{{ 'picture.properties.license'|trans([],'admin') }}</th>
             <td>
                 <a href="{{ license.url }}" title="{{ license.name }}" rel="nofollow" target="_blank">
                     {% if license.image %}
@@ -17,7 +17,7 @@
         </tr>
     {% endif %}
     <tr>
-        <th>Modified by WikiArchives</th>
+        <th>{{ 'picture.properties.isEditedByWikiarchives'|trans([],'admin') }}</th>
         <td>
             {% if picture.isEditedByWikiarchives %}
                 Oui
@@ -28,19 +28,19 @@
     </tr>
     {% if picture.exif.title %}
         <tr>
-            <th>Title</th>
+            <th>{{ 'picture.properties.exif.title'|trans([],'admin') }}</th>
             <td>{{ picture.exif.title }}</td>
         </tr>
     {% endif %}
     {% if picture.exif.author %}
         <tr>
-            <th>Author</th>
+            <th>{{ 'picture.properties.exif.author'|trans([],'admin') }}</th>
             <td>{{ picture.exif.author }}</td>
         </tr>
     {% endif %}
     {% if picture.exif.camera %}
         <tr>
-            <th>Camera</th>
+            <th>{{ 'picture.properties.exif.camera'|trans([],'admin') }}</th>
             <td>{{ picture.exif.camera }}</td>
         </tr>
     {% endif %}
@@ -58,133 +58,133 @@
     {% endif %}#}
     {% if picture.exif.creationdate %}
         <tr>
-            <th>Creation date</th>
+            <th>{{ 'picture.properties.exif.creationdate'|trans([],'admin') }}</th>
             <td>{{ picture.exif.creationdate|date('Y-m-d H:i:s') }}</td>
         </tr>
     {% endif %}
     {% if picture.exif.credit %}
         <tr>
-            <th>Credit</th>
+            <th>{{ 'picture.properties.exif.credit'|trans([],'admin') }}</th>
             <td>{{ picture.exif.credit }}</td>
         </tr>
     {% endif %}
     {% if picture.exif.aperture %}
         <tr>
-            <th>Aperture</th>
+            <th>{{ 'picture.properties.exif.aperture'|trans([],'admin') }}</th>
             <td>{{ picture.exif.aperture }}</td>
         </tr>
     {% endif %}
     {% if picture.exif.exposure %}
         <tr>
-            <th>Exposure</th>
+            <th>{{ 'picture.properties.exif.exposure'|trans([],'admin') }}</th>
             <td>{{ picture.exif.exposure }}</td>
         </tr>
     {% endif %}
     {% if picture.exif.exposure %}
         <tr>
-            <th>Exposure ms</th>
+            <th>{{ 'picture.properties.exif.exposureMilliseconds'|trans([],'admin') }}</th>
             <td>{{ picture.exif.exposureMilliseconds }}</td>
         </tr>
     {% endif %}
     {% if picture.exif.focalLength %}
         <tr>
-            <th>Focal Length</th>
+            <th>{{ 'picture.properties.exif.focalLength'|trans([],'admin') }}</th>
             <td>{{ picture.exif.focalLength }}</td>
         </tr>
     {% endif %}
     {% if picture.exif.focalDistance %}
         <tr>
-            <th>Focal Distance</th>
+            <th>{{ 'picture.properties.exif.focalDistance'|trans([],'admin') }}</th>
             <td>{{ picture.exif.focalDistance }}</td>
         </tr>
     {% endif %}
     {% if picture.exif.iso %}
         <tr>
-            <th>Iso</th>
+            <th>{{ 'picture.properties.exif.iso'|trans([],'admin') }}</th>
             <td>{{ picture.exif.iso }}</td>
         </tr>
     {% endif %}
     {% if picture.exif.colorSpace %}
         <tr>
-            <th>ColorSpace</th>
+            <th>{{ 'picture.properties.exif.colorSpace'|trans([],'admin') }}</th>
             <td>{{ picture.exif.colorSpace }}</td>
         </tr>
     {% endif %}
     {% if picture.exif.fileSize %}
         <tr>
-            <th>File Size</th>
+            <th>{{ 'picture.properties.exif.fileSize'|trans([],'admin') }}</th>
             <td>{{ picture.exif.fileSize|humanFilesize }}</td>
         </tr>
     {% endif %}
     {% if picture.exif.height %}
         <tr>
-            <th>Height</th>
+            <th>{{ 'picture.properties.exif.height'|trans([],'admin') }}</th>
             <td>{{ picture.exif.height }}</td>
         </tr>
     {% endif %}
     {% if picture.exif.width %}
         <tr>
-            <th>Width</th>
+            <th>{{ 'picture.properties.exif.width'|trans([],'admin') }}</th>
             <td>{{ picture.exif.width }}</td>
         </tr>
     {% endif %}
     {% if picture.exif.horizontalResolution %}
         <tr>
-            <th>Horizontal Resolution</th>
+            <th>{{ 'picture.properties.exif.horizontalResolution'|trans([],'admin') }}</th>
             <td>{{ picture.exif.horizontalResolution }}</td>
         </tr>
     {% endif %}
     {% if picture.exif.verticalResolution %}
         <tr>
-            <th>Vertical Resolution</th>
+            <th>{{ 'picture.properties.exif.verticalResolution'|trans([],'admin') }}</th>
             <td>{{ picture.exif.verticalResolution }}</td>
         </tr>
     {% endif %}
     {% if picture.exif.headline %}
         <tr>
-            <th>Headline</th>
+            <th>{{ 'picture.properties.exif.headline'|trans([],'admin') }}</th>
             <td>{{ picture.exif.headline }}</td>
         </tr>
     {% endif %}
     {% if picture.exif.jobTitle %}
         <tr>
-            <th>JobTitle</th>
+            <th>{{ 'picture.properties.exif.jobTitle'|trans([],'admin') }}</th>
             <td>{{ picture.exif.jobTitle }}</td>
         </tr>
     {% endif %}
     {% if picture.exif.keywords %}
         <tr>
-            <th>Keywords</th>
+            <th>{{ 'picture.properties.exif.keywords'|trans([],'admin') }}</th>
             <td>{{ picture.exif.keywords|join(', ') }}</td>
         </tr>
     {% endif %}
     {% if picture.exif.mimeType %}
         <tr>
-            <th>Mime Type</th>
+            <th>{{ 'picture.properties.exif.mimeType'|trans([],'admin') }}</th>
             <td>{{ picture.exif.mimeType }}</td>
         </tr>
     {% endif %}
     {% if picture.exif.orientation %}
         <tr>
-            <th>Orientation</th>
+            <th>{{ 'picture.properties.exif.orientation'|trans([],'admin') }}</th>
             <td>{{ picture.exif.orientation }}</td>
         </tr>
     {% endif %}
     {% if picture.exif.software %}
         <tr>
-            <th>Software</th>
+            <th>{{ 'picture.properties.exif.software'|trans([],'admin') }}</th>
             <td>{{ picture.exif.software }}</td>
         </tr>
     {% endif %}
     {% if picture.exif.source %}
         <tr>
-            <th>Source</th>
+            <th>{{ 'picture.properties.exif.source'|trans([],'admin') }}</th>
             <td>{{ picture.exif.source }}</td>
         </tr>
     {% endif %}
     {% if picture.exif.gps %}
         <tr>
-            <th>GPS</th>
+            <th>{{ 'picture.properties.exif.gps'|trans([],'admin') }}</th>
             <td>{{ picture.exif.gps }}</td>
         </tr>
     {% endif %}

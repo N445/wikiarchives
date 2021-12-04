@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}{{ 'sign_up.title'|trans([],'front') }}{% endblock %}
 
 {% block body %}
     <div class="container my-5">
@@ -12,16 +12,14 @@
                            <div class="alert alert-danger" role="alert">{{ flashError }}</div>
                        {% endfor %}
 
-                       <h1 class="h3 mb-3 font-weight-normal">Register</h1>
+                       <h1 class="h3 mb-3 font-weight-normal">{{ 'sign_up.title'|trans([],'front') }}</h1>
 
                        {{ form_start(registrationForm) }}
                        {{ form_row(registrationForm.email) }}
-                       {{ form_row(registrationForm.plainPassword, {
-                           label: 'Password'
-                       }) }}
+                       {{ form_row(registrationForm.plainPassword) }}
                        {{ form_row(registrationForm.agreeTerms) }}
 
-                       <button type="submit" class="btn btn-wikiarchives-primary w-100 my-3">Register</button>
+                       <button type="submit" class="btn btn-wikiarchives-primary w-100 my-3">{{ 'actions.sign_up'|trans([],'front') }}</button>
                        {{ form_end(registrationForm) }}
                    </div>
                </div>

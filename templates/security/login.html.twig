@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}{{ 'login.title'|trans([],'front') }}{% endblock %}
 
 {% block body %}
     <div class="container my-5">
@@ -15,19 +15,19 @@
 
                            {% if app.user %}
                                <div class="mb-3">
-                                   You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('APP_LOGOUT') }}">Logout</a>
+                                   {{ 'login.logged_as'|trans([],'front') }} {{ app.user.userIdentifier }}, <a href="{{ path('APP_LOGOUT') }}">{{ 'actions.logout'|trans([],'front') }}</a>
                                </div>
                            {% endif %}
 
-                           <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+                           <h1 class="h3 mb-3 font-weight-normal">{{ 'login.title'|trans([],'front') }}</h1>
 
                            <div class="mb-3">
-                               <label for="inputEmail" class="form-label">Email</label>
+                               <label for="inputEmail" class="form-label">{{ 'login.email'|trans([],'front') }}</label>
                                <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control"
                                       autocomplete="email" required autofocus>
                            </div>
                            <div class="mb-3">
-                               <label for="inputPassword" class="form-label">Password</label>
+                               <label for="inputPassword" class="form-label">{{ 'login.password'|trans([],'front') }}</label>
                                <input type="password" name="password" id="inputPassword" class="form-control"
                                       autocomplete="current-password" required>
                            </div>
@@ -48,11 +48,11 @@
                            #}
 
                            <button class="btn btn-wikiarchives-primary w-100 my-3" type="submit">
-                               Sign in
+                               {{ 'actions.login'|trans([],'front') }}
                            </button>
                        </form>
-                       <p>New to Wikiarchives ? <a href="{{ path('APP_REGISTER') }}">Create an account.</a> </p>
-                       <p>Forgot password ? <a href="{{ path('APP_FORGOT_PASSWORD_REQUEST') }}">Reset password.</a> </p>
+                       <p>{{ 'login.create_account'|trans([],'front') }} <a href="{{ path('APP_REGISTER') }}">{{ 'login.create_account_link'|trans([],'front') }}</a> </p>
+                       <p>{{ 'login.forgot_password'|trans([],'front') }} <a href="{{ path('APP_FORGOT_PASSWORD_REQUEST') }}">{{ 'login.forgot_password_link'|trans([],'front') }}</a> </p>
                    </div>
                </div>
             </div>

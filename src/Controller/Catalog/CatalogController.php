@@ -203,7 +203,7 @@
                 }
             }
         
-            $breadcrumb->addLink(new BreadcrumbLink('catalog.form.add_multiple.label', $this->generateUrl('ADMIN_CATALOG_EDIT_MULTIPLE', [
+            $breadcrumb->addLink(new BreadcrumbLink('picture.form.add_multiple.label', $this->generateUrl('ADMIN_CATALOG_EDIT_MULTIPLE', [
                 'id' => $catalog->getId()
             ])));
         

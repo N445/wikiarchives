@@ -2,7 +2,6 @@
 
     namespace App\Entity\Catalog;
 
-    use App\Entity\Catalog\Picture\Exif;
     use App\Entity\Catalog\Picture\File;
     use App\Entity\Catalog\Picture\Version;
     use App\Entity\User;
@@ -102,10 +101,10 @@
         private $catalogsIllustrations;
         
         /**
-         * @ORM\OneToOne(targetEntity=Exif::class, cascade={"persist", "remove"}, fetch="EAGER")
+         * @ORM\Column(type="array")
          * @Gedmo\Versioned
          */
-        private $exif;
+        private array $exif = [];
     
         public function __construct()
         {
@@ -117,7 +116,6 @@
             $this->setLicense(PictureLicenseHelper::CC_BY);
             $this->setIsEditedByWikiarchives(false);
             $this->catalogsIllustrations = new ArrayCollection();
-            $this->exif = new Exif();
         }
 
         public function __toString()
@@ -165,26 +163,40 @@
             $this->enabled = $enabled;
             return $this;
         }
-
+    
         public function getName()
         {
             return $this->getValidatedVersion()?->getName();
         }
-
+    
         public function getDescription()
         {
             return $this->getValidatedVersion()?->getDescription();
         }
-
+    
+        public function getGps()
+        {
+            if (!$lat = $this->getValidatedVersion()?->getLat()) {
+                return;
+            }
+            if (!$lng = $this->getValidatedVersion()?->getLng()) {
+                return;
+            }
+            return [
+                'lat' => $lat,
+                'lng' => $lng,
+            ];
+        }
+    
         public function getCatalog(): ?Catalog
         {
             return $this->catalog;
         }
-
+    
         public function setCatalog(?Catalog $catalog): self
         {
             $this->catalog = $catalog;
-
+        
             return $this;
         }
 
@@ -370,12 +382,12 @@
         }
     
     
-        public function getExif(): ?Exif
+        public function getExif(): ?array
         {
             return $this->exif;
         }
     
-        public function setExif(?Exif $exif): self
+        public function setExif(?array $exif): self
         {
             $this->exif = $exif;
         

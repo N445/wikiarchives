@@ -130,12 +130,13 @@
         public function getGpsPointsFront(): array
         {
             return $this->createQueryBuilder('p')
-                        ->addSelect( 'catalog', 'catalog_parent','exif')
+                        ->addSelect( 'catalog', 'catalog_parent','validatedVersion')
+                        ->leftJoin('p.validatedVersion', 'validatedVersion')
                         ->leftJoin('p.catalog', 'catalog')
-                        ->leftJoin('p.exif', 'exif')
                         ->leftJoin('catalog.parent', 'catalog_parent')
-                        ->andWhere('exif.lat IS NOT NULL')
-                        ->andWhere('exif.lng IS NOT NULL')
+                        ->andWhere('validatedVersion.lat IS NOT NULL')
+                        ->andWhere('validatedVersion.lng IS NOT NULL')
+                        ->orWhere('p.place IS NOT NULL')
                         ->andWhere('p.enabled = true')
                         ->andWhere('catalog.enabled = true')
                         ->getQuery()

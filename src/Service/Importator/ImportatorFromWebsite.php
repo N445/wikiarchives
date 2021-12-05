@@ -128,8 +128,7 @@ class ImportatorFromWebsite
     
             $newCatalog = (new Catalog())
                 ->setPiwigoId($category['id'])
-                ->setName($category['name'])
-                ->setImageName($fakeImage['name']);
+                ->setName($category['name']);
     
             $this->catalogs[$newCatalog->getPiwigoId()] = $newCatalog;
             if ($parentId = $category['id_uppercat'] ?? null) {
@@ -229,6 +228,9 @@ class ImportatorFromWebsite
                     dump(count($this->pictures) . '/' . $total);
                     dump('flush');
                     $this->em->flush();
+                }
+                if($key === 1000){
+                    die;
                 }
             }
     

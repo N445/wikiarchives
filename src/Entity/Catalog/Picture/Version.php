@@ -94,6 +94,18 @@ class Version
     private ?string $source = null;
     
     /**
+     * @ORM\Column(type="float",nullable=true)
+     * @Gedmo\Versioned
+     */
+    private ?float $lat = null;
+    
+    /**
+     * @ORM\Column(type="float",nullable=true)
+     * @Gedmo\Versioned
+     */
+    private ?float $lng = null;
+    
+    /**
      * @ORM\ManyToOne(targetEntity=Picture::class, inversedBy="versions")
      * @Gedmo\Versioned
      */
@@ -378,6 +390,42 @@ class Version
     public function setSource(?string $source): self
     {
         $this->source = $source;
+        return $this;
+    }
+    
+    /**
+     * @return float|null
+     */
+    public function getLat(): ?float
+    {
+        return $this->lat;
+    }
+    
+    /**
+     * @param float|null $lat
+     * @return Version
+     */
+    public function setLat(?float $lat): Version
+    {
+        $this->lat = $lat;
+        return $this;
+    }
+    
+    /**
+     * @return float|null
+     */
+    public function getLng(): ?float
+    {
+        return $this->lng;
+    }
+    
+    /**
+     * @param float|null $lng
+     * @return Version
+     */
+    public function setLng(?float $lng): Version
+    {
+        $this->lng = $lng;
         return $this;
     }
     

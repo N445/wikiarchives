@@ -51,8 +51,8 @@
                     </div>
                     <div class="card-footer text-muted">
                         <small>
-                            {{ child.pictures|length }} {{ 'picture.label'|trans({'number':child.pictures|length},'admin') }} -
-                            {{ child.children|length }} {{ 'catalog.label'|trans({'number':child.children|length},'admin') }}
+                            {{ child|countPictures }} {{ 'picture.label'|trans({'number':child|countPictures},'admin') }} -
+                            {{ child|countChildren }} {{ 'catalog.label'|trans({'number':child|countChildren},'admin') }}
                         </small>
                     </div>
                 </div>

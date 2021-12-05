@@ -10,7 +10,14 @@ class PictureContentPopulator
     public static function setContent(Picture $picture)
     {
         self::setTitle($picture);
-        self::setDescription($picture);
+        self::setGps($picture);
+    
+        $picture->getValidatedVersion()->setDescription($picture->getExif()['caption'] ?? null);
+        $picture->getValidatedVersion()->setAuthor($picture->getExif()['author'] ?? null);
+        $picture->getValidatedVersion()->setCopyright($picture->getExif()['copyright'] ?? null);
+        $picture->getValidatedVersion()->setCreationdate($picture->getExif()['creationdate'] ?? null);
+        $picture->getValidatedVersion()->setCredit($picture->getExif()['credit'] ?? null);
+        $picture->getValidatedVersion()->setSource($picture->getExif()['source'] ?? null);
     }
 
     public static function setTitle(Picture $picture)
@@ -18,7 +25,7 @@ class PictureContentPopulator
         if ($picture->getValidatedVersion()->getName()) {
             return;
         }
-        if ($title = $picture->getExif()->getTitle()) {
+        if ($title = $picture->getExif()['title'] ?? null) {
             $picture->getValidatedVersion()->setName($title);
             return;
         }
@@ -30,9 +37,16 @@ class PictureContentPopulator
             return;
         }
     }
-
-    public static function setDescription(Picture $picture)
+    
+    private static function setGps(Picture $picture)
     {
-
+        if (!$gps = $picture->getExif()['gps'] ?? null) {
+            return;
+        }
+        $gps = explode(',', $gps);
+        $picture->getValidatedVersion()
+                ->setLat($gps[0])
+                ->setLng($gps[1])
+        ;
     }
 }

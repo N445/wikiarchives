@@ -119,37 +119,37 @@
          */
         public function getGpsPoints(): array
         {
-            return $this->cache->get(CacheHelper::PICTURE_MAP, function (ItemInterface $item) {
-                $item->expiresAfter(3600);
+//            return $this->cache->get(CacheHelper::PICTURE_MAP, function (ItemInterface $item) {
+//                $item->expiresAfter(3600);
             
                 $mapsPoints = [];
                 $catalogs = [];
                 foreach ($this->pictureRepository->getGpsPointsFront() as $picture) {
                     $catalogs[$picture->getCatalog()->getId()] = $picture->getCatalog();
                 
-                    if (($lat = $picture->getExif()->getLat() ?? null) === null) {
-                        continue;
-                    }
-                    if (($lng = $picture->getExif()->getLng() ?? null) === null) {
-                        continue;
+                    if (!$gps = $picture->getGps()) {
+                        if(!$place = $picture->getPlace()){
+                            continue;
+                        }
+                        $gps= $place->getLatLng();
                     }
                     if (!CatalogHelper::checkIfParentsIsEnabled($picture->getCatalog())) {
                         continue;
                     }
                 
                     $mapsPoints[] = (new MapPoint())
-                        ->setLat($lat)
-                        ->setLng($lng)
+                        ->setLat($gps['lat'])
+                        ->setLng($gps['lng'])
                         ->setTitle($picture->getName())
                         ->setHtml($this->twig->render('default/map/_marker-popup.html.twig', [
                             'picture' => $picture,
                         ]))//                    ->setHtml($picture->getDescription())
                     ;
                 }
-                foreach ($catalogs as $catalog) {
-                    CacheHelper::setTagsFromCatalog($item, $catalog);
-                }
+//                foreach ($catalogs as $catalog) {
+//                    CacheHelper::setTagsFromCatalog($item, $catalog);
+//                }
                 return $mapsPoints;
-            });
+//            });
         }
     }

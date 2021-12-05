@@ -90,7 +90,7 @@ final class ImageDownloadHandler implements MessageHandlerInterface
         $finder = new Finder();
 // find all files in the current directory
         $finder->files()
-               ->in(__DIR__ . '/../../../public/uploads/picture/')
+               ->in(__DIR__ . '/../../public/uploads/picture/')
                ->name('aaa-test-image-*')
         ;
         

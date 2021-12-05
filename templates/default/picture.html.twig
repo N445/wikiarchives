@@ -30,9 +30,87 @@
             <div class="col-md-6">
                 <div>
                     <h2 class="text-white">{{ picture.name }}</h2>
-                    <div class="description">
+                    <div class="description mb-3">
                         {{ picture.description|raw }}
                     </div>
+                    <table class="text-white table table-sm table-bordered">
+                        <tbody>
+                        {% set license = picture|getLicense %}
+                        {% if license %}
+                            <tr class="align-middle">
+                                <th>{{ 'picture.properties.license'|trans([],'admin') }}</th>
+                                <td>
+                                    <a href="{{ license.url }}" title="{{ license.name }}" rel="nofollow"
+                                       target="_blank">
+                                        {% if license.image %}
+                                            <img src="{{ asset('images/license/'~license.image) }}"
+                                                 alt="{{ license.name }}">
+                                        {% else %}
+                                            {{ license.name }}
+                                        {% endif %}
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endif %}
+                        <tr>
+                            <th>{{ 'picture.properties.isEditedByWikiarchives'|trans([],'admin') }}</th>
+                            <td>
+                                {% if picture.isEditedByWikiarchives %}
+                                    Oui
+                                {% else %}
+                                    Non
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% if picture.validatedVersion.author %}
+                            <tr class="align-middle">
+                                <th>{{ 'picture.properties.author'|trans([],'admin') }}</th>
+                                <td>
+                                    {{ picture.validatedVersion.author }}
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% if picture.validatedVersion.copyright %}
+                            <tr class="align-middle">
+                                <th>{{ 'picture.properties.copyright'|trans([],'admin') }}</th>
+                                <td>
+                                    {{ picture.validatedVersion.copyright }}
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% if picture.validatedVersion.creationdate %}
+                            <tr class="align-middle">
+                                <th>{{ 'picture.properties.creationdate'|trans([],'admin') }}</th>
+                                <td>
+                                    {{ picture.validatedVersion.creationdate|date('Y-m-d H:i:s') }}
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% if picture.validatedVersion.credit %}
+                            <tr class="align-middle">
+                                <th>{{ 'picture.properties.credit'|trans([],'admin') }}</th>
+                                <td>
+                                    {{ picture.validatedVersion.credit }}
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% if picture.validatedVersion.source %}
+                            <tr class="align-middle">
+                                <th>{{ 'picture.properties.source'|trans([],'admin') }}</th>
+                                <td>
+                                    {{ picture.validatedVersion.source }}
+                                </td>
+                            </tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                    {% if picture.gps %}
+                        <div id="map"
+                             class="rounded small"
+                             data-picture="{{ picture.gps|serialize }}"
+                        >
+                        </div>
+                    {% endif %}
                     {% include 'includes/catalog/_picture-exif.html.twig' %}
                 </div>
             </div>

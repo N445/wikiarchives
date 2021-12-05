@@ -18,6 +18,7 @@ actions:
   download_vlg : Very large size
   download_original : Original
   propose_version: Suggest a change
+  see_exif: See EXIF
 
 login:
   logged_as: You are logged in as

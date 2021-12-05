@@ -7,7 +7,7 @@ use App\Provider\PictureProvider;
 use App\Security\Voter\PictureVersionVoter;
 use App\Service\Catalog\CatalogHelper;
 use App\Service\Catalog\PictureDownloadProvider;
-use App\Service\Catalog\PictureHelper;
+use App\Service\Catalog\PictureExifProvider;
 use App\Service\Catalog\Version\VersionProposator;
 use Psr\Cache\InvalidArgumentException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -42,7 +42,8 @@ class PictureController extends AbstractController
         if (!CatalogHelper::checkEnabledRecusively($catalog)) {
             return $this->redirectToRoute('HOMEPAGE');
         }
-        
+    
+    
         return $this->render('default/picture.html.twig', [
             'picture' => $picture,
             'catalog' => $catalog,

@@ -85,7 +85,6 @@ class PictureController extends AbstractController
             PictureContentPopulator::setContent($picture);
     
             $picture->getValidatedVersion()->setStatus(PictureVersionHelper::STATUS_ACCEPTED);
-    
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($picture);
             $entityManager->flush();

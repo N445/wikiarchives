@@ -24,6 +24,7 @@ class PictureFilterExtension extends AbstractExtension
         return [
             new TwigFilter('versionStatusLabel', [$this, 'versionStatusLabel']),
             new TwigFilter('getLicense', [$this, 'getLicense']),
+            new TwigFilter('getExifValueType', [$this, 'getExifValueType']),
         ];
     }
     
@@ -41,5 +42,22 @@ class PictureFilterExtension extends AbstractExtension
     public function getLicense(Picture $picture)
     {
         return PictureLicenseHelper::getLicense($picture->getLicense());
+    }
+    
+    public function getExifValueType($value)
+    {
+        if($value instanceof \DateTime){
+            return 'date';
+        }
+        if(is_array($value)){
+            return 'array';
+        }
+        if(is_string($value)){
+            return 'string';
+        }
+        if(is_int($value)){
+            return 'int';
+        }
+        return 'string';
     }
 }

@@ -82,7 +82,7 @@ class ImportatorFromWebsite
             $this->root = (new Catalog())->setName(Catalog::ROOT);
             $this->em->persist($this->root);
     
-            dump('flush');
+            dump('create root');
             $this->em->flush();
         }
     }
@@ -140,7 +140,7 @@ class ImportatorFromWebsite
             $this->em->persist($newCatalog);
         }
     
-        dump('flush');
+        dump('flush catalogs');
         $this->em->flush();
     }
     
@@ -153,10 +153,10 @@ class ImportatorFromWebsite
         $nbPages = $infoPagination['nbPages'];
         $total = $infoPagination['total'];
     
+        $i = 0;
     
         foreach (range(1, $nbPages) as $page) {
-            $page = 1;
-            dump($page . '/' . $nbPages);
+            dump('Page : ' . $page . ' sur ' . $nbPages);
 
 //            $response = $this->cache->get('import_images_' . $page, function (ItemInterface $item) use ($page) {
 //                $item->expiresAfter(36000);
@@ -173,8 +173,11 @@ class ImportatorFromWebsite
             $responseArray = $response->toArray();
             $pictures = $responseArray['result']['images'];
     
+            dump(count($pictures));
+    
     
             foreach ($pictures as $key => $pictureRaw) {
+                $i++;
                 $raw_id = $pictureRaw['id'];
                 $raw_width = $pictureRaw['width'] ?? null;
                 $raw_height = $pictureRaw['height'] ?? null;
@@ -224,12 +227,13 @@ class ImportatorFromWebsite
                 $this->bus->dispatch(new ImageDownload($raw_id, $raw_element_url));
         
                 $this->em->persist($newPicture);
-                if ($key % 1000 === 0) {
+        
+                if ($i % 1000 === 0) {
                     dump(count($this->pictures) . '/' . $total);
                     dump('flush');
                     $this->em->flush();
                 }
-                if($key === 1000){
+                if ($i === 1000) {
                     die;
                 }
             }

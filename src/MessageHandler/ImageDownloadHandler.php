@@ -5,6 +5,7 @@ namespace App\MessageHandler;
 use App\Entity\Catalog\Picture;
 use App\Message\ImageDownload;
 use App\Repository\Catalog\PictureRepository;
+use App\Service\Catalog\PictureContentPopulator;
 use App\Service\Catalog\PictureExifPopulator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -30,8 +31,8 @@ final class ImageDownloadHandler implements MessageHandlerInterface
             return;
         }
         
-//        $this->setRealImage($picture, $message);
-        $this->setFakeImage($picture, $message);
+        $this->setRealImage($picture, $message);
+//        $this->setFakeImage($picture, $message);
         
         $this->em->persist($picture);
         $this->em->flush();
@@ -72,6 +73,7 @@ final class ImageDownloadHandler implements MessageHandlerInterface
         
         $picture->setFile($file);
         $picture->setExif($exif);
+        PictureContentPopulator::setContent($picture);
     }
     
     private function setFakeImage(Picture $picture)

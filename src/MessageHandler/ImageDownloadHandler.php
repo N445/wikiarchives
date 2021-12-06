@@ -69,7 +69,7 @@ final class ImageDownloadHandler implements MessageHandlerInterface
         $file = $picture->getFile();
         $file->setImageFile($uploadedfile);
         
-        $exif = PictureExifPopulator::getExifFromFile($uploadedfile, $picture->getExif());
+        $exif = PictureExifPopulator::getExifFromFile($uploadedfile);
         
         $picture->setFile($file);
         $picture->setExif($exif);

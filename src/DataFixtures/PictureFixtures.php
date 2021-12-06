@@ -3,7 +3,6 @@
     namespace App\DataFixtures;
 
     use App\Entity\Catalog\Picture;
-    use App\Entity\Catalog\Picture\Exif;
     use App\Entity\Catalog\Picture\Version;
     use App\Service\Catalog\PictureLicenseHelper;
     use App\Service\Catalog\Version\PictureVersionHelper;
@@ -82,45 +81,6 @@
                     }
                 }
             
-                /** @var Exif $baseExif */
-                $baseExif = $fakeImage['exif'];
-                $exif = (new Exif())
-                    ->setIsVerified($baseExif->isVerified())
-                    ->setTitle($baseExif->getTitle())
-                    ->setAuthor($baseExif->getAuthor())
-                    ->setCamera($baseExif->getCamera())
-                    ->setCaption($baseExif->getCaption())
-                    ->setCopyright($baseExif->getCopyright())
-                    ->setCreationdate($baseExif->getCreationdate())
-                    ->setCredit($baseExif->getCredit())
-                    ->setAperture($baseExif->getAperture())
-                    ->setExposure($baseExif->getExposure())
-                    ->setFocalLength($baseExif->getFocalLength())
-                    ->setFocalDistance($baseExif->getFocalDistance())
-                    ->setIso($baseExif->getIso())
-                    ->setColorSpace($baseExif->getColorSpace())
-                    ->setFileSize($baseExif->getFileSize())
-                    ->setHeight($baseExif->getHeight())
-                    ->setWidth($baseExif->getWidth())
-                    ->setHorizontalResolution($baseExif->getHorizontalResolution())
-                    ->setVerticalResolution($baseExif->getVerticalResolution())
-                    ->setHeadline($baseExif->getHeadline())
-                    ->setJobTitle($baseExif->getJobTitle())
-                    ->setKeywords($baseExif->getKeywords())
-                    ->setMimeType($baseExif->getMimeType())
-                    ->setOrientation($baseExif->getOrientation())
-                    ->setSoftware($baseExif->getSoftware())
-                    ->setSource($baseExif->getSource())
-                    ->setLat($baseExif->getLat())
-                    ->setLng($baseExif->getLng());
-            
-                if (!$exif->getLat()) {
-                    if ($this->faker->boolean) {
-                        $exif->setLat($this->faker->latitude());
-                        $exif->setLng($this->faker->longitude());
-                    }
-                }
-            
                 /** @var Version $validatedVersion */
                 $validatedVersion = $this->faker->randomElement($versions);
                 $validatedVersion
@@ -129,7 +89,6 @@
                 ;
                 $picture
                     ->setValidatedVersion($validatedVersion)
-                    ->setExif($exif)
                 ;
             
                 if ($this->faker->boolean()) {
@@ -156,39 +115,6 @@
         {
             $versions = [];
             foreach (range(1, rand(1, 5)) as $i) {
-                $exif = (new Exif())
-                    ->setIsVerified($this->faker->boolean())
-                    ->setTitle($this->faker->optional()->realText(50))
-                    ->setAuthor($this->faker->optional()->realText(50))
-                    ->setCamera($this->faker->optional()->realText(50))
-                    ->setCaption($this->faker->optional()->realText(50))
-                    ->setCopyright($this->faker->optional()->realText(50))
-                    ->setCreationdate($this->faker->optional()->dateTimeBetween('-30 years', 'now'))
-                    ->setCredit($this->faker->optional()->realText(50))
-                    ->setAperture($this->faker->optional()->realText(50))
-                    ->setExposure($this->faker->optional()->realText(50))
-                    ->setFocalLength($this->faker->optional()->randomFloat(0, 800))
-                    ->setFocalDistance($this->faker->optional()->realText(50))
-                    ->setIso($this->faker->optional()->numberBetween(100, 1000))
-                    ->setColorSpace($this->faker->optional()->realText(50))
-                    ->setFileSize($this->faker->numberBetween(50000, 80000000))
-                    ->setHeight($this->faker->optional()->numberBetween(1000, 5000))
-                    ->setWidth($this->faker->optional()->numberBetween(1000, 5000))
-                    ->setHorizontalResolution($this->faker->optional()->numberBetween(10, 100))
-                    ->setVerticalResolution($this->faker->optional()->numberBetween(10, 100))
-                    ->setHeadline($this->faker->optional()->realText(50))
-                    ->setJobTitle($this->faker->optional()->realText(50))
-                    ->setKeywords(explode(' ', $this->faker->optional()->realText(50)))
-                    ->setMimeType($this->faker->optional()->mimeType())
-                    ->setOrientation($this->faker->optional()->numberBetween(0, 7))
-                    ->setSoftware($this->faker->optional()->realText(50))
-                    ->setSource($this->faker->optional()->realText(50));
-
-                if ($this->faker->boolean()) {
-                    $exif->setLat($this->faker->latitude());
-                    $exif->setLng($this->faker->longitude());
-                }
-
 
                 $version = (new Version())
                     ->setVersionNumber($i)
@@ -204,7 +130,6 @@
                     ->setBasedVersion($this->faker->randomElement($versions))
                     ->setName($this->faker->realText(50))
                     ->setDescription($this->faker->optional()->realText(500))
-//                    ->setExif($exif)
                     ->setCreatedBy($this->getReference(sprintf(UserFixtures::REFERENCE, rand(1, UserFixtures::LOOP))))
                     ->setCreatedAt($this->faker->dateTimeBetween('-10 month', 'now'));
     

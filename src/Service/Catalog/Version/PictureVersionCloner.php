@@ -14,38 +14,7 @@ class PictureVersionCloner
     public static function cloneVersion(Picture $picture): Version
     {
         $clonedVersion = $picture->getValidatedVersion();
-//        $clonedExif = $picture->getExif();
-        
-//        $newExif = (new Exif())
-//            ->setIsVerified($clonedExif->isVerified())
-//            ->setTitle($clonedExif->getTitle())
-//            ->setAuthor($clonedExif->getAuthor())
-//            ->setCamera($clonedExif->getCamera())
-//            ->setCaption($clonedExif->getCaption())
-//            ->setCopyright($clonedExif->getCopyright())
-//            ->setCreationdate($clonedExif->getCreationdate())
-//            ->setCredit($clonedExif->getCredit())
-//            ->setAperture($clonedExif->getAperture())
-//            ->setExposure($clonedExif->getExposure())
-//            ->setFocalLength($clonedExif->getFocalLength())
-//            ->setFocalDistance($clonedExif->getFocalDistance())
-//            ->setIso($clonedExif->getIso())
-//            ->setColorSpace($clonedExif->getColorSpace())
-//            ->setFileSize($clonedExif->getFileSize())
-//            ->setHeight($clonedExif->getHeight())
-//            ->setWidth($clonedExif->getWidth())
-//            ->setHorizontalResolution($clonedExif->getHorizontalResolution())
-//            ->setVerticalResolution($clonedExif->getVerticalResolution())
-//            ->setHeadline($clonedExif->getHeadline())
-//            ->setJobTitle($clonedExif->getJobTitle())
-//            ->setKeywords($clonedExif->getKeywords())
-//            ->setMimeType($clonedExif->getMimeType())
-//            ->setOrientation($clonedExif->getOrientation())
-//            ->setSoftware($clonedExif->getSoftware())
-//            ->setSource($clonedExif->getSource())
-//            ->setLat($clonedExif->getLat())
-//            ->setLng($clonedExif->getLng())
-//        ;
+
         $versionNumber=1;
         if($lastVersion = $picture->getVersions()->last()){
             $versionNumber = $lastVersion->getVersionNumber() + 1 ;

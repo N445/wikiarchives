@@ -5,9 +5,7 @@ namespace App\Service\Catalog;
 
 
 use App\Entity\Catalog\Picture;
-use App\Entity\Catalog\Picture\Exif;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class PictureExifPopulator
 {

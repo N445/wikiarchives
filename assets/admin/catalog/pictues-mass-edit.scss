@@ -6,6 +6,8 @@
 
 
 .pictures-selection {
+
+
   .picture-card {
     position: relative;
 
@@ -27,6 +29,10 @@
       justify-content: center;
       transition: .2s;
       opacity: 0;
+    }
+
+    &.multi-selected {
+      border: 1px solid green;
     }
 
     .selected-icon {

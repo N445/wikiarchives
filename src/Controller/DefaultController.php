@@ -40,6 +40,20 @@
             ]);
         }
     
+    
+        #[Route('/about', name: 'ABOUT')]
+        public function about(Request $request)
+        {
+            return $this->render('default/about.html.twig', []);
+        }
+    
+        #[Route('/legal-mention', name: 'LEGAL_MENTION')]
+        public function legalMention(Request $request)
+        {
+            return $this->render('default/legal-mention.html.twig', []);
+        }
+    
+    
         #[Route('/map', name: 'MAP')]
         public function map(Request $request)
         {

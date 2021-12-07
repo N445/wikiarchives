@@ -1,5 +1,7 @@
 navbar:
   homepage: Homepage
+  about: About
+  legal_mention: Legal Mention
   map: Map
 
 actions:
@@ -96,3 +98,14 @@ picture:
       creationdate: Date taken
       credit: Credit
       source: Source
+
+homepage:
+  title: Wikiarchives
+
+legal_mention:
+  title: Legal Mention
+  content: Legal Mention content
+
+about:
+  title: About
+  content: About content

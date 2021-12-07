@@ -23,6 +23,11 @@ liip_imagine:
     # valid drivers options include "gd" or "gmagick" or "imagick"
     filter_sets:
       cache: ~
+      banner:
+        cache: default
+        quality: 75
+        filters:
+          thumbnail: { size: [1920, 500], mode: outbound }
       catalog_banner:
         cache: default
         data_loader: loader_picture

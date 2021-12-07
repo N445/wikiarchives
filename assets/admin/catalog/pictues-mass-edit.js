@@ -37,9 +37,36 @@ function filterNotselected() {
     $('.picture-card:not(.selected)').closest('.col-md-4').css('display', 'block');
 }
 
+let previousSelected = null;
+
 $(function () {
-    $('.picture-card').on('click', function () {
-        $(this).toggleClass('selected');
+    $('.picture-card').on('click', function (e) {
+        let clickedCard = $(this);
+        clickedCard.addClass('multi-selected');
+
+        clickedCard.toggleClass('selected');
+        let isSelected = clickedCard.hasClass('selected');
+
+        if (e.shiftKey) {
+            let parentCol = clickedCard.closest('.picture-card-col');
+            if (null === previousSelected) {
+                parentCol.find('.picture-card').addClass('multi-selected');
+                previousSelected = parentCol;
+            } else {
+                let cardsToChange = previousSelected.nextUntil(parentCol).find('.picture-card');
+                cardsToChange.addClass('multi-selected');
+                if(isSelected){
+                    cardsToChange.addClass('selected');
+                }else{
+                    cardsToChange.removeClass('selected');
+                }
+                previousSelected = null;
+                parentCol.find('.picture-card').removeClass('multi-selected');
+            }
+        } else {
+            $('.picture-card').removeClass('multi-selected');
+            previousSelected = null;
+        }
         refreshform();
         custom();
         // filterAll();

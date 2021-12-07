@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} - {{ 'about.title'|trans([],'front') }}{% endblock %}
+
+{% block body %}
+    {% include 'includes/banner.html.twig' with {banner_title:'about.title'|trans([],'front')} %}
+    <div class="container px-4">
+        {{ 'about.content'|trans([],'front') }}
+    </div>
+{% endblock %}

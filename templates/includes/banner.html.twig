@@ -1,0 +1,9 @@
+<div class="catalog-banner">
+    <img src="{{ asset(banner_image is defined ?:'images/banner/pillars_of_creation.jpg')|imagine_filter('banner') }}"
+         alt="{{ banner_title }}" class="img-fluid">
+    <div class="content">
+        <div class="container">
+            <h1 class="catalog-name">{{ banner_title }}</h1>
+        </div>
+    </div>
+</div>

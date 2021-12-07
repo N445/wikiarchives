@@ -1,5 +1,7 @@
 navbar:
   homepage: Accueil
+  about: A propos
+  legal_mention: Mention légale
   map: Carte
 
 actions:
@@ -101,3 +103,14 @@ picture:
       creationdate: Date de prise de vue
       credit: Crédit
       source: Source
+
+homepage:
+  title: Wikiarchives
+
+legal_mention:
+  title: Mentions légale
+  content: Mentions légale contenu
+
+about:
+  title: A propos
+  content: A propos contenu

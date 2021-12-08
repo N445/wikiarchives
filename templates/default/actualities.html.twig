@@ -1,19 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-    {% include 'includes/banner.html.twig' with {banner_title:'homepage.title'|trans([],'front')} %}
-    <div class="container-fluid px-4">
-        <div class="row row-cols-1 row-cols-md-5 g-5 my-3">
-            {% if root %}
-                {% for catalog in root.children %}
-                    <div class="col">
-                        {% include 'includes/catalog/_catalog-card.html.twig' %}
-                    </div>
-                {% endfor %}
-            {% endif %}
-        </div>
+{% block title %}{{ parent() }} - {{ 'actuality.listing'|trans([],'front') }}{% endblock %}
 
-        <hr>
+{% block body %}
+    {% include 'includes/banner.html.twig' with {banner_title:'actuality.listing'|trans([],'front')} %}
+    <div class="container px-4">
         <div class="row row-cols-1 row-cols-md-5 g-5">
             {% for actuality in actualities %}
                 <div class="col">

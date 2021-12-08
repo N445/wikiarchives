@@ -4,6 +4,7 @@ navigation:
   website: Le site
   go_to_website: Acceder au site
   dashboard: Dashboard
+  actuality: Actualités
   catalog: Catalogue
   directory:
     label: Dossiers
@@ -180,6 +181,8 @@ picture:
     credit: Crédit
     source: Source
 
+
+
 zone:
   add: Ajouter une zone
   properties:
@@ -193,4 +196,22 @@ zone:
   form:
     create_label: Création d'une zone
     edit_label: Edition d'une zone
+
+actuality:
+  listing: Liste des actualités
+  add: Ajouter une actualité
+  properties:
+    title: Titre
+    content: Contenu
+    isVisible: Visible
+    created_at: Ajout le
+    created_by: Ajout par
+    edited_at: Modifié le
+    edited_by: Modifié par
+  form:
+    create_label: Création d'une actualité
+    edit_label: Edition d'une actualité
+
 no_records_found:  Aucunes données trouvées
+yes: Oui
+no: Non

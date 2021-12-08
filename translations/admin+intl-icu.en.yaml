@@ -4,6 +4,7 @@ navigation:
   website: The site
   go_to_website: Access to the site
   dashboard: Dashboard
+  actuality: Actualities
   catalog: Catalog
   directory:
     label: Folders
@@ -180,6 +181,7 @@ picture:
     creationdate: Date of shooting
     credit: Credit
     source: Source
+
 zone:
   add: Add a zone
   properties:
@@ -194,4 +196,21 @@ zone:
     create_label: Creation of zone
     edit_label: Edition of zone
 
+actuality:
+  listing: List of actualities
+  add: Add an actuality
+  properties:
+    title: Title
+    content: Content
+    isVisible: Is Visible
+    created_at: Created at
+    created_by: Created by
+    edited_at: Edited at
+    edited_by: Edited by
+  form:
+    create_label: Creation of actuality
+    edit_label: Edition of actuality
+
 no_records_found:  No data found
+yes: Yes
+no: No

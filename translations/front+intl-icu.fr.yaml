@@ -107,6 +107,10 @@ picture:
 homepage:
   title: Wikiarchives
 
+actuality:
+  listing: Actualités
+  see: Lire
+
 legal_mention:
   title: Mentions légale
   content: Mentions légale contenu

@@ -1,0 +1,14 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}{{ 'actuality.add'|trans([],'admin') }} - {{ parent() }}{% endblock %}
+{% block bodytitle %}{{ 'actuality.add'|trans([],'admin') }}{% endblock %}
+
+{% block body %}
+    {{ include('actuality/actuality/_form.html.twig') }}
+
+    <a href="{{ path('ACTUALITY_ACTUALITY_INDEX') }}">{{ 'actions.back_listing'|trans([],'admin') }}</a>
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('wysiwyg-js') }}
+{% endblock %}

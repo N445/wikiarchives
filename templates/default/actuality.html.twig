@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} - {{ actuality.title }}{% endblock %}
+
+{% block body %}
+    {% include 'includes/banner.html.twig' with {banner_title:actuality.title} %}
+    <div class="container px-4">
+        <p><small>{{ actuality.createdAt|date('Y-m-d') }}</small></p>
+        <br>
+        {{ actuality.content|raw }}
+    </div>
+{% endblock %}

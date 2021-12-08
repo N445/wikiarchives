@@ -7,10 +7,10 @@ use App\Entity\Catalog\Picture;
 use App\Model\Breadcrumb\Breadcrumb;
 use App\Provider\CatalogProvider;
 use App\Provider\PictureProvider;
-use App\Service\Breadcrumb\BreadcrumbCreator;
 use App\Service\Catalog\CatalogHelper;
 use Doctrine\Common\Util\ClassUtils;
 use Symfony\Component\Intl\Locales;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\Markup;
@@ -20,14 +20,17 @@ class TwigFilterExtension extends AbstractExtension
 {
     private CatalogProvider $catalogProvider;
     private PictureProvider $pictureProvider;
+    private TranslatorInterface $translator;
     
     public function __construct(
-        CatalogProvider $catalogProvider,
-        PictureProvider $pictureProvider
+        CatalogProvider     $catalogProvider,
+        PictureProvider     $pictureProvider,
+        TranslatorInterface $translator
     )
     {
         $this->catalogProvider = $catalogProvider;
         $this->pictureProvider = $pictureProvider;
+        $this->translator = $translator;
     }
 
     public function getFilters(): array
@@ -97,9 +100,11 @@ class TwigFilterExtension extends AbstractExtension
 
     public function yesNoHtml(bool $value)
     {
+        $yes = $this->translator->trans('yes', [], 'admin');
+        $no = $this->translator->trans('no', [], 'admin');
         if ($value) {
-            return new Markup('<span class="badge badge-pill bg-success">Yes</span>', "utf-8");
+            return new Markup(sprintf('<span class="badge badge-pill bg-success">%s</span>', $yes), "utf-8");
         }
-        return new Markup('<span class="badge badge-pill bg-danger">No</span>', "utf-8");
+        return new Markup(sprintf('<span class="badge badge-pill bg-danger">%s</span>', $no), "utf-8");
     }
 }

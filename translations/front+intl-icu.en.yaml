@@ -102,6 +102,10 @@ picture:
 homepage:
   title: Wikiarchives
 
+actuality:
+  listing: Actualities
+  see: Read
+
 legal_mention:
   title: Legal Mention
   content: Legal Mention content

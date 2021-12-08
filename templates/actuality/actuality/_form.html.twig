@@ -1,0 +1,13 @@
+{{ form_start(form) }}
+<div class="row">
+    <div class="col-md-6">
+        {{ form_row(form.isVisible) }}
+        {{ form_row(form.title) }}
+    </div>
+    <div class="col-md-6">
+        {{ form_row(form.content) }}
+    </div>
+</div>
+    {{ form_widget(form) }}
+    <button type="submit" class="btn btn-success">{{ button_label|default('actions.add')|trans([],'admin') }}</button>
+{{ form_end(form) }}

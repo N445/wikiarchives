@@ -3,10 +3,12 @@
     namespace App\Controller;
 
 
+    use App\Entity\Actuality\Actuality;
     use App\Entity\Catalog\Catalog;
     use App\Entity\Toto;
     use App\Provider\CatalogProvider;
     use App\Provider\PictureProvider;
+    use App\Repository\Actuality\ActualityRepository;
     use App\Repository\Catalog\CatalogRepository;
     use App\Repository\Catalog\PictureRepository;
     use Knp\Component\Pager\PaginatorInterface;
@@ -22,14 +24,17 @@
     {
         private CatalogProvider $catalogProvider;
         private PictureProvider $pictureProvider;
+        private ActualityRepository $actualityRepository;
     
         public function __construct(
-            CatalogProvider $catalogProvider,
-            PictureProvider $pictureProvider
+            CatalogProvider     $catalogProvider,
+            PictureProvider     $pictureProvider,
+            ActualityRepository $actualityRepository
         )
         {
             $this->catalogProvider = $catalogProvider;
             $this->pictureProvider = $pictureProvider;
+            $this->actualityRepository = $actualityRepository;
         }
     
         #[Route('/', name: 'HOMEPAGE')]
@@ -37,6 +42,23 @@
         {
             return $this->render('default/index.html.twig', [
                 'root' => $this->catalogProvider->root(),
+                'actualities' => $this->actualityRepository->getByDate(3)
+            ]);
+        }
+    
+        #[Route('/actuality', name: 'ACTUALITY_LISTING')]
+        public function actualities()
+        {
+            return $this->render('default/actualities.html.twig', [
+                'actualities' => $this->actualityRepository->findAll()
+            ]);
+        }
+    
+        #[Route('/actuality/{id}', name: 'ACTUALITY_DETAIL')]
+        public function actualityShow(Actuality $actuality)
+        {
+            return $this->render('default/actuality.html.twig', [
+                'actuality' => $actuality
             ]);
         }
     
@@ -84,10 +106,10 @@
             if (!$query) {
                 return $this->redirectToRoute('HOMEPAGE');
             }
-    
-    
+        
+        
             $page = $request->get('page', 1);
-    
+        
             return $this->render('default/search.html.twig', [
                 'catalog' => $catalog,
                 'catalogs' => $this->catalogProvider->search($query, $catalog),
@@ -104,13 +126,12 @@
         public function testGrid(Request $request, PictureRepository $pictureRepository,PaginatorInterface $paginator)
         {
             $picturesQb = $pictureRepository->createQueryBuilder('p')
-                                          ->addSelect('v', 'f')
-                                          ->leftJoin('p.validatedVersion', 'v')
-                                          ->leftJoin('p.file', 'f')
-                                          ->getQuery()
-            ;
-    
-            $paginator = $paginator->paginate($picturesQb,1,500);
+                                            ->addSelect('v', 'f')
+                                            ->leftJoin('p.validatedVersion', 'v')
+                                            ->leftJoin('p.file', 'f')
+                                            ->getQuery();
+        
+            $paginator = $paginator->paginate($picturesQb, 1, 500);
         
             return $this->render('default/test-grid.html.twig', [
                 'pictures' => $paginator
@@ -127,17 +148,17 @@
             $cache = new TagAwareAdapter(
                 new FilesystemAdapter(),
             );
-
+        
             $data = $cache->get('aaaaaalkmktest', function (ItemInterface $item) use ($catalogRepository) {
                 $item->expiresAfter(3600);
                 dump('test dump');
-
+            
                 /** @var Catalog $catalog */
                 return $catalogRepository->createQueryBuilder('c')
-                                             ->andWhere('c.id = :id')
-                                             ->setParameter('id', 102)
-                                             ->getQuery()
-                                             ->getOneOrNullResult()
+                                         ->andWhere('c.id = :id')
+                                         ->setParameter('id', 102)
+                                         ->getQuery()
+                                         ->getOneOrNullResult()
                 ;
             });
             dump($data);

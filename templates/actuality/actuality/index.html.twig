@@ -1,0 +1,44 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}{{ 'actuality.listing'|trans([],'admin') }} - {{ parent() }}{% endblock %}
+{% block bodytitle %}{{ 'actuality.listing'|trans([],'admin') }}{% endblock %}
+
+{% block body %}
+    <a href="{{ path('ACTUALITY_ACTUALITY_NEW') }}">{{ 'actuality.add'|trans([],'admin') }}</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>{{ 'actuality.properties.title'|trans([],'admin') }}</th>
+{#                <th>{{ 'actuality.properties.content'|trans([],'admin') }}</th>#}
+                <th>{{ 'actuality.properties.isVisible'|trans([],'admin') }}</th>
+                <th>{{ 'actuality.properties.created_at'|trans([],'admin') }}</th>
+                <th>{{ 'actuality.properties.edited_at'|trans([],'admin') }}</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for actuality in actualities %}
+            <tr>
+                <td>{{ actuality.title }}</td>
+{#                <td>{{ actuality.content }}</td>#}
+                <td>{{ actuality.isVisible|yesNoHtml }}</td>
+                <td>{{ actuality.createdAt ? actuality.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ actuality.updatedAt ? actuality.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('ACTUALITY_ACTUALITY_SHOW', {'id': actuality.id}) }}">
+                        {{ 'actions.see'|trans([],'admin') }}
+                    </a>
+                    <a href="{{ path('ACTUALITY_ACTUALITY_EDIT', {'id': actuality.id}) }}">
+                        {{ 'actions.edit'|trans([],'admin') }}
+                    </a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">{{ 'no_records_found'|trans([],'admin') }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

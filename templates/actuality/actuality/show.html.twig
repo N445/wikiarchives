@@ -1,0 +1,43 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}{{ actuality.title}} - {{ parent() }}{% endblock %}
+{% block bodytitle %}{{ actuality.title }}{% endblock %}
+
+{% block body %}
+    <h1>Actuality</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ actuality.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ actuality.title }}</td>
+            </tr>
+            <tr>
+                <th>Content</th>
+                <td>{{ actuality.content }}</td>
+            </tr>
+            <tr>
+                <th>IsVisible</th>
+                <td>{{ actuality.isVisible ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ actuality.createdAt ? actuality.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ actuality.updatedAt ? actuality.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('ACTUALITY_ACTUALITY_INDEX') }}">{{ 'actions.back_listing'|trans([],'admin') }}</a>
+
+    <a href="{{ path('ACTUALITY_ACTUALITY_EDIT', {'id': actuality.id}) }}">edit</a>
+
+    {{ include('actuality/actuality/_delete_form.html.twig') }}
+{% endblock %}

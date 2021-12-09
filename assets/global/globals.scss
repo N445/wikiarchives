@@ -42,3 +42,17 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 @import "~noty/src/themes/bootstrap-v4";
 
 @import "./mixins/bubble";
+
+.admin-top-nav {
+  background-color: $dark;
+
+  ul {
+    display: flex;
+    padding-left: 0;
+    margin-bottom: 0;
+
+    li {
+      list-style: none;
+    }
+  }
+}

@@ -20,7 +20,38 @@
 </head>
 <body>
 {% include 'includes/flash-message.html.twig' %}
-{% include 'includes/navigation.html.twig' %}
+<div class="sticky-top">
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="admin-top-nav">
+            <ul>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('ADMIN') }}">
+                        Backoffice
+                    </a>
+                </li>
+                {% if catalog is defined %}
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           href="{{ path('ADMIN_CATALOG_CATALOG_EDIT', {'id': catalog.id}) }}">
+                            Catalog
+                        </a>
+                    </li>
+                {% endif %}
+                {% if picture is defined %}
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           href="{{ path('ADMIN_CATALOG_PICTURE_EDIT', {'id': picture.id}) }}">
+                            Picture
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+        {% block admin_nav %}
+        {% endblock %}
+    {% endif %}
+    {% include 'includes/navigation.html.twig' %}
+</div>
 
 {% block body %}{% endblock %}
 {{ encore_entry_script_tags('globalsjs') }}

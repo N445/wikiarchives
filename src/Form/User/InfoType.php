@@ -16,23 +16,28 @@ class InfoType extends AbstractType
     {
         $builder
             ->add('lastname', TextType::class, [
-                'label' => 'Nom'
+                'label' => 'Nom',
+                'required' => false,
             ])
             ->add('firstname', TextType::class, [
-                'label' => 'Prénom'
+                'label' => 'Prénom',
+                'required' => false,
             ])
             ->add('country', CountryType::class, [
                 'label' => 'Pays',
+                'required' => false,
                 'attr' => [
                     'class' => 'select2'
                 ],
                 'preferred_choices' => ['FR', 'US', 'GB'],
             ])
             ->add('city', TextType::class, [
-                'label' => 'Ville'
+                'label' => 'Ville',
+                'required' => false,
             ])
             ->add('address', TextareaType::class, [
-                'label' => 'Adresse'
+                'label' => 'Adresse',
+                'required' => false,
             ])
         ;
     }

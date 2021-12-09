@@ -3,6 +3,10 @@ navbar:
   about: About
   legal_mention: Legal Mention
   map: Map
+  contact: Contact us
+
+notification:
+  contact_success: Thanks for your message
 
 actions:
   search_placeholder: Search
@@ -105,6 +109,16 @@ homepage:
 actuality:
   listing: Actualities
   see: Read
+
+contact:
+  title: Contact us
+  send: Send us your message
+  properties:
+    firstname: Your firstname
+    lastname: Your lastname
+    email: Your email
+    message: Your awesome message
+    created_at: Sended at
 
 legal_mention:
   title: Legal Mention

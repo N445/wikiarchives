@@ -3,6 +3,11 @@
 body {
   background-color: $wikiarchives-dark;
   color: $wikiarchives-white;
+  .form-floating {
+    label {
+      color: $wikiarchives-dark;
+    }
+  }
 }
 
 .sticky-top-offset {

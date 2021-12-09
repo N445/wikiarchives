@@ -211,6 +211,16 @@ actuality:
     create_label: Creation of actuality
     edit_label: Edition of actuality
 
+contact:
+  listing: Contacts
+  contact_of: Contact of
+  properties:
+    firstname: Firstname
+    lastname: Lastname
+    email: Email
+    message: Message
+    created_at: Sended at
+
 no_records_found:  No data found
 yes: Yes
 no: No

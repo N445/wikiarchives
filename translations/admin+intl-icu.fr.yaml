@@ -212,6 +212,16 @@ actuality:
     create_label: Création d'une actualité
     edit_label: Edition d'une actualité
 
+contact :
+  listing: Contacts
+  contact_of: Contact de
+  properties :
+    firstname : Prénom
+    lastname : Nom
+    email : Email
+    message : Message
+    created_at : Envoyé le
+
 no_records_found:  Aucunes données trouvées
 yes: Oui
 no: Non

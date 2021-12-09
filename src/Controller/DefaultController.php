@@ -5,12 +5,15 @@
 
     use App\Entity\Actuality\Actuality;
     use App\Entity\Catalog\Catalog;
+    use App\Entity\Contact;
     use App\Entity\Toto;
+    use App\Form\ContactType;
     use App\Provider\CatalogProvider;
     use App\Provider\PictureProvider;
     use App\Repository\Actuality\ActualityRepository;
     use App\Repository\Catalog\CatalogRepository;
     use App\Repository\Catalog\PictureRepository;
+    use Doctrine\ORM\EntityManagerInterface;
     use Knp\Component\Pager\PaginatorInterface;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\Cache\Adapter\FilesystemAdapter;
@@ -25,16 +28,19 @@
         private CatalogProvider $catalogProvider;
         private PictureProvider $pictureProvider;
         private ActualityRepository $actualityRepository;
+        private EntityManagerInterface $em;
     
         public function __construct(
-            CatalogProvider     $catalogProvider,
-            PictureProvider     $pictureProvider,
-            ActualityRepository $actualityRepository
+            CatalogProvider        $catalogProvider,
+            PictureProvider        $pictureProvider,
+            ActualityRepository    $actualityRepository,
+            EntityManagerInterface $em
         )
         {
             $this->catalogProvider = $catalogProvider;
             $this->pictureProvider = $pictureProvider;
             $this->actualityRepository = $actualityRepository;
+            $this->em = $em;
         }
     
         #[Route('/', name: 'HOMEPAGE')]
@@ -81,6 +87,23 @@
         {
             return $this->render('default/map.html.twig', [
                 'pictureGpsPoints' => $this->pictureProvider->getGpsPoints()
+            ]);
+        }
+    
+        #[Route('/contact', name: 'CONTACT')]
+        public function contact(Request $request)
+        {
+            $contact = new Contact();
+            $form = $this->createForm(ContactType::class, $contact);
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $this->em->persist($contact);
+                $this->em->flush();
+                $this->addFlash('success', 'notification.contact_success');
+                return $this->redirectToRoute('CONTACT');
+            }
+            return $this->render('default/contact.html.twig', [
+                'form' => $form->createView()
             ]);
         }
     

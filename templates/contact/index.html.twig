@@ -1,0 +1,38 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}{{ 'contact.listing'|trans([],'admin') }} - {{ parent() }}{% endblock %}
+{% block bodytitle %}{{ 'contact.listing'|trans([],'admin') }}{% endblock %}
+
+
+{% block body %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>{{ 'contact.properties.firstname'|trans([],'admin') }}</th>
+                <th>{{ 'contact.properties.lastname'|trans([],'admin') }}</th>
+                <th>{{ 'contact.properties.email'|trans([],'admin') }}</th>
+                <th>{{ 'contact.properties.message'|trans([],'admin') }}</th>
+                <th>{{ 'contact.properties.created_at'|trans([],'admin') }}</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for contact in contacts %}
+            <tr>
+                <td>{{ contact.firstname }}</td>
+                <td>{{ contact.lastname }}</td>
+                <td>{{ contact.email }}</td>
+                <td>{{ contact.message }}</td>
+                <td>{{ contact.createdAt ? contact.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('CONTACT_SHOW', {'id': contact.id}) }}">{{ 'actions.see'|trans([],'admin') }}</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">{{ 'no_records_found'|trans([],'admin') }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

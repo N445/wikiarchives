@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} - {{ 'contact.title'|trans([],'front') }}{% endblock %}
+
+{% block body %}
+    {% include 'includes/banner.html.twig' with {banner_title:'contact.title'|trans([],'front')} %}
+    <div class="container py-4">
+        {{ form_start(form) }}
+        <div class="row g-4">
+            <div class="col-md-6">{{ form_row(form.firstname) }}</div>
+            <div class="col-md-6">{{ form_row(form.lastname) }}</div>
+            <div class="col-md-6">{{ form_row(form.email) }}</div>
+            <div class="col-md-6">{{ form_row(form.message) }}</div>
+        </div>
+        <button type="submit" class="btn btn-wikiarchives-primary mt-4">
+            {{ 'contact.send'|trans([],'front') }}
+        </button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

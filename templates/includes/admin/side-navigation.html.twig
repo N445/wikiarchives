@@ -12,52 +12,63 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                     {{ 'navigation.dashboard'|trans([],'admin') }}
                 </a>
-                <a class="nav-link" href="{{ path('ACTUALITY_ACTUALITY_INDEX') }}">
-                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                    {{ 'navigation.actuality'|trans([],'admin') }}
-                </a>
-                <div class="sb-sidenav-menu-heading">{{ 'navigation.catalog'|trans([],'admin') }}</div>
-                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts"
-                   aria-expanded="false" aria-controls="collapseLayouts">
-                    <div class="sb-nav-link-icon"><i class="fas fa-folder-open"></i></div>
-                    {{ 'navigation.directory.label'|trans([],'admin') }}
-                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                </a>
-                <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
-                     data-bs-parent="#sidenavAccordion">
-                    <nav class="sb-sidenav-menu-nested nav">
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a class="nav-link" href="{{ path('ACTUALITY_ACTUALITY_INDEX') }}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                        {{ 'navigation.actuality'|trans([],'admin') }}
+                    </a>
+                {% endif %}
+
+                {% if is_granted('ROLE_CONTRIBUTOR') %}
+                    <div class="sb-sidenav-menu-heading">{{ 'navigation.catalog'|trans([],'admin') }}</div>
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts"
+                       aria-expanded="false" aria-controls="collapseLayouts">
+                        <div class="sb-nav-link-icon"><i class="fas fa-folder-open"></i></div>
+                        {{ 'navigation.directory.label'|trans([],'admin') }}
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
+                         data-bs-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav">
                         <a class="nav-link" href="{{ path('ADMIN_CATALOG_CATALOG_TREE') }}">{{ 'navigation.directory.tree'|trans([],'admin') }}</a>
                         <a class="nav-link" href="{{ path('ADMIN_CATALOG_CATALOG_BROWSE') }}">{{ 'navigation.directory.browse'|trans([],'admin') }}</a>
                     </nav>
-                </div>
-                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages"
-                   aria-expanded="false" aria-controls="collapsePages">
-                    <div class="sb-nav-link-icon"><i class="fas fa-images"></i></div>
-                    {{ 'navigation.images.label'|trans([],'admin') }}
-                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                </a>
-                <div class="collapse" id="collapsePages" aria-labelledby="headingTwo"
-                     data-bs-parent="#sidenavAccordion">
-                    <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                        <a class="nav-link" href="{{ path('ADMIN_CATALOG_PICTURE_NEW_MULTIPLE') }}">{{ 'navigation.images.add'|trans([],'admin') }}</a>
-{#                        <a class="nav-link" href="layout-sidenav-light.html">Gestion par lot</a>#}
-                        <a class="nav-link" href="{{ path('ADMIN_CATALOG_PICTURE_ORPHELINES') }}">{{ 'navigation.images.orphan'|trans([],'admin') }}</a>
-                    </nav>
-                </div>
-                <a class="nav-link" href="{{ path('ADMIN_CATALOG_PLACE_INDEX') }}">
-                    <div class="sb-nav-link-icon"><i class="fas fa-map-marked-alt"></i></div>
-                    {{ 'navigation.zone'|trans([],'admin') }}
-                </a>
+                    </div>
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages"
+                       aria-expanded="false" aria-controls="collapsePages">
+                        <div class="sb-nav-link-icon"><i class="fas fa-images"></i></div>
+                        {{ 'navigation.images.label'|trans([],'admin') }}
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapsePages" aria-labelledby="headingTwo"
+                         data-bs-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                            <a class="nav-link"
+                               href="{{ path('ADMIN_CATALOG_PICTURE_NEW_MULTIPLE') }}">{{ 'navigation.images.add'|trans([],'admin') }}</a>
+                            {# <a class="nav-link" href="layout-sidenav-light.html">Gestion par lot</a> #}
+                            <a class="nav-link"
+                               href="{{ path('ADMIN_CATALOG_PICTURE_ORPHELINES') }}">{{ 'navigation.images.orphan'|trans([],'admin') }}</a>
+                        </nav>
+                    </div>
+                    <a class="nav-link" href="{{ path('ADMIN_CATALOG_PLACE_INDEX') }}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-map-marked-alt"></i></div>
+                        {{ 'navigation.zone'|trans([],'admin') }}
+                    </a>
+                {% endif %}
                 <div class="sb-sidenav-menu-heading">{{ 'navigation.community.label'|trans([],'admin') }}</div>
-                <a class="nav-link" href="{{ path('ADMIN_USER_INDEX_ADMIN') }}">
-                    <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
-                    {{ 'navigation.community.admin'|trans([],'admin') }}
-                </a>
-                <a class="nav-link" href="{{ path('ADMIN_USER_INDEX') }}">
-                    <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
-                    {{ 'navigation.community.users'|trans([],'admin') }}
-                </a>
-                <a class="nav-link" href="tables.html">
+                {% if is_granted('ROLE_SUPER_ADMIN') %}
+                    <a class="nav-link" href="{{ path('ADMIN_USER_INDEX_ADMIN') }}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
+                        {{ 'navigation.community.admin'|trans([],'admin') }}
+                    </a>
+                {% endif %}
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a class="nav-link" href="{{ path('ADMIN_USER_INDEX') }}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
+                        {{ 'navigation.community.users'|trans([],'admin') }}
+                    </a>
+                {% endif %}
+                <a class="nav-link" href="{{ path('CONTACT_INDEX') }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-envelope"></i></div>
                     {{ 'navigation.community.contact'|trans([],'admin') }}
                 </a>

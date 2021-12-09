@@ -5,13 +5,15 @@ namespace App\Controller\Actuality;
 use App\Entity\Actuality\Actuality;
 use App\Form\Actuality\ActualityType;
 use App\Repository\Actuality\ActualityRepository;
+use App\Service\User\UserRoles;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/actuality/actuality')]
+#[Route('/admin/actuality'), IsGranted(UserRoles::ROLE_ADMIN)]
 class ActualityController extends AbstractController
 {
     #[Route('/', name: 'ACTUALITY_ACTUALITY_INDEX', methods: ['GET'])]

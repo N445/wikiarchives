@@ -7,13 +7,14 @@ use App\Form\UserBackOfficeType;
 use App\Model\Breadcrumb\Breadcrumb;
 use App\Model\Breadcrumb\BreadcrumbLink;
 use App\Repository\UserRepository;
+use App\Service\User\UserRoles;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/admin/user'), IsGranted('ROLE_ADMIN')]
+#[Route('/admin/user'), IsGranted(UserRoles::ROLE_ADMIN)]
 class UserController extends AbstractController
 {
     #[Route('/', name: 'ADMIN_USER_INDEX', methods: ['GET'])]
@@ -29,7 +30,7 @@ class UserController extends AbstractController
         ]);
     }
     
-    #[Route('/admin', name: 'ADMIN_USER_INDEX_ADMIN', methods: ['GET'])]
+    #[Route('/admin', name: 'ADMIN_USER_INDEX_ADMIN', methods: ['GET']),IsGranted(UserRoles::ROLE_SUPER_ADMIN)]
     public function admin(UserRepository $userRepository): Response
     {
         $breadcrumb = new Breadcrumb([

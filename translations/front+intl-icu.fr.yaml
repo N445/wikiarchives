@@ -3,6 +3,10 @@ navbar:
   about: A propos
   legal_mention: Mention légale
   map: Carte
+  contact: Nous contacter
+
+notification:
+  contact_success: Merci pour votre message
 
 actions:
   search_placeholder: Rechercher
@@ -110,6 +114,16 @@ homepage:
 actuality:
   listing: Actualités
   see: Lire
+
+contact :
+  title: Nous contacter
+  send: Envoyer votre message
+  properties :
+    firstname : Votre prénom
+    lastname : Votre nom de famille
+    email : Votre email
+    message : Votre message génial
+    created_at : Envoyé le
 
 legal_mention:
   title: Mentions légale

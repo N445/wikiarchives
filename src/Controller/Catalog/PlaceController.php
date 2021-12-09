@@ -5,12 +5,13 @@ namespace App\Controller\Catalog;
 use App\Entity\Catalog\Place;
 use App\Form\Catalog\PlaceType;
 use App\Repository\Catalog\PlaceRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/admin/catalog/place')]
+#[Route('/admin/catalog/place'), IsGranted('ROLE_CONTRIBUTOR')]
 class PlaceController extends AbstractController
 {
     #[Route('/', name: 'ADMIN_CATALOG_PLACE_INDEX', methods: ['GET'])]

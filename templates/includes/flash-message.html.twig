@@ -2,7 +2,9 @@
     <div class="flash-message-wrapper d-none">
         <div class="container">
             {% for message in messages %}
-                <div class="flash-message" data-type="{{ label }} " data-message="{{ message|raw }}"></div>
+                <div class="flash-message" data-type="{{ label }} "
+                     data-message="{{ message|raw|trans([],'front') }}">
+                </div>
             {% endfor %}
         </div>
     </div>

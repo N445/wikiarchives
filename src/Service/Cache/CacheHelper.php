@@ -10,7 +10,7 @@ use Symfony\Contracts\Cache\ItemInterface;
 
 class CacheHelper
 {
-    public const PREFIX = "12345678910";
+    public const PREFIX = "123";
     
     public const CATALOG_BREADCRUMB_BY_ID = self::PREFIX . '_catalog_by_id_%d';
     public const CATALOG_BY_ID = self::PREFIX . '_catalog_by_id_%d_%s';
@@ -19,8 +19,8 @@ class CacheHelper
     public const CATALOG_COUNT_ALL = self::PREFIX . '_catalog_count_all_%d';
     public const CATALOG_DOWNLOAD = self::PREFIX . '_catalog_download_%d';
     
-    public const PICTURE_BREADCRUMB_BY_ID = self::PREFIX . '_picture_by_id_%d';
-    public const PICTURE_ID = self::PREFIX . '_picture_%d';
+    public const PICTURE_BREADCRUMB_BY_ID = self::PREFIX . '_picture_by_id_%d_%d';
+    public const PICTURE_ID = self::PREFIX . '_picture_%d_%d';
     public const PICTURE_PAGINATION = self::PREFIX . '_picture_pagination_%d_%d_%d';
     public const PICTURE_MAP = self::PREFIX . '_picture_map';
     public const PICTURE_DOWNLOAD = self::PREFIX . '_picture_download_%d_%s';
@@ -104,7 +104,7 @@ class CacheHelper
     public static function setTagsFromPicture(ItemInterface $item, Picture $picture)
     {
         $item->tag(sprintf(self::TAG_PICTURE, $picture->getId()));
-        if ($catalog = $picture->getCatalog()) {
+        foreach ($picture->getCatalogs() as $catalog) {
             self::setTagsFromCatalog($item, $catalog);
         }
     }

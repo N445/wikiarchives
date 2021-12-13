@@ -42,10 +42,9 @@
         private $enabled = true;
 
         /**
-         * @Gedmo\Versioned
-         * @ORM\ManyToOne(targetEntity=Catalog::class, inversedBy="pictures")
+         * @ORM\ManyToMany(targetEntity=Catalog::class, inversedBy="pictures")
          */
-        private $catalog;
+        private $catalogs;
 
         /**
          * @Gedmo\Versioned
@@ -109,6 +108,7 @@
         public function __construct()
         {
             $this->file = new File();
+            $this->catalogs = new ArrayCollection();
             $this->versions = new ArrayCollection();
             $this->tmpVersions = new ArrayCollection();
             $this->validatedVersion = new Version();
@@ -188,15 +188,26 @@
             ];
         }
     
-        public function getCatalog(): ?Catalog
+        /**
+         * @return Collection|Catalog[]
+         */
+        public function getCatalogs(): Collection
         {
-            return $this->catalog;
+            return $this->catalogs;
         }
     
-        public function setCatalog(?Catalog $catalog): self
+        public function addCatalog(Catalog $catalog): self
         {
-            $this->catalog = $catalog;
+            if (!$this->catalogs->contains($catalog)) {
+                $this->catalogs[] = $catalog;
+            }
         
+            return $this;
+        }
+    
+        public function removeCatalog(Catalog $catalog): self
+        {
+            $this->catalogs->removeElement($catalog);
             return $this;
         }
 
@@ -207,9 +218,6 @@
 
         public function getPlaceRecursive(): ?Place
         {
-            if (!$this->place) {
-                return $this->getCatalog() ? $this->getCatalog()->getPlaceRecursive() : null;
-            }
             return $this->place;
         }
 

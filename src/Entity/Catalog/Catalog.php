@@ -92,7 +92,7 @@
         private $children;
 
         /**
-         * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="catalog", cascade={"persist", "remove"})
+         * @ORM\ManyToMany(targetEntity=Picture::class, mappedBy="catalogs", cascade={"persist", "remove"})
          */
         private $pictures;
 
@@ -308,7 +308,7 @@
         {
             if (!$this->pictures->contains($picture)) {
                 $this->pictures[] = $picture;
-                $picture->setCatalog($this);
+                $picture->addCatalog($this);
             }
 
             return $this;
@@ -321,12 +321,8 @@
         public function removePicture(Picture $picture): self
         {
             if ($this->pictures->removeElement($picture)) {
-                // set the owning side to null (unless already changed)
-                if ($picture->getCatalog() === $this) {
-                    $picture->setCatalog(null);
-                }
+                $picture->removeCatalog($this);
             }
-
             return $this;
         }
     

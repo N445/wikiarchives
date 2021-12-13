@@ -1,8 +1,10 @@
+{% import 'macro/catalog/_breadcrumb.html.twig' as breadCrumbMacro %}
+
 <nav class="mb-5 py-2">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-8">
-                {% include 'includes/catalog/_breadcrumb.html.twig' with {object:catalog} %}
+                {{ breadCrumbMacro.breadcrumb(getBreadcrumbCatalog(catalog)) }}
             </div>
             <div class="col-md-4">
                 <div class="d-flex align-items-center justify-content-end">

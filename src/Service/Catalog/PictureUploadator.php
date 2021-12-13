@@ -63,13 +63,17 @@
     
         public function uploadPicturefile(Catalog $catalog, UploadedFile $uploadedFile, bool $isFlush = true)
         {
-            $picture = (new Picture())->setCatalog($catalog);
+            $picture = new Picture();
             $picture->getValidatedVersion()->setStatus(PictureVersionHelper::STATUS_ACCEPTED);
             $file = $picture->getFile()->setImageFile($uploadedFile);
             $picture->setFile($file);
         
             PictureExifPopulator::populate($picture);
             PictureContentPopulator::setContent($picture);
+    
+            $catalog->addPicture($picture);
+            
+            $this->em->persist($catalog);
             $this->em->persist($picture);
             if ($isFlush) {
                 $this->em->flush();

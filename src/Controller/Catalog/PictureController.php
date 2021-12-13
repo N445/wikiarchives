@@ -127,9 +127,6 @@ class PictureController extends AbstractController
         }
         $breadcrumb = new Breadcrumb([
             new BreadcrumbLink('Dashboard', $this->generateUrl('ADMIN')),
-            new BreadcrumbLink($picture->getCatalog()->getName(), $this->generateUrl('ADMIN_CATALOG_CATALOG_BROWSE', [
-                'id' => $picture->getCatalog()->getId()
-            ])),
             new BreadcrumbLink($picture->getName(), $this->generateUrl('ADMIN_CATALOG_PICTURE_SHOW', [
                 'id' => $picture->getId()
             ])),
@@ -161,9 +158,6 @@ class PictureController extends AbstractController
         }
         $breadcrumb = new Breadcrumb([
             new BreadcrumbLink('Dashboard', $this->generateUrl('ADMIN')),
-            $picture->getCatalog() ? new BreadcrumbLink($picture->getCatalog()->getName(), $this->generateUrl('ADMIN_CATALOG_CATALOG_BROWSE', [
-                'id' => $picture->getCatalog()->getId()
-            ])) : null,
             new BreadcrumbLink(sprintf('Edition de "%s"', $picture->getName()), $this->generateUrl('ADMIN_CATALOG_PICTURE_SHOW', [
                 'id' => $picture->getId()
             ])),
@@ -191,9 +185,7 @@ class PictureController extends AbstractController
             $pictureRemover->remove($picture);
         }
     
-        return $this->redirectToRoute('ADMIN_CATALOG_CATALOG_TREE', [
-            'id' => $picture->getCatalog()->getId()
-        ], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('ADMIN_CATALOG_CATALOG_TREE',[], Response::HTTP_SEE_OTHER);
         return $this->redirectToRoute('ADMIN_CATALOG_PICTURE_INDEX', [], Response::HTTP_SEE_OTHER);
     }
 }

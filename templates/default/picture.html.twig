@@ -1,3 +1,5 @@
+{% import 'macro/catalog/_breadcrumb.html.twig' as breadCrumbMacro %}
+
 {% extends 'base.html.twig' %}
 
 {% block title %}{{ parent() }} - {{ picture.name }}{% endblock %}
@@ -18,7 +20,7 @@
                         {% for catalogPicture in catalog.pictures %}
                             <div class="item{{ catalogPicture.id == picture.id?' current-picture':'' }}">
                                 <div class="catalog-navigation-image rounded">
-                                    <a href="{{ path('PICTURE', {'catalogId':picture.catalog.id,'id': catalogPicture.id}) }}">
+                                    <a href="{{ path('PICTURE', {'catalogId':catalog.id,'id': catalogPicture.id}) }}">
                                         <img data-lazy="{{ asset(catalogPicture.file.imageName|imagine_filter('picture_card_listing')) }}"
                                              alt="{{ catalogPicture.name }}">
                                     </a>
@@ -102,6 +104,16 @@
                                 </td>
                             </tr>
                         {% endif %}
+                        {% if picture.catalogs|length > 1 %}
+                            <tr class="align-middle">
+                                <th>{{ 'picture.properties.catalog'|trans([],'admin') }}</th>
+                                <td class="text-white">
+                                    {% for catalogInPicture in picture.catalogs  %}
+                                        {{ breadCrumbMacro.breadcrumb(getBreadcrumbPicture(catalogInPicture)) }}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                        {% endif %}
                         </tbody>
                     </table>
                     {% if picture.gps %}
@@ -111,6 +123,7 @@
                         >
                         </div>
                     {% endif %}
+
                     {% include 'includes/catalog/_picture-exif.html.twig' %}
                 </div>
             </div>

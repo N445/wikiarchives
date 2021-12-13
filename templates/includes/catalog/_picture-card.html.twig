@@ -19,7 +19,7 @@
 {#    </div>#}
 {#</div>#}
 
-<a href="{{ path('PICTURE', {'catalogId':picture.catalog.id,'id': picture.id}) }}" class="picture-card card shadow-sm h-100" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ picture.name }}">
+<a href="{{ path('PICTURE', {'catalogId':catalog.id,'id': picture.id}) }}" class="picture-card card shadow-sm h-100" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ picture.name }}">
     <div class="image">
         <img src="{{ picture.file.imageName|imagine_filter('picture_card_listing') }}"
              class="card-img-top rounded"

@@ -31,7 +31,10 @@ class CatalogSubscriber implements EventSubscriberInterface
         }
         $catalog = $object;
         if($object instanceof Picture){
-            $catalog = $object->getCatalog();
+            foreach ($object->getCatalogs() as $catalog) {
+                $this->clearCatalogCache($catalog);
+            }
+            return;
         }
         $this->clearCatalogCache($catalog);
     }
@@ -44,7 +47,10 @@ class CatalogSubscriber implements EventSubscriberInterface
         }
         $catalog = $object;
         if($object instanceof Picture){
-            $catalog = $object->getCatalog();
+            foreach ($object->getCatalogs() as $catalog) {
+                $this->clearCatalogCache($catalog);
+            }
+            return;
         }
         $this->clearCatalogCache($catalog);
     }
@@ -56,7 +62,6 @@ class CatalogSubscriber implements EventSubscriberInterface
             return;
         }
         if($object instanceof Picture){
-//            $catalog = $object->getCatalog();
             $this->clearPictureCache($object);
             return;
         }

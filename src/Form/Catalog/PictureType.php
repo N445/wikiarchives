@@ -48,9 +48,10 @@ class PictureType extends AbstractType
                 'label' => false,
                 'data' => $builder->getData()->getfile()
             ])
-            ->add('catalog', EntityType::class, [
-                'label'=>'picture.properties.catalog',
+            ->add('catalogs', EntityType::class, [
+                'label' => 'picture.properties.catalog',
                 'class' => Catalog::class,
+                'multiple' => true,
                 'attr' => [
                     'class' => 'select2'
                 ]

@@ -47,7 +47,7 @@
             }
 
             if ($catalog) {
-                $qb->andWhere('p.catalog = :catalog')
+                $qb->andWhere('p.catalogs IN (:catalog)')
                    ->setParameter('catalog', $catalog)
                 ;
             }
@@ -113,7 +113,7 @@
         public function byCatalogPaginatedFront(Catalog $catalog, int $page, int $nbPerPage = 10): PaginationInterface
         {
             $query = $this->getBaseFrontQuery()
-                          ->andWhere('p.catalog = :catalog')
+                          ->andWhere('catalogs IN (:catalog)')
                           ->setParameter('catalog', $catalog)
                           ->getQuery();
         
@@ -161,8 +161,8 @@
         public function getBaseAdminQuery()
         {
             return $this->createQueryBuilder('p')
-                        ->addSelect('catalog', 'pictures_versions')
-                        ->leftJoin('p.catalog', 'catalog')
+                        ->addSelect('catalogs', 'pictures_versions')
+                        ->leftJoin('p.catalogs', 'catalogs')
                         ->leftJoin('p.versions', 'pictures_versions')
             ;
         }
@@ -173,9 +173,9 @@
         public function getBaseFrontQuery()
         {
             return $this->createQueryBuilder('p')
-                        ->addSelect('catalog', 'catalog_parent')
-                        ->leftJoin('p.catalog', 'catalog')
-                        ->leftJoin('catalog.parent', 'catalog_parent')
+                        ->addSelect('catalogs', 'catalog_parent')
+                        ->leftJoin('p.catalogs', 'catalogs')
+                        ->leftJoin('catalogs.parent', 'catalog_parent')
                         ->andWhere('p.enabled = true')
             ;
         }

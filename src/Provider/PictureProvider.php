@@ -57,21 +57,23 @@
          * @return Picture|null
          * @throws InvalidArgumentException
          */
-        public function byId(int $id): ?Picture
+        public function byId(Catalog $catalog, int $id): ?Picture
         {
-            return $this->cache->get(sprintf(CacheHelper::PICTURE_ID, $id), function (ItemInterface $item) use ($id) {
+            return $this->cache->get(sprintf(CacheHelper::PICTURE_ID, $catalog->getId(), $id), function (ItemInterface $item) use ($id, $catalog) {
                 $item->expiresAfter(3600);
-    
-    
+        
+        
                 CacheHelper::setTagsFromPictureId($item, $id);
-    
+        
                 if (!$picture = $this->pictureRepository->byIdFront($id)) {
                     return null;
                 }
-                
-                CacheHelper::setTagsFromCatalogWithParent($item, $picture->getCatalog());
-                
-                if (!PictureHelper::checkEnabledRecusively($picture)) {
+        
+                foreach ($picture->getCatalogs() as $catalog) {
+                    CacheHelper::setTagsFromCatalogWithParent($item, $catalog);
+                }
+        
+                if (!PictureHelper::checkEnabledRecusively($picture, $catalog)) {
                     return null;
                 }
                 return $picture;
@@ -83,14 +85,14 @@
          * @return Breadcrumb
          * @throws InvalidArgumentException
          */
-        public function getBreadCrumb(Picture $picture): Breadcrumb
+        public function getBreadCrumb(Catalog $catalog, Picture $picture): Breadcrumb
         {
-            return $this->cache->get(sprintf(CacheHelper::PICTURE_BREADCRUMB_BY_ID, $picture->getId()), function (ItemInterface $item) use ($picture) {
+            return $this->cache->get(sprintf(CacheHelper::PICTURE_BREADCRUMB_BY_ID, $catalog->getId(), $picture->getId()), function (ItemInterface $item) use ($picture, $catalog) {
                 $item->expiresAfter(3600);
-    
-                CacheHelper::setTagsFromCatalogWithParent($item, $picture->getCatalog());
+            
+                CacheHelper::setTagsFromCatalogWithParent($item, $catalog);
                 CacheHelper::setTagsFromPicture($item, $picture);
-                return $this->breadcrumbCreator->getPictureBreadcrumb($picture);
+                return $this->breadcrumbCreator->getPictureBreadcrumb($catalog, $picture);
             });
         }
     
@@ -123,9 +125,7 @@
 //                $item->expiresAfter(3600);
             
                 $mapsPoints = [];
-                $catalogs = [];
                 foreach ($this->pictureRepository->getGpsPointsFront() as $picture) {
-                    $catalogs[$picture->getCatalog()->getId()] = $picture->getCatalog();
                 
                     if (!$gps = $picture->getGps()) {
                         if(!$place = $picture->getPlace()){

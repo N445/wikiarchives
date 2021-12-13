@@ -73,8 +73,7 @@ class PicturesMassEditHelper
     {
         $picture->setEnabled($picturesMassEdit->isEnabled())
                 ->setIsEditedByWikiarchives($picturesMassEdit->isEditedByWikiarchives())
-                ->setCatalog($picturesMassEdit->getNewCatalog() ?: $picture->getCatalog())
-                ->setPlace($picturesMassEdit->getPlace() ?: $picture->getPlace())
+              ->setPlace($picturesMassEdit->getPlace() ?: $picture->getPlace())
                 ->getValidatedVersion()
                 ->setAuthor($picturesMassEdit->getAuthor() ?: $picture->getValidatedVersion()->getAuthor())
                 ->setCreationdate($picturesMassEdit->getCreationdate() ?: $picture->getValidatedVersion()->getCreationdate())

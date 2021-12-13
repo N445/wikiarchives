@@ -1,8 +1,10 @@
+{% import 'macro/catalog/_breadcrumb.html.twig' as breadCrumbMacro %}
+
 <nav class="picture-status-bar mb-5 py-2">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-9">
-                {% include 'includes/catalog/_breadcrumb.html.twig' with {object:picture} %}
+                {{ breadCrumbMacro.breadcrumb(getBreadcrumbPicture(catalog,picture)) }}
             </div>
             <div class="col-md-3">
                 <div class="d-flex align-items-center justify-content-end">
@@ -17,27 +19,27 @@
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
                                 <li>
                                     <a target="_blank" class="dropdown-item"
-                                       href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'square'}) }}">
+                                       href="{{ path('PICTURE_DOWNLOAD',{'catalogId':catalog.id,'id':picture.id,'size':'square'}) }}">
                                         {{ 'actions.download_square'|trans([],'front') }}
                                     </a>
                                     <a target="_blank" class="dropdown-item"
-                                       href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'sm'}) }}">
+                                       href="{{ path('PICTURE_DOWNLOAD',{'catalogId':catalog.id,'id':picture.id,'size':'sm'}) }}">
                                         {{ 'actions.download_sm'|trans([],'front') }}
                                     </a>
                                     <a target="_blank" class="dropdown-item"
-                                       href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'md'}) }}">
+                                       href="{{ path('PICTURE_DOWNLOAD',{'catalogId':catalog.id,'id':picture.id,'size':'md'}) }}">
                                         {{ 'actions.download_md'|trans([],'front') }}
                                     </a>
                                     <a target="_blank" class="dropdown-item"
-                                       href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'lg'}) }}">
+                                       href="{{ path('PICTURE_DOWNLOAD',{'catalogId':catalog.id,'id':picture.id,'size':'lg'}) }}">
                                         {{ 'actions.download_lg'|trans([],'front') }}
                                     </a>
                                     <a target="_blank" class="dropdown-item"
-                                       href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'vlg'}) }}">
+                                       href="{{ path('PICTURE_DOWNLOAD',{'catalogId':catalog.id,'id':picture.id,'size':'vlg'}) }}">
                                         {{ 'actions.download_vlg'|trans([],'front') }}
                                     </a>
                                     <a target="_blank" class="dropdown-item"
-                                       href="{{ path('PICTURE_DOWNLOAD',{'catalogId':picture.catalog.id,'id':picture.id,'size':'original'}) }}">
+                                       href="{{ path('PICTURE_DOWNLOAD',{'catalogId':catalog.id,'id':picture.id,'size':'original'}) }}">
                                         {{ 'actions.download_original'|trans([],'front') }}
                                     </a>
                                 </li>
@@ -47,7 +49,7 @@
                     {% if is_granted('PICTURE_VERSION_CREATE',app.user) %}
                         <div>
                             <a class="btn btn-wikiarchives-primary"
-                               href="{{ path('PICTURE_CHANGE', {'catalogId': picture.catalog.id, 'id': picture.id}) }}">
+                               href="{{ path('PICTURE_CHANGE', {'catalogId': catalog.id, 'id': picture.id}) }}">
                                 {{ 'actions.propose_version'|trans([],'front') }}
                             </a>
                         </div>

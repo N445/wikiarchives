@@ -33,17 +33,16 @@ class PictureController extends AbstractController
     #[Route('/{id}', name: 'PICTURE')]
     public function picture(int $catalogId, int $id): Response
     {
-        if (!$picture = $this->pictureProvider->byId($id)) {
+        if (!$catalog = $this->catalogProvider->byId($catalogId, true)) {
             return $this->redirectToRoute('HOMEPAGE');
         }
-        if (!$catalog = $this->catalogProvider->byId($picture->getCatalog()->getId(), true)) {
+        if (!$picture = $this->pictureProvider->byId($catalog, $id)) {
             return $this->redirectToRoute('HOMEPAGE');
         }
         if (!CatalogHelper::checkEnabledRecusively($catalog)) {
             return $this->redirectToRoute('HOMEPAGE');
         }
-    
-    
+        
         return $this->render('default/picture.html.twig', [
             'picture' => $picture,
             'catalog' => $catalog,
@@ -53,7 +52,10 @@ class PictureController extends AbstractController
     #[Route('/{id}/download/{size}', name: 'PICTURE_DOWNLOAD')]
     public function pictureDownload(int $catalogId, int $id, ?string $size, Request $request, PictureDownloadProvider $pictureDownloadProvider)
     {
-        if (!$picture = $this->pictureProvider->byId($id)) {
+        if (!$catalog = $this->catalogProvider->byId($catalogId, true)) {
+            return $this->redirectToRoute('HOMEPAGE');
+        }
+        if (!$picture = $this->pictureProvider->byId($catalog, $id)) {
             return $this->redirectToRoute('HOMEPAGE');
         }
 //            return $this->redirect($pictureDownloadProvider->getResizedPicture($picture, $size));
@@ -75,19 +77,22 @@ class PictureController extends AbstractController
             $this->addFlash('info', 'You must be connected to propose a new version');
             return $this->redirectToRoute('APP_LOGIN');
         }
-        
-        if (!$picture = $this->pictureProvider->byId($id)) {
+        if (!$catalog = $this->catalogProvider->byId($catalogId, false)) {
             return $this->redirectToRoute('HOMEPAGE');
         }
-        
+        if (!$picture = $this->pictureProvider->byId($catalog, $id)) {
+            return $this->redirectToRoute('HOMEPAGE');
+        }
+    
+    
         if (!$this->isGranted(PictureVersionVoter::PICTURE_VERSION_CREATE, $this->getUser())) {
             return $this->redirectToRoute('PICTURE', [
-                'catalogId' => $picture->getCatalog()->getId(),
+                'catalogId' => $catalog,
                 'id' => $picture->getId(),
             ]);
         }
-        
-        
+    
+    
         $data = $versionProposator->getNewVersion($picture);
         $form = $data['form'];
         $newVersion = $data['newVersion'];
@@ -98,7 +103,7 @@ class PictureController extends AbstractController
             $versionProposator->proposeVersion($newVersion, $picture);
             $this->addFlash('success', 'Thanks for your participation');
             return $this->redirectToRoute('PICTURE', [
-                'catalogId' => $picture->getCatalog()->getId(),
+                'catalogId' => $catalog->getId(),
                 'id' => $picture->getId(),
             ]);
         }

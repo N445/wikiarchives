@@ -87,17 +87,17 @@
             });
         }
 
-        public function getResizedPicture(Picture $picture, ?string $size = self::ORIGINAL)
+        public function getResizedPicture(Catalog $catalog, Picture $picture, ?string $size = self::ORIGINAL)
         {
             $cache = new TagAwareAdapter(
                 new FilesystemAdapter(),
             );
     
-            return $cache->get(sprintf(CacheHelper::PICTURE_DOWNLOAD, $picture->getId(), $size), function (ItemInterface $item) use ($picture, $size) {
+            return $cache->get(sprintf(CacheHelper::PICTURE_DOWNLOAD, $picture->getId(), $size), function (ItemInterface $item) use ($picture, $size, $catalog) {
                 $item->expiresAfter(3600);
         
                 CacheHelper::setTagsFromPicture($item, $picture);
-                if (!PictureHelper::checkEnabledRecusively($picture)) {
+                if (!PictureHelper::checkEnabledRecusively($picture, $catalog)) {
                     return null;
                 }
                 $imageName = $picture->getFile()->getImageName();

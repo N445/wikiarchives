@@ -38,7 +38,6 @@ class TwigFilterExtension extends AbstractExtension
         return [
             new TwigFilter('catalogTotalPictures', [$this, 'catalogTotalPictures']),
             new TwigFilter('humanFilesize', [$this, 'humanFilesize']),
-            new TwigFilter('getBreadcrumb', [$this, 'getBreadcrumb']),
             new TwigFilter('truncate', [$this, 'twig_truncate_filter'], ['needs_environment' => true]),
             new TwigFilter('yesNoHtml', [$this, 'yesNoHtml']),
             new TwigFilter('getLocalName', [Locales::class, 'getName']),
@@ -58,28 +57,7 @@ class TwigFilterExtension extends AbstractExtension
 
         return sprintf("%.{$dec}f", $bytes / pow(1024, $factor)) . @$size[$factor];
     }
-
-    /**
-     * @param object $object
-     * @return Breadcrumb|null
-     * @throws \Exception
-     */
-    public function getBreadcrumb(object $object)
-    {
-        if (!in_array(ClassUtils::getClass($object), [Catalog::class, Picture::class])) {
-            throw new \Exception(sprintf('La class "%s" n\'est pas valide', ClassUtils::getClass($object)));
-        }
     
-        if (Catalog::class === ClassUtils::getClass($object)) {
-            return $this->catalogProvider->getBreadCrumb($object);
-        }
-        if (Picture::class === ClassUtils::getClass($object)) {
-            return $this->pictureProvider->getBreadCrumb($object);
-        }
-        return null;
-    }
-
-
     public function twig_truncate_filter(Environment $env, $value, $length = 30, $preserve = false, $separator = '...')
     {
         if (mb_strlen($value, $env->getCharset()) > $length) {

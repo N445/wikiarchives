@@ -154,7 +154,7 @@
                         ->getOneOrNullResult()
             ;
         }
-
+    
         /**
          * @return QueryBuilder
          */

@@ -25,4 +25,17 @@ class PictureRemover
         $this->em->remove($picture);
         $this->em->flush();
     }
+
+    public function removeMultiple(array $pictures)
+    {
+        foreach ($pictures as $picture) {
+            $picture->setValidatedVersion(null);
+            foreach ($picture->getVersions() as $version) {
+                $this->em->remove($version);
+            }
+            $this->em->flush();
+            $this->em->remove($picture);
+        }
+        $this->em->flush();
+    }
 }

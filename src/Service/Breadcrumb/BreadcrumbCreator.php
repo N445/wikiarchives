@@ -6,17 +6,23 @@ use App\Entity\Catalog\Catalog;
 use App\Entity\Catalog\Picture;
 use App\Model\Breadcrumb\Breadcrumb;
 use App\Model\Breadcrumb\BreadcrumbLink;
+use App\Repository\Catalog\CatalogTreeRepository;
 use Symfony\Component\Routing\RouterInterface;
 
 class BreadcrumbCreator
 {
     private RouterInterface $router;
-
-    public function __construct(RouterInterface $router)
+    private CatalogTreeRepository $catalogTreeRepository;
+    
+    public function __construct(
+        RouterInterface       $router,
+        CatalogTreeRepository $catalogTreeRepository
+    )
     {
         $this->router = $router;
+        $this->catalogTreeRepository = $catalogTreeRepository;
     }
-
+    
     /**
      * @param Catalog $catalog
      * @return Breadcrumb
@@ -28,12 +34,14 @@ class BreadcrumbCreator
             $this->addHome($breadcrumb);
             return $breadcrumb;
         }
-        $breadcrumb->addLink(new BreadcrumbLink($catalog->getName()));
-
-        if ($parent = $catalog->getParent()) {
-            $this->addCatalogBreadcrumbLink($breadcrumb, $parent);
+    
+        $path = array_reverse($this->catalogTreeRepository->getPath($catalog));
+        foreach ($path as $item) {
+            if (Catalog::ROOT === $item->getName()) {
+                continue;
+            }
+            $breadcrumb->addLink(new BreadcrumbLink($item->getName(), $this->router->generate('CATALOG', ['id' => $item->getId()])));
         }
-
         $this->addHome($breadcrumb);
 
         return $breadcrumb;
@@ -48,28 +56,17 @@ class BreadcrumbCreator
     {
         $breadcrumb = (new Breadcrumb())->addLink(new BreadcrumbLink($picture->getName()));
     
-        $this->addCatalogBreadcrumbLink($breadcrumb, $catalog);
+        $path = array_reverse($this->catalogTreeRepository->getPath($catalog));
+        foreach ($path as $item) {
+            if (Catalog::ROOT === $item->getName()) {
+                continue;
+            }
+            $breadcrumb->addLink(new BreadcrumbLink($item->getName(), $this->router->generate('CATALOG', ['id' => $item->getId()])));
+        }
+        
         $this->addHome($breadcrumb);
     
-        dump($breadcrumb);
         return $breadcrumb;
-    }
-    
-    /**
-     * @param Breadcrumb $breadcrumb
-     * @param Catalog $catalog
-     */
-    private function addCatalogBreadcrumbLink(Breadcrumb $breadcrumb, Catalog $catalog)
-    {
-        if (Catalog::ROOT === $catalog->getName()) {
-            return;
-        }
-    
-        dump($catalog);
-        $breadcrumb->addLink(new BreadcrumbLink($catalog->getName(), $this->router->generate('CATALOG', ['id' => $catalog->getId()])));
-        if ($parent = $catalog->getParent()) {
-            $this->addCatalogBreadcrumbLink($breadcrumb, $parent);
-        }
     }
     
     /**

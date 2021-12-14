@@ -11,6 +11,7 @@
             <li><a class="dropdown-item" href="{{ path('ADMIN_CATALOG_EDIT_MULTIPLE', {'id': catalog.id}) }}">{{ 'catalog.actions.edit_pictures'|trans([],'admin') }}</a></li>
             <li><a class="dropdown-item" href="{{ path('ADMIN_CATALOG_NEW_MULTIPLE', {'id': catalog.id}) }}">{{ 'catalog.actions.add_pictures'|trans([],'admin') }}</a></li>
             <li><a class="dropdown-item" href="{{ path('ADMIN_CATALOG_CATALOG_EDIT', {'id': catalog.id}) }}">{{ 'catalog.actions.edit'|trans([],'admin') }}</a></li>
+            <li><a class="dropdown-item" href="{{ path('ADMIN_CATALOG_DOUBLON', {'id': catalog.id}) }}">{{ 'catalog.actions.doublon'|trans([],'admin') }}</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="{{ path('CATALOG', {'id': catalog.id}) }}">{{ 'catalog.actions.see_front'|trans([],'admin') }}</a></li>
         </ul>

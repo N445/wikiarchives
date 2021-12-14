@@ -153,12 +153,11 @@
         public function getBaseFrontQuery(bool $isFull = false)
         {
             $qb = $this->createQueryBuilder('c')
-                       ->addSelect('children', 'children_pictures', 'pictures', 'illustration')
+                       ->addSelect('children', 'children_pictures', 'pictures')
                        ->andWhere('c.enabled = true')
                        ->leftJoin('c.children', 'children', Join::WITH, 'children.enabled = true')
                        ->leftJoin('children.pictures', 'children_pictures', Join::WITH, 'children_pictures.enabled = true')
                        ->leftJoin('c.pictures', 'pictures', Join::WITH, 'pictures.enabled = true')
-                       ->leftJoin('c.illustration', 'illustration')
                        ->addOrderBy('c.lft', 'ASC')
                        ->addOrderBy('children.lft', 'ASC')
             ;

@@ -75,6 +75,7 @@ catalog:
     create: Créer catalogue
     see_front: Voir en front
     add_catalog_in: Ajouter un catalogue dans
+    doublon: Doublon
   form:
     edit:
       recursive_zone: Zone recursif

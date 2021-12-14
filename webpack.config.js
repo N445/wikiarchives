@@ -69,6 +69,8 @@ Encore
     .addEntry('pictues-mass-edit-js', './assets/admin/catalog/pictues-mass-edit.js')
     .addStyleEntry('pictues-mass-edit', './assets/admin/catalog/pictues-mass-edit.scss')
 
+    .addEntry('pictues-duplicate-remover-js', './assets/admin/catalog/pictues-duplicate-remover.js')
+
     // Admin Datatable
     .addEntry('admin-catalog-datatable-js', './assets/admin/catalog/catalog-datatable.js')
     .addStyleEntry('admin-catalog-datatable', './assets/admin/catalog/catalog-datatable.scss')

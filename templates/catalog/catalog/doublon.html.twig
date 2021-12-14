@@ -1,0 +1,65 @@
+{% import 'macro/admin/_catalog-actions.html.twig' as catalogMacro %}
+
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}{{ 'catalog.form.mass_edit.label'|trans([],'admin') }} - {{ parent() }}{% endblock %}
+{% block bodytitle %}{{ 'catalog.form.mass_edit.label'|trans([],'admin') }}{% endblock %}
+{% block objecttitle %}{{ catalog.name }}{% endblock %}
+
+{% block body %}
+    {% if 'root' != catalog.name %}
+        <div>
+            {{ catalogMacro.catalogActionsButtons(catalog) }}
+            {% if catalog.illustration %}
+                <br>
+                <img src="{{ vich_uploader_asset(catalog.illustration.file) }}"
+                     alt="{{ catalog.name }}" class="img-fluid rounded mt-3" width="200">
+            {% endif %}
+        </div>
+    {% endif %}
+
+
+    <div class="row">
+        <div class="col-md-6">
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button type="submit" class="btn btn-primary">
+                Nettoyer
+            </button>
+            {{ form_end(form) }}
+        </div>
+        <div class="col-md-6">
+            {% for key,doublon in doublons %}
+                <div class="mb-3">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input duplicate-input" type="checkbox" role="switch" id="{{ key }}" value="{{ key }}">
+                        <label class="form-check-label" for="{{ key }}">{{ doublon|first.file.imageOriginalName }}</label>
+                    </div>
+                    <div class="row g-3">
+                        {% for picture in doublon %}
+                            <div class="picture-card-col col-md-4">
+                                <div id="{{ picture.id }}" class="card h-100 picture-card">
+                                    <a href="{{ vich_uploader_asset(picture.file) }}"
+                                       data-fancybox="gallery{{ key }}">
+                                        <img src="{{ picture.file.imageName|imagine_filter('picture_admin_listing') }}"
+                                             alt="{{ picture.file.imageOriginalName }}"
+                                             class="card-img-top" loading="lazy">
+                                    </a>
+                                    <div class="card-body">
+                                        <div class="d-flex flex-column justify-content-between h-100">
+                                            <p class="card-text">{{ picture.name }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('pictues-duplicate-remover-js') }}
+{% endblock %}

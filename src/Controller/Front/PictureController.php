@@ -42,7 +42,7 @@ class PictureController extends AbstractController
         if (!CatalogHelper::checkEnabledRecusively($catalog)) {
             return $this->redirectToRoute('HOMEPAGE');
         }
-        
+        dump($picture);
         return $this->render('default/picture.html.twig', [
             'picture' => $picture,
             'catalog' => $catalog,

@@ -109,7 +109,8 @@
                                 <th>{{ 'picture.properties.catalog'|trans([],'admin') }}</th>
                                 <td class="text-white">
                                     {% for catalogInPicture in picture.catalogs  %}
-                                        {{ breadCrumbMacro.breadcrumb(getBreadcrumbPicture(catalogInPicture)) }}
+                                        {{ breadCrumbMacro.breadcrumb(getBreadcrumbPicture(catalogInPicture,picture)) }}
+                                        <hr>
                                     {% endfor %}
                                 </td>
                             </tr>

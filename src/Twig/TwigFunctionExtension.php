@@ -65,6 +65,7 @@ class TwigFunctionExtension extends AbstractExtension
      */
     public function getBreadcrumbPicture(Catalog $catalog, Picture $picture)
     {
+        dump($catalog);
         return $this->pictureProvider->getBreadCrumb($catalog, $picture);
     }
 }

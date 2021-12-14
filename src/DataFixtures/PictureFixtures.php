@@ -51,24 +51,26 @@
                             $this->faker->numberBetween(1000, 5000),
                         ]
                     );
-
-
+    
+    
                 $picture = (new Picture())
-//                    ->setEnabled($this->faker->boolean())
                     ->setEnabled(true)
                     ->setLicense($this->faker->randomElement(PictureLicenseHelper::getLicensesChoices()))
                     ->setIsEditedByWikiarchives($this->faker->boolean(20))
-                    ->setCatalog($this->getReference(sprintf(CatalogFixtures::REFERENCE, rand(1, CatalogFixtures::LOOP))))
                     ->setFile($file)
                     ->setCreatedBy($this->getReference(sprintf(UserFixtures::REFERENCE, rand(1, UserFixtures::LOOP))))
                     ->setCreatedAt($this->faker->dateTimeBetween('-10 month', 'now'));
+                
+                foreach (range(1, 3) as $i) {
+                    $picture->addCatalog($this->getReference(sprintf(CatalogFixtures::REFERENCE, rand(1, CatalogFixtures::LOOP))));
+                }
     
                 if ($this->faker->boolean()) {
                     $picture->setUpdatedBy($this->getReference(sprintf(UserFixtures::REFERENCE, rand(1, UserFixtures::LOOP))))
                             ->setUpdatedAt($this->faker->dateTimeBetween('-10 month', 'now'))
                     ;
                 }
-                
+    
                 $picture->removeVersion($picture->getValidatedVersion());
     
                 $versions = $this->getVersions();

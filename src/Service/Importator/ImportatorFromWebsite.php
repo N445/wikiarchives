@@ -216,11 +216,12 @@ class ImportatorFromWebsite
 
 //                PictureExifPopulator::populate($newPicture);
 //                PictureContentPopulator::setContent($newPicture);
-        
-                if ($parentId = $raw_categories[0]['id'] ?? null) {
-                    $parent = $this->catalogs[$parentId];
-                    $newPicture->setCatalog($parent);
-                    $this->em->persist($parent);
+    
+                foreach ($raw_categories as $raw_category) {
+                    if ($parent = $this->catalogs[$raw_category['id']]) {
+                        $newPicture->addCatalog($parent);
+                        $this->em->persist($parent);
+                    }
                 }
                 $this->pictures[$newPicture->getPiwigoId()] = $newPicture;
         

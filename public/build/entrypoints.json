@@ -3,7 +3,7 @@
     "globalsjs": {
       "js": [
         "/build/runtime.js",
-        "/build/vendors-node_modules_core-js_internals_array-iteration_js-node_modules_core-js_internals_export_js.js",
+        "/build/vendors-node_modules_core-js_internals_export_js.js",
         "/build/vendors-node_modules_bootstrap_dist_js_bootstrap_esm_js-node_modules_core-js_modules_es_array-88fc80.js",
         "/build/globalsjs.js"
       ]
@@ -38,7 +38,8 @@
       "js": [
         "/build/runtime.js",
         "/build/vendors-node_modules_jquery_dist_jquery_js.js",
-        "/build/vendors-node_modules_core-js_internals_array-iteration_js-node_modules_core-js_internals_export_js.js",
+        "/build/vendors-node_modules_core-js_internals_export_js.js",
+        "/build/vendors-node_modules_core-js_internals_add-to-unscopables_js-node_modules_core-js_internals_a-464164.js",
         "/build/vendors-node_modules_core-js_modules_es_array_find_js-node_modules_noty_lib_noty_js.js",
         "/build/mainjs.js"
       ]
@@ -47,7 +48,7 @@
       "js": [
         "/build/runtime.js",
         "/build/vendors-node_modules_jquery_dist_jquery_js.js",
-        "/build/vendors-node_modules_core-js_internals_array-iteration_js-node_modules_core-js_internals_export_js.js",
+        "/build/vendors-node_modules_core-js_internals_export_js.js",
         "/build/vendors-node_modules_core-js_modules_es_array_map_js-node_modules_leaflet_dist_leaflet-src_js-e0c243.js",
         "/build/vendors-node_modules_leaflet_markercluster_dist_leaflet_markercluster-src_js.js",
         "/build/map-multiple-js.js"
@@ -57,7 +58,7 @@
       "js": [
         "/build/runtime.js",
         "/build/vendors-node_modules_jquery_dist_jquery_js.js",
-        "/build/vendors-node_modules_core-js_internals_array-iteration_js-node_modules_core-js_internals_export_js.js",
+        "/build/vendors-node_modules_core-js_internals_export_js.js",
         "/build/vendors-node_modules_core-js_modules_es_array_map_js-node_modules_leaflet_dist_leaflet-src_js-e0c243.js",
         "/build/vendors-node_modules_leaflet_markercluster_dist_leaflet_markercluster-src_js.js",
         "/build/map-single-js.js"
@@ -75,8 +76,9 @@
       "js": [
         "/build/runtime.js",
         "/build/vendors-node_modules_jquery_dist_jquery_js.js",
-        "/build/vendors-node_modules_core-js_internals_array-iteration_js-node_modules_core-js_internals_export_js.js",
-        "/build/vendors-node_modules_core-js_internals_add-to-unscopables_js-node_modules_core-js_modules_es_-4a17ad.js",
+        "/build/vendors-node_modules_core-js_internals_export_js.js",
+        "/build/vendors-node_modules_core-js_internals_add-to-unscopables_js-node_modules_core-js_internals_a-464164.js",
+        "/build/vendors-node_modules_core-js_internals_array-slice_js-node_modules_core-js_internals_create-p-a38089.js",
         "/build/vendors-node_modules_core-js_modules_es_array_find_js-node_modules_core-js_modules_es_array_s-3f77ce.js",
         "/build/adminjs.js"
       ]
@@ -93,8 +95,9 @@
       "js": [
         "/build/runtime.js",
         "/build/vendors-node_modules_jquery_dist_jquery_js.js",
-        "/build/vendors-node_modules_core-js_internals_array-iteration_js-node_modules_core-js_internals_export_js.js",
-        "/build/vendors-node_modules_core-js_internals_add-to-unscopables_js-node_modules_core-js_modules_es_-4a17ad.js",
+        "/build/vendors-node_modules_core-js_internals_export_js.js",
+        "/build/vendors-node_modules_core-js_internals_add-to-unscopables_js-node_modules_core-js_internals_a-464164.js",
+        "/build/vendors-node_modules_core-js_internals_array-slice_js-node_modules_core-js_internals_create-p-a38089.js",
         "/build/vendors-node_modules_filepond-plugin-file-validate-type_dist_filepond-plugin-file-validate-ty-f96cf8.js",
         "/build/vendors-node_modules_core-js_modules_es_array_for-each_js-node_modules_core-js_modules_es_obj-04c62c.js",
         "/build/vendor_friendsofsymfony_jsrouting-bundle_Resources_public_js_router_min_js-public_js_fos_js_r-064a7f.js",
@@ -105,7 +108,7 @@
       "js": [
         "/build/runtime.js",
         "/build/vendors-node_modules_jquery_dist_jquery_js.js",
-        "/build/vendors-node_modules_core-js_internals_array-iteration_js-node_modules_core-js_internals_export_js.js",
+        "/build/vendors-node_modules_core-js_internals_export_js.js",
         "/build/vendors-node_modules_core-js_modules_es_array_map_js-node_modules_leaflet_dist_leaflet-src_js-e0c243.js",
         "/build/place-map-formjs.js"
       ]
@@ -123,13 +126,14 @@
       "js": [
         "/build/runtime.js",
         "/build/vendors-node_modules_jquery_dist_jquery_js.js",
-        "/build/vendors-node_modules_core-js_internals_array-iteration_js-node_modules_core-js_internals_export_js.js",
-        "/build/vendors-node_modules_core-js_internals_add-to-unscopables_js-node_modules_core-js_modules_es_-4a17ad.js",
+        "/build/vendors-node_modules_core-js_internals_export_js.js",
+        "/build/vendors-node_modules_core-js_internals_add-to-unscopables_js-node_modules_core-js_internals_a-464164.js",
+        "/build/vendors-node_modules_core-js_internals_array-slice_js-node_modules_core-js_internals_create-p-a38089.js",
         "/build/vendors-node_modules_tinymce_icons_default_icons_js-node_modules_tinymce_plugins_autoresize_p-3678fd.js",
         "/build/vendors-node_modules_datatables_net-bs5_js_dataTables_bootstrap5_js.js",
         "/build/vendors-node_modules_bootstrap_dist_js_bootstrap_esm_js-node_modules_core-js_modules_es_array-88fc80.js",
         "/build/vendors-node_modules_core-js_modules_es_array_for-each_js-node_modules_core-js_modules_es_obj-04c62c.js",
-        "/build/vendors-node_modules_bootbox_bootbox_all_js-node_modules_core-js_modules_es_array_concat_js-n-81f151.js",
+        "/build/vendors-node_modules_bootbox_bootbox_all_js-node_modules_core-js_modules_es_array_concat_js-n-adec39.js",
         "/build/vendor_friendsofsymfony_jsrouting-bundle_Resources_public_js_router_min_js-public_js_fos_js_r-064a7f.js",
         "/build/admin-tree-js.js"
       ]
@@ -138,8 +142,17 @@
       "js": [
         "/build/runtime.js",
         "/build/vendors-node_modules_jquery_dist_jquery_js.js",
-        "/build/vendors-node_modules_core-js_internals_array-iteration_js-node_modules_core-js_internals_export_js.js",
+        "/build/vendors-node_modules_core-js_internals_export_js.js",
+        "/build/vendors-node_modules_core-js_internals_add-to-unscopables_js-node_modules_core-js_internals_a-464164.js",
         "/build/pictues-mass-edit-js.js"
+      ]
+    },
+    "pictues-duplicate-remover-js": {
+      "js": [
+        "/build/runtime.js",
+        "/build/vendors-node_modules_jquery_dist_jquery_js.js",
+        "/build/vendors-node_modules_core-js_internals_export_js.js",
+        "/build/pictues-duplicate-remover-js.js"
       ]
     },
     "admin-catalog-datatable-js": {

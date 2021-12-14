@@ -69,8 +69,8 @@
                     return null;
                 }
         
-                foreach ($picture->getCatalogs() as $catalog) {
-                    CacheHelper::setTagsFromCatalogWithParent($item, $catalog);
+                foreach ($picture->getCatalogs() as $catalogInPicture) {
+                    CacheHelper::setTagsFromCatalogWithParent($item, $catalogInPicture);
                 }
         
                 if (!PictureHelper::checkEnabledRecusively($picture, $catalog)) {
@@ -117,7 +117,9 @@
     
         /**
          * @return MapPoint[]
-         * @throws InvalidArgumentException
+         * @throws \Twig\Error\LoaderError
+         * @throws \Twig\Error\RuntimeError
+         * @throws \Twig\Error\SyntaxError
          */
         public function getGpsPoints(): array
         {

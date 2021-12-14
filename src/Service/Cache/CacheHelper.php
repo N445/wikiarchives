@@ -10,7 +10,7 @@ use Symfony\Contracts\Cache\ItemInterface;
 
 class CacheHelper
 {
-    public const PREFIX = "123";
+    public const PREFIX = "12345678910111213141516171819202122";
     
     public const CATALOG_BREADCRUMB_BY_ID = self::PREFIX . '_catalog_by_id_%d';
     public const CATALOG_BY_ID = self::PREFIX . '_catalog_by_id_%d_%s';

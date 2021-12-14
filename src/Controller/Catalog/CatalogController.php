@@ -6,11 +6,14 @@
     use App\Form\Catalog\AjaxCatalogTreeType;
     use App\Form\Catalog\CatalogType;
     use App\Form\Catalog\PictureMassEditType;
+    use App\Form\Catalog\PicturesDuplicateRemoverType;
     use App\Model\Breadcrumb\Breadcrumb;
     use App\Model\Breadcrumb\BreadcrumbLink;
+    use App\Model\Catalog\PicturesDuplicateRemover;
     use App\Model\Catalog\PicturesMassEdit;
     use App\Repository\Catalog\CatalogRepository;
     use App\Repository\Catalog\CatalogTreeRepository;
+    use App\Service\Catalog\PictureDoublonManager;
     use App\Service\Catalog\PicturesMassEditHelper;
     use Doctrine\ORM\EntityManagerInterface;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -250,10 +253,57 @@
             $breadcrumb->addLink(new BreadcrumbLink('catalog.form.mass_edit.label', $this->generateUrl('ADMIN_CATALOG_EDIT_MULTIPLE', [
                 'id' => $catalog->getId()
             ])));
-        
+    
             return $this->renderForm('catalog/catalog/edit-multiple.html.twig', [
                 'catalog' => $catalog,
                 'breadcrumb' => $breadcrumb,
+                'form' => $form,
+                'catalogs' => array_filter($this->catalogRepository->findAll(), function ($catalog) {
+                    return Catalog::ROOT !== $catalog->getName();
+                }),
+            ]);
+        }
+    
+        #[Route('/{id}/doublon', name: 'ADMIN_CATALOG_DOUBLON', methods: ['GET', 'POST'])]
+        public function doublon(?int $id, Request $request, PictureDoublonManager $pictureDoublonManager): Response
+        {
+            if (!$catalog = $this->catalogRepository->byIdAdmin($id)) {
+                return $this->redirectToRoute('ADMIN_CATALOG_CATALOG_BROWSE');
+            }
+        
+            $breadcrumb = new Breadcrumb([
+                new BreadcrumbLink('navigation.dashboard', $this->generateUrl('ADMIN')),
+            ]);
+        
+            foreach ($this->catalogTreeRepository->getPath($catalog) as $item) {
+                if ('root' !== $item->getName()) {
+                    $breadcrumb->addLink(new BreadcrumbLink($item->getName(), $this->generateUrl('ADMIN_CATALOG_CATALOG_BROWSE', [
+                        'id' => $item->getId()
+                    ])));
+                }
+            }
+        
+            $breadcrumb->addLink(new BreadcrumbLink('catalog.form.doublon.label', $this->generateUrl('ADMIN_CATALOG_DOUBLON', [
+                'id' => $catalog->getId()
+            ])));
+        
+            $doublons = $pictureDoublonManager->find($catalog);
+        
+            $pictureDuplicate = new PicturesDuplicateRemover();
+            $form = $this->createForm(PicturesDuplicateRemoverType::class, $pictureDuplicate);
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                dump($pictureDuplicate);
+                $pictureDoublonManager->clearDuplicateByKeys($catalog, $pictureDuplicate);
+                return $this->redirectToRoute('ADMIN_CATALOG_DOUBLON', [
+                    'id' => $catalog->getId()
+                ]);
+            }
+        
+            return $this->renderForm('catalog/catalog/doublon.html.twig', [
+                'catalog' => $catalog,
+                'breadcrumb' => $breadcrumb,
+                'doublons' => $doublons,
                 'form' => $form,
                 'catalogs' => array_filter($this->catalogRepository->findAll(), function ($catalog) {
                     return Catalog::ROOT !== $catalog->getName();

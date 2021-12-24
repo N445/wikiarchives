@@ -77,6 +77,8 @@ catalog:
     add_catalog_in: Ajouter un catalogue dans
     doublon: Doublon
   form:
+    doublon:
+      label: Doublon
     edit:
       recursive_zone: Zone recursif
     mass_edit:

@@ -77,6 +77,8 @@ catalog:
       add_catalog_in: Add a catalog in
       doublon: Duplicate
   form:
+    doublon:
+      label: Duplicate
     edit:
       recursive_zone: Recursive zone
     mass_edit:

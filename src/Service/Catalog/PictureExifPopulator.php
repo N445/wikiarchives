@@ -18,13 +18,13 @@ class PictureExifPopulator
         if (!$file instanceof UploadedFile) {
             $file = new UploadedFile($file, $file, null, null, true);
         }
-        
+    
         // reader with Native adapter
         $reader = \PHPExif\Reader\Reader::factory(\PHPExif\Reader\Reader::TYPE_NATIVE);
-        
+    
         $read = $reader->read($file->getRealPath());
-        
-        return $read->getData();
+    
+        return $read ? $read->getData() : [];
     }
     
     public static function populate(Picture $picture)

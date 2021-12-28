@@ -33,9 +33,9 @@ class PicturesMassEdit
     private $originalCatalog;
     
     /**
-     * @var Catalog|null
+     * @var Catalog[]
      */
-    private $newCatalog;
+    private $newCatalogs = [];
     
     /**
      * @var Place|null
@@ -154,20 +154,30 @@ class PicturesMassEdit
     }
     
     /**
-     * @return Catalog|null
+     * @return Catalog[]
      */
-    public function getNewCatalog(): ?Catalog
+    public function getNewCatalogs(): array
     {
-        return $this->newCatalog;
+        return $this->newCatalogs;
     }
     
     /**
-     * @param Catalog|null $newCatalog
+     * @param Catalog[] $newCatalogs
      * @return PicturesMassEdit
      */
-    public function setNewCatalog(?Catalog $newCatalog): PicturesMassEdit
+    public function setNewCatalogs(array $newCatalogs): PicturesMassEdit
     {
-        $this->newCatalog = $newCatalog;
+        $this->newCatalogs = $newCatalogs;
+        return $this;
+    }
+    
+    /**
+     * @param Catalog $newCatalog
+     * @return PicturesMassEdit
+     */
+    public function addNewCatalog(Catalog $newCatalog): PicturesMassEdit
+    {
+        $this->newCatalogs[] = $newCatalog;
         return $this;
     }
     

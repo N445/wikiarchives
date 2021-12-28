@@ -226,7 +226,7 @@
         
             $picturesMassEdit = (new PicturesMassEdit())
                 ->setOriginalCatalog($catalog)
-                ->setNewCatalog($catalog)
+                ->addNewCatalog($catalog)
                 ->setPictures($catalog->getPictures()->toArray());
             $form = $this->createForm(PictureMassEditType::class, $picturesMassEdit);
             $form->handleRequest($request);

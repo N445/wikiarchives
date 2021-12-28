@@ -73,10 +73,11 @@ class PictureMassEditType extends AbstractType
                 'label' => 'catalog.form.mass_edit.source',
                 'required' => false,
             ])
-            ->add('newCatalog', EntityType::class, [
+            ->add('newCatalogs', EntityType::class, [
                 'label' => 'catalog.form.mass_edit.newCatalog',
                 'class' => Catalog::class,
                 'required' => false,
+                'multiple' => true,
                 'attr' => [
                     'class' => 'select2'
                 ],

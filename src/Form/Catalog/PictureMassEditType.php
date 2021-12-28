@@ -100,12 +100,6 @@ class PictureMassEditType extends AbstractType
                 'class' => Picture::class,
                 'multiple' => true,
                 'required' => false,
-                'query_builder' => function (EntityRepository $er) use ($catalog) {
-                    return $er->createQueryBuilder('p')
-                              ->andWhere('p.catalog = :catalog')
-                              ->setParameter('catalog', $catalog)
-                    ;
-                },
             ])
         ;
     

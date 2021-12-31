@@ -160,7 +160,7 @@
     
         private function getResponseLocal(string $imageName, string $urlPath)
         {
-            $response = new BinaryFileResponse($urlPath);
+            $response = new BinaryFileResponse($this->kernel->getProjectDir() . '/public' . $urlPath);
             $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $imageName);
         
             return $response;

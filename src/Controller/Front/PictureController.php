@@ -59,7 +59,7 @@ class PictureController extends AbstractController
             return $this->redirectToRoute('HOMEPAGE');
         }
 //            return $this->redirect($pictureDownloadProvider->getResizedPicture($picture, $size));
-        return $pictureDownloadProvider->getResizedPicture($picture, $size);
+        return $pictureDownloadProvider->getResizedPicture($catalog, $picture, $size);
     }
     
     /**

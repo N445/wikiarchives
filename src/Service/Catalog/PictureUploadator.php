@@ -36,13 +36,15 @@
             }
         
             $zip = new ZipArchive();
-            $tmp = $this->kernel->getProjectDir() . '/var/tmp/' . uniqid('', true);
+//            $tmp = $this->kernel->getProjectDir() . '/var/tmp/' . uniqid('', true);
+            $tmp = (new Filesystem())->tempnam('preprod-wikiarchives', 'upload-zip');
+            $tmpDir = sys_get_temp_dir();
             $finder = new Finder();
         
             if ($zip->open($uploadedFile->getRealPath()) === TRUE) {
-                $zip->extractTo($tmp);
+                $zip->extractTo($tmpDir);
                 $zip->close();
-                $finder->files()->in($tmp);
+                $finder->files()->in($tmpDir);
     
                 $i = 0;
                 foreach ($finder as $file) {
@@ -58,7 +60,7 @@
                 }
             }
             $this->em->flush();
-            (new Filesystem())->remove($tmp);
+//            (new Filesystem())->remove($tmpDir);
         }
     
         public function uploadPicturefile(Catalog $catalog, UploadedFile $uploadedFile, bool $isFlush = true)

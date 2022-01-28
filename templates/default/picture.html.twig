@@ -27,7 +27,6 @@
 {% endblock %}
 
 {% block body %}
-    {{ dump(picture) }}
     {% include 'includes/catalog/_catalog-banner.html.twig' with{catalog:catalog,isPicture:true} %}
     {% include 'includes/catalog/_picture-status-bar.html.twig' %}
     <div class="container-fluid">

@@ -17,4 +17,5 @@ knp_gaufrette:
 
   filesystems:
     picture_fs:
+#      adapter: picture_adapter
       adapter: local_picture_adapter

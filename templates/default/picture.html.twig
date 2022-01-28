@@ -4,7 +4,30 @@
 
 {% block title %}{{ parent() }} - {{ picture.name }}{% endblock %}
 
+{% block opengraph %}
+    <meta property="og:site_name" content="Wikiarchives" />
+    <meta property="og:title" content="{{ picture.name }}" />
+    <meta property="og:description" content="{{ picture.description|striptags }}" />
+    <meta property="og:url" content="{{ absolute_url(app.request.pathInfo) }}" />
+    <meta property="og:image" content="{{ absolute_url(asset(picture.file.imageName)|imagine_filter('opengraph')) }}" />
+    <meta property="og:image:secure_url" content="{{ absolute_url(asset(picture.file.imageName)|imagine_filter('opengraph')) }}" />
+    <meta property="og:image:type" content="{{ picture.file.imageMimeType }}" />
+    <meta property="og:image:width" content="{{ picture.file.imageDimensions[0] }}" />
+    <meta property="og:image:height" content="{{ picture.file.imageDimensions[1] }}" />
+    <meta property="og:image:alt" content="{{ picture.name }}" />
+
+
+    <meta name=”twitter:card” content=”summary_large_image”>
+    <meta name=”twitter:site” content=”@archives_space”>
+{#    <meta name=”twitter:creator” content=”@archives_space”>#}
+    <meta name=”twitter:title” content=”{{ picture.name|truncate(70) }}”>
+    <meta name=”twitter:description” content=”{{ picture.description|striptags|truncate(200) }}”>
+    <meta name=”twitter:image” content=”{{ absolute_url(asset(picture.file.imageName)|imagine_filter('twitter')) }}“>
+    <meta name=”twitter:image:alt” content=”{{ picture.name }}“>
+{% endblock %}
+
 {% block body %}
+    {{ dump(picture) }}
     {% include 'includes/catalog/_catalog-banner.html.twig' with{catalog:catalog,isPicture:true} %}
     {% include 'includes/catalog/_picture-status-bar.html.twig' %}
     <div class="container-fluid">

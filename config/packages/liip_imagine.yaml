@@ -94,3 +94,18 @@ liip_imagine:
         filters:
           relative_resize:
             widen: 2825
+      opengraph:
+        cache: default
+        data_loader: loader_picture
+        quality: 75
+        filters:
+          thumbnail: { size: [600, 315], mode: outbound }
+
+      twitter:
+        cache: default
+        data_loader: loader_picture
+        quality: 75
+        filters:
+          relative_resize:
+            widen: 4096
+            heighten: 4096

@@ -1,6 +1,9 @@
 twig:
     default_path: '%kernel.project_dir%/templates'
-    form_themes: ['bootstrap_5_layout.html.twig']
+    form_themes: [ 'bootstrap_5_layout.html.twig' ]
+    globals:
+        twitter_username: archives_space
+        twitter_numeric_id: 1325116350927429636
 
 when@test:
     twig:

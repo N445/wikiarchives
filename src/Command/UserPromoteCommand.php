@@ -27,9 +27,11 @@ class UserPromoteCommand extends Command
      */
     private EntityManagerInterface $em;
 
-    public function __construct(string $name = null, UserRepository $userRepository, EntityManagerInterface $em)
+    public function __construct(
+        UserRepository $userRepository,
+        EntityManagerInterface $em
+    )
     {
-        parent::__construct($name);
         $this->userRepository = $userRepository;
         $this->em = $em;
     }

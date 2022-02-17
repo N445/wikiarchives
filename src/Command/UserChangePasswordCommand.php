@@ -31,9 +31,12 @@
         private EntityManagerInterface $em;
         private UserPasswordHasherInterface $userPasswordHasher;
         
-        public function __construct(string $name = null, UserRepository $userRepository, EntityManagerInterface $em, UserPasswordHasherInterface $userPasswordHasher)
+        public function __construct(
+            UserRepository $userRepository,
+            EntityManagerInterface $em,
+            UserPasswordHasherInterface $userPasswordHasher
+        )
         {
-            parent::__construct($name);
             $this->userRepository = $userRepository;
             $this->em = $em;
             $this->userPasswordHasher = $userPasswordHasher;

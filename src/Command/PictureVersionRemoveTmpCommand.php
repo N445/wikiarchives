@@ -20,9 +20,11 @@ class PictureVersionRemoveTmpCommand extends Command
     private VersionRepository $versionRepository;
     private EntityManagerInterface $em;
     
-    public function __construct(string $name = null, VersionRepository $versionRepository, EntityManagerInterface $em)
+    public function __construct(
+        VersionRepository $versionRepository,
+        EntityManagerInterface $em
+    )
     {
-        parent::__construct($name);
         $this->versionRepository = $versionRepository;
         $this->em = $em;
     }

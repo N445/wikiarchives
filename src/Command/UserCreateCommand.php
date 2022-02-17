@@ -35,14 +35,12 @@ class UserCreateCommand extends Command
     private ValidatorInterface $validator;
 
     public function __construct(
-        string                      $name = null,
         UserRepository              $userRepository,
         EntityManagerInterface      $em,
         UserPasswordHasherInterface $userPasswordHasher,
         ValidatorInterface          $validator
     )
     {
-        parent::__construct($name);
         $this->userRepository = $userRepository;
         $this->em = $em;
         $this->userPasswordHasher = $userPasswordHasher;

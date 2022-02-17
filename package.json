@@ -1,5 +1,6 @@
 {
     "devDependencies": {
+        "@hotwired/stimulus": "^3.0.0",
         "@popperjs/core": "^2.10.2",
         "@symfony/stimulus-bridge": "^2.0.0",
         "@symfony/ux-lazy-image": "file:vendor/symfony/ux-lazy-image/Resources/assets",

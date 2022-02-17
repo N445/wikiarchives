@@ -17,9 +17,10 @@ class ImportWebsiteCommand extends Command
 {
     private ImportatorFromWebsite $importatorFromWebsite;
     
-    public function __construct(string $name = null, ImportatorFromWebsite $importatorFromWebsite)
+    public function __construct(
+        ImportatorFromWebsite $importatorFromWebsite
+    )
     {
-        parent::__construct($name);
         $this->importatorFromWebsite = $importatorFromWebsite;
     }
     

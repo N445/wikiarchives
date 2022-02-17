@@ -242,9 +242,6 @@
             "config/packages/stof_doctrine_extensions.yaml"
         ]
     },
-    "symfony/amqp-messenger": {
-        "version": "v5.3.7"
-    },
     "symfony/asset": {
         "version": "v5.3.4"
     },
@@ -292,9 +289,6 @@
     },
     "symfony/doctrine-bridge": {
         "version": "v5.3.8"
-    },
-    "symfony/doctrine-messenger": {
-        "version": "v5.3.10"
     },
     "symfony/dom-crawler": {
         "version": "v5.3.7"
@@ -441,9 +435,6 @@
     "symfony/polyfill-mbstring": {
         "version": "v1.23.1"
     },
-    "symfony/polyfill-php73": {
-        "version": "v1.23.0"
-    },
     "symfony/polyfill-php80": {
         "version": "v1.23.1"
     },
@@ -461,9 +452,6 @@
     },
     "symfony/proxy-manager-bridge": {
         "version": "v5.3.4"
-    },
-    "symfony/redis-messenger": {
-        "version": "v5.3.10"
     },
     "symfony/routing": {
         "version": "5.3",
@@ -498,9 +486,6 @@
     },
     "symfony/security-csrf": {
         "version": "v5.3.4"
-    },
-    "symfony/security-guard": {
-        "version": "v5.3.7"
     },
     "symfony/security-http": {
         "version": "v5.3.8"

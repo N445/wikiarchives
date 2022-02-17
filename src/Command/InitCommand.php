@@ -20,9 +20,11 @@ class InitCommand extends Command
     private EntityManagerInterface $em;
     private CatalogRepository $catalogRepository;
     
-    public function __construct(string $name = null, EntityManagerInterface $em, CatalogRepository $catalogRepository)
+    public function __construct(
+        EntityManagerInterface $em,
+        CatalogRepository $catalogRepository
+    )
     {
-        parent::__construct($name);
         $this->em = $em;
         $this->catalogRepository = $catalogRepository;
     }

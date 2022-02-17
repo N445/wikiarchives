@@ -1,14 +1,15 @@
 framework:
-    messenger:
-        failure_transport: failed
-        transports:
-            async_image_download:
-                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
-                retry_strategy:
-                    max_retries: 3
-                    delay: 1000
-                    multiplier: 2
-                    max_delay: 0
-            failed: 'doctrine://default?queue_name=failed'
-        routing:
-            'App\Message\ImageDownload': async_image_download
+  messenger:
+    reset_on_message: true
+    failure_transport: failed
+    transports:
+      async_image_download:
+        dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+        retry_strategy:
+          max_retries: 3
+          delay: 1000
+          multiplier: 2
+          max_delay: 0
+      failed: 'doctrine://default?queue_name=failed'
+    routing:
+      'App\Message\ImageDownload': async_image_download

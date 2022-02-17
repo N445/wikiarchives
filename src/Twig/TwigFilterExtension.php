@@ -3,12 +3,7 @@
 namespace App\Twig;
 
 use App\Entity\Catalog\Catalog;
-use App\Entity\Catalog\Picture;
-use App\Model\Breadcrumb\Breadcrumb;
-use App\Provider\CatalogProvider;
-use App\Provider\PictureProvider;
 use App\Service\Catalog\CatalogHelper;
-use Doctrine\Common\Util\ClassUtils;
 use Symfony\Component\Intl\Locales;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
@@ -18,18 +13,12 @@ use Twig\TwigFilter;
 
 class TwigFilterExtension extends AbstractExtension
 {
-    private CatalogProvider $catalogProvider;
-    private PictureProvider $pictureProvider;
     private TranslatorInterface $translator;
     
     public function __construct(
-        CatalogProvider     $catalogProvider,
-        PictureProvider     $pictureProvider,
         TranslatorInterface $translator
     )
     {
-        $this->catalogProvider = $catalogProvider;
-        $this->pictureProvider = $pictureProvider;
         $this->translator = $translator;
     }
 

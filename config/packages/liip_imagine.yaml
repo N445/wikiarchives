@@ -3,6 +3,8 @@ liip_imagine:
 #    driver: "imagick"
     driver: "gd"
     cache: aws_s3_resolver
+    twig:
+      mode: lazy
     loaders:
       loader_picture:
         stream:

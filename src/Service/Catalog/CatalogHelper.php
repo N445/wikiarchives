@@ -25,6 +25,7 @@ class CatalogHelper
         foreach ($catalog->getChildren() as $child) {
             self::addChildPictures($child, $pictures);
         }
+        return $pictures;
     }
     
     private static function addChildPictures(Catalog $catalog, &$pictures)
